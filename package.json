@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "edit:oauth-api": "openapi-editor --file ./apis/v1/oauth/schema.yaml --port 23000",
-    "edit:holders-api": "openapi-editor --file ./apis/v1/holders/schema.yaml --port 23001",
-    "edit:accounts-api": "openapi-editor --file ./apis/v1/accouts/schema.yaml --port 23002"
+    "edit:document-analysis-api": "openapi-editor --file ./apis/v1/document-analysis/schema.yaml --port 23001",
+    "edit:holders-api": "openapi-editor --file ./apis/v1/holders/schema.yaml --port 23002",
+    "edit:accounts-api": "openapi-editor --file ./apis/v1/accouts/schema.yaml --port 23003"
   },
   "repository": {
     "type": "git",
