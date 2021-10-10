@@ -1,28 +1,31 @@
 openapi: 3.0.1
 info:
   title: Análise de Documentos
-  description: Antes de abrir uma conta ou solicitar um cartão, conheça mais sobre o seu cliente.
+  description: Antes de abrir uma conta de pagamento ou solicitar um cartão de crédito (pré-pago), conheça mais sobre o seu cliente.
   version: '1.0'
 servers:
-  - url: https://api.sandbox.bankly.com.br
+  - url: 'https://api.sandbox.bankly.com.br'
 paths:
-  /document-analysis/{documentNumber}:
+  '/document-analysis/{documentNumber}':
     get:
       tags:
         - Análise de documentos.
       summary: Obtenha o resultado da análise do documento.
-      description: Você pode solicitar mais de um resultado, informando os tokens correspondentes às análises solicitadas.
-      operationId: GetDocumentAnalysisAsync
+      description: |
+        <div class="bkly-ref-description">
+          <p>Você pode solicitar mais de um resultado, informando os tokens correspondentes às análises solicitadas.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
+        </div>  
+      operationId: GetDocumentAnalysis
       parameters:
         - name: documentNumber
           in: path
-          description: Número do documento CPF do titular.
+          description: Número do documento CPF do cliente pessoa física ou representante legal da empresa.
           required: true
           style: simple
           explode: false
           schema:
             type: string
-            description: Número do documento CPF do titular.
             nullable: true
         - name: token
           in: query
@@ -52,6 +55,7 @@ paths:
           explode: false
           schema:
             type: string
+            default: 1
       responses:
         '200':
           description: Recurso encontrado
@@ -66,6 +70,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentAnalysisResponse'
+              examples:
+                Selfie:
+                  value:
+                    token: string
+                    documentType: SELFIE
+                    documentSide: FRONT
+                    status: ANALYSIS_COMPLETED
+                    liveness:
+                      status: LIVENESS_FOUND
+                      confidence: 1.9746
+                    faceDetails:
+                      status: DETECTED_FACE
+                      confidence: 99.99689
+                      ageRange:
+                        low: 18
+                        high: 23
+                      gender:
+                        value: Male
+                        confidence: 99.21723
+                      sunglasses:
+                        value: false
+                        confidence: 99.40401
+                      eyesOpen:
+                        value: false
+                        confidence: 57.259457
+                      emotions:
+                        - value: CALM
+                          confidence: 95.32976
+                        - value: SAD
+                          confidence: 2.078439
+                        - value: CONFUSED
+                          confidence: 0.9475501
+                        - value: ANGRY
+                          confidence: 0.6159508
+                        - value: SURPRISED
+                          confidence: 0.37119603
+                        - value: FEAR
+                          confidence: 0.24299896
+                        - value: HAPPY
+                          confidence: 0.20983662
+                        - value: DISGUSTED
+                          confidence: 0.20425977
+                    analyzedAt: '2021-08-31T21:20:58.754Z'
+                DocumentFront:
+                  value:
+                    token: string
+                    documentType: RG
+                    documentSide: FRONT
+                    status: ANALYSIS_COMPLETED
+                    faceMatch:
+                      status: HAS_FACE_MATCH
+                      similarity: 99.98459
+                      confidence: 99.99835
+                    documentDetails:
+                      status: DETECTED_DOCUMENT
+                      identifiedDocumentType: RG
+                      idNumber: string
+                      cpfNumber: string
+                      birthDate: string
+                      fatherName: string
+                      motherName: string
+                      registerName: string
+                      validDate: string
+                      driveLicenseCategory: string
+                      driveLicenseNumber: string
+                      driveLicenseFirstQualifyingDate: string
+                      federativeUnit: string
+                      issuedBy: string
+                      issuePlace: string
+                      issueDate: string
+                    analyzedAt: '2021-08-31T21:20:58.754Z'
+                DocumentBack:
+                  value:
+                    token: string
+                    documentType: RG
+                    documentSide: BACK
+                    status: ANALYSIS_COMPLETED
+                    documentDetails:
+                      status: DETECTED_DOCUMENT
+                      identifiedDocumentType: RG
+                      idNumber: string
+                      cpfNumber: string
+                      birthDate: string
+                      fatherName: string
+                      motherName: string
+                      registerName: string
+                      validDate: string
+                      driveLicenseCategory: string
+                      driveLicenseNumber: string
+                      driveLicenseFirstQualifyingDate: string
+                      federativeUnit: string
+                      issuedBy: string
+                      issuePlace: string
+                      issueDate: string
+                    analyzedAt: '2021-08-31T21:20:58.754Z'
+        '400':
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                accountDetailedExample:
+                  $ref: '#/components/examples/invalidParameterErrorResponse'
         '404':
           description: Recurso não encontrado.
           headers:
@@ -75,10 +190,6 @@ paths:
               explode: false
               schema:
                 type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Ocorreu algum erro inexperado no nosso servidor.
           headers:
@@ -88,29 +199,35 @@ paths:
               explode: false
               schema:
                 type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
     put:
       tags:
-        - Análise de documentos.
-      summary: Envie documentos (SELFIE, RG ou CNH) para análise.
-      description: Essa etapa deve anteceder o pedido de registro do titular da conta (pessoa física ou pessoa jurídica).
-      operationId: UploadDocumentAsync
+        - Análise de documentos
+      summary: 'Envie documentos (SELFIE, RG ou CNH) para análise.'
+      description: |
+        <div class="bkly-ref-description">
+          <p>Essa análise é um pré-requisito para fluxo de onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
+        </div>  
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "A análise acontece de forma assíncrona, considere consultar o status da análise antes de avançar com as etapas do onboarding completo ou atualização cadastral."
+        }
+        [/block]
+      operationId: UploadDocument
       parameters:
         - name: documentNumber
           in: path
-          description: Número do documento CPF do cliente pessoal ou representante legal da empresa.
+          description: Número do documento CPF do cliente pessoa física ou representante legal da empresa.
           required: true
           style: simple
           explode: false
           schema:
             type: string
-            description: Número do documento CPF do cliente pessoal ou representante legal da empresa.
-            nullable: true
+            nullable: false
         - name: api-version
           in: header
           description: Versão da API. Atualmente estamos na 1.0.
@@ -119,11 +236,12 @@ paths:
           explode: false
           schema:
             type: string
+            default: 1
       requestBody:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/documentanalysis_documentNumber_body'
+              $ref: '#/components/schemas/DocumentAnalysisForm'
             encoding:
               documentType:
                 style: form
@@ -164,8 +282,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
+              examples:
+                accountDetailedExample:
+                  $ref: '#/components/examples/invalidParameterErrorResponse'
+        '409':
+          description: A solicitação conflitou com o estado atual do recurso existente no servidor.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -177,55 +298,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                accountDetailedExample:
+                  $ref: '#/components/examples/errorResponse'
+        '422':
+          description: A sintaxe da requisição esta correta, mas não foi possível processar devido uma regra de negócio.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                accountDetailedExample:
+                  $ref: '#/components/examples/errorResponse'
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
       security:
         - Bearer: []
 security:
   - Bearer: []
 components:
   schemas:
-    Balance:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-        currency:
-          type: string
-          nullable: true
-      additionalProperties: false
-    SummarizedBalance:
-      type: object
-      properties:
-        inProcess:
-          $ref: '#/components/schemas/Balance'
-        available:
-          $ref: '#/components/schemas/Balance'
-        blocked:
-          $ref: '#/components/schemas/Balance'
-      additionalProperties: false
-    AccountStatus:
-      type: string
-      description: Status da conta.
-      enum:
-        - ACTIVE
-        - CLOSED
-        - CASH_IN_BLOCKED
-        - CASH_OUT_BLOCKED
-        - BLOCKED
-    PaymentAccountResponse:
-      type: object
-      properties:
-        balance:
-          $ref: '#/components/schemas/SummarizedBalance'
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        branch:
-          type: string
-          nullable: true
-        number:
-          type: string
-          nullable: true
-      additionalProperties: false
     Error:
       type: object
       properties:
@@ -253,396 +359,9 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    GetPaymentAccountRequest:
-      required:
-        - accountNumber
-      type: object
-      properties:
-        accountNumber:
-          minLength: 1
-          type: string
-          description: Número da conta.
-        includeBalance:
-          type: boolean
-          description: Inclua o saldo da conta na pesquisa.
-      additionalProperties: false
-    BusinessType:
-      type: string
-      enum:
-        - MEI
-        - EI
-        - EIRELI
-    BusinessSize:
-      type: string
-      enum:
-        - MEI
-        - ME
-        - EPP
-    Address:
-      required:
-        - addressLine
-        - buildingNumber
-        - city
-        - country
-        - neighborhood
-        - state
-        - zipCode
-      type: object
-      properties:
-        zipCode:
-          minLength: 1
-          type: string
-          description: O CEP correspondente ao endereço.
-        addressLine:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Logradouro (Nome da rua, avenida, etc).
-        buildingNumber:
-          maxLength: 10
-          minLength: 1
-          type: string
-          description: Número da residência.
-        complement:
-          maxLength: 256
-          type: string
-          description: 'Complemento do endereço. Exemplo: Apto 123, Casa B, etc.'
-          nullable: true
-        neighborhood:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome do bairro ou distrito.
-        city:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome da cidade.
-        state:
-          minLength: 1
-          type: string
-          description: Sigla do estado brasileiro conforme a ISO 3166-2:BR.
-        country:
-          minLength: 1
-          type: string
-          description: 'Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR.'
-      additionalProperties: false
-    Phone:
-      required:
-        - countryCode
-        - number
-      type: object
-      properties:
-        countryCode:
-          minLength: 1
-          type: string
-          description: Código DDI do país. Por enquanto é permitido apenas 55 ou +55 (Brasil).
-        number:
-          minLength: 1
-          type: string
-          description: Número de telefone incluindo DDD.
-      additionalProperties: false
-    LegalRepresentative:
-      required:
-        - address
-        - birthDate
-        - documentNumber
-        - email
-        - motherName
-        - phone
-        - registerName
-      type: object
-      properties:
-        registerName:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
-          nullable: true
-        phone:
-          $ref: '#/components/schemas/Phone'
-        address:
-          $ref: '#/components/schemas/Address'
-        birthDate:
-          minLength: 1
-          type: string
-          description: Data de nascimento do cliente. O cliente deve possuir no mínimo 16 anos.
-          format: date-time
-        motherName:
-          type: string
-          description: Nome da mãe do cliente conforme consta no documento de identificação.
-          nullable: true
-        email:
-          minLength: 1
-          type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email
-        documentNumber:
-          minLength: 1
-          type: string
-          description: Número do documento CPF. Informe somente os números.
-          readOnly: true
-      additionalProperties: false
-    RegisterBusinessRequest:
-      required:
-        - businessAddress
-        - businessName
-        - businessSize
-        - businessType
-        - legalRepresentative
-      type: object
-      properties:
-        businessName:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Razão social da empresa.
-        tradingName:
-          type: string
-          description: Nome fantasia da empresa.
-          nullable: true
-        businessEmail:
-          type: string
-          description: E-mail comercial da empresa.
-          format: email
-          nullable: true
-        businessType:
-          $ref: '#/components/schemas/BusinessType'
-        businessSize:
-          $ref: '#/components/schemas/BusinessSize'
-        businessAddress:
-          $ref: '#/components/schemas/Address'
-        legalRepresentative:
-          $ref: '#/components/schemas/LegalRepresentative'
-      additionalProperties: false
-    BusinessIdentification:
-      required:
-        - documentNumber
-      type: object
-      properties:
-        documentNumber:
-          minLength: 1
-          type: string
-          description: Número do documento CNPJ da empresa. Informe somente os números.
-      additionalProperties: false
-    ResultLevels:
-      type: string
-      description: Tipo de retorno da API (BASIC ou DETAILED).
-      enum:
-        - BASIC
-        - DETAILED
-    BusinessDetailedResponse:
-      type: object
-      properties:
-        email:
-          type: string
-          nullable: true
-        businessAddress:
-          $ref: '#/components/schemas/Address'
-        owners:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/LegalRepresentative'
-        legalRepresentatives:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/LegalRepresentative'
-        reasons:
-          type: array
-          nullable: true
-          items:
-            type: string
-        documentNumber:
-          type: string
-          nullable: true
-        businessName:
-          type: string
-          nullable: true
-        tradingName:
-          type: string
-          nullable: true
-        status:
-          type: string
-          nullable: true
-        businessType:
-          type: string
-          nullable: true
-        businessSize:
-          type: string
-          nullable: true
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          nullable: true
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        status:
-          type: integer
-          format: int32
-          nullable: true
-        detail:
-          type: string
-          nullable: true
-        instance:
-          type: string
-          nullable: true
-        extensions:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: false
-          nullable: true
-          readOnly: true
-      additionalProperties: false
-    AccountType:
-      type: string
-      description: Tipo da conta a ser criada. Neste momento só é permitido PAYMENT_ACCOUNT.
-      enum:
-        - PAYMENT_ACCOUNT
-    CreatePaymentAccountRequest:
-      type: object
-      properties:
-        accountType:
-          $ref: '#/components/schemas/AccountType'
-      additionalProperties: false
-    PaymentAccountBasicResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        branch:
-          type: string
-          nullable: true
-        number:
-          type: string
-          nullable: true
-      additionalProperties: false
-    RegisterCustomerRequest:
-      required:
-        - address
-        - birthDate
-        - email
-        - motherName
-        - phone
-        - registerName
-      type: object
-      properties:
-        registerName:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
-          nullable: true
-        phone:
-          $ref: '#/components/schemas/Phone'
-        address:
-          $ref: '#/components/schemas/Address'
-        birthDate:
-          minLength: 1
-          type: string
-          description: Data de nascimento do cliente. O cliente deve possuir no mínimo 16 anos.
-          format: date-time
-        motherName:
-          type: string
-          description: Nome da mãe do cliente conforme consta no documento de identificação.
-          nullable: true
-        email:
-          minLength: 1
-          type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email
-      additionalProperties: false
-    CustomerIdentification:
-      required:
-        - documentNumber
-      type: object
-      properties:
-        documentNumber:
-          minLength: 1
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      additionalProperties: false
-    CustomerStatus:
-      type: string
-      description: Status do cliente (PF).
-      enum:
-        - PENDING_APPROVAL
-        - APPROVED
-        - REPROVED
-        - REVOKED
-        - CANCELED
-        - BLACKLISTED
-    CustomerProfile:
-      type: string
-      description: Perfil do cliente (PF).
-      enum:
-        - COMPLETE
-        - SIMPLE
-    CustomerDetailedResponse:
-      type: object
-      properties:
-        phone:
-          $ref: '#/components/schemas/Phone'
-        address:
-          $ref: '#/components/schemas/Address'
-        email:
-          type: string
-          nullable: true
-        motherName:
-          type: string
-          nullable: true
-        birthDate:
-          type: string
-          format: date-time
-        isPoliticallyExposedPerson:
-          type: boolean
-        reasons:
-          type: array
-          nullable: true
-          items:
-            type: string
-        documentNumber:
-          type: string
-          nullable: true
-        registerName:
-          type: string
-          nullable: true
-        socialName:
-          type: string
-          nullable: true
-        status:
-          $ref: '#/components/schemas/CustomerStatus'
-        profile:
-          $ref: '#/components/schemas/CustomerProfile'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-      additionalProperties: false
     DocumentType:
       type: string
-      description: Tipo do documento (RG, CNH, SELFIE).
+      description: 'Tipo do documento (RG, CNH, SELFIE).'
       enum:
         - RG
         - CNH
@@ -653,13 +372,6 @@ components:
       enum:
         - FRONT
         - BACK
-    UploadDocumentResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          nullable: true
-      additionalProperties: false
     ResultLevel:
       type: string
       enum:
@@ -820,6 +532,13 @@ components:
           format: double
           nullable: true
       additionalProperties: false
+    UploadDocumentResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+      additionalProperties: false
     DocumentAnalysisResponse:
       type: object
       properties:
@@ -845,7 +564,7 @@ components:
           format: date-time
           nullable: true
       additionalProperties: false
-    documentanalysis_documentNumber_body:
+    DocumentAnalysisForm:
       type: object
       properties:
         documentType:
@@ -863,6 +582,22 @@ components:
       description: Inclua o token de autorização do tipo Bearer
       scheme: bearer
       bearerFormat: JWT
+  examples:
+    invalidParameterErrorResponse:
+      value:
+        errors:
+          - code: INVALID_PARAMETER
+            propertyName: '{{propertyName}}'
+            messages:
+              - '{{"propertyName" error message}}'
+      summary: Invalid parameter error
+    errorResponse:
+      value:
+        errors:
+          - code: SOME_ERROR_CODE
+            messages:
+              - '{{Some error message}}'
+      summary: Business error
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
