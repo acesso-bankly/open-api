@@ -1,0 +1,871 @@
+openapi: 3.0.1
+info:
+  title: Análise de Documentos
+  description: Antes de abrir uma conta ou solicitar um cartão, conheça mais sobre o seu cliente.
+  version: '1.0'
+servers:
+  - url: https://api.sandbox.bankly.com.br
+paths:
+  /document-analysis/{documentNumber}:
+    get:
+      tags:
+        - Análise de documentos.
+      summary: Obtenha o resultado da análise do documento.
+      description: Você pode solicitar mais de um resultado, informando os tokens correspondentes às análises solicitadas.
+      operationId: GetDocumentAnalysisAsync
+      parameters:
+        - name: documentNumber
+          in: path
+          description: Número do documento CPF do titular.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: Número do documento CPF do titular.
+            nullable: true
+        - name: token
+          in: query
+          description: Lista de tokens de análise do documento.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: array
+            description: Lista de tokens de análise do documento.
+            nullable: true
+            items:
+              type: string
+        - name: resultLevel
+          in: query
+          description: Tipo de resultado a ser retornado (ONLY_STATUS ou DETAILED).
+          required: false
+          style: form
+          explode: true
+          schema:
+            $ref: '#/components/schemas/ResultLevel'
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAnalysisResponse'
+        '404':
+          description: Recurso não encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - Bearer: []
+    put:
+      tags:
+        - Análise de documentos.
+      summary: Envie documentos (SELFIE, RG ou CNH) para análise.
+      description: Essa etapa deve anteceder o pedido de registro do titular da conta (pessoa física ou pessoa jurídica).
+      operationId: UploadDocumentAsync
+      parameters:
+        - name: documentNumber
+          in: path
+          description: Número do documento CPF do cliente pessoal ou representante legal da empresa.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            description: Número do documento CPF do cliente pessoal ou representante legal da empresa.
+            nullable: true
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/documentanalysis_documentNumber_body'
+            encoding:
+              documentType:
+                style: form
+              documentSide:
+                style: form
+              image:
+                style: form
+      responses:
+        '202':
+          description: Requisição foi aceita e está sendo processada
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+            Location:
+              description: Localização do recurso recém-criado ou em análise.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDocumentResponse'
+        '400':
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - Bearer: []
+security:
+  - Bearer: []
+components:
+  schemas:
+    Balance:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SummarizedBalance:
+      type: object
+      properties:
+        inProcess:
+          $ref: '#/components/schemas/Balance'
+        available:
+          $ref: '#/components/schemas/Balance'
+        blocked:
+          $ref: '#/components/schemas/Balance'
+      additionalProperties: false
+    AccountStatus:
+      type: string
+      description: Status da conta.
+      enum:
+        - ACTIVE
+        - CLOSED
+        - CASH_IN_BLOCKED
+        - CASH_OUT_BLOCKED
+        - BLOCKED
+    PaymentAccountResponse:
+      type: object
+      properties:
+        balance:
+          $ref: '#/components/schemas/SummarizedBalance'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        propertyName:
+          type: string
+          nullable: true
+        messages:
+          type: array
+          nullable: true
+          items:
+            type: string
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Error'
+        reference:
+          type: integer
+          format: int32
+      additionalProperties: false
+    GetPaymentAccountRequest:
+      required:
+        - accountNumber
+      type: object
+      properties:
+        accountNumber:
+          minLength: 1
+          type: string
+          description: Número da conta.
+        includeBalance:
+          type: boolean
+          description: Inclua o saldo da conta na pesquisa.
+      additionalProperties: false
+    BusinessType:
+      type: string
+      enum:
+        - MEI
+        - EI
+        - EIRELI
+    BusinessSize:
+      type: string
+      enum:
+        - MEI
+        - ME
+        - EPP
+    Address:
+      required:
+        - addressLine
+        - buildingNumber
+        - city
+        - country
+        - neighborhood
+        - state
+        - zipCode
+      type: object
+      properties:
+        zipCode:
+          minLength: 1
+          type: string
+          description: O CEP correspondente ao endereço.
+        addressLine:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Logradouro (Nome da rua, avenida, etc).
+        buildingNumber:
+          maxLength: 10
+          minLength: 1
+          type: string
+          description: Número da residência.
+        complement:
+          maxLength: 256
+          type: string
+          description: 'Complemento do endereço. Exemplo: Apto 123, Casa B, etc.'
+          nullable: true
+        neighborhood:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Nome do bairro ou distrito.
+        city:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Nome da cidade.
+        state:
+          minLength: 1
+          type: string
+          description: Sigla do estado brasileiro conforme a ISO 3166-2:BR.
+        country:
+          minLength: 1
+          type: string
+          description: 'Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR.'
+      additionalProperties: false
+    Phone:
+      required:
+        - countryCode
+        - number
+      type: object
+      properties:
+        countryCode:
+          minLength: 1
+          type: string
+          description: Código DDI do país. Por enquanto é permitido apenas 55 ou +55 (Brasil).
+        number:
+          minLength: 1
+          type: string
+          description: Número de telefone incluindo DDD.
+      additionalProperties: false
+    LegalRepresentative:
+      required:
+        - address
+        - birthDate
+        - documentNumber
+        - email
+        - motherName
+        - phone
+        - registerName
+      type: object
+      properties:
+        registerName:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          nullable: true
+        phone:
+          $ref: '#/components/schemas/Phone'
+        address:
+          $ref: '#/components/schemas/Address'
+        birthDate:
+          minLength: 1
+          type: string
+          description: Data de nascimento do cliente. O cliente deve possuir no mínimo 16 anos.
+          format: date-time
+        motherName:
+          type: string
+          description: Nome da mãe do cliente conforme consta no documento de identificação.
+          nullable: true
+        email:
+          minLength: 1
+          type: string
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          format: email
+        documentNumber:
+          minLength: 1
+          type: string
+          description: Número do documento CPF. Informe somente os números.
+          readOnly: true
+      additionalProperties: false
+    RegisterBusinessRequest:
+      required:
+        - businessAddress
+        - businessName
+        - businessSize
+        - businessType
+        - legalRepresentative
+      type: object
+      properties:
+        businessName:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Razão social da empresa.
+        tradingName:
+          type: string
+          description: Nome fantasia da empresa.
+          nullable: true
+        businessEmail:
+          type: string
+          description: E-mail comercial da empresa.
+          format: email
+          nullable: true
+        businessType:
+          $ref: '#/components/schemas/BusinessType'
+        businessSize:
+          $ref: '#/components/schemas/BusinessSize'
+        businessAddress:
+          $ref: '#/components/schemas/Address'
+        legalRepresentative:
+          $ref: '#/components/schemas/LegalRepresentative'
+      additionalProperties: false
+    BusinessIdentification:
+      required:
+        - documentNumber
+      type: object
+      properties:
+        documentNumber:
+          minLength: 1
+          type: string
+          description: Número do documento CNPJ da empresa. Informe somente os números.
+      additionalProperties: false
+    ResultLevels:
+      type: string
+      description: Tipo de retorno da API (BASIC ou DETAILED).
+      enum:
+        - BASIC
+        - DETAILED
+    BusinessDetailedResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          nullable: true
+        businessAddress:
+          $ref: '#/components/schemas/Address'
+        owners:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/LegalRepresentative'
+        legalRepresentatives:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/LegalRepresentative'
+        reasons:
+          type: array
+          nullable: true
+          items:
+            type: string
+        documentNumber:
+          type: string
+          nullable: true
+        businessName:
+          type: string
+          nullable: true
+        tradingName:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        businessType:
+          type: string
+          nullable: true
+        businessSize:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+        extensions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    AccountType:
+      type: string
+      description: Tipo da conta a ser criada. Neste momento só é permitido PAYMENT_ACCOUNT.
+      enum:
+        - PAYMENT_ACCOUNT
+    CreatePaymentAccountRequest:
+      type: object
+      properties:
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+      additionalProperties: false
+    PaymentAccountBasicResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+      additionalProperties: false
+    RegisterCustomerRequest:
+      required:
+        - address
+        - birthDate
+        - email
+        - motherName
+        - phone
+        - registerName
+      type: object
+      properties:
+        registerName:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          nullable: true
+        phone:
+          $ref: '#/components/schemas/Phone'
+        address:
+          $ref: '#/components/schemas/Address'
+        birthDate:
+          minLength: 1
+          type: string
+          description: Data de nascimento do cliente. O cliente deve possuir no mínimo 16 anos.
+          format: date-time
+        motherName:
+          type: string
+          description: Nome da mãe do cliente conforme consta no documento de identificação.
+          nullable: true
+        email:
+          minLength: 1
+          type: string
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          format: email
+      additionalProperties: false
+    CustomerIdentification:
+      required:
+        - documentNumber
+      type: object
+      properties:
+        documentNumber:
+          minLength: 1
+          type: string
+          description: Número do documento CPF do cliente . Informe somente os números.
+      additionalProperties: false
+    CustomerStatus:
+      type: string
+      description: Status do cliente (PF).
+      enum:
+        - PENDING_APPROVAL
+        - APPROVED
+        - REPROVED
+        - REVOKED
+        - CANCELED
+        - BLACKLISTED
+    CustomerProfile:
+      type: string
+      description: Perfil do cliente (PF).
+      enum:
+        - COMPLETE
+        - SIMPLE
+    CustomerDetailedResponse:
+      type: object
+      properties:
+        phone:
+          $ref: '#/components/schemas/Phone'
+        address:
+          $ref: '#/components/schemas/Address'
+        email:
+          type: string
+          nullable: true
+        motherName:
+          type: string
+          nullable: true
+        birthDate:
+          type: string
+          format: date-time
+        isPoliticallyExposedPerson:
+          type: boolean
+        reasons:
+          type: array
+          nullable: true
+          items:
+            type: string
+        documentNumber:
+          type: string
+          nullable: true
+        registerName:
+          type: string
+          nullable: true
+        socialName:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
+        profile:
+          $ref: '#/components/schemas/CustomerProfile'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DocumentType:
+      type: string
+      description: Tipo do documento (RG, CNH, SELFIE).
+      enum:
+        - RG
+        - CNH
+        - SELFIE
+    DocumentSide:
+      type: string
+      description: Lado do documento (FRONT ou BACK). Quando o tipo do documento for selfie, este parâmetro será desprezado.
+      enum:
+        - FRONT
+        - BACK
+    UploadDocumentResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+      additionalProperties: false
+    ResultLevel:
+      type: string
+      enum:
+        - ONLY_STATUS
+        - DETAILED
+    AnalysisStatus:
+      type: string
+      enum:
+        - ANALYZING
+        - PARTIALLY_ANALYZED
+        - ANALYSIS_COMPLETED
+        - UNEXPECTED_ERROR
+    FaceMatchStatus:
+      type: string
+      enum:
+        - HAS_FACE_MATCH
+        - UNMATCHED_DOCUMENT
+        - MANY_FACES_DETECTED
+    FaceMatch:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceMatchStatus'
+        similarity:
+          type: number
+          format: double
+          nullable: true
+        confidence:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    FaceDetailsStatus:
+      type: string
+      enum:
+        - DETECTED_FACE
+        - MANY_FACES_DETECTED
+        - COULD_NOT_DETECT_FACE
+    AgeRange:
+      type: object
+      properties:
+        low:
+          type: integer
+          format: int32
+          nullable: true
+        high:
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    FacialDetail:
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties: false
+          description: Tipo do detalhe facial identificado
+          nullable: true
+        confidence:
+          type: number
+          description: N�vel de confian�a do resultado
+          format: float
+          nullable: true
+      additionalProperties: false
+    FaceDetails:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceDetailsStatus'
+        confidence:
+          type: number
+          format: float
+          nullable: true
+        ageRange:
+          $ref: '#/components/schemas/AgeRange'
+        gender:
+          $ref: '#/components/schemas/FacialDetail'
+        sunglasses:
+          $ref: '#/components/schemas/FacialDetail'
+        eyesOpen:
+          $ref: '#/components/schemas/FacialDetail'
+        emotions:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/FacialDetail'
+      additionalProperties: false
+    OcrStatus:
+      type: string
+      enum:
+        - DETECTED_DOCUMENT
+        - NO_DOCUMENT_FOUND
+        - NO_INFO_FOUND
+    DocumentDetails:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/OcrStatus'
+        identifiedDocumentType:
+          type: string
+          nullable: true
+        idNumber:
+          type: string
+          nullable: true
+        cpfNumber:
+          type: string
+          nullable: true
+        birthDate:
+          type: string
+          nullable: true
+        fatherName:
+          type: string
+          nullable: true
+        motherName:
+          type: string
+          nullable: true
+        registerName:
+          type: string
+          nullable: true
+        validDate:
+          type: string
+          nullable: true
+        driveLicenseCategory:
+          type: string
+          nullable: true
+        driveLicenseNumber:
+          type: string
+          nullable: true
+        driveLicenseFirstQualifyingDate:
+          type: string
+          nullable: true
+        federativeUnit:
+          type: string
+          nullable: true
+        issuedBy:
+          type: string
+          nullable: true
+        issuePlace:
+          type: string
+          nullable: true
+        issueDate:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LivenessStatus:
+      type: string
+      enum:
+        - LIVENESS_FOUND
+        - NO_LIVENESS
+        - COULD_NOT_DETECT_FACE
+    Liveness:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/LivenessStatus'
+        confidence:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    DocumentAnalysisResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        status:
+          $ref: '#/components/schemas/AnalysisStatus'
+        faceMatch:
+          $ref: '#/components/schemas/FaceMatch'
+        faceDetails:
+          $ref: '#/components/schemas/FaceDetails'
+        documentDetails:
+          $ref: '#/components/schemas/DocumentDetails'
+        liveness:
+          $ref: '#/components/schemas/Liveness'
+        analyzedAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    documentanalysis_documentNumber_body:
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        image:
+          type: string
+          description: Arquivo da imagem. Não deve ser superior à 1 MB. A resolução deve ser compatível com VGA. [Saiba mais](https://en.wikipedia.org/wiki/Video_Graphics_Array).
+          format: binary
+          nullable: true
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true
+  samples-languages:
+    - curl
