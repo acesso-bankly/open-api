@@ -93,3 +93,4 @@ jobs:
       #     readme-oas-key: ${{ secrets.CARDS_API_README_OAS_KEY }}
       #     oas-file-path: './apis/v1/cards/schema.yaml'
       #     api-version: 'v1.0'                    
+      #     api-version: 'v1.0'                    
