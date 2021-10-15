@@ -4,7 +4,8 @@
   "description": "bankly's open api reference",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e js,json,yml,yaml index.js && openapi-editor --file ./models/components.yaml --port 23100",
+    "dev": "nodemon -e js,json,yml,yaml index.js",
+    "edit:commons": "openapi-editor --file ./commons/components/schema.yaml --port 23001",
     "edit:oauth-api": "openapi-editor --file ./apis/v1/oauth/schema.yaml --port 23001",
     "edit:document-analysis-api": "openapi-editor --file ./apis/v1/document-analysis/schema.yaml --port 23002",
     "edit:holders-api": "openapi-editor --file ./apis/v1/holders/schema.yaml --port 23003",
