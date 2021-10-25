@@ -3,22 +3,111 @@ info:
   version: 1.0.0
   title: TED
   description: >-
-    Realize transferencias de valores através do canal de pagamentos TED. Consulte também
-    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
-    sobre os fluxos de negócio.
+    Realize transferencias de valores através do canal de pagamentos TED.
+    Consulte também nossa [documentação](https://bankly.readme.io/v1.0/docs/)
+    para mais detalhes sobre os fluxos de negócio.
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
-
-paths: {}
-
+paths:
+  /fund-transfers:
+    post:
+      tags:
+        - Testando menu
+      summary: Transferência via TED
+      parameters:
+        - in: header
+          name: x-correlation-id
+          required: true
+          description: Guid para correlacionar o request.
+          schema:
+            type : string
+        - in: header
+          name: api-version
+          required: true
+          description: Versão da api em uso.
+          schema:
+            type : string
+            example: 1
+        - in: header
+          name: idempotency-key
+          required: true
+          description: Parâmetro obrigatório **apenas** em sandbox. Guid para garantir que não haja duplicidade nas requisições.
+          schema:
+            type : string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                sender:
+                  $ref: '#/components/schemas/sender'
+                recipient:
+                  $ref: '#/components/schemas/recipient'
+                description:
+                  type: string
+              required:
+              - amount
+              
+      responses: 
+        '202':
+          description: accepted 
 security:
   - Bearer: []
-
-components: {}
+components:
+  schemas:
+    sender:
+      type: object
+      properties:
+        branch:
+          type: string
+        account:
+          type: string
+        document:
+          type: string
+        name:
+          type: string
+      required:  
+        - branch
+        - account
+        - document
+        - name
   
+    recipient:
+      type: object
+      properties:
+        accountType:
+          type: string
+        document:
+          type: string
+        bankCode:
+          type: string
+        branch:
+          type: string
+        account:
+          type: string
+        name:
+          type: string
+      required:  
+        - branch
+        - account
+        - document
+        - name
+        - accountType
+        - bankCode
+        
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+      bearerFormat: JWT
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
   samples-enabled: true
   samples-languages:
     - curl
+
