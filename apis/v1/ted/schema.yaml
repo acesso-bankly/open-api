@@ -109,6 +109,9 @@ paths:
               schema: 
                 type: object
                 properties:
+                  nextPage:
+                    type: string
+                    description: Valor retornado apenas quando é usado o campo pageSize, e ainda existem dados não apresentados
                   data:
                     type: array
                     items:
@@ -138,6 +141,78 @@ paths:
                           type: string
                         updatedAt:
                           type: string
+                          
+  /fund-transfers/{authenticationCode}:
+    get:
+      tags:
+        - Operações via TED
+      summary: Consulta por código de autenticação
+      parameters:
+        - in: path 
+          name: authenticationCode
+          description: Informação retornada ao efetuar transferência via TED.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: branch
+          description: Agência da conta da qual se deseja obter os detalhes da transferência.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: account
+          description: Conta da qual se deseja obter o detalhe de transferência.
+          required: true
+          schema:
+            type : string
+        - in: header
+          name: x-correlation-id
+          description: Guid para correlacionar o request.
+          required: true
+          schema:
+            type : string
+        - in: header
+          name: api-version
+          description: Versão da api em uso.
+          required: true
+          schema:
+            type : string
+            example: 1
+      responses:
+        '200':
+          description: Retorna a transação do tipo TED referente ao authenticationCode informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companyKey:
+                    type: string
+                  authenticationCode:
+                    type: string
+                  amount:
+                    type: number
+                    format: double
+                    example: 20.55
+                  description:
+                    type: string
+                  correlationId:
+                    type: string
+                  sender:
+                    $ref: '#/components/schemas/holderComplete'
+                  recipient:
+                    $ref: '#/components/schemas/holderComplete'
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                       
+                     
 security:
   - Bearer: []
 components:
