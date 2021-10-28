@@ -12,7 +12,7 @@ paths:
   /fund-transfers:
     post:
       tags:
-        - Testando menu
+        - Operações via TED
       summary: Transferência via TED
       parameters:
         - in: header
@@ -30,8 +30,7 @@ paths:
             example: 1
         - in: header
           name: idempotency-key
-          required: true
-          description: Parâmetro obrigatório **apenas** em sandbox. Guid para garantir que não haja duplicidade nas requisições.
+          description: Guid para garantir que não haja duplicidade nas requisições.
           schema:
             type : string
       requestBody:
@@ -53,7 +52,92 @@ paths:
               
       responses: 
         '202':
-          description: accepted 
+          description: Ted aceito com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authenticationCode:
+                    type: string
+                    description: Código para consulta da transação
+    get:
+      tags:
+        - Operações via TED
+      summary: Consulta por conta
+      parameters:
+        - in: query 
+          name: branch
+          description: Agência da conta da qual se deseja obter os detalhes da transferência.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: account
+          description: Conta da qual se deseja obter o detalhe de transferência.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: pageSize
+          description: Quantidade de itens para retornar a consulta
+          schema:
+            type : integer
+        - in: query 
+          name: nextPage
+          description: Token identificador da próxima página solicitada.
+          schema:
+            type : integer
+        - in: header
+          name: x-correlation-id
+          description: Guid para correlacionar o request.
+          required: true
+          schema:
+            type : string
+        - in: header
+          name: api-version
+          description: Versão da api em uso.
+          required: true
+          schema:
+            type : string
+            example: 1
+      responses:
+        '200':
+          description: Retorna todas as transações do tipo TED feitas pela conta informada
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        companyKey:
+                          type: string
+                        authenticationCode:
+                          type: string
+                        amount:
+                          type: number
+                          format: double
+                          example: 20.55
+                        description:
+                          type: string
+                        correlationId:
+                          type: string
+                        sender:
+                          $ref: '#/components/schemas/holderComplete'
+                        recipient:
+                          $ref: '#/components/schemas/holderComplete'
+                        channel:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
 security:
   - Bearer: []
 components:
@@ -74,6 +158,36 @@ components:
         - account
         - document
         - name
+        
+    holderComplete:
+      type: object
+      properties:
+        document:
+          type: string
+        name:
+          type: string
+        account:
+          $ref: '#/components/schemas/account'
+          
+    account:
+      type: object
+      properties:
+        branch:
+          type: string
+        number:
+          type: string
+        bank:
+          $ref: '#/components/schemas/bank'
+          
+    bank:
+      type: object
+      properties:
+        ispb:
+          type: string
+        name:
+          type: string
+        compe:
+          type: string
   
     recipient:
       type: object
