@@ -1,6 +1,6 @@
 # Bankly Open Api Schemas
 
-O Bankly Open API Schemas é fortemente baseado no [OpenAPI Specification 3.*](https://swagger.io/specification) (OAS). Nossas APIs buscam aplicar a melhor interpretação da arquitetura REST.
+O Bankly Open API Schemas é fortemente baseado no [OpenAPI Specification 3*](https://swagger.io/specification) (OAS). Nossas APIs buscam aplicar a melhor interpretação da arquitetura REST.
 
 
 ![validate](https://github.com/acesso-bankly/open-api/actions/workflows/review.yaml/badge.svg)
@@ -61,7 +61,7 @@ Abra o editor da API que deseja trabalha e acesso ```http://127.0.0.1:33201/?url
 
 Após fazer as atualizações, commit as mudanças e submeta um Pull Request apontando para a branch **develop**.
 
-**🗒️ DICA! Faça commits pequenos e centrados na alteração que está propondo**
+**🗒️ DICA! Faça commits pequenos e centrados na alteração que está propondo.**
 
 ### **Passo 4:**  
 
@@ -96,7 +96,7 @@ A tag _beta_ define que o endpoint da API está em aprimoramento e poderá sofre
 <span class="bkly-ref-small-stable-tag">stable</span>
 ```
 
-A tag _stable_ define que o endpoint da api é estável e não sofrerá alterações que geram breaking changes.
+A tag _stable_ define que o endpoint da API é estável e não sofrerá alterações que geram breaking changes.
 
 ---
 
@@ -106,7 +106,7 @@ A tag _stable_ define que o endpoint da api é estável e não sofrerá alteraç
 <span class="bkly-ref-small-deprecated-tag">deprecated</span>
 ```
 
-A tag _deprecated_ define que o endpoint da api está obsoleto e foi substituído por outro.
+A tag _deprecated_ define que o endpoint da API está obsoleto e foi substituído por outro.
 
 ---
 
@@ -116,7 +116,7 @@ A tag _deprecated_ define que o endpoint da api está obsoleto e foi substituíd
 <span class="bkly-ref-scope-tag">scope: {{scope}}/span>
 ```
 
-A tag _scope_ define qual é o scope requerido no token para acessar a api.
+A tag _scope_ define qual é o scope requerido no token para acessar a API.
 
 ---
 
