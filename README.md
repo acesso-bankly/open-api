@@ -55,7 +55,8 @@ Ex:
 
 ### **Passo 2:**  
 
-Abra o editor da API que deseja trabalha e acesso ```http://127.0.0.1:33201/?url=/oas/spec``` 
+Utilizando o Swagger Editor, é possível ver a renderização do arquivo (Open Api) no momento da alteração. 
+Para utilizá-lo, dentro da pasta dos arquivos, abra um prompt de comando e digite: npm run edit:{api}. No browser, a página do editor abrirá no endereço ```http://127.0.0.1:{porta}/?url=/oas/spec``` 
 
 ### **Passo 3:**  
 
@@ -65,7 +66,7 @@ Após fazer as atualizações, commit as mudanças e submeta um Pull Request apo
 
 ### **Passo 4:**  
 
-Caso tenha comentários e sugestões no Pull Request, aplique-os!
+Ajude-nos a manter nossa documentação atualizada, caso tenha comentários e sugestões, envie seu Pull Request!
 
 
 # Ferramentas
