@@ -36,7 +36,7 @@ $ npm run edit:{api}
 - events
 - helpers
 
-**⚠️ IMPORTANTE! Não é possível editar duas apis ao mesmo tempo**
+**⚠️ IMPORTANTE! Não é possível editar duas APIs ao mesmo tempo.**
 
 
 # Como contribuir
@@ -51,15 +51,15 @@ Ex:
 - enhancement/descricao-api-version
 - fix/descricao-api-version
 
-**⚠️ IMPORTANTE! Branchs que não respeitarem a convenção proposta acima não serão revisadas**
+**⚠️ IMPORTANTE! Branchs que não respeitarem a convenção proposta acima não serão revisadas.**
 
 ### **Passo 2:**  
 
-Abra o editor da api que deseja trabalha e acesso ```http://127.0.0.1:33201/?url=/oas/spec``` 
+Abra o editor da API que deseja trabalha e acesso ```http://127.0.0.1:33201/?url=/oas/spec``` 
 
 ### **Passo 3:**  
 
-Após fazer as atualizações, commit as mudanças e submeta um Pull Request apontando para a branch **develop**
+Após fazer as atualizações, commit as mudanças e submeta um Pull Request apontando para a branch **develop**.
 
 **🗒️ DICA! Faça commits pequenos e centrados na alteração que está propondo**
 
@@ -86,7 +86,7 @@ Caso tenha comentários e sugestões no Pull Request, aplique-os!
 <span class="bkly-ref-small-beta-tag">beta</span>
 ```
 
-A tag _beta_ define que o endpoint da api está em aprimoramento e poderá sofrer alterações que geram breaking changes.
+A tag _beta_ define que o endpoint da API está em aprimoramento e poderá sofrer alterações que gerem breaking changes.
 
 ---
 
@@ -122,7 +122,7 @@ A tag _scope_ define qual é o scope requerido no token para acessar a api.
 
 ## Sistema de versão
 
-O Bankly faz forte uso do sistema de versão semântico, no entanto, na API Pública, somente exibimos e requeremos que seja informado o major da API, através do header ```api-version```.
+O Bankly faz forte uso do sistema de versão semântico. No entanto, na API Pública, somente exibimos e requeremos que seja informado o major da API, através do header ```api-version```.
 
 # Referências
 
