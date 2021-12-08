@@ -1,6 +1,6 @@
 # Bankly Open Api Schemas
 
-O Bankly Open API Schemas é fortemente baseado no [OpenAPI Specification 3.*](https://swagger.io/specification) (OAS), assim como as APIs buscam aplicar a melhor interpretação da arquitetura REST.
+O Bankly Open API Schemas é fortemente baseado no [OpenAPI Specification 3.*](https://swagger.io/specification) (OAS). Nossas APIs buscam aplicar a melhor interpretação da arquitetura REST.
 
 
 ![validate](https://github.com/acesso-bankly/open-api/actions/workflows/review.yaml/badge.svg)
@@ -43,7 +43,7 @@ $ npm run edit:{api}
 
 ### **Passo 1:** 
 
-Crie uma branch com um dos prefixos: _feature/_ ou _enhancement/_ ou _fix/_ 
+Crie uma branch com um dos prefixos: _feature/_ , _enhancement/_ ou _fix/_ 
 
 Ex: 
 
@@ -51,7 +51,7 @@ Ex:
 - enhancement/descricao-api-version
 - fix/descricao-api-version
 
-**⚠️ IMPORTANTE! Branchs que não respeitam a convenção proposta acima não serão revisadas**
+**⚠️ IMPORTANTE! Branchs que não respeitarem a convenção proposta acima não serão revisadas**
 
 ### **Passo 2:**  
 
@@ -59,7 +59,7 @@ Abra o editor da api que deseja trabalha e acesso ```http://127.0.0.1:33201/?url
 
 ### **Passo 3:**  
 
-Após fazer as atualizações commit as mudanças e submeta uma Pull Request apontando para a branch **develop**
+Após fazer as atualizações, commit as mudanças e submeta um Pull Request apontando para a branch **develop**
 
 **🗒️ DICA! Faça commits pequenos e centrados na alteração que está propondo**
 
@@ -96,7 +96,7 @@ A tag _beta_ define que o endpoint da api está em aprimoramento e poderá sofre
 <span class="bkly-ref-small-stable-tag">stable</span>
 ```
 
-A tag _stable_ define o endpoint a api produto estável e não sofrerá alterações que geram breaking changes.
+A tag _stable_ define que o endpoint da api é estável e não sofrerá alterações que geram breaking changes.
 
 ---
 
@@ -106,7 +106,7 @@ A tag _stable_ define o endpoint a api produto estável e não sofrerá alteraç
 <span class="bkly-ref-small-deprecated-tag">deprecated</span>
 ```
 
-A tag _deprecated_ define o endpoint da api está depreciado e é substituído por outro endpoint.
+A tag _deprecated_ define que o endpoint da api está obsoleto e foi substituído por outro.
 
 ---
 
@@ -120,9 +120,9 @@ A tag _scope_ define qual é o scope requerido no token para acessar a api.
 
 ---
 
-## Sistema de verão
+## Sistema de versão
 
-O Bankly faz forte uso do sistemas de versão semantico, no entanto, na API Pública, somente exibimos e requerimos que seja informado apenas o major da API, através do header ```api-version```.
+O Bankly faz forte uso do sistema de versão semântico, no entanto, na API Pública, somente exibimos e requeremos que seja informado o major da API, através do header ```api-version```.
 
 # Referências
 
@@ -133,11 +133,3 @@ O Bankly faz forte uso do sistemas de versão semantico, no entanto, na API Púb
 [Fundamentos para sistemas com arquiteturas REST](https://arquiteturadesoftware.online/capitulos/capitulo-09)
 
 [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR)
-
-
-
-
-
-
-
-
