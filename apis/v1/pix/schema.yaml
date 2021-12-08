@@ -370,7 +370,7 @@ paths:
     post:
       tags:
         - Pagamentos Instantâneos
-      summary: Transferência pix cashout
+      summary: Transferência de pix cash-out
       description: IMPORTANTE! É necessário ter conta aberta.
       operationId: CreatePixCashOutTransactionAsync
       parameters:
@@ -436,7 +436,7 @@ paths:
     post:
       tags:
         - Pagamentos Instantâneos
-      summary: Devolução de pix cashout.
+      summary: Devolução de pix cash-out.
       description: IMPORTANTE! É necessário que a transação tenha acontecido dentro dos últimos 90 dias.
       operationId: CreateRefundAsync
       parameters:
@@ -502,7 +502,7 @@ paths:
     get:
       tags:
         - Pagamentos Instantâneos
-      summary: Consulta de pix cashout
+      summary: Consulta de pix cash-out
       description: É necessário ter um AuthenticationCode válido
       operationId: GetByAuthenticationCodeAsync
       parameters:
@@ -625,6 +625,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Deve informar o número do documento do cliente que solicita a leitura.
+          required: true
+          schema:
+            type: string    
       requestBody:
         content:
           application/json:
