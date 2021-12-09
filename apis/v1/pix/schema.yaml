@@ -80,7 +80,7 @@ paths:
       summary: Cadastro de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>É possível vincular até 5 chaves para contas com titular pessoa física e 20 chaves com titular pessoa jurídica.</p>
+          <p>Permite vincular até 5 chaves para contas com titular pessoa física e 20 chaves com titular pessoa jurídica.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
         </div>
           
@@ -274,7 +274,7 @@ paths:
       summary: Transferência Pix cash-out
       description: |
         <div class="bkly-ref-description">
-          <p>IMPORTANTE! Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
+          <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreatePixCashOutTransactionAsync
@@ -344,7 +344,7 @@ paths:
       summary: Devolução de pix cash-out
       description: |
         <div class="bkly-ref-description">
-          <p> IMPORTANTE! Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreateRefundAsync
