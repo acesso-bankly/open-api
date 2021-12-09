@@ -53,19 +53,23 @@ paths:
                 description:
                   type: string
               required:
-              - amount
-              
-      responses: 
-        '202':
-          description: Ted aceito com sucesso.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  authenticationCode:
-                    type: string
-                    description: Código para consulta da transação
+              - amount              
+      responses:
+        '200':
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     get:
       tags:
         - Operações via TED
@@ -301,7 +305,20 @@ components:
         - name
         - accountType
         - bankCode
-        
+
+    AccountDetailedResponse:
+      type: object
+      properties:
+        balance:
+          $ref: '#/components/schemas/SummarizedBalance'
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        branch:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+        number:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
+      additionalProperties: false
+
   securitySchemes:
     Bearer:
       type: http
