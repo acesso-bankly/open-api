@@ -272,7 +272,11 @@ paths:
       tags:
         - Pagamentos instantâneos
       summary: Transferência Pix cash-out
-      description: IMPORTANTE! É necessário ter conta aberta.
+      description: |
+        <div class="bkly-ref-description">
+          <p>IMPORTANTE! Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+        </div>
       operationId: CreatePixCashOutTransactionAsync
       parameters:
         - name: api-version
@@ -336,11 +340,11 @@ paths:
   /pix/cash-out:refund:
     post:
       tags:
-        - Pagamentos Instantâneos
+        - Pagamentos instantâneos
       summary: Devolução de pix cash-out
       description: |
         <div class="bkly-ref-description">
-          <p> IMPORTANTE! É necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <p> IMPORTANTE! Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreateRefundAsync
@@ -406,7 +410,7 @@ paths:
   /pix/cash-out/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
     get:
       tags:
-        - Pagamentos Instantâneos
+        - Pagamentos instantâneos
       summary: Consulta de pix cash-out
       description: |
         <div class="bkly-ref-description">
