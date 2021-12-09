@@ -267,120 +267,6 @@ paths:
                 type: string
       security:
         - Bearer: []
-  /pix/cash-in:
-    post:
-      tags:
-        - Pagamentos instantâneos
-      summary: Efetivação de depósito em conta
-      operationId: DepositAsync
-      parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ValidationAccountMakeTransferCashInRequest'
-      responses:
-        '202':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MakePixCashInTransferResponse'
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationAccountMakeTransferCashInResponse'
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationAccountMakeTransferCashInResponse'
-      security:
-        - Bearer: []
-  /pix/{endToEndId}/cash-in:refund:
-    post:
-      tags:
-        - Pagamentos instantâneos
-      summary: Efetivação de devolução de crédito em conta
-      operationId: RefundAsync
-      parameters:
-        - name: endToEndId
-          in: path
-          required: true
-          schema:
-            type: string
-            nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ValidationAccountMakeTransferCashInRequest'
-      responses:
-        '202':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MakePixCashInTransferResponse'
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationAccountMakeTransferCashInResponse'
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationAccountMakeTransferCashInResponse'
-      security:
-        - Bearer: []
   /pix/cash-out:
     post:
       tags:
@@ -451,8 +337,12 @@ paths:
     post:
       tags:
         - Pagamentos Instantâneos
-      summary: Devolução de pix cashout.
-      description: IMPORTANTE! É necessário que a transação tenha acontecido dentro dos últimos 90 dias.
+      summary: Devolução de pix cash-out
+      description: |
+        <div class="bkly-ref-description">
+          <p> IMPORTANTE! É necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+        </div>
       operationId: CreateRefundAsync
       parameters:
         - name: api-version
@@ -517,8 +407,12 @@ paths:
     get:
       tags:
         - Pagamentos Instantâneos
-      summary: Consulta de pix cashout
-      description: É necessário ter um AuthenticationCode válido
+      summary: Consulta de pix cash-out
+      description: |
+        <div class="bkly-ref-description">
+          <p> Para realizar a consulta de Pix cash-out, é necessário ter um AuthenticationCode válido.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span>
+        </div>
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - name: accountNumber
