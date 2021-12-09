@@ -78,13 +78,12 @@ paths:
       tags:
         - Diretório de chaves - DICT
       summary: Cadastro de chaves
-      description:
-          <div class="bkly-ref-description">
-          <p>É possível vincular até 5 chaves para contas com titular pessoa física e 20 chaves com titular pessoa jurídica.
-          </p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
+      description: |
+        <div class="bkly-ref-description">
+          <p>É possível vincular até 5 chaves para contas com titular pessoa física e 20 chaves com titular pessoa jurídica.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
         </div>
+          
       operationId: CreateEntryAsync
       parameters:
         - name: api-version
@@ -142,8 +141,8 @@ paths:
       tags:
         - Diretório de chaves - DICT
       summary: Consulta de vínculo de chave com uma conta
-      description: 
-      <div class="bkly-ref-description">
+      description: |
+        <div class="bkly-ref-description">
           <p>Informa os detalhes da conta vinculada a uma chave de endereçamento.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.read</span>
         </div>
@@ -213,9 +212,9 @@ paths:
     delete:
       tags:
         - Diretório de chaves - DICT
-      summary: Exclusão de chaves 
-      description: 
-      <div class="bkly-ref-description">
+      summary: Exclusão de chaves
+      description: |
+        <div class="bkly-ref-description">
           <p>Para excluir uma chave, ela não pode estar em um processo de reinvindicação. Caso esteja, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
@@ -273,11 +272,6 @@ paths:
       tags:
         - Pagamentos instantâneos
       summary: Efetivação de depósito em conta
-      description: 
-      <div class="bkly-ref-description">
-          <p>IMPORTANTE! É necessário ter conta aberta e chave cadastrada corretamente.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
-        </div>
       operationId: DepositAsync
       parameters:
         - name: api-version
@@ -332,11 +326,6 @@ paths:
       tags:
         - Pagamentos instantâneos
       summary: Efetivação de devolução de crédito em conta
-      description: 
-      <div class="bkly-ref-description">
-          <p>IMPORTANTE! É necessário ter conta aberta e chave cadastrada corretamente.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: </span>
-        </div>
       operationId: RefundAsync
       parameters:
         - name: endToEndId
