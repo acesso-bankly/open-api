@@ -546,6 +546,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Deve informar o número do documento do cliente que solicita a leitura.
+          required: true
+          schema:
+            type: string    
       requestBody:
         content:
           application/json:
