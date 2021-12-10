@@ -215,7 +215,7 @@ paths:
       summary: Exclusão de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>Para excluir uma chave, ela não pode estar em um processo de reinvindicação. Caso esteja, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
+          <p><b>Importante!</b> A chave não pode estar em um processo de reinvindicação. Caso esteja, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
       operationId: DeleteAsync
@@ -487,9 +487,13 @@ paths:
   /pix/qrcodes:
     post:
       tags:
-        - QRCodes
-      summary: Crie QRCodes estáticos.
-      description: É necessário ter uma chave no DICT registrada previamente.
+        - QR Codes
+      summary: Emissão de QR Codes estáticos
+      description: |
+        <div class="bkly-ref-description">
+          <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
+        </div>
       operationId: CreateStaticQRCodeAsync
       parameters:
         - name: api-version
@@ -527,9 +531,13 @@ paths:
   /pix/qrcodes/decode:
     post:
       tags:
-        - QRCodes
-      summary: Leitura de QRCodes estáticos e dinâmicos
-      description: O conteúdo do QRCode deve estar obrigatoriamente em formato base64.
+        - QR Codes
+      summary: Leitura de QR Codes estáticos e dinâmicos 
+      description: |
+        <div class="bkly-ref-description">
+          <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
+        </div>
       operationId: DecodeQRCodeAsync
       parameters:
         - name: api-version
@@ -574,7 +582,7 @@ components:
         - PHONE
         - EVP
       type: string
-      description: Tipo de Chave de endereçamento do dict
+      description: Tipo de Chave de endereçamento do DICT
     AddressingKey:
       type: object
       properties:
@@ -781,7 +789,7 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
           nullable: true
       additionalProperties: false
     PaymentOrderCreditMakeTransferCashIn:
@@ -892,7 +900,7 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
           nullable: true
       additionalProperties: false
     PixInitializationType:
@@ -954,7 +962,7 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
           nullable: true
       additionalProperties: false
     CreatePixCashOutTransactionResponse:
