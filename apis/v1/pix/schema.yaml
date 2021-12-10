@@ -271,7 +271,7 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Transferência Pix cash-out
+      summary: Transferência Pix cash-out manual
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
@@ -588,7 +588,7 @@ components:
         - PHONE
         - EVP
       type: string
-      description: Tipo de Chave de endereçamento do DICT
+      description: Tipo de chave de endereçamento do DICT
     AddressingKey:
       type: object
       properties:
