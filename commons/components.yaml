@@ -88,7 +88,7 @@ components:
         _Default: **0001**._
       required: true
       style: form
-      explode: false
+      explode: true
       schema:
         $ref: '#/components/schemas/BankBranch'
 
@@ -103,6 +103,17 @@ components:
       explode: true
       schema:
         $ref: '#/components/schemas/ResultLevel'
+
+    AccountNumberQuery:
+      name: account
+      in: query
+      description: |
+        Número da conta de pagamento.
+      required: true
+      style: form
+      explode: true
+      schema:
+        $ref: '#/components/schemas/AccountNumber'
 
   schemas:
 
