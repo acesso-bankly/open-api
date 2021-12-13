@@ -80,6 +80,18 @@ components:
       schema:
         $ref: '#/components/schemas/BankBranch'
 
+      BankBranchQuery:
+      name: branch
+      in: query
+      description: |
+        Agencia bancária.
+        _Default: **0001**._
+      required: true
+      style: simple
+      explode: false
+      schema:
+        $ref: '#/components/schemas/BankBranch'
+
     ResultLevel:
       name: resultLevel
       in: query
