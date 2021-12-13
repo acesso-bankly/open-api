@@ -87,7 +87,7 @@ components:
         Agencia bancária.
         _Default: **0001**._
       required: true
-      style: simple
+      style: form
       explode: false
       schema:
         $ref: '#/components/schemas/BankBranch'
