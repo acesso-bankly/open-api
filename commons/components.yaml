@@ -81,7 +81,7 @@ components:
         $ref: '#/components/schemas/BankBranch'
 
       BankBranchQuery:
-      name: branch
+      name: branchTeste
       in: query
       description: |
         Agencia bancária.
