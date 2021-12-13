@@ -294,19 +294,6 @@ components:
         - accountType
         - bankCode
 
-    AccountDetailedResponse:
-      type: object
-      properties:
-        balance:
-          $ref: '#/components/schemas/SummarizedBalance'
-        status:
-          $ref: '#/components/schemas/AccountStatus'
-        branch:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
-        number:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
-      additionalProperties: false
-
   securitySchemes:
     Bearer:
       type: http
