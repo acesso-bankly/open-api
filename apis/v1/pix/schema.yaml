@@ -948,6 +948,8 @@ components:
           type: string
           format: date-time
           readOnly: true
+      required: 
+        - amount
       additionalProperties: false
     DocumentType:
       enum:
