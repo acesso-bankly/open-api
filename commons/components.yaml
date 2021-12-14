@@ -169,8 +169,7 @@ components:
       minLength: 3
       maxLength: 13
 
-    BankBranch:
-      name: branch
+    BankBranch:      
       type: string
       minLength: 4
       maxLength: 4
