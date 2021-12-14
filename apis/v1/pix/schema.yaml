@@ -271,7 +271,7 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Transferência Pix cash-out manual
+      summary: Pix cash-out manual
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
@@ -289,7 +289,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePixCashOutTransactionRequest'
+              $ref: '#/components/schemas/CreatePixCashOutTransactionRequestManual'
       responses:
         '202':
           description: Success
@@ -301,7 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePixCashOutTransactionResponse'
+                $ref: '#/components/schemas/CreatePixCashOutTransactionResponseManual'
         '400':
           description: Há algum problema com a sua requisição.
           headers:
@@ -647,6 +647,44 @@ components:
         type:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
+    AccountSenderManual:
+      required:
+        - branch
+        - number
+        - account
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    AccountRecipientManual:
+      required:
+        - branch
+        - number
+        - account
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string  
+      additionalProperties: false
+    AccountResponseManual:
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string  
+      additionalProperties: false  
     CreateEntryRequest:
       required:
         - account
@@ -698,6 +736,13 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    BankPixRecipientManual:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+      additionalProperties: false  
     PaymentAccount:
       type: object
       properties:
@@ -886,6 +931,15 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    BankRequestRecipientManual:
+      type: object
+      properties:
+        ispb:
+            type: string
+            nullable: true
+      required:
+        - ispb
+      additionalProperties: false
     Document:
       type: object
       properties:
@@ -909,6 +963,45 @@ components:
           description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
           nullable: true
       additionalProperties: false
+    PersonRequestSenderManual:
+      required:
+        - documentNumber
+        - name
+        - account
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderManual'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
+          nullable: true
+      additionalProperties: false
+    PersonRequestRecipientManual:
+      required:
+        - documentNumber
+        - name
+        - account
+        - bank
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountRecipientManual'
+        bank:
+          $ref: '#/components/schemas/BankRequestRecipientManual'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
+      nullable: true
+      additionalProperties: false  
     PixInitializationType:
       enum:
         - Manual
@@ -916,7 +1009,9 @@ components:
         - StaticQrCode
         - DynamicQrCode
       type: string
-    CreatePixCashOutTransactionRequest:
+      required: 
+        - PixInitializationType
+    CreatePixCashOutTransactionRequestManual:
       type: object
       properties:
         correlationId:
@@ -930,26 +1025,21 @@ components:
           type: string
           nullable: true
         sender:
-          $ref: '#/components/schemas/PersonRequest'
+          $ref: '#/components/schemas/PersonRequestSenderManual'
         recipient:
-          $ref: '#/components/schemas/PersonRequest'
+          $ref: '#/components/schemas/PersonRequestRecipientManual'
         initializationType:
           $ref: '#/components/schemas/PixInitializationType'
-        addressKey:
-          type: string
-          nullable: true
-        receiverReconciliationId:
-          type: string
-          nullable: true
-        endToEndId:
-          type: string
-          nullable: true
         requestDatetime:
           type: string
           format: date-time
           readOnly: true
       required: 
         - amount
+        - description
+        - initializationType
+        - sender
+        - recipient
       additionalProperties: false
     DocumentType:
       enum:
@@ -973,6 +1063,37 @@ components:
           description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
           nullable: true
       additionalProperties: false
+    PixPersonSenderManual:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountResponseManual'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
+          nullable: true
+      additionalProperties: false
+
+    PixPersonRecipientManual:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountResponseManual'
+        bank:
+          $ref: '#/components/schemas/BankPixRecipientManual'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
+          nullable: true
+      additionalProperties: false
     CreatePixCashOutTransactionResponse:
       type: object
       properties:
@@ -986,6 +1107,23 @@ components:
           $ref: '#/components/schemas/PixPerson'
         recipient:
           $ref: '#/components/schemas/PixPerson'
+        authenticationCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CreatePixCashOutTransactionResponseManual:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+        sender:
+          $ref: '#/components/schemas/PixPersonSenderManual'
+        recipient:
+          $ref: '#/components/schemas/PixPersonRecipientManual'
         authenticationCode:
           type: string
           nullable: true
