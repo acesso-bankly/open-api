@@ -72,7 +72,8 @@ paths:
               schema:
                 type: string
       security:
-        - Bearer: []
+        - Bearer: []      
+
   /pix/entries:
     post:
       tags:
@@ -136,6 +137,7 @@ paths:
                 type: string
       security:
         - Bearer: []
+
   /pix/entries/{addressingKeyValue}:
     get:
       tags:
@@ -209,6 +211,7 @@ paths:
                 type: string
       security:
         - Bearer: []
+  
     delete:
       tags:
         - Diretório de chaves - DICT
@@ -267,11 +270,12 @@ paths:
                 type: string
       security:
         - Bearer: []
+        
   /pix/cash-out:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Pix cash-out manual
+      summary: Pix cash-out 
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
@@ -289,7 +293,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePixCashOutTransactionRequestManual'
+              $ref: '#/components/schemas/CreatePixCashOutTransactionRequest'
       responses:
         '202':
           description: Success
@@ -301,7 +305,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePixCashOutTransactionResponseManual'
+                $ref: '#/components/schemas/CreatePixCashOutTransactionResponse'
         '400':
           description: Há algum problema com a sua requisição.
           headers:
@@ -337,81 +341,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
-  /pix/cash-out-:
-    post:
-      tags:
-        - Pagamentos instantâneos
-      summary: Pix cash-out por chave
-      description: |
-        <div class="bkly-ref-description">
-          <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
-        </div>
-      operationId: CreatePixCashOutTransactionAsync
-      parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreatePixCashOutTransactionRequestKey'
-      responses:
-        '202':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatePixCashOutTransactionResponseKey'
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      security:
-        - Bearer: []      
+  
   /pix/cash-out:refund:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Devolução de pix cash-out
+      summary: Devolução de Pix cash-out
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
@@ -477,14 +412,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+        
   /pix/cash-out/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
     get:
       tags:
         - Pagamentos instantâneos
-      summary: Consulta de pix cash-out
+      summary: Consulta de Pix cash-out
       description: |
         <div class="bkly-ref-description">
-          <p> Para realizar a consulta de Pix cash-out, é necessário ter um AuthenticationCode válido.</p>
+          <p> Para realizar a consulta de Pix cash-out, é necessário ter um <b>AuthenticationCode</b> válido.</p>
           <span class="bkly-ref-small-beta-tag">beta</span>
         </div>
       operationId: GetByAuthenticationCodeAsync
@@ -554,6 +490,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+  
   /pix/qrcodes:
     post:
       tags:
@@ -597,12 +534,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
-        - Bearer: []
+        - Bearer: []      
+  
   /pix/qrcodes/decode:
     post:
       tags:
         - QR Codes
-      summary: Leitura de QR Codes estáticos e dinâmicos 
+      summary: Decodificação de QR Codes estáticos e dinâmicos 
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
@@ -618,7 +556,7 @@ paths:
             type: string
         - name: x-bkly-pix-user-id
           in: header
-          description: Deve informar o número do documento do cliente que solicita a leitura.
+          description: Deve informar o número do documento do cliente que solicita a leitura do QR Code.
           required: true
           schema:
             type: string    
@@ -658,7 +596,8 @@ components:
         - PHONE
         - EVP
       type: string
-      description: Tipo de chave de endereçamento do DICT
+      description: Tipo de chave de endereçamento do DICT.
+
     AddressingKey:
       type: object
       properties:
@@ -668,6 +607,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     ProblemDetails:
       type: object
       properties:
@@ -695,6 +635,7 @@ components:
           nullable: true
           readOnly: true
       additionalProperties: false
+    
     AccountType:
       enum:
         - CHECKING
@@ -702,6 +643,7 @@ components:
         - SAVINGS
         - PAYMENT
       type: string
+    
     Account:
       required:
         - branch
@@ -717,84 +659,60 @@ components:
         type:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
-    AccountSenderManual:
-      required:
-        - branch
-        - number
-        - account
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string
-      additionalProperties: false
-    AccountSenderKey:
-      required:
-        - branch
-        - number
-        - account
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1  
-          type: string
-      additionalProperties: false
-    AccountRecipientManual:
-      required:
-        - branch
-        - number
-        - account
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string  
-      additionalProperties: false
-    AccountResponseManual:
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string  
-      additionalProperties: false  
-    AccountResponseKey:
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string  
-      additionalProperties: false
+
     CreateEntryRequest:
       required:
-        - account
-        - addressingKey
+      - account
+      - addressingKey
+      type: object
+      properties:
+        addressingKey: 
+          $ref: '#/components/schemas/AddressingKey'
+        account: 
+          $ref: '#/components/schemas/Account'
+      additionalProperties: false
+
+    CreateEntryResponse:
       type: object
       properties:
         addressingKey:
           $ref: '#/components/schemas/AddressingKey'
         account:
-          $ref: '#/components/schemas/Account'
+          $ref: '#/components/schemas/PaymentAccount'
+        status:
+          $ref: '#/components/schemas/EntryStatus'
+        createdAt:
+          type: string
+          format: date-time
+        ownedAt:
+          type: string
+          format: date-time
       additionalProperties: false
-    HolderType:
+      
+    PaymentAccount:
+      type: object
+      properties:
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/AccountType'
+        holder:
+          $ref: '#/components/schemas/Holder'
+        bank:
+          $ref: '#/components/schemas/Bank'
+      additionalProperties: false
+
+    EntryStatus:
       enum:
-        - CUSTOMER
-        - BUSINESS
+        - OWNED
+        - EXCLUDED
+        - LOCKED_BY_CLAIM
       type: string
+   
     Holder:
       type: object
       properties:
@@ -814,9 +732,16 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa.
           nullable: true
       additionalProperties: false
+    
+    HolderType:
+      enum:
+        - CUSTOMER
+        - BUSINESS
+      type: string
+
     Bank:
       type: object
       properties:
@@ -830,74 +755,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    BankPixRecipientManual:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-      additionalProperties: false  
-    BankPixRecipientKey:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-        compe:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PaymentAccount:
-      type: object
-      properties:
-        branch:
-          type: string
-          nullable: true
-        number:
-          type: string
-          nullable: true
-        type:
-          $ref: '#/components/schemas/AccountType'
-        holder:
-          $ref: '#/components/schemas/Holder'
-        bank:
-          $ref: '#/components/schemas/Bank'
-      additionalProperties: false
-    EntryStatus:
-      enum:
-        - OWNED
-        - EXCLUDED
-        - LOCKED_BY_CLAIM
-      type: string
-    CreateEntryResponse:
-      type: object
-      properties:
-        addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
-        account:
-          $ref: '#/components/schemas/PaymentAccount'
-        status:
-          $ref: '#/components/schemas/EntryStatus'
-        createdAt:
-          type: string
-          format: date-time
-        ownedAt:
-          type: string
-          format: date-time
-      additionalProperties: false
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
-      additionalProperties: false
+    
     ErrorResponse:
       type: object
       properties:
@@ -913,6 +771,18 @@ components:
             $ref: '#/components/schemas/Error'
           nullable: true
       additionalProperties: false
+    
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+
     GetEntryResponse:
       type: object
       properties:
@@ -932,13 +802,127 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    PersonMakeTransferCashIn:
+    
+    CreatePixCashOutTransactionRequest:
       type: object
       properties:
-        holderType:
-          $ref: '#/components/schemas/HolderType'
+        correlationId:
+          type: string
+          nullable: true
+          readOnly: true
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+        sender:
+          $ref: '#/components/schemas/PersonRequestSender'
+        recipient:
+          $ref: '#/components/schemas/PersonRequestRecipient'
+        initializationType:
+          $ref: '#/components/schemas/PixInitializationType'
+        endToEndId:
+          type: string
+          nullable: true
+          description: Campo obrigatório para cash-out por <b>chave Pix</b> e <b>Pix QR Code</b>. Só deve ser preenchido nesses casos.
+        requestDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+      required: 
+        - amount
+        - description
+        - sender
+        - initializationType
+      additionalProperties: false  
+         
+    CreatePixCashOutTransactionResponse:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+        sender:
+          $ref: '#/components/schemas/PixPersonSender'
+        recipient:
+          $ref: '#/components/schemas/PixPersonRecipient'
+        authenticationCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+      
+    PersonRequestSender:
+      type: object
+      properties:
         account:
-          $ref: '#/components/schemas/Account'
+          $ref: '#/components/schemas/AccountSender'
+        bank:
+          $ref: '#/components/schemas/BankRequestSender'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br />nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+      required:
+        - documentNumber
+        - name
+        - account
+
+    PersonRequestRecipient:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountRecipient'
+        bank:
+          $ref: '#/components/schemas/BankRequestRecipient'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).<br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta. Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa. <br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          nullable: true
+      additionalProperties: false
+  
+    PixInitializationType:
+      enum:
+        - Manual
+        - Key
+        - StaticQrCode
+        - DynamicQrCode
+      type: string
+      
+    PixPersonSender:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderResponse'
+        bank:
+          $ref: '#/components/schemas/BankSenderResponse'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+    
+    PixPerson:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderResponse'
         bank:
           $ref: '#/components/schemas/Bank'
         documentNumber:
@@ -947,85 +931,103 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
       additionalProperties: false
-    PaymentOrderCreditMakeTransferCashIn:
+      
+    PixPersonRecipient:
       type: object
       properties:
-        endToEndId:
+        account:
+          $ref: '#/components/schemas/AccountRecipientResponse'
+        bank:
+          $ref: '#/components/schemas/BankRecipientResponse'
+        documentNumber:
           type: string
+          description: Número do documento (CPF ou CNPJ).
           nullable: true
-        conciliationId:
+        name:
           type: string
-          nullable: true
-        key:
-          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
       additionalProperties: false
-    DevolutionCreditMakeTransferCashIn:
+    
+    AccountSender:
+      required:
+        - branch
+        - number
       type: object
       properties:
-        endToEndIdOriginal:
+        branch:
+          minLength: 1
           type: string
-          nullable: true
-        endToEndIdDevolution:
+        number:
+          minLength: 1
           type: string
-          nullable: true
-        devolutionCode:
-          type: string
-          nullable: true
-        devolutionReason:
-          type: string
-          nullable: true
       additionalProperties: false
-    ValidationAccountMakeTransferCashInRequest:
+      
+    AccountSenderResponse:
       type: object
       properties:
-        sender:
-          $ref: '#/components/schemas/PersonMakeTransferCashIn'
-        recipient:
-          $ref: '#/components/schemas/PersonMakeTransferCashIn'
-        amount:
-          type: number
-          format: double
-        description:
+        branch:
+          minLength: 1
           type: string
-          nullable: true
-        conciliationId:
+        number:
+          minLength: 1
           type: string
-          nullable: true
+        type:
+          $ref: '#/components/schemas/AccountType'
       additionalProperties: false
-    MakePixCashInTransferResponse:
+      
+    AccountRecipient:
       type: object
       properties:
-        pixTransactionId:
+        branch:
+          minLength: 1
           type: string
-          format: uuid
-        endToEndId:
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+        number:
+          minLength: 1
           type: string
-          nullable: true
-        createdAt:
-          type: string
-          format: date-time
-      additionalProperties: false
-    ValidationAccountMakeTransferCashInResponse:
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+    
+    AccountRecipientResponse:
       type: object
       properties:
-        result:
-          type: integer
-          format: int32
-        reason:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+        type:
+          $ref: '#/components/schemas/AccountType'
+          
+    BankRequestSender:
+      type: object
+      properties:
+        ispb:
           type: string
           nullable: true
-        complementReason:
+          description: Campo obrigatório para cash-out por <b>chave Pix</b>. Só deve ser preenchido nesse caso.
+         
+    BankRequestRecipient:
+      type: object
+      properties:
+        ispb:
           type: string
           nullable: true
-        validationDate:
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+    
+    BankSenderResponse:
+      type: object
+      properties:
+        ispb:
           type: string
-          format: date-time
+          nullable: true
       additionalProperties: false
-    BankRequest:
+      
+    BankRecipientResponse:
       type: object
       properties:
         ispb:
@@ -1038,305 +1040,32 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    BankRequestRecipientManual:
-      type: object
-      properties:
-        ispb:
-            type: string
-            nullable: true
-      required:
-        - ispb
-      additionalProperties: false
-    BankRequestSenderKey:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-      required:
-        - ispb
-      additionalProperties: false
-    BankResponseSenderKey:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-      additionalProperties: false
-    Document:
-      type: object
-      properties:
-        value:
-          type: string
-          nullable: true
-      additionalProperties: false
-    PersonRequest:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/Account'
-        bank:
-          $ref: '#/components/schemas/BankRequest'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PersonRequestSenderManual:
-      required:
-        - documentNumber
-        - name
-        - account
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountSenderManual'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PersonRequestSenderKey:
-      required:
-        - documentNumber
-        - name
-        - account
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountSenderKey'
-        bank:
-          $ref: '#/components/schemas/BankRequestSenderKey'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PersonRequestRecipientManual:
-      required:
-        - documentNumber
-        - name
-        - account
-        - bank
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountRecipientManual'
-        bank:
-          $ref: '#/components/schemas/BankRequestRecipientManual'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-      nullable: true
-      additionalProperties: false  
-    PixInitializationType:
-      enum:
-        - Manual
-        - Key
-        - StaticQrCode
-        - DynamicQrCode
-      type: string
-      required: 
-        - PixInitializationType
-    CreatePixCashOutTransactionRequestManual:
+    
+    CreatePixRefundRequest:
       type: object
       properties:
         correlationId:
           type: string
           nullable: true
           readOnly: true
-        amount:
-          type: number
-          format: double
-        description:
-          type: string
-          nullable: true
-        sender:
-          $ref: '#/components/schemas/PersonRequestSenderManual'
-        recipient:
-          $ref: '#/components/schemas/PersonRequestRecipientManual'
-        initializationType:
-          $ref: '#/components/schemas/PixInitializationType'
-        requestDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-      required: 
-        - amount
-        - description
-        - initializationType
-        - sender
-        - recipient
-      additionalProperties: false
-    CreatePixCashOutTransactionRequestKey:
-      type: object
-      properties:
-        correlationId:
-          type: string
-          nullable: true
-          readOnly: true
-        amount:
-          type: number
-          format: double
-        description:
-          type: string
-          nullable: true
-        sender:
-          $ref: '#/components/schemas/PersonRequestSenderKey'
-        recipient:
-          $ref: '#/components/schemas/PersonRequestRecipient'
-          type: object
-          description: "Obrigatório apenas para Pix cash-out manual"
-        initializationType:
-          $ref: '#/components/schemas/PixInitializationType'
-        endToEndId:
-          type: string
-          nullable: true
-        requestDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-      required: 
-        - amount
-        - description
-        - initializationType
-        - sender
-        - endToEndId
-      additionalProperties: false
-    DocumentType:
-      enum:
-        - UNDEFINED
-        - CPF
-        - CNPJ
-      type: string
-    PixPerson:
-      type: object
-      properties:
         account:
-          $ref: '#/components/schemas/Account'
-        bank:
-          $ref: '#/components/schemas/Bank'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PixPersonSenderManual:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountResponseManual'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PixPersonSenderKey:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountResponseKey'
-        bank:
-          $ref: '#/components/schemas/BankResponseSenderKey'  
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PixPersonRecipientManual:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountResponseManual'
-        bank:
-          $ref: '#/components/schemas/BankPixRecipientManual'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    PixPersonRecipientKey:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountResponseKey'
-        bank:
-          $ref: '#/components/schemas/BankPixRecipientKey'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa."
-          nullable: true
-      additionalProperties: false
-    CreatePixCashOutTransactionResponse:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-        description:
-          type: string
-          nullable: true
-        sender:
-          $ref: '#/components/schemas/PixPerson'
-        recipient:
-          $ref: '#/components/schemas/PixPerson'
+          $ref: '#/components/schemas/AccountSenderResponse'
         authenticationCode:
           type: string
-          nullable: true
-      additionalProperties: false
-    CreatePixCashOutTransactionResponseManual:
-      type: object
-      properties:
+          format: uuid
         amount:
           type: number
           format: double
+        refundCode:
+          $ref: '#/components/schemas/RefundCode'
+        refundReason:
+          type: string
+          nullable: true
         description:
           type: string
           nullable: true
-        sender:
-          $ref: '#/components/schemas/PixPersonSenderManual'
-        recipient:
-          $ref: '#/components/schemas/PixPersonRecipientManual'
-        authenticationCode:
-          type: string
-          nullable: true
       additionalProperties: false
+    
     RefundCode:
       enum:
         - AM05
@@ -1353,70 +1082,7 @@ components:
         - NARR
         - SL02
       type: string
-    CreatePixCashOutTransactionResponseKey: 
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-        withdrawalAmount:
-          type: number
-          format: double
-        changeAmount:
-          type: number
-          format: double
-        description:
-          type: string
-          nullable: true
-        sender:
-          $ref: '#/components/schemas/PixPersonSenderKey'
-        recipient:
-          $ref: '#/components/schemas/PixPersonRecipientKey'
-        authenticationCode:
-          type: string
-          nullable: true
-      additionalProperties: false    
-    CreatePixRefundRequest:
-      type: object
-      properties:
-        correlationId:
-          type: string
-          nullable: true
-          readOnly: true
-        account:
-          $ref: '#/components/schemas/Account'
-        authenticationCode:
-          type: string
-          format: uuid
-        amount:
-          type: number
-          format: double
-        refundCode:
-          $ref: '#/components/schemas/RefundCode'
-        refundReason:
-          type: string
-          nullable: true
-        description:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ChannelResponse:
-      enum:
-        - INTERNAL
-        - EXTERNAL
-      type: string
-    PixTransferStatusResponse:
-      enum:
-        - IN_PROCESS
-        - DONE
-        - UNDONE
-        - CANCELED
-      type: string
-    PixTransferTypeResponse:
-      enum:
-        - CASH_OUT
-        - REFUND
-      type: string
+      
     PixTransferResponse:
       type: object
       properties:
@@ -1461,16 +1127,27 @@ components:
           format: date-time
           nullable: true
       additionalProperties: false
-    Location:
-      type: object
-      properties:
-        city:
-          type: string
-          nullable: true
-        zipCode:
-          type: string
-          nullable: true
-      additionalProperties: false
+    
+    ChannelResponse:
+      enum:
+        - INTERNAL
+        - EXTERNAL
+      type: string
+    
+    PixTransferStatusResponse:
+      enum:
+        - IN_PROCESS
+        - DONE
+        - UNDONE
+        - CANCELED
+      type: string
+    
+    PixTransferTypeResponse:
+      enum:
+        - CASH_OUT
+        - REFUND
+      type: string
+      
     CreateStaticQRCodeRequest:
       required:
         - addressingKey
@@ -1498,6 +1175,18 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+      
+    Location:
+      type: object
+      properties:
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
     DecodeQRCodeRequest:
       type: object
       properties:
@@ -1505,7 +1194,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-  
+      
   securitySchemes:
     Bearer:
       type: http
