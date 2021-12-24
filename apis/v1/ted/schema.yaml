@@ -3,22 +3,307 @@ info:
   version: 1.0.0
   title: TED
   description: >-
-    Realize transferencias de valores através do canal de pagamentos TED. Consulte também
-    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
-    sobre os fluxos de negócio.
+    Realize transferencias de valores através do canal de pagamentos TED.
+    Consulte também nossa [documentação](https://bankly.readme.io/v1.0/docs/)
+    para mais detalhes sobre os fluxos de negócio.
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
-
-paths: {}
-
+paths:
+  /fund-transfers:
+    post:
+      tags:
+        - Operações via TED
+      summary: Transferência via TED
+      description: |
+        <div class="bkly-ref-description">
+          <p>Transfira valores monetários de forma segura e rápida.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.create</span>
+        </div>  
+      parameters:
+        - in: header
+          name: x-correlation-id
+          required: true
+          description: Guid para correlacionar o request.
+          schema:
+            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'     
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                sender:
+                  $ref: '#/components/schemas/sender'
+                recipient:
+                  $ref: '#/components/schemas/recipient'
+                description:
+                  type: string         
+              required:
+              - amount              
+      responses:
+        '202':
+          description: Ted aceito com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authenticationCode:
+                    type: string
+                    description: Código para consulta da transação
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+    get:
+      tags:
+        - Operações via TED
+      summary: Consulta por conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Retornamos todas as operações TED realizadas na conta informada</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
+        </div>  
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BankBranchQuery'          
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumberQuery'          
+        - in: query 
+          name: pageSize
+          description: Quantidade de itens para retornar a consulta
+          schema:
+            type : integer
+        - in: query 
+          name: nextPage
+          description: Token identificador da próxima página solicitada.
+          schema:
+            type : integer
+        - in: header
+          name: x-correlation-id
+          description: Guid para correlacionar o request.
+          required: true
+          schema:
+            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Retorna todas as transações do tipo TED feitas pela conta informada
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  nextPage:
+                    type: string
+                    description: Valor retornado apenas quando é usado o campo pageSize, e ainda existem dados não apresentados
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        companyKey:
+                          type: string
+                        authenticationCode:
+                          type: string
+                        amount:
+                          type: number
+                          format: double
+                          example: 20.55
+                        description:
+                          type: string
+                        correlationId:
+                          type: string
+                        sender:
+                          $ref: '#/components/schemas/holderComplete'
+                        recipient:
+                          $ref: '#/components/schemas/holderComplete'
+                        channel:
+                          type: string
+                        status:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'                  
+  /fund-transfers/{authenticationCode}:
+    get:
+      tags:
+        - Operações via TED
+      summary: Consulta por código de autenticação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Retornamos a operação TED referente ao código de autenticação informado</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
+        </div>  
+      parameters:
+        - in: path 
+          name: authenticationCode
+          description: Informação retornada ao efetuar transferência via TED.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: branch
+          description: Agência da conta da qual se deseja obter os detalhes da transferência.
+          required: true
+          schema:
+            type : string
+        - in: query 
+          name: account
+          description: Conta da qual se deseja obter o detalhe de transferência.
+          required: true
+          schema:
+            type : string
+        - in: header
+          name: x-correlation-id
+          description: Guid para correlacionar o request.
+          required: true
+          schema:
+            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Retorna a transação do tipo TED referente ao authenticationCode informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companyKey:
+                    type: string
+                  authenticationCode:
+                    type: string
+                  amount:
+                    type: number
+                    format: double
+                    example: 20.55
+                  description:
+                    type: string
+                  correlationId:
+                    type: string
+                  sender:
+                    $ref: '#/components/schemas/holderComplete'
+                  recipient:
+                    $ref: '#/components/schemas/holderComplete'
+                  channel:
+                    type: string
+                  status:
+                    type: string
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'               
+                     
 security:
   - Bearer: []
+components:
+  schemas:
 
-components: {}
+    sender:
+      type: object
+      properties:
+        document:
+          type: string
+        name:
+          type: string        
+        branch:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+        account:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
+      additionalProperties: false
+        
+    holderComplete:
+      type: object
+      properties:
+        document:
+          type: string
+        name:
+          type: string
+        account:
+          $ref: '#/components/schemas/account'
+          
+    account:
+      type: object
+      properties:
+        branch:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+        number:
+          type: string
+        bank:
+          $ref: '#/components/schemas/bank'
+          
+    bank:
+      type: object
+      properties:
+        ispb:
+          type: string
+        name:
+          type: string
+        compe:
+          type: string
   
+    recipient:
+      type: object
+      properties:
+        accountType:
+          type: string
+        document:
+          type: string
+        bankCode:
+          type: string
+        branch:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+        account:
+          type: string
+        name:
+          type: string
+      required:  
+        - branch
+        - account
+        - document
+        - name
+        - accountType
+        - bankCode
+
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+      bearerFormat: JWT
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
   samples-enabled: true
   samples-languages:
     - curl
+

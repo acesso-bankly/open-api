@@ -80,6 +80,18 @@ components:
       schema:
         $ref: '#/components/schemas/BankBranch'
 
+    BankBranchQuery:
+      name: branch
+      in: query
+      description: |
+        Agencia bancária.
+        _Default: **0001**._
+      required: true
+      style: form
+      explode: true
+      schema:
+        $ref: '#/components/schemas/BankBranch'
+
     ResultLevel:
       name: resultLevel
       in: query
@@ -91,6 +103,17 @@ components:
       explode: true
       schema:
         $ref: '#/components/schemas/ResultLevel'
+
+    AccountNumberQuery:
+      name: account
+      in: query
+      description: |
+        Número da conta de pagamento.
+      required: true
+      style: form
+      explode: true
+      schema:
+        $ref: '#/components/schemas/AccountNumber'
 
   schemas:
 
@@ -146,7 +169,7 @@ components:
       minLength: 3
       maxLength: 13
 
-    BankBranch:
+    BankBranch:      
       type: string
       minLength: 4
       maxLength: 4
