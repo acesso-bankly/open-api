@@ -1,0 +1,373 @@
+openapi: 3.0.0
+info:
+  title: Limite transacionais
+  description: Na sessão  API de Limites transacionais você encontra serviços que
+    te auxiliam a fazer todo o processo de gestão de limites do usuário. Disponibilizamos
+    um endpoint para consultar o limite por determinada feature e um conjunto de
+    endpoints para gestão do limite máximo configurado pelo usuário.
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: https://api.sandbox.bankly.com.br
+paths:
+   /api/holders/{documentNumber}/limits/{limitType}/features/{featureName}:
+    get:
+      tags: - Limites
+      summary: Consulta de limite por feature
+      description: Traz as configurações de limites por feature.
+      operationId: HolderController_getLimits
+      parameters:
+      - name: documentNumber
+        required: true
+        in: path
+        description: Documento do cliente (CPF/CNPJ).
+        example: '12345678900'
+        schema:
+          type: string
+      - name: limitType
+        required: true
+        in: path
+        enumName: LimitType
+        schema:
+          type: string
+          enum:
+          - Undefined
+          - CashIn
+          - CashOut
+      - name: featureName
+        required: true
+        in: path
+        description: Funcionalidade do limite
+        examples:
+          Spi:
+            description: Transferência via Pix
+          Spb:
+            description: Transferência via Ted
+          Withdrawn:
+            description: Saque / Retirada de dinheiro
+          Card:
+            description: Compras com o cartão
+          PayBill:
+            description: Pagamento de conta
+        schema:
+          type: string
+      - name: authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: api-version
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetLimitsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - bearer: []
+  /api/holders/{documentNumber}/max-limits:
+    put:
+      tags: - Limites
+      summary: Atualizar meu limite máximo personalizado
+      description: Criar ou atualizar Limite Máximo definido pelo usuário.
+      operationId: HolderController_putMaximumLimit
+      parameters:
+      - name: documentNumber
+        required: true
+        in: path
+        description: Documento do cliente (CPF/CNPJ).
+        example: '12345678900'
+        schema:
+          type: string
+      - name: authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: api-version
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaximumLimitRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaximumLimitRequest'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - bearer: []
+    get:
+      tags: - Limites
+      summary: Obter meus limites máximos personalizados
+      description: Obter configurações de Limite Máximo
+      operationId: HolderController_getMaximumLimits
+      parameters:
+      - name: documentNumber
+        required: true
+        in: path
+        description: Documento do cliente (CPF/CNPJ).
+        example: '12345678900'
+        schema:
+          type: string
+      - name: featureName
+        required: false
+        in: query
+        description: Funcionalidade do limite
+        examples:
+          Spi:
+            description: Transferência via Pix
+          Spb:
+            description: Transferência via Ted
+          Withdrawn:
+            description: Saque / Retirada de dinheiro
+          Card:
+            description: Compras com o cartão
+          PayBill:
+            description: Pagamento de conta
+        schema:
+          type: string
+      - name: cycleType
+        required: false
+        in: query
+        description: Ciclo do limite
+        enumName: CycleType
+        example: Daily
+        schema:
+          enum:
+          - Undefined
+          - Transaction
+          - Daily
+          - Monthly
+          type: string
+      - name: levelType
+        required: false
+        in: query
+        description: Nível do limite
+        enumName: LevelType
+        example: Account
+        schema:
+          enum:
+          - Undefined
+          - Card
+          - Account
+          - Document
+          type: string
+      - name: authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: api-version
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaximumLimitResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+      security:
+      - bearer: []
+components:
+  schemas:
+    GetLimitsResponse:
+      type: object
+      properties:
+        cycle:
+          type: string
+          example: Daily
+        level:
+          type: string
+          example: Account
+        minAmount:
+          type: number
+          example: '999.99'
+        maxAmount:
+          type: number
+          example: '999.99'
+        amountToApply:
+          type: number
+          example: '999.99'
+        maxQuantity:
+          type: number
+          example: '1'
+        usedAmount:
+          type: number
+          example: '999.99'
+        usedQuantity:
+          type: number
+          example: '1'
+      required:
+      - cycle
+      - level
+      - minAmount
+      - maxAmount
+      - amountToApply
+      - maxQuantity
+      - usedAmount
+      - usedQuantity
+    ErrorModel:
+      type: object
+      properties:
+        code:
+          type: string
+        propertyName:
+          type: string
+        message:
+          type: array
+          items:
+            type: string
+      required:
+      - code
+      - propertyName
+      - message
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorModel'
+        reference:
+          type: string
+          description: Link para obter mais informações
+      required:
+      - errors
+      - reference
+    CycleType:
+      type: string
+      enum:
+      - Undefined
+      - Transaction
+      - Daily
+      - Monthly
+    LevelType:
+      type: string
+      enum:
+      - Undefined
+      - Card
+      - Account
+      - Document
+    MaximumLimitRequest:
+      type: object
+      properties:
+        featureName:
+          type: string
+          description: Funcionalidade do limite
+          example: SPI
+        cycleType:
+          description: Ciclo do limite
+          example: Daily
+          $ref: '#/components/schemas/CycleType'
+        levelType:
+          description: Nível do limite
+          example: Account
+          $ref: '#/components/schemas/LevelType'
+        amount:
+          type: number
+          description: Valor de Limite Máximo escolhido pelo usuário em decimal
+          example: '999.99'
+      required:
+      - featureName
+      - cycleType
+      - levelType
+      - amount
+    MaximumLimitResponse:
+      type: object
+      properties:
+        documentNumber:
+          type: string
+          example: '12345678900'
+        featureName:
+          type: string
+          example: SPI
+        cycleType:
+          example: Daily
+          $ref: '#/components/schemas/CycleType'
+        levelType:
+          example: Account
+          $ref: '#/components/schemas/LevelType'
+        amount:
+          type: number
+          example: 999.99
+      required:
+      - documentNumber
+      - featureName
+      - cycleType
+      - levelType
+      - amount
+  
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+      bearerFormat: JWT  
