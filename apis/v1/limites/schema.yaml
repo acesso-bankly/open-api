@@ -11,9 +11,10 @@ tags: []
 servers:
   - url: https://api.sandbox.bankly.com.br
 paths:
-   /api/holders/{documentNumber}/limits/{limitType}/features/{featureName}:
+  /api/holders/{documentNumber}/limits/{limitType}/features/{featureName}:
     get:
-      tags: - Limites
+      tags: 
+        - Limites
       summary: Consulta de limite por feature
       description: Traz as configurações de limites por feature.
       operationId: HolderController_getLimits
@@ -28,7 +29,6 @@ paths:
       - name: limitType
         required: true
         in: path
-        enumName: LimitType
         schema:
           type: string
           enum:
@@ -91,7 +91,8 @@ paths:
       - bearer: []
   /api/holders/{documentNumber}/max-limits:
     put:
-      tags: - Limites
+      tags: 
+        - Limites
       summary: Atualizar meu limite máximo personalizado
       description: Criar ou atualizar Limite Máximo definido pelo usuário.
       operationId: HolderController_putMaximumLimit
@@ -143,7 +144,8 @@ paths:
       security:
       - bearer: []
     get:
-      tags: - Limites
+      tags: 
+        - Limites
       summary: Obter meus limites máximos personalizados
       description: Obter configurações de Limite Máximo
       operationId: HolderController_getMaximumLimits
@@ -176,7 +178,6 @@ paths:
         required: false
         in: query
         description: Ciclo do limite
-        enumName: CycleType
         example: Daily
         schema:
           enum:
@@ -189,7 +190,6 @@ paths:
         required: false
         in: query
         description: Nível do limite
-        enumName: LevelType
         example: Account
         schema:
           enum:
