@@ -32,7 +32,7 @@ paths:
           required: true
           schema:
             type: string
-         - name: authorization
+        - name: authorization
           in: header 
           required: true
           schema:
