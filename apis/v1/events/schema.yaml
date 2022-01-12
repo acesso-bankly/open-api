@@ -1,376 +1,641 @@
 openapi: 3.0.1
 info:
-  title: Webhooks e Eventos
-  description: 'Registre, atualize, exclua e consulte webhooks de eventos.'
-  version: '1.0'
+  version: 1.0.0
+  title: Webhooks
+  description: >-
+    Registre, atualize, exclua e consulte webhooks de eventos.
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
 paths:
-  /webhooks:
+  /webhooks/configurations:
     post:
       tags:
-        - Configurações de webhooks
-      summary: Registre um novo webhook.
+        - Configurações dos webhooks
+      summary: Registro de um novo webhook
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um novo webhook para um evento bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Somente é possível registrar um webhook por evento."
-        }
-        [/block] 
-      operationId: RegisterWebhook
+          <p>Registre um novo webhook para um evento Bankly.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhooks.create</span>
+        </div>  
+      operationId: RegisterWebhookAsync
       parameters:
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/ApiVersion
+        - name: api-version
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebhookRegistrationRequest'
-      responses:
-        '201':
-          description: Recurso criado com sucesso
-          headers:
-            x-bkly-correlation-id:
-              $ref: http://localhost:3320/commons/components#/components/headers/CorrelationId
-            Location:
-              $ref: http://localhost:3320/commons/components#/components/headers/Location
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HookResponseSuccessResponse'
-              examples:
-                Webhook:
-                  $ref: '#/components/examples/Webhook'
+                "$ref": "#/components/schemas/WebhookRegistrationRequest"
+      responses:
+        '201':
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+            Location:
+              description: Localização do recurso recém-criado ou em análise.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HookResponseSuccessResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
         '409':
           $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-  '/webhooks/{id}':
     get:
       tags:
-        - Configurações de webhooks
-      summary: Obtenha as configuração de um webhook.
+        - Configurações dos webhooks
+      summary: Consulta de todas as configurações de webhooks
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha as configuração de um webhook vinculado a um evento bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>
-      operationId: GetWebhook
+          <p>Consulte todas as configurações registradas para os webhooks.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+        </div>  
+      operationId: SearchWebhookAsync
       parameters:
-        - $ref: '#/components/parameters/WebhookId'
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/ApiVersion
+        - name: status
+          in: query
+          schema:
+            "$ref": "#/components/schemas/WebhookStatus"
+        - name: page
+          in: query
+          schema:
+            minimum: 1
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            maximum: 100
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Recurso encontrado
           headers:
             x-bkly-correlation-id:
-              $ref: >-
-                http://localhost:3320/commons/components#/components/headers/CorrelationId
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HookResponseSuccessResponse'
-              examples:
-                Webhook:
-                  $ref: '#/components/examples/Webhook'              
+                "$ref": "#/components/schemas/WebhookSearchResponse"  
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /webhooks/configurations/{id}:
+    get:
+      tags:
+        - Configurações dos webhooks
+      summary: Consulta de configurações de webhook específico
+      description: |
+        <div class="bkly-ref-description">
+        <p>Realize a consulta das configurações de um webhook específico.</p> 
+        <span class="bkly-ref-small-beta-tag">beta</span>
+        </div>  
+      operationId: GetWebhookAsync
+      parameters:
+        - name: id
+          description: Valor do ID do webhook. Ele pode ser obtido na consulta de todas as configurações de webhooks.
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+            format: uuid
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/HookResponseSuccessResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     patch:
       tags:
-        - Configurações de webhooks
-      summary: Atualize as configurações de um webhook.
+          - Configurações dos webhooks
+      summary: Alteração da configuração
       description: |
         <div class="bkly-ref-description">
-          <p>Substitua a url, a private key e a public key de um webhook bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>
-      operationId: UpdateWebhook
+          <p>Altere a chave pública, a chave privada e/ou a URI do endpoint de um webhook Bankly.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhooks.update</span>
+        </div>  
+      operationId: UpdateWebhookAsync
       parameters:
-        - $ref: '#/components/parameters/WebhookId'
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/ApiVersion
+        - name: id
+          in: path
+          description: Valor do ID do webhook. Ele pode ser obtido na consulta de todas as configurações de webhooks.
+          required: true
+          schema: 
+            type: string
+            format: uuid
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebhookUpdateRequest'
+              "$ref": "#/components/schemas/WebhookUpdateRequest"
       responses:
         '200':
           description: Requisição foi processada com sucesso.
           headers:
             x-bkly-correlation-id:
-              $ref: >-
-                http://localhost:3320/commons/components#/components/headers/CorrelationId
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HookResponseSuccessResponse'
-              examples:
-                Webhook:
-                  $ref: '#/components/examples/Webhook'
+                "$ref": "#/components/schemas/HookResponseSuccessResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-    delete:
+    delete: 
       tags:
-        - Configurações de webhooks
-      summary: Exclua um webhook.
+        - Configurações dos webhooks
+      summary: Exclusão de configuração
       description: |
         <div class="bkly-ref-description">
-          <p>Exclua um webhook vinculado a um evento bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.delete</span>
-        </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Os eventos gerados após a deleção não poderão ser reprocessados para notificação."
-        }
-        [/block]
-      operationId: DeleteWebhook
+          <p>Realize a exclusão de uma configuração de webhook quando necessário.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhooks.delete</span>
+        </div>  
+      operationId: DeleteWebhookAsync
       parameters:
-        - $ref: '#/components/parameters/WebhookId'
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/ApiVersion
+        - name: id
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+            format: uuid
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
       responses:
         '204':
-          description: >-
-            Requisição foi processada com sucesso, mas não há conteúdo a ser
-            retornado.
+          description: A requisição foi processada com sucesso, mas não há conteúdo
+            a ser retornado.
           headers:
             x-bkly-correlation-id:
-              $ref: >-
-                http://localhost:3320/commons/components#/components/headers/CorrelationId
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /webhooks/processed-messages:
+    get:
+      tags:
+        - Configurações dos webhooks
+      summary: Mensagens enviadas 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Pesquise todos os eventos enviados por um webhook Bankly em um determinado período.</p> 
+            <span class="bkly-ref-small-beta-tag">beta</span> 
+        </div>  
+      operationId: SearchProcessedMessageAsync
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: state
+          in: query
+          schema:
+            "$ref": "#/components/schemas/ProcessedMessageState"
+        - name: eventName
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: context
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: page
+          in: query
+          schema:
+            minimum: 1
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            maximum: 100
+            minimum: 1
+            type: integer
+            format: int32
+        - name: api-version
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProcessedMessageSearchResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /webhooks/configurations/{id}/disable:
+    patch:
+      tags:
+        -  Configurações dos webhooks
+      summary: Desabilitar uma configuração
+      description: |
+       <div class="bkly-ref-description">
+          <p>Desabilite a configuração de um webhook vinculado a um evento Bankly quando necessário.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+        </div>  
+      operationId: DisableWebhookAsync
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+            format: uuid
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: A requisição foi processada com sucesso, mas não há conteúdo a ser retornado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /configurations/{id}/enable:
+    patch:
+      tags:
+        -  Configurações dos webhooks
+      summary: Habilitar uma configuração
+      description: |
+       <div class="bkly-ref-description">
+          <p>Habilite a configuração de um webhook vinculado a um evento Bankly.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+        </div>  
+      operationId: EnableWebhookAsync
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+            format: uuid
+        - name: api-version
+          in: header
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Requisição foi processada com sucesso, mas não há conteúdo
+            a ser retornado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
 components:
-  
-  parameters:
-  
-    WebhookId:
-      name: id
-      in: path
-      required: true
-      description: Identificador do webhook
-      schema:
-        $ref: '#/components/schemas/WebhookId'
-  
   schemas:
-    Error:
-      $ref: >-
-        http://localhost:3320/commons/components#/components/schemas/ErrorResponse
-    ErrorResponse:
-      $ref: 'http://localhost:3320/commons/components#/components/schemas/Error'
-    
-    WebhookId:
-      description: Identificador do webhook
-      type: integer
-      format: int32
-      
-    WebhookName:
-      description: Nome do webhook.
-      type: string
-      minLength: 3
-      maxLength: 36
-      
-    WebhookContext:
-      description: Contexto do evento associado ao webhook.
-      type: string
-      minLength: 3
-      maxLength: 24
-    
-    EventName:
-      description: Nome do evento associado ao webhook.
-      type: string
-      minLength: 10
-      maxLength: 128
-      
-    URI:
-      description: URL do recurso.
-      type: string
-      maxLength: 256
-
-    WebhookURI:
-      description: URL (POST) para envio da notificação.
-      type: string
-      maxLength: 256
-
-    PublicKey:
-      description: Chave publica para assinatura HMAC.
-      type: string
-      minLength: 24
-      maxLength: 36
-      
-    PrivateKey:
-      description: Chave privada para assinatura HMAC.
-      type: string
-      minLength: 32
-      maxLength: 512
-  
     WebhookRegistrationRequest:
       required:
-        - name
         - context
         - eventName
-        - uri
-        - publicKey
+        - name
         - privateKey
+        - publicKey
+        - uri
       type: object
       properties:
         name:
-          $ref: '#/components/schemas/WebhookName'
+          description: Nome que o assinante deseja dar para identificar o evento. Esse nome é da escolha do parceiro.
+          maxLength: 50
+          minLength: 1
+          type: string
         context:
-          $ref: '#/components/schemas/WebhookContext'
+          description: Nome do contexto em que o evento está sendo criado. Por exemplo, Ted.
+          maxLength: 50
+          minLength: 1
+          type: string
         eventName:
-          $ref: '#/components/schemas/EventName'
+          description: Nome do evento que está sendo assinado. Por exemplo, PIX_CASH_IN_WAS_CLEARED.
+          maxLength: 150
+          minLength: 1
+          type: string
         uri:
-          $ref: '#/components/schemas/WebhookURI'
+          description: URI de sua API para o recebimento dos eventos.
+          maxLength: 500
+          minLength: 1
+          type: string
         publicKey:
-          $ref: '#/components/schemas/PublicKey'
+          description: Chave aleatória gerada pelo parceiro e que será enviada pelo Bankly nos cabeçalhos dos eventos de webhook.
+          maxLength: 60
+          minLength: 1
+          type: string
         privateKey:
-          $ref: '#/components/schemas/PrivateKey'
-
-    WebhookUpdateRequest:
-      required:
-        - uri
-        - publicKey
-        - privateKey
+          description: Chave aleatória gerada pelo parceiro em base64, que somente o Bankly e o dono da chave conhecem.
+          maxLength: 2000
+          minLength: 1
+          type: string
+      additionalProperties: false
+    HookResponseSuccessResponse:
       type: object
       properties:
-        uri:
-          $ref: '#/components/schemas/WebhookURI'
-        publicKey:
-          $ref: '#/components/schemas/PublicKey'
-        privateKey:
-          $ref: '#/components/schemas/PrivateKey'
-      additionalProperties: false
-
+        data:
+          "$ref": "#/components/schemas/HookResponse"
+        links:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false  
     HookResponse:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebhookId'
+          type: string
+          format: uuid
         name:
-          $ref: '#/components/schemas/WebhookName'
+          type: string
+          nullable: true
         context:
-          $ref: '#/components/schemas/WebhookContext'
+          type: string
+          nullable: true
         eventName:
-          $ref: '#/components/schemas/EventName'
+          type: string
+          nullable: true
         uri:
-          $ref: '#/components/schemas/WebhookURI'
+          type: string
+          nullable: true
         publicKey:
-          $ref: '#/components/schemas/PublicKey'
-      additionalProperties: false
+          type: string
+          nullable: true
+      additionalProperties: false  
     Link:
-      description: link que identifica um possível estado do recurso ou entidade
       type: object
       properties:
         url:
-          $ref: '#/components/schemas/URI'
+          type: string
+          nullable: true
         rel:
           type: string
           nullable: true
         method:
           type: string
           nullable: true
-      additionalProperties: false
-
-    HookResponseSuccessResponse:
+      additionalProperties: false  
+    WebhookSearchResponse:
       type: object
       properties:
         data:
-          description: recurso ou entidade processado
-          $ref: '#/components/schemas/HookResponse'
-        links:
-          description: lista de links que indicam os estados do recurso ou entidade processado
           type: array
           items:
-            $ref: '#/components/schemas/Link'
+            "$ref": "#/components/schemas/WebhookSearchItemResponse"
+          nullable: true
+          readOnly: true
+    WebhookSearchItemResponse:
+      type: object
+      properties:
+        id:
+          description: Valor em UUID v4 que identifica o webhook criado. Esse valor será requerido para realizar outras ações relativas às configurações do webhook.
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        eventName:
+          type: string
+          nullable: true
+        context:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+        publicKey:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          "$ref": "#/components/schemas/WebhookStatus"
+      additionalProperties: false
+    WebhookStatus:
+      enum:
+        - Disabled
+        - Enabled
+      type: string
+    WebhookUpdateRequest:
+      required:
+        - privateKey
+        - publicKey
+        - uri
+      type: object
+      properties:
+        uri:
+          description: URI de sua API para o recebimento dos eventos.
+          maxLength: 500
+          minLength: 1
+          type: string
+        publicKey:
+          description: Chave enviada nos cabeçalhos dos eventos de webhook.
+          maxLength: 60
+          minLength: 1
+          type: string
+        privateKey:
+          description: Chave em base64 que somente o Bankly e o dono da chave conhecem.
+          maxLength: 2000
+          minLength: 1
+          type: string
+      additionalProperties: false 
+    ProcessedMessageState:
+      enum:
+        - Success
+        - Failed
+      type: string
+    ProcessedMessageSearchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ProcessedMessageSearchResponseItem"
+          nullable: true
+          readOnly: true
+        links:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Link"
           nullable: true
           readOnly: true
         meta:
-          description: metadados da requisição
           type: object
           additionalProperties:
             type: object
             additionalProperties: false
           nullable: true
       additionalProperties: false
-
-      
-  securitySchemes:
-    Bearer:
-      type: http
-      description: Inclua o token de autorização do tipo Bearer.
-      scheme: bearer
-      bearerFormat: JWT
-      
-  examples:
-    Webhook:
-      value:
-        data:
-          id: 1
-          name: webhook
-          context: Pix
-          eventName: PixCashinWasReceived
-          uri: https://notifications.yourdomain.com
-          publicKey: SGMzdNANYW23bHlXZWJob332
-        links:
-          - url: https://api.sandbox.bankly.com.br/webhooks/1
-            rel: get_webhook
-            method: GET
-          - url: https://api.sandbox.bankly.com.br/webhooks/1
-            rel: update_webhook
-            method: PATCH
-          - url: https://api.sandbox.bankly.com.br/webhooks/1
-            rel: delete_webhook
-            method: DELETE
-        meta:
-          requestedAt: '2021-10-19T02:30:23.000000Z'
-          responseAt: '2021-10-19T02:30:23.100000Z'
-      summary: Webhook configurado
-          
-security:
-  - Bearer: []
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
-  samples-enabled: true
-  samples-languages:
-    - curl
+    ProcessedMessageSearchResponseItem:
+      type: object
+      properties:
+        idempotencyKey:
+          type: string
+          format: uuid
+        state:
+          "$ref": "#/components/schemas/ProcessedMessageState"
+        destination:
+          type: string
+          nullable: true
+        sentDate:
+          type: string
+          format: date-time
+        eventName:
+          type: string
+          nullable: true
+        retryCount:
+          type: integer
+          format: int32
+        elapsedEventCapture:
+          type: string
+          format: date-span
+        elapsedHttpCall:
+          type: string
+          format: date-span
+        context:
+          type: string
+          nullable: true
+      additionalProperties: false
