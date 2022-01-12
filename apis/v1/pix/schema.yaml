@@ -16,7 +16,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Informa a lista de chaves de endereçamento vinculadas a uma conta de pagamento.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.account.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.account.read</span>
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
@@ -32,6 +32,11 @@ paths:
           required: true
           schema:
             type: string
+         - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado
@@ -93,6 +98,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -146,7 +156,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Informa os detalhes da conta vinculada a uma chave de endereçamento.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.read</span>
         </div>
       operationId: GetAsync
       parameters:
@@ -168,6 +178,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado
@@ -219,7 +234,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> A chave não pode estar em um processo de reinvindicação. Caso esteja, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
       operationId: DeleteAsync
       parameters:
@@ -235,6 +250,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '204':
           description: Recurso excluído com sucesso.
@@ -279,7 +299,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreatePixCashOutTransactionAsync
       parameters:
@@ -289,6 +309,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -360,6 +385,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -421,7 +451,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p> Para realizar a consulta de Pix cash-out, é necessário ter um <b>AuthenticationCode</b> válido.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.read</span>
         </div>
       operationId: GetByAuthenticationCodeAsync
       parameters:
@@ -443,6 +473,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Success
@@ -499,7 +534,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
         </div>
       operationId: CreateStaticQRCodeAsync
       parameters:
@@ -509,6 +544,11 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -544,7 +584,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
       operationId: DecodeQRCodeAsync
       parameters:
@@ -559,7 +599,12 @@ paths:
           description: Deve informar o número do documento do cliente que solicita a leitura do QR Code.
           required: true
           schema:
-            type: string    
+            type: string  
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string  
       requestBody:
         content:
           application/json:
