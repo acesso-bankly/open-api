@@ -41,9 +41,9 @@ jobs:
             ./apis/v1/paybill/schema.yaml
             ./apis/v1/events/schema.yaml
             ./apis/v1/helpers/schema.yaml
-
+            ./apis/v1/pix/schema.yaml
   publish:
-    if: ${{ success() && github.ref	== 'refs/heads/main' }}
+    if: ${{ success() && github.ref=='refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -57,39 +57,54 @@ jobs:
         with:
           find: ${{ env.COMPONENTS_LOCAL_URL }}
           replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
-          regex: false
-
-      - uses: readmeio/github-readme-sync@v2
-        name: Publish Auth API Reference to readme.io
-        with:
-          readme-oas-key: ${{ secrets.OAUTH_APIS_README_OAS_KEY }}
-          oas-file-path: './apis/v1/oauth/schema.yaml'
-          api-version: 'v1.0'
-          
-      - uses: readmeio/github-readme-sync@v2
-        name: Publish Documents API Reference to readme.io
-        with:
-          readme-oas-key: ${{ secrets.DOCUMENT_APIS_README_OAS_KEY }}
-          oas-file-path: './apis/v1/documents/schema.yaml'
-          api-version: 'v1.0'      
-
+          regex: false      
+      
       - uses: readmeio/github-readme-sync@v2
         name: Publish Holders API Reference to readme.io
         with:
           readme-oas-key: ${{ secrets.HOLDERS_APIS_README_OAS_KEY }}
           oas-file-path: './apis/v1/holders/schema.yaml'
-          api-version: 'v1.0'
+          api-version: 'v1'
 
       - uses: readmeio/github-readme-sync@v2
         name: Publish Accounts API Reference to readme.io
         with:
           readme-oas-key: ${{ secrets.ACCOUNTS_API_README_OAS_KEY }}
           oas-file-path: './apis/v1/accounts/schema.yaml'
-          api-version: 'v1.0'       
-      
+          api-version: 'v1'
+          
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish Auth API Reference to readme.io
+        with:
+          readme-oas-key: ${{ secrets.OAUTH_APIS_README_OAS_KEY }}
+          oas-file-path: './apis/v1/oauth/schema.yaml'
+          api-version: 'v1'
+          
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish Documents API Reference to readme.io
+        with:
+          readme-oas-key: ${{ secrets.DOCUMENT_APIS_README_OAS_KEY }}
+          oas-file-path: './apis/v1/documents/schema.yaml'
+          api-version: 'v1'
+          
       - uses: readmeio/github-readme-sync@v2
         name: Publish Events and Webhooks API Reference to readme.io
         with:
           readme-oas-key: ${{ secrets.EVENTS_API_README_OAS_KEY }}
           oas-file-path: './apis/v1/events/schema.yaml'
-          api-version: 'v1.0'    
+          api-version: 'v1'
+          
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish PIX API Reference to readme.io
+        with:
+          readme-oas-key: ${{ secrets.PIX_API_README_OAS_KEY }}
+          oas-file-path: './apis/v1/pix/schema.yaml'
+          api-version: 'v1'
+          
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish TED API Reference to readme.io
+        with:
+          readme-oas-key: ${{ secrets.TED_API_README_OAS_KEY }}
+          oas-file-path: './apis/v1/ted/schema.yaml'
+          api-version: 'v1'
+      
