@@ -255,11 +255,11 @@ paths:
   /webhooks/processed-messages:
     get:
       tags:
-        - Configurações dos webhooks
-      summary: Mensagens enviadas 
+        - Mensagens
+      summary: Mensagens processadas
       description: |
         <div class="bkly-ref-description">
-          <p>Pesquise todos os eventos enviados por um webhook Bankly em um determinado período.</p> 
+          <p>Pesquise todas as mensagens processadas por um webhook Bankly em um determinado período.</p> 
             <span class="bkly-ref-small-beta-tag">beta</span> 
         </div>  
       operationId: SearchProcessedMessageAsync
