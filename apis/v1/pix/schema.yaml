@@ -761,13 +761,16 @@ components:
     Holder:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/HolderType'
-        socialName:
+        addressingKey:
+          $ref: '#/components/schemas/AddressingKey'
+        account:
+          $ref: '#/components/schemas/PaymentAccount'
+        status:
+          $ref: '#/components/schemas/EntryStatus'
+        createdAt:
           type: string
-          description: "Nome pelo qual a pessoa deseja ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)\r\nEsse campo é retornado se foi previamente informado no durante o onboard, quando titular da conta está associado a um parceiro Bankly."
-          nullable: true
-        tradingName:
+          format: date-time
+        ownedAt:
           type: string
           description: Nome comercial (nome fantasia) da empresa. Esse campo é retornado apenas quando o Person é Pessoa Jurídica
           nullable: true
@@ -807,7 +810,7 @@ components:
         code:
           type: string
           nullable: true
-        message:
+        compe:
           type: string
           nullable: true
         errors:
