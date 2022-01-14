@@ -110,16 +110,8 @@ jobs:
           api-version: 'v0.05'
 
       - uses: readmeio/github-readme-sync@v2
-        name: Publish CARD API Reference to readme.io
-        with:
-          readme-oas-key: ${{ secrets.CARD_API_README_OAS_KEY_DEV }}
-          oas-file-path: './apis/v1/cards/schema.yaml'
-          api-version: 'v0.05'
-
-      - uses: readmeio/github-readme-sync@v2
         name: Publish Limits API Reference to readme.io
         with:
           readme-oas-key: ${{ secrets.LIMITS_API_README_OAS_KEY_DEV }}
           oas-file-path: './apis/v1/limites/schema.yaml'
           api-version: 'v0.05'
-      
