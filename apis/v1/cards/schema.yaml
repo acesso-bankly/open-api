@@ -1552,17 +1552,37 @@ paths:
             statusCode: 409
           '500':
             statusCode: 500 
-
-  /cards/{proxy}/nextStatus:
+            
+  /cards/{proxy}/transactions:
     get:
       tags:
-        - Status do cartão
-      summary: Consulta dos proximos status
-      description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
-      operationId: cardGetLots
+        - Consulta de transações
+      summary: Consulta de transações por cartão
+      description: Obtém as transações realizadas no cartão de acordo com os filtros informados. Obs. A diferença entre a data de início e fim deverá ter o máximo de sete dias, e o valor máximo permitido no parâmetro PageSize é de 100.
+      operationId: cardTransactionsByCard
       parameters:
         - name: proxy
           in: path
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: endDate
+          in: query
           required: true
           schema:
             type: string
@@ -1570,19 +1590,54 @@ paths:
         - $ref: "#components/parameters/authorization"
       responses:
         '200':
-          description: A solicitação é recebida e retorna os dados dos lotes.
+          description: Lista as transações pertecente ao cartão, além das propriedades referente a páginação da consulta.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/cardLotsResponse"
+                type: object
+                $ref: "#components/schemas/resultTransactionResponse"
+              examples:
+                response:
+                  value:
+                    - nextPage: "mkzjfhcnnhat84y583hguim49801"
+                      hasLastPage: true
+                      transactions: 
+                        [
+                          {
+                            account: {
+                              number: "000231",
+                              agency: "0001"
+                            },
+                            amount: {
+                              value: 138.54,
+                              local: 138.54,
+                              net: 138.54,
+                              iof: 0,
+                              markup: 0
+                            },
+                            merchant: {
+                              id: "207001540000011",
+                              name: "EC*MERCADOLIVRE",
+                              mcc: "0101",
+                              city: "SAO PAULO"
+                            },  
+                            authorizationCode: "823912",
+                            countryCode: "BR",
+                            currencyCode: "986",
+                            entryMode: "Chip",
+                            status: "TransactionHoldWasExpired",
+                            transactionTimestamp: "2020-09-24T17:21:39.8921566+00:00",
+                            transactionType: "Purchase"
+                          }
+                        ]
         '204':
-          description: Não foram encontrados lotes.              
+          description: Não há transações para o cartão fornecido.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -1595,7 +1650,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -1604,26 +1659,31 @@ paths:
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
-        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/transactions?startDate={startDate}&endDate={endDate}&pageSize={pageSize}&page={page}
         passthroughBehavior: when_no_match
         connectionType: VPC_LINK
         connectionId: m116y5
         httpMethod: GET
         type: http
         requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.query.startDate: method.request.query.startDate
+          integration.request.query.endDate: method.request.query.endDate
+          integration.request.query.page: method.request.query.page
+          integration.request.query.pageSize: method.request.query.pageSize
           integration.request.header.api-version: method.request.header.api-version
           integration.request.header.Authorization: method.request.header.Authorization
         responses:
-          '200':
-            statusCode: 200
+          '202':
+            statusCode: 202
           '204':
-            statusCode: 204      
+            statusCode: 204
           '400':
             statusCode: 400
           '401':
             statusCode: 401
           '500':
-            statusCode: 500            
+            statusCode: 500
 
 security:
   - Bearer: []
