@@ -1288,7 +1288,98 @@ paths:
             statusCode: 409
           '500':
             statusCode: 500
+            
+  /cards/{proxy}/activate:
+    patch:
+      tags:
+        - Status do cartão
+      summary: Ativação de cartão
+      description: Realiza a ativação do cartão pela primeira vez.
+      operationId: cardActivateCard
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/activateCardRequest"
+      responses:
+        '200':
+          description: Ativação foi realizada.
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                               { code: required, message: [ Activate Code must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Se o cartão não existir.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/activate
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: PATCH
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
   
+
+
 security:
   - Bearer: []
   
