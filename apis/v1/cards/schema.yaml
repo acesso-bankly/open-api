@@ -319,7 +319,122 @@ paths:
           '500':
             statusCode: 500
 
-  
+  /cards/{proxy}/duplicate:
+    post:
+      tags:
+        - Criação de cartão
+      summary: Crie uma segunda via de cartão
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente."
+        }
+        [/block]
+      operationId: createDuplicateCard
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createDuplicateCardRequest"
+      responses:
+        '202':
+          description: Cartão
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardBuildingResponse"
+              examples:
+                response:
+                  value:
+                    proxy: "2370021007715002820"
+                    activateCode: "A0DDDC0951D1"
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+        '409':
+            description: Criação em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/duplicate
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '406':
+            statusCode: 406
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
 security:
   - Bearer: []
   
