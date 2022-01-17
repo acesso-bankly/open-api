@@ -10,7 +10,6 @@ info:
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
 paths:
- 
   /cards/activatecode/{activationCode}:
     get:
       tags:
@@ -33,55 +32,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Lista com os cartões com o código de ativação informado.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/cardResponse"
-              examples:
-                response:
-                  value:
-                    - created: "2020-07-20T22:53:12"
-                      companyKey: "Acesso"
-                      documentNumber: "00000000000"
-                      activateCode: "A9991B2E491D"
-                      bankAgency: "0001"
-                      bankAccount: "0001"
-                      lastFourDigits: "4321"
-                      proxy: "22999903520114195"
-                      name: Jose da Silva
-                      alias: Meu Cartão
-                      cardType: Virtual
-                      status: InTransitLocked
-                      physicalBinds: 
-                        [{ proxy: "2300199994444111999", created: "2020-07-20T22:54:03" }]               
-                      virtualBind: 
-                        proxy: "22999903520114195"
-                        created: "2020-07-20T22:55:12" 
-                      allowContactless: true
-                      address:
-                        zipCode: "05402100"
-                        address: Avenida Rebouças
-                        number: "1368"
-                        neighborhood: Pinheiros
-                        complement: Em frente a Wizard
-                        city: São Paulo
-                        state: SP
-                        country: Brasil
-                      historyStatus:
-                        [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
-                      activatedAt: null
-                      lastUpdatedAt: "2020-07-20T22:55:12"
-                      isActivated: false
-                      isLocked: true
-                      isCanceled: false
-                      isBuilding: false
-                      isFirtual: true
-                      isPre: true
-                      isPos: false
+          description: Lista com os cartões com o código de ativação informado.          
         '204':
           description: Não há cartões criados para o código de ativação fornecido.
         '400':
