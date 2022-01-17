@@ -1553,7 +1553,7 @@ paths:
           '500':
             statusCode: 500 
 
-  /cards/{proxy}/nextStatus:
+  /cards/{teste}/nextStatus:
     get:
       tags:
         - Status do cartão
@@ -1561,7 +1561,7 @@ paths:
       description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
       operationId: cardGetLots
       parameters:
-        - name: proxy
+        - name: teste
           in: path
           required: true
           schema:
