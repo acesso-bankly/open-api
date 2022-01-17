@@ -983,6 +983,197 @@ paths:
           '500':
             statusCode: 500
 
+  /cards/{proxy}/pci:
+    post:
+      tags:
+        - Consulta de Cartões
+      summary: Dados de segurança do cartão
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtém os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: getDataPci
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/getDataPciRequest"
+      responses:
+        '200':
+          description: Dados de PCI do cartão.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/dataPciResponse"
+              examples:
+                response:
+                  value:
+                    cardNumber: "000000000000000"
+                    cvv: "000"
+                    expirationDate: 05/09
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Cartão não existente.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/pci
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+        '200':
+          statusCode: 200
+        '400':
+          statusCode: 400
+        '401':
+          statusCode: 401
+        '404':
+          statusCode: 404
+        '409':
+          statusCode: 409
+        '500':
+          statusCode: 500
+
+    /cards/{proxy}/password:
+    patch:
+      tags:
+        - Gestão de senha
+      summary: Alterar senha
+      description: Altera a senha do cartão.
+      operationId: cardChangeCardPassword
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/changeCardPasswordRequest"
+      responses:
+        '200':
+          description: Alteração de senha realizada.
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 6 characters. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Se o cartão não exisitir.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+        '500':
+            description:  Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/password
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: PATCH
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.authorization-token: method.request.header.authorization-token
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
 security:
   - Bearer: []
   
