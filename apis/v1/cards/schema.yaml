@@ -836,6 +836,153 @@ paths:
           '500':
             statusCode: 500
 
+  /cards/account/{account}:
+    get:
+      tags:
+        - Consulta de Cartões 
+      summary: Por conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha os cartões vinculados a uma conta de pagamentos.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: cardGetCardsByAccount
+      parameters:
+        - name: agency
+          in: query
+          required: false
+          description: Número de agência (4 dígitos)
+          schema:
+            type: string
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: documentNumber
+          in: query
+          required: false
+          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres)
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Lista com os cartões pertecente a conta.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/cardResponse"
+              examples:
+                response:
+                  value:
+                    - created: "2020-07-20T22:53:12"
+                      companyKey: "Acesso"
+                      documentNumber: "00000000000"
+                      activateCode: "A9991B2E491D"
+                      bankAgency: "0001"
+                      bankAccount: "0001"
+                      lastFourDigits: "4321"
+                      proxy: "22999903520114195"
+                      name: Jose da Silva
+                      alias: Meu Cartão
+                      cardType: Virtual
+                      status: InTransitLocked
+                      physicalBinds: 
+                        [{ proxy: "2300199994444111999", created: "2020-07-20T22:54:03" }]               
+                      virtualBind: 
+                        proxy: "22999903520114195"
+                        created: "2020-07-20T22:55:12" 
+                      allowContactless: true
+                      address:
+                        zipCode: "05402100"
+                        address: Avenida Rebouças
+                        number: "1368"
+                        neighborhood: Pinheiros
+                        complement: Em frente a Wizard
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                      historyStatus:
+                        [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                      activatedAt: null
+                      lastUpdatedAt: "2020-07-20T22:55:12"
+                      isActivated: false
+                      isLocked: true
+                      isCanceled: false
+                      isBuilding: false
+                      isFirtual: true
+                      isPre: true
+                      isPos: false
+        '204':
+          description: Não há cartões criados para a conta fornecida.
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/account/{account}?agency={agency}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.agency: method.request.path.agency
+          integration.request.path.account: method.request.path.account
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '204':
+            statusCode: 204
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
 security:
   - Bearer: []
   
