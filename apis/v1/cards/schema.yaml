@@ -1085,7 +1085,7 @@ paths:
         '500':
           statusCode: 500
 
-    /cards/{proxy}/password:
+  /cards/{proxy}/password:
     patch:
       tags:
         - Gestão de senha
