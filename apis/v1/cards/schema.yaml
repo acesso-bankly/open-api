@@ -17,9 +17,16 @@ paths:
       summary: Por código de ativação
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os cartões através do seu código de ativação.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <p>Crie um cartão físico múltiplo (pré e pós) que será embossado e entrege no endereço informado pelo cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "O cartão multíplo tem como principal caracteristica ter no mesmo plástico um número pré e um pós, porém um dos números ficará adormecido enquanto o outro estiver ativo."
+        }
+        [/block]
       operationId: cardGetByActivateCode
       parameters:
         - name: activateCode
