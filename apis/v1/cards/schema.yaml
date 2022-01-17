@@ -29,7 +29,7 @@ paths:
         [/block]
       operationId: cardGetByActivateCode
       parameters:
-        - name: activateCode
+        - name: activationCode
           in: path
           required: true
           description: Código de ativação do cartão (12 caracteres)
