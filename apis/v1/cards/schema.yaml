@@ -10,6 +10,696 @@ info:
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
 paths:
+  /cards/virtual:
+    post:
+      tags:
+      - Criação de cartão
+      summary: Cartão virtual
+      description: Responsável pela criação de um cartão virtual que será utilizado em compras não presenciais.
+      operationId: cardCreateVirtualCard
+      parameters:
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardRequest"
+      responses:
+        '202':
+          description: A solicitação foi aceita e o cartão está sendo criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardBuildingResponse"
+              examples:
+                response:
+                  value:
+                    proxy: "2370021007715002820"
+                    activateCode: "A0DDDC0951D1"
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+        '409':
+            description: Criação em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/virtual
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+        '202':
+          statusCode: 202
+        '400':
+          statusCode: 400
+        '401':
+          statusCode: 401
+        '406':
+          statusCode: 406
+        '409':
+          statusCode: 409
+        '500':
+          statusCode: 500
+  
+  /cards/physical:
+    post:
+      tags:
+        - Criação de cartão
+      summary: Cartão físico
+      description: Responsável pela criação de um cartão físico que será embossado e entrege no endereço informado.
+      operationId: cardCreatePhysicalCard
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardRequest"
+      responses:
+        '202':
+          description: A solicitação foi aceita e o cartão está sendo criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardBuildingResponse"
+              examples:
+                response:
+                  value:
+                    proxy: "2370021007715002820"
+                    activateCode: "A0DDDC0951D1"
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+        '409':
+            description: Criação em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/physical
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '406':
+            statusCode: 406
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+  /cards/multiple:
+    post:
+      tags:
+        - Criação de cartão
+      summary: Cartão físico múltiplo
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie um cartão físico múltiplo (pré e pós) que será embossado e entrege no endereço informado pelo cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "O cartão multíplo tem como principal caracteristica ter no mesmo plástico um número pré e um pós, porém um dos números ficará adormecido enquanto o outro estiver ativo."
+        }
+        [/block]
+      operationId: cardCreateMultipleCard
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardRequest"
+      responses:
+        '202':
+          description: Cartão
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardBuildingResponse"
+              examples:
+                response:
+                  value:
+                    proxy: "2370021007715002820"
+                    activateCode: "A0DDDC0951D1"
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+        '409':
+            description: Criação em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/orders/multiple
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+  /cards/{proxy}/duplicate:
+    post:
+      tags:
+        - Criação de cartão
+      summary: Crie uma segunda via de cartão
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente."
+        }
+        [/block]
+      operationId: createDuplicateCard
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createDuplicateCardRequest"
+      responses:
+        '202':
+          description: Cartão
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardBuildingResponse"
+              examples:
+                response:
+                  value:
+                    proxy: "2370021007715002820"
+                    activateCode: "A0DDDC0951D1"
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+        '409':
+            description: Criação em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/duplicate
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '406':
+            statusCode: 406
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+  /cards/{proxy}:
+    get:
+      tags:
+        - Consulta de Cartões
+      summary: Por proxy
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha dados de um cartão consultando pelo seu proxy.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: GetCardByProxy
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: A solicitação é recebida e retorna o cartão do proxy correspondente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardResponse"
+              examples:
+                response:
+                  value:
+                    created: "2020-07-20T22:53:12"
+                    companyKey: "Acesso"
+                    documentNumber: "00000000000"
+                    activateCode: "A9991B2E491D"
+                    bankAgency: "0001"
+                    bankAccount: "0001"
+                    lastFourDigits: "4321"
+                    proxy: "22999903520114195"
+                    name: Jose da Silva
+                    alias: Meu Cartão
+                    cardType: Virtual
+                    status: InTransitLocked
+                    physicalBinds: 
+                      [{ proxy: "2300199994444111999", created: "2020-07-20T22:54:03" }]               
+                    virtualBind: 
+                      proxy: "22999903520114195"
+                      created: "2020-07-20T22:55:12"            
+                    allowContactless: true
+                    address:
+                      zipCode: "05402100"
+                      address: Avenida Rebouças
+                      number: "1368"
+                      neighborhood: Pinheiros
+                      complement: Em frente a Wizard
+                      city: São Paulo
+                      state: SP
+                      country: Brasil
+                    historyStatus:
+                      [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                    activatedAt: null
+                    lastUpdatedAt: "2020-07-20T22:55:12"
+                    isActivated: false
+                    isLocked: true
+                    isCanceled: false
+                    isBuilding: false
+                    isFirtual: true
+                    isPre: true
+                    isPos: false
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Cartão não existente.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+  /cards/document/{documentNumber}:
+     get:
+      tags:
+        - Consulta de Cartões
+      summary: Por documento (CPF ou CNPJ)
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha os cartões vinculado ao número de documento (CPF ou CNPJ) do titular.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: cardGetCardsByDocument
+      parameters:
+        - name: documentNumber
+          in: path
+          required: true
+          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres)
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Lista com os cartões pertecente ao documento.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/cardResponse"
+              examples:
+                response:
+                  value:
+                    - created: "2020-07-20T22:53:12"
+                      companyKey: "Acesso"
+                      documentNumber: "00000000000"
+                      activateCode: "A9991B2E491D"
+                      bankAgency: "0001"
+                      bankAccount: "0001"
+                      lastFourDigits: "4321"
+                      proxy: "22999903520114195"
+                      name: Jose da Silva
+                      alias: Meu Cartão
+                      cardType: Virtual
+                      status: InTransitLocked
+                      physicalBinds: 
+                        [{ proxy: "2300199994444111999", created: "2020-07-20T22:54:03" }]               
+                      virtualBind: 
+                        proxy: "22999903520114195"
+                        created: "2020-07-20T22:55:12"  
+                      allowContactless: true
+                      address:
+                        zipCode: "05402100"
+                        address: Avenida Rebouças
+                        number: "1368"
+                        neighborhood: Pinheiros
+                        complement: Em frente a Wizard
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+                      historyStatus:
+                        [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                      activatedAt: null
+                      lastUpdatedAt: "2020-07-20T22:55:12"
+                      isActivated: false
+                      isLocked: true
+                      isCanceled: false
+                      isBuilding: false
+                      isFirtual: true
+                      isPre: true
+                      isPos: false
+        '204':
+          description: Não há cartões criados para o documento fornecido.
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/document/{document}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.documentNumber: method.request.path.documentNumber
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '202':
+            statusCode: 202
+          '204':
+            statusCode: 204
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
 
   /cards/activatecode/{activationCode}:
     get:
