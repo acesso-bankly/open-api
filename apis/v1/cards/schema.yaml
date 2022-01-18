@@ -1565,7 +1565,7 @@ paths:
             type: string
       responses:
         '200':
-          description: A sol
+          description: Que porra !!
                  
 security:
   - Bearer: []
