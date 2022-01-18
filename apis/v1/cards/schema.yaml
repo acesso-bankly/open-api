@@ -325,17 +325,7 @@ paths:
         - Criação de cartão
       summary: Segunda via de cartão
       description: |
-        <div class="bkly-ref-description">
-          <p>Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
-        </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente."
-        }
-        [/block]
+        Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.
       operationId: createDuplicateCard
       parameters:
         - name: proxy
