@@ -1558,7 +1558,7 @@ paths:
       tags:
         - Status do cartão
       summary: Consulta dos proximos status
-      description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
+      description: teste
       operationId: cardGetLots
       parameters:
         - name: proxy
