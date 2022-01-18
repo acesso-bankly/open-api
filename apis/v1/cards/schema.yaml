@@ -91,31 +91,7 @@ paths:
                     value:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
-      x-amazon-apigateway-auth:
-        type: NONE
-      x-amazon-apigateway-integration:
-        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/duplicate
-        passthroughBehavior: when_no_match
-        connectionType: VPC_LINK
-        connectionId: m116y5
-        httpMethod: POST
-        type: http
-        requestParameters:
-          integration.request.header.api-version: method.request.header.api-version
-          integration.request.header.Authorization: method.request.header.Authorization
-        responses:
-          '202':
-            statusCode: 202
-          '400':
-            statusCode: 400
-          '401':
-            statusCode: 401
-          '406':
-            statusCode: 406
-          '409':
-            statusCode: 409
-          '500':
-            statusCode: 500
+     
             
 security:
   - Bearer: []
