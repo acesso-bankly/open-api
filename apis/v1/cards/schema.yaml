@@ -24,6 +24,8 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       responses:
         '202':
           description: Cartão
