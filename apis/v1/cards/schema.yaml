@@ -17,7 +17,10 @@ paths:
         - Criação de cartão
       summary: Segunda via de cartão
       description: |
-        Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.
+        <div class="bkly-ref-description">
+          <p>Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
       parameters:
         - name: proxy
           in: path
