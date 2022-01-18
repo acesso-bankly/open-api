@@ -1553,7 +1553,7 @@ paths:
           '500':
             statusCode: 500 
 
-  /cards/{proxy}/nextStatus:
+  /cards/nextStatus:
     get:
       tags:
         - Status do cartão
@@ -1561,11 +1561,6 @@ paths:
       description: teste
       operationId: next
       parameters:
-        - name: proxy
-          in: path
-          required: true
-          schema:
-            type: string
         - $ref: "#components/parameters/apiVersion"
         - $ref: "#components/parameters/authorization"
       responses:
