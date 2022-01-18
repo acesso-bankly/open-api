@@ -11,28 +11,13 @@ servers:
   - url: 'https://api.sandbox.bankly.com.br'
 paths:
 
-  /cards/{codigo}/duplicate:
+  /cards/duplicate:
     post:
       tags:
         - Criação de cartão
       summary: Segunda via de cartão
       description: |
         Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.
-      operationId: createDuplicateCard
-      parameters:
-        - name: codigo
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/createDuplicateCardRequest"
       responses:
         '202':
           description: Cartão
