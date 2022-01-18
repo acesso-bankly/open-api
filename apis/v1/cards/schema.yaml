@@ -1553,7 +1553,13 @@ paths:
           '500':
             statusCode: 500 
 
-  
+  /cards/nextStatus:
+    get:
+      tags:
+        - Status do cartão
+      responses:
+        '200':
+          description: A sol
                  
 security:
   - Bearer: []
