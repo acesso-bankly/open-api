@@ -28,6 +28,7 @@ paths:
           "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente."
         }
         [/block]
+      operationId: createDuplicateCard
       parameters:
         - name: proxy
           in: path
