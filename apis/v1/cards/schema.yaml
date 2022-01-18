@@ -1559,7 +1559,7 @@ paths:
         - Status do cartão
       summary: Consulta dos proximos status
       description: teste
-      operationId: cardGetLots
+      operationId: next
       parameters:
         - name: proxy
           in: path
