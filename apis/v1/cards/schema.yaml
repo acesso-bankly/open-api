@@ -1909,6 +1909,10 @@ components:
     changeCardStatusRequest:
       type: object
       properties:
+        status:
+          type: string
+          $ref: "#components/schemas/cardStatus"
+          description: Status para qua o cartão será modificado.
         password:
           type: string
           description: Senha de uso do cartão (4 dígitos).
