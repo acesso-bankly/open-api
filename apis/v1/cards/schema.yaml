@@ -1780,8 +1780,8 @@ components:
     cardStatus:
       type: string
       enum:
+        - Building      
         - Undefined
-        - Building
         - Active
         - UpdateRegisterLocked
         - UpdateRegisterCanceled
@@ -1923,7 +1923,6 @@ components:
         - status
         - password
         - updateCardBinded
-        - documentNumber
             
     cardLotsResponse:
       type: array
