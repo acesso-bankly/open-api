@@ -1590,41 +1590,13 @@ paths:
           '500':
             statusCode: 500  
   
-  /cards/{proxy}/transactions:
+  /cards/transactions:
     get:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
       description: Obtém as transações realizadas no cartão de acordo com os filtros informados. Obs. A diferença entre a data de início e fim deverá ter o máximo de sete dias, e o valor máximo permitido no parâmetro PageSize é de 100.
       operationId: cardTransactionsByCard
-      parameters:
-        - name: proxy
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          required: false
-          schema:
-            type: integer
-        - name: startDate
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: endDate
-          in: query
-          required: true
-          schema:
-            type: string
-        - $ref: "#components/parameters/apiVersion"
-        - $ref: "#components/parameters/authorization"
       responses:
         '200':
           description: Lista as transações pertecente ao cartão, além das propriedades referente a páginação da consulta.
