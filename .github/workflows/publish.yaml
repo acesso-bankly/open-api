@@ -42,6 +42,7 @@ jobs:
             ./apis/v1/events/schema.yaml
             ./apis/v1/helpers/schema.yaml
             ./apis/v1/pix/schema.yaml
+            ./apis/v1/limites/schema.yaml
   publish:
     if: ${{ success() && github.ref=='refs/heads/main' }}
     runs-on: ubuntu-latest
@@ -108,3 +109,9 @@ jobs:
           oas-file-path: './apis/v1/ted/schema.yaml'
           api-version: 'v1'
       
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish Limits API Reference to readme.io        
+        with: 
+          readme-oas-key: ${{ secrets.LIMITS_API_README_OAS_KEY }}          
+          oas-file-path: './apis/v1/limites/schema.yaml'
+          api-version: 'v1'
