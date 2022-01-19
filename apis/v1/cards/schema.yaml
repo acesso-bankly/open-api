@@ -1353,12 +1353,15 @@ paths:
         - Status do cartão
       summary: Altera o status do cartão
       description: O status do cartão será alterado para um status que pode ser temporário e definitivo.
+      operationId: cardChangeCardStatus
       parameters:
         - name: proxy
           in: path
           required: true
           schema:
             type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       responses:
         '200':
           description: Se o status foi alterado.
