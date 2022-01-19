@@ -1911,7 +1911,7 @@ components:
       properties:
         status:
           type: string
-          $ref: "#components/schemas/cardStatus"
+          $ref: "#/components/schemas/cardStatus"
           description: Status para qua o cartão será modificado.
         password:
           type: string
