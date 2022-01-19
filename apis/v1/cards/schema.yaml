@@ -1522,12 +1522,18 @@ paths:
           '500':
             statusCode: 500 
   
-  /cards/nextStatus:
+  /cards/{proxy}/nextStatus:
     get:
       tags:
         - Status do cartão
       summary: Consulta dos proximos status
       description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: A solicitação é recebida e retorna os dados dos lotes.
