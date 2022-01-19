@@ -1347,12 +1347,18 @@ paths:
           '500':
             statusCode: 500
   
-  /cards/status:
+  /cards/{proxy}/status:
     patch:
       tags:
         - Status do cartão
       summary: Altera o status do cartão
       description: O status do cartão será alterado para um status que pode ser temporário e definitivo.
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Se o status foi alterado.
