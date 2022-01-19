@@ -1362,6 +1362,12 @@ paths:
             type: string
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/changeCardStatusRequest"
       responses:
         '200':
           description: Se o status foi alterado.
