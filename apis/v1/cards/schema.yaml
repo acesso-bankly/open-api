@@ -1919,6 +1919,10 @@ components:
         updateCardBinded:
           type: boolean
           description: Atualizar cartões vinculados.
+      required:
+        - status
+        - password
+        - updateCardBinded
             
     cardLotsResponse:
       type: array
