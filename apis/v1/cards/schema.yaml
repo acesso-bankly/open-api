@@ -15,7 +15,7 @@ paths:
       tags:
       - Criação de cartão
       summary: Cartão virtual
-      description: Responsável pela criação de um cartão virtual que será utilizado em compras não presenciais.
+      description: Responsável pela criação de um cartão virtual que será utilizado em compras não presenciais
       operationId: cardCreateVirtualCard
       parameters:
       - $ref: "#/components/parameters/apiVersion"
