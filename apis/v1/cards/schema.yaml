@@ -1595,8 +1595,7 @@ paths:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
-      description: Obtém as transações realizadas no cartão de acordo com os filtros informados. Obs. A diferença entre a data de início e fim deverá ter o máximo de sete dias, e o valor máximo permitido no parâmetro PageSize é de 100.
-      operationId: cardTransactionsByCard
+      description: teste
       responses:
         '200':
           description: Lista as transações pertecente ao cartão, além das propriedades referente a páginação da consulta.
