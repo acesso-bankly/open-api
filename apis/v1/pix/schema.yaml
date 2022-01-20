@@ -217,7 +217,7 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Pix cash-out 
+      summary: Transferência via Pix 
       description: |
         <div class="bkly-ref-description">
           <p>Realize transferências via Pix (manuais, por chave ou QR Code). Para isso, é necessário possuir uma conta aberta no Bankly.</p>
@@ -264,7 +264,7 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Devolução de Pix cash-out
+      summary: Devolução de transferência Pix
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
