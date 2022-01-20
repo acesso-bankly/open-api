@@ -120,7 +120,7 @@ jobs:
       - uses: readmeio/github-readme-sync@v2
         name: Publish CARD2 API Reference to readme.io
         with:
-          readme-oas-key: ${{ secrets.CARD_API_README_OAS_KEY_DEV }}
+          readme-oas-key: ${{ secrets.CARD2_API_README_OAS_KEY_DEV }}
           oas-file-path: './apis/v1/cards/schema2.yaml'
           api-version: 'v0.05'
 
