@@ -392,7 +392,10 @@ components:
     '503':
       description: |
         O serviço está temporariamente indisponível.
-      
+      headers:
+        x-bkly-correlation-id:
+          $ref: '#/components/headers/CorrelationId'
+
   securitySchemes:
     Bearer:
       type: http
