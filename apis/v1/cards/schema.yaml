@@ -1523,72 +1523,72 @@ paths:
   #           statusCode: 500 
   
   # /cards/{proxy}/nextStatus:
-    get:
-      tags:
-        - Status do cartão
-      summary: Consulta dos proximos status
-      description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
-      operationId: cardGetLots
-      parameters:
-        - name: proxy
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: "#components/parameters/apiVersion"
-        - $ref: "#components/parameters/authorization"
-      responses:
-        '200':
-          description: A solicitação é recebida e retorna os dados dos lotes.
-        '204':
-          description: Não foram encontrados lotes.              
-        '400':
-            description: "Existem erros no preenchimento da requisição."
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
-        '401':
-          description: Sem autorização para realizar a solicitação.
-        '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
-      x-amazon-apigateway-auth:
-        type: NONE
-      x-amazon-apigateway-integration:
-        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
-        passthroughBehavior: when_no_match
-        connectionType: VPC_LINK
-        connectionId: m116y5
-        httpMethod: GET
-        type: http
-        requestParameters:
-          integration.request.header.api-version: method.request.header.api-version
-          integration.request.header.Authorization: method.request.header.Authorization
-        responses:
-          '200':
-            statusCode: 200
-          '204':
-            statusCode: 204      
-          '400':
-            statusCode: 400
-          '401':
-            statusCode: 401
-          '500':
-            statusCode: 500  
+    # get:
+    #   tags:
+    #     - Status do cartão
+    #   summary: Consulta dos proximos status
+    #   description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
+    #   operationId: cardGetLots
+    #   parameters:
+    #     - name: proxy
+    #       in: path
+    #       required: true
+    #       schema:
+    #         type: string
+    #     - $ref: "#components/parameters/apiVersion"
+    #     - $ref: "#components/parameters/authorization"
+    #   responses:
+    #     '200':
+    #       description: A solicitação é recebida e retorna os dados dos lotes.
+    #     '204':
+    #       description: Não foram encontrados lotes.              
+    #     '400':
+    #         description: "Existem erros no preenchimento da requisição."
+    #         content:
+    #           application/json:
+    #             schema:
+    #               $ref: "#/components/schemas/cardErrorResponse"
+    #             examples:
+    #               response:
+    #                 value:
+    #                   reference: https://bankly.readme.io/reference
+    #                   errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+    #     '401':
+    #       description: Sem autorização para realizar a solicitação.
+    #     '500':
+    #         description: Ocorrência de erro inesperado.
+    #         content:
+    #           application/json:
+    #             schema:
+    #               $ref: "#/components/schemas/cardErrorResponse"
+    #             examples:
+    #               response:
+    #                 value:
+    #                   reference: https://bankly.readme.io/reference
+    #                   errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+    #   x-amazon-apigateway-auth:
+    #     type: NONE
+    #   x-amazon-apigateway-integration:
+    #     uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+    #     passthroughBehavior: when_no_match
+    #     connectionType: VPC_LINK
+    #     connectionId: m116y5
+    #     httpMethod: GET
+    #     type: http
+    #     requestParameters:
+    #       integration.request.header.api-version: method.request.header.api-version
+    #       integration.request.header.Authorization: method.request.header.Authorization
+    #     responses:
+    #       '200':
+    #         statusCode: 200
+    #       '204':
+    #         statusCode: 204      
+    #       '400':
+    #         statusCode: 400
+    #       '401':
+    #         statusCode: 401
+    #       '500':
+    #         statusCode: 500  
          
 security:
   - Bearer: []
