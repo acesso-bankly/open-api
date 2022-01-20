@@ -546,16 +546,6 @@ paths:
             statusCode: 401
           '500':
             statusCode: 500  
-  
-  /cards/transactions:
-    get:
-      tags:
-        - Consulta de transações
-      summary: Consulta de transações por cartão
-      description: teste 1
-      responses:
-        '200':
-          description: Lista as transações pertecente ao cartão, além das propriedades referente a páginação da consulta.
          
 security:
   - Bearer: []
