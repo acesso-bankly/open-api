@@ -110,8 +110,8 @@ jobs:
           api-version: 'v1'
       
       - uses: readmeio/github-readme-sync@v2
-        name: Publish Limits API Reference to readme.io        
+        name: Publish Limits API Reference to readme.io
         with: 
-          readme-oas-key: ${{ secrets.LIMITS_API_README_OAS_KEY }}          
+          readme-oas-key: ${{ secrets.LIMITS_API_README_OAS_KEY }} 
           oas-file-path: './apis/v1/limites/schema.yaml'
           api-version: 'v1'
