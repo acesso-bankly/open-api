@@ -1721,6 +1721,91 @@ paths:
             statusCode: 401
           '500':
             statusCode: 500
+
+  /cards/{proxy}/tracking:
+    get:
+      tags:
+        - Rastreio de Cartões
+      summary: Por proxy
+      description: Obtém o rastreio do cartão pelo seu proxy.
+      operationId: trackingGetByProxy
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: A solicitação é recebida e retorna o rastreio do cartão do proxy correspondente.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/trackingResponse"
+              examples:
+                response:
+                  value:
+                    createdDate: "2020-07-20T22:53:12"
+                    companyKey: "Acesso"
+                    name: Jose da Silva
+                    alias: Meu Cartão
+                    address:
+                      zipCode: "05402100"
+                      address: Avenida Rebouças
+                      number: "1368"
+                      neighborhood: Pinheiros
+                      complement: Em frente a Wizard
+                      city: São Paulo
+                      state: SP
+                      country: Brasil
+                    status:
+                      [ { createdDate: "2020-07-20T22:53:12", type: Created, reason: Created  }, { createdDate: "2020-07-20T22:55:12", type: InProgress, reason: In route to delivery } ]
+                    finalized:
+                      [ { createdDate: "2020-07-20T22:53:12", recipientName: "Maria da Silva", recipientKinship: "Mãe", documentNumber: "1234567", attempts: 1 }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Rastreio de cartão não existente.
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/trackingErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/tracking
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
          
 security:
   - bearerAuth: []
@@ -2188,16 +2273,6 @@ components:
         - status
         - password
         - updateCardBinded
-            
-    cardLotsResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          value: 
-            type: string
-          isDefinitive: 
-            type: boolean
    
     resultTransactionResponse:
       type: object
@@ -2323,6 +2398,120 @@ components:
         - Withdrawal
         - Refund
         - Balance
+    
+    trackingResponse:
+      type: object
+      properties:
+        createdDate:
+          type: string
+          description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
+        companyKey:
+          type: string
+          description: Identificador da companhia.
+        name:
+          type: string
+          description: Nome impresso no cartão.
+        alias:
+          type: string
+          description: Apelido impresso no cartão.
+        estimatedDeliveryDate:
+          type: string
+          description: Data prevista de entrega do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: CEP.
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (formato UF).
+            country:
+              type: string
+              description: País.
+            isActive:
+              type: boolean
+              description: Situação de endereço de rastreio
+        status:
+          type: array
+          description: Histórico de status do rastreio.
+          items:
+            type: object
+            properties:
+              createdDate:
+                type: string
+                description: Data em que o status foi aplicado (formato 'yyyy-MM-ddTHH:mm:ss').
+              type:
+                type: string
+                $ref: "#/components/schemas/trackingStatus"
+                description: Status aplicado.
+              reason:
+                type: string
+                description: Motivo do status.
+        finalized:
+          type: array
+          description: Histórico de baixa do rastreio.
+          items:
+            type: object
+            properties:
+              createdDate:
+                type: string
+                description: Data em que baixa adicionada (formato 'yyyy-MM-ddTHH:mm:ss').
+              recipientName:
+                type: string
+                description: Nome do recebedor do cartão.
+              recipientKinship:
+                type: string
+                description: Grau de parentêsco com o titular do cartão.
+              documentNumber:
+                type: string
+                description: Documento do recebdor do cartão
+              attempts:
+                type: number
+                description: Quantidade de tentativas de entrega
+
+    trackingStatus:
+      type: string
+      enum:
+        - Created
+        - InProgress
+        - NotDelivered
+        - Cancelled
+        - Custody
+        - Delivered
+    
+    trackingErrorResponse:
+      type: object
+      properties:
+        reference:
+          type: string
+          description: Link para documentação de integração
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: Código de erro.
+              message:
+                type: string
+                description: Mensagem explicativa do erro.
     
 x-readme:
   explorer-enabled: true
