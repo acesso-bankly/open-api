@@ -16,7 +16,11 @@ paths:
       tags:
         - Gestão de limites
       summary: Consulta de limite por feature
-      description: Consulte as configurações dos limites de uma feature (funcionalidade) específica.
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as configurações dos limites de uma feature (funcionalidade) específica.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.read</span>
+        </div>
       operationId: HolderController_getLimits
       parameters:
       - name: documentNumber
@@ -100,7 +104,11 @@ paths:
       tags:
         - Gestão de limites
       summary: Criação/atualização de limites personalizados
-      description: Crie ou atualize limites definidos pelo usuário.
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie ou atualize limites definidos pelo usuário.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.write</span>
+        </div>
       operationId: HolderController_putMaximumLimit
       parameters:
       - name: documentNumber
@@ -156,7 +164,11 @@ paths:
       tags:
         - Gestão de limites
       summary: Consulta de limites personalizados
-      description: Consulte as configurações dos limites personalizados para o usuário.
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as configurações dos limites personalizados para o usuário.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.read</span>
+        </div>
       operationId: HolderController_getMaximumLimits
       parameters:
       - name: documentNumber

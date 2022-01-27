@@ -65,7 +65,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todas as configurações registradas para os webhooks.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhooks.read</span>
         </div>  
       operationId: SearchWebhookAsync
       parameters:
@@ -121,7 +121,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
         <p>Realize a consulta das configurações de um webhook específico.</p> 
-        <span class="bkly-ref-small-beta-tag">beta</span>
+        <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhooks.read</span>
         </div>  
       operationId: GetWebhookAsync
       parameters:
