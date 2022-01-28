@@ -237,6 +237,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Insira o mesmo valor do <code>x-correlation-id</code> informado na decodificação do QR Code. 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
