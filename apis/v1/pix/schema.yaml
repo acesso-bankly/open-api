@@ -843,7 +843,6 @@ components:
           description: Informe o valor do troco. <br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de pagamento de <b>QR Code para Pix Troco</b>.
       required: 
         - amount
-        - description
         - sender
         - initializationType
       additionalProperties: false  
@@ -879,8 +878,6 @@ components:
       properties:
         account:
           $ref: '#/components/schemas/AccountSender'
-        bank:
-          $ref: '#/components/schemas/BankRequestSender'
         documentNumber:
           type: string
           description: Número do documento (CPF ou CNPJ).
