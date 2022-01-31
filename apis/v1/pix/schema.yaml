@@ -43,6 +43,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Chave encontrada.
@@ -83,6 +89,12 @@ paths:
             type: string
         - name: authorization
           in: header 
+          required: true
+          schema:
+            type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
           required: true
           schema:
             type : string
@@ -142,6 +154,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado.
@@ -190,6 +208,12 @@ paths:
             type: string
         - name: authorization
           in: header 
+          required: true
+          schema:
+            type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
           required: true
           schema:
             type : string
@@ -290,6 +314,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -353,6 +383,12 @@ paths:
             type: string
         - name: authorization
           in: header 
+          required: true
+          schema:
+            type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
           required: true
           schema:
             type : string
