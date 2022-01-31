@@ -396,6 +396,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4. Essa informação será utilizada no pagamento do QR Code.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
