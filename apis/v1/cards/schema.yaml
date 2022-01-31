@@ -149,7 +149,7 @@ paths:
       summary: Dados de segurança do cartão
       description: |
         <div class="bkly-ref-description">
-          <p>Obtém os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
+          <p>Obtenha os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: GetCardPCIData

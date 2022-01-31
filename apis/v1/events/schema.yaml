@@ -15,7 +15,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Registre um novo webhook para um evento Bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.create</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
       operationId: RegisterWebhookAsync
       parameters:
@@ -167,7 +167,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Altere a chave pública, a chave privada e/ou a URI do endpoint de um webhook Bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.update</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
       operationId: UpdateWebhookAsync
       parameters:
@@ -339,7 +339,7 @@ paths:
       description: |
        <div class="bkly-ref-description">
           <p>Desabilite a configuração de um webhook vinculado a um evento Bankly quando necessário.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.update</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
       operationId: DisableWebhookAsync
       parameters:
@@ -381,7 +381,7 @@ paths:
       description: |
        <div class="bkly-ref-description">
           <p>Habilite a configuração de um webhook vinculado a um evento Bankly.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.update</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
       operationId: EnableWebhookAsync
       parameters:
