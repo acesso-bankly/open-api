@@ -45,7 +45,7 @@ paths:
             type: string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID. 
           required: true
           schema:
             type : string
@@ -94,7 +94,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -156,7 +156,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -213,7 +213,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -263,7 +263,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Insira o mesmo valor do <code>x-correlation-id</code> informado na decodificação do QR Code. 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -316,7 +316,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -388,7 +388,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -434,7 +434,7 @@ paths:
             type : string
         - name: x-correlation-id
           in: header 
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4. Essa informação será utilizada no pagamento do QR Code.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type : string
@@ -491,7 +491,7 @@ paths:
             type : string  
         - name: x-correlation-id
           in: header
-          description: Informe o id de relacionamento da operção do cliente (se houver) ou um GUID v4. Essa informação será utilizada no pagamento do QR Code.
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
           required: true
           schema:
             type: string 
