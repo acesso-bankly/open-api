@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: PIX
-  description: Gerencie vínculo entre chaves e contas de pagamento e realize pagamentos através do sistema PIX® à qualquer hora do dia ou da noite. Consulte também
+  description: Gerencie vínculo entre chaves e contas de pagamento e realize pagamentos através do sistema PIX®, a qualquer hora do dia ou da noite. Consulte também
     nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
     sobre os fluxos de negócio.
   version: '1.0'
@@ -15,7 +15,7 @@ paths:
       summary: Consulta de chaves de uma conta
       description: |
         <div class="bkly-ref-description">
-          <p>Informa a lista de chaves de endereçamento vinculadas a uma conta de pagamento.</p>
+          <p>Consulte a lista de chaves de endereçamento vinculadas a uma conta de pagamento.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.account.read</span>
         </div>
       operationId: GetAccountEntriesAsync
@@ -37,14 +37,21 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID. 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Chave encontrada.
           content:
             application/json:
               schema:
@@ -52,30 +59,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/AddressingKey'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'   
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
         '503':
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
       security:
         - Bearer: []      
 
@@ -86,7 +74,8 @@ paths:
       summary: Cadastro de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>Permite vincular até 5 chaves para contas com titular pessoa física e 20 chaves com titular pessoa jurídica.</p>
+          <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cadastro-chaves" target="_blank" rel="noopener noreferrer">Cadastro de chaves</a>.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
         </div>
           
@@ -103,6 +92,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -110,41 +105,16 @@ paths:
               $ref: '#/components/schemas/CreateEntryRequest'
       responses:
         '201':
-          description: Recurso criado com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateEntryResponse'
+          description: Chave cadastrada com sucesso.
         '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
+        
       security:
         - Bearer: []
 
@@ -155,7 +125,8 @@ paths:
       summary: Consulta de vínculo de chave com uma conta
       description: |
         <div class="bkly-ref-description">
-          <p>Informa os detalhes da conta vinculada a uma chave de endereçamento.</p>
+          <p>Consulte os detalhes da conta vinculada a uma chave de endereçamento.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-por-chaves" target="_blank" rel="noopener noreferrer">Consulta por chaves</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.read</span>
         </div>
       operationId: GetAsync
@@ -174,7 +145,7 @@ paths:
             type: string
         - name: x-bkly-pix-user-id
           in: header
-          description: Deve informar o número do documento do cliente que solicita a consulta da chave.
+          description: Informe o número do documento do cliente que solicita a consulta.
           required: true
           schema:
             type: string
@@ -183,47 +154,25 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       responses:
         '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            x-bkly-pix-endtoend-id:
-              description: Identificador fim-a-fim do pagamento associado à essa requisição.Esse identificador deve ser fornecido como EndToEndId para confirmar o pagamento ao SPI.Também é utilizado para rate-limiting.
-              schema:
-                type: string
+          description: Recurso encontrado.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEntryResponse'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
   
@@ -233,7 +182,8 @@ paths:
       summary: Exclusão de chaves
       description: |
         <div class="bkly-ref-description">
-          <p><b>Importante!</b> A chave não pode estar em um processo de reinvindicação. Caso esteja, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
+          <p><b>Importante!</b> A chave a ser excluída não pode estar em um processo de reinvindicação. Se esse for o caso, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-exclusao-chaves" target="_blank" rel="noopener noreferrer">Exclusão chaves</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
       operationId: DeleteAsync
@@ -250,44 +200,40 @@ paths:
           required: true
           schema:
             type: string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Deve informar o número do documento do cliente que solicita a exclusão da chave.
+          required: true
+          schema:
+            type: string
         - name: authorization
           in: header 
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       responses:
-        '204':
-          description: Recurso excluído com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+        '200':
+          description: Chave excluída com sucesso.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProblemDetails'
+                $ref: '#/components/schemas/GetEntryResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
         
@@ -295,10 +241,11 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Pix cash-out 
+      summary: Transferência via Pix
       description: |
         <div class="bkly-ref-description">
-          <p><b>Importante!</b> Para realizar uma transferência via Pix, é necessário possuir uma conta aberta.</p>
+          <p>Realize transferências via Pix (manuais, por chave ou QR Code). Para isso, é necessário possuir uma conta aberta no Bankly.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cash-out" target="_blank" rel="noopener noreferrer">Pix cash-out</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreatePixCashOutTransactionAsync
@@ -314,6 +261,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -321,49 +274,19 @@ paths:
               $ref: '#/components/schemas/CreatePixCashOutTransactionRequest'
       responses:
         '202':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Pagamento realizado com sucesso.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreatePixCashOutTransactionResponse'
         '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
       security:
         - Bearer: []
   
@@ -371,10 +294,11 @@ paths:
     post:
       tags:
         - Pagamentos instantâneos
-      summary: Devolução de Pix cash-out
+      summary: Devolução de transferência Pix
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-devolucao" target="_blank" rel="noopener noreferrer">Devolução</a>.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
       operationId: CreateRefundAsync
@@ -390,6 +314,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -397,49 +327,20 @@ paths:
               $ref: '#/components/schemas/CreatePixRefundRequest'
       responses:
         '202':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Devolução realizada com sucesso.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreatePixRefundRequest'
         '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      
       security:
         - Bearer: []
         
@@ -447,10 +348,11 @@ paths:
     get:
       tags:
         - Pagamentos instantâneos
-      summary: Consulta de Pix cash-out
+      summary: Consulta do status da transação
       description: |
         <div class="bkly-ref-description">
-          <p> Para realizar a consulta de Pix cash-out, é necessário ter um <b>AuthenticationCode</b> válido.</p>
+          <p>Realize a consulta do status dos pagamentos realizados via Pix. Para isso, é necessário ter um <b>AuthenticationCode</b> válido.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-status" target="_blank" rel="noopener noreferrer">Consulta do status da transação</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.read</span>
         </div>
       operationId: GetByAuthenticationCodeAsync
@@ -473,56 +375,36 @@ paths:
           required: true
           schema:
             type: string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
         - name: authorization
           in: header 
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       responses:
         '200':
-          description: Success
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Consulta retornada com sucesso.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PixTransferResponse'
         '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: []
   
@@ -534,6 +416,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-emissao-qrcode" target="_blank" rel="noopener noreferrer">Emissão de QR Code</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
         </div>
       operationId: CreateStaticQRCodeAsync
@@ -549,6 +432,12 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -556,23 +445,17 @@ paths:
               $ref: '#/components/schemas/CreateStaticQRCodeRequest'
       responses:
         '200':
-          description: Recurso criado com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: QR Code emitido com sucesso.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties:
+                  encodedValue:
+                    description: QR Code codificado em base64.
+                    type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []      
   
@@ -584,6 +467,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
+          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-decodificacao-qrcode" target="_blank" rel="noopener noreferrer">Decodificação de QR Code</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
       operationId: DecodeQRCodeAsync
@@ -596,7 +480,7 @@ paths:
             type: string
         - name: x-bkly-pix-user-id
           in: header
-          description: Deve informar o número do documento do cliente que solicita a leitura do QR Code.
+          description: Informe o número do documento do cliente que solicita a leitura do QR Code.
           required: true
           schema:
             type: string  
@@ -605,6 +489,12 @@ paths:
           required: true
           schema:
             type : string  
+        - name: x-correlation-id
+          in: header
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type: string 
       requestBody:
         content:
           application/json:
@@ -612,23 +502,44 @@ paths:
               $ref: '#/components/schemas/DecodeQRCodeRequest'
       responses:
         '200':
-          description: Recurso criado com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Decodificação de QR Code realizada com sucesso.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties:
+                  endToEndId:
+                    type: string
+                    description: Identificador único gerado pelo Bacen que deverá ser informado ao realizar o pagamento do QR Code.
+                  conciliationId:
+                    type: string
+                  addressingKey:
+                    $ref: '#/components/schemas/AddressingKey'
+                  qrCodeType:
+                    description: Informa se o QR Code é estático ou dinâmico. 
+                    type: string
+                  holder:
+                    $ref: '#/components/schemas/PersonalInformationHolder'  
+                  bank:
+                    $ref: '#/components/schemas/BankName'
+                  payment:
+                    $ref: '#/components/schemas/Payment'
+                  location:
+                    $ref: '#/components/schemas/LocationResponse'
+                  withdrawalDetail:
+                    $ref: '#/components/schemas/WithdrawalDetail'
+                  changeAmountDetail:
+                    $ref: '#/components/schemas/ChangeAmountDetail'
+                  qrCodePurpose:
+                    type: string
+                    description: Razão da emissão do QR Code.
+         
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
 components:
@@ -790,6 +701,18 @@ components:
         - BUSINESS
       type: string
 
+    HolderGetEntryResponse:
+      type: object
+      properties:
+        type:
+         type: string
+        name:
+         type: string
+        socialName: 
+          type: string
+        document:
+         type: string
+      additionalProperties: false
     Bank:
       type: object
       properties:
@@ -802,6 +725,34 @@ components:
         name:
           type: string
           nullable: true
+      additionalProperties: false
+
+    BankStatus:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        compe:
+          type: string
+          nullable: true
+          description: <code>compe</code> do banco do sender não é retornado em caso de Pix externo.
+        name:
+          type: string
+          nullable: true
+          description: <code>name</code> do banco do sender não é retornado em caso de Pix externo.
+      additionalProperties: false
+    
+    BankName:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code estático.
+        ispb: 
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code dinâmico.
+
       additionalProperties: false
     
     ErrorResponse:
@@ -839,8 +790,8 @@ components:
           nullable: true
         addressingKey:
           $ref: '#/components/schemas/AddressingKey'
-        account:
-          $ref: '#/components/schemas/PaymentAccount'
+        holder:
+          $ref: '#/components/schemas/HolderGetEntryResponse'
         status:
           $ref: '#/components/schemas/EntryStatus'
         createdAt:
@@ -861,6 +812,7 @@ components:
         amount:
           type: number
           format: double
+          description: Informe o valor a ser pago.<br /> Em caso de pagamento de QR Code para Pix Troco, informe o valor total a ser pago (valor da compra somado ao valor que se deseja obter em espécie). <br />Em caso de pagamento de QR Code para Pix Saque, <b>não</b> preencha este campo. O valor deverá ser enviado no campo <code>withdrawalAmount</code>.
         description:
           type: string
           nullable: true
@@ -874,13 +826,23 @@ components:
           type: string
           nullable: true
           description: Campo obrigatório para cash-out por <b>chave Pix</b> e <b>Pix QR Code</b>. Só deve ser preenchido nesses casos.
+        withdrawalAmount:
+          type: number
+          format: double
+          description: Informe o valor do saque. <br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de pagamento de <b>QR Code para Pix Saque</b>.
         requestDatetime:
           type: string
           format: date-time
           readOnly: true
+        receiverReconciliationId:
+          type: string
+          description: Deve ser preenchido com o valor do <code>conciliationId</code> quando esse campo retornar na leitura do QR Code.
+        changeAmount:
+          type: number
+          format: double
+          description: Informe o valor do troco. <br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de pagamento de <b>QR Code para Pix Troco</b>.
       required: 
         - amount
-        - description
         - sender
         - initializationType
       additionalProperties: false  
@@ -891,6 +853,14 @@ components:
         amount:
           type: number
           format: double
+        withdrawalAmount:
+          type: number
+          format: double
+          description: Valor do saque (retornado apenas em caso de pagamento de QR Code para Pix Saque).
+        changeAmount:
+          type: number
+          format: double
+          description: Valor do troco (retornado apenas em caso de pagamento de QR Code para Pix Troco).
         description:
           type: string
           nullable: true
@@ -900,7 +870,7 @@ components:
           $ref: '#/components/schemas/PixPersonRecipient'
         authenticationCode:
           type: string
-          nullable: true
+          description: Identificador retornado nas operações de cash-out. Seu valor é utilizado para verificar os status da transação no endpoint de consulta de status.
       additionalProperties: false
       
     PersonRequestSender:
@@ -908,15 +878,13 @@ components:
       properties:
         account:
           $ref: '#/components/schemas/AccountSender'
-        bank:
-          $ref: '#/components/schemas/BankRequestSender'
         documentNumber:
           type: string
           description: Número do documento (CPF ou CNPJ).
           nullable: true
         name:
           type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br />nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
       additionalProperties: false
       required:
@@ -926,6 +894,7 @@ components:
 
     PersonRequestRecipient:
       type: object
+      description: Os dados do recebedor <b>não</b> devem ser enviados em caso de pagamento por chave Pix e QR Code. 
       properties:
         account:
           $ref: '#/components/schemas/AccountRecipient'
@@ -962,7 +931,7 @@ components:
           nullable: true
         name:
           type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
       additionalProperties: false
     
@@ -972,7 +941,7 @@ components:
         account:
           $ref: '#/components/schemas/AccountSenderResponse'
         bank:
-          $ref: '#/components/schemas/Bank'
+          $ref: '#/components/schemas/BankStatus'
         documentNumber:
           type: string
           description: Número do documento (CPF ou CNPJ).
@@ -1057,7 +1026,6 @@ components:
         ispb:
           type: string
           nullable: true
-          description: Campo obrigatório para cash-out por <b>chave Pix</b>. Só deve ser preenchido nesse caso.
          
     BankRequestRecipient:
       type: object
@@ -1073,6 +1041,12 @@ components:
         ispb:
           type: string
           nullable: true
+        compe:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
       additionalProperties: false
       
     BankRecipientResponse:
@@ -1084,13 +1058,20 @@ components:
         compe:
           type: string
           nullable: true
+          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
         name:
           type: string
           nullable: true
+          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
       additionalProperties: false
     
     CreatePixRefundRequest:
       type: object
+      required:
+        - account
+        - authenticationCode
+        - amount
+        - refundCode
       properties:
         correlationId:
           type: string
@@ -1134,6 +1115,8 @@ components:
     PixTransferResponse:
       type: object
       properties:
+        companyKey:
+          type: string
         authenticationCode:
           type: string
           format: uuid
@@ -1142,9 +1125,6 @@ components:
           nullable: true
         initializationType:
           $ref: '#/components/schemas/PixInitializationType'
-        addressingKey:
-          type: string
-          nullable: true
         receiverReconciliationId:
           type: string
           nullable: true
@@ -1207,6 +1187,7 @@ components:
         amount:
           type: number
           format: double
+          description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
           nullable: true
         recipientName:
           minLength: 1
@@ -1216,16 +1197,21 @@ components:
         conciliationId:
           type: string
           nullable: true
+          description: Informe um valor que auxilie o parceiro a identificar a qual QR Code um determinado pagamento pertence.<br /> Esse campo é limitado a 25 caracteres e não aceita nenhum caractere especial.
         categoryCode:
           type: string
           nullable: true
         additionalData:
           type: string
           nullable: true
+        withdrawalProviderIspb:
+          type: string
+          description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
       additionalProperties: false
       
     Location:
       type: object
+      description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
       properties:
         city:
           type: string
@@ -1237,12 +1223,93 @@ components:
     
     DecodeQRCodeRequest:
       type: object
+      required: 
+      - encodedValue
       properties:
         encodedValue:
           type: string
-          nullable: true
       additionalProperties: false
-      
+    
+    PersonalInformationHolder:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        document:
+          type: string
+    
+    Payment:
+      type: object
+      properties:
+        baseValue:
+          type: number
+          format: double
+        interestValue:
+          type: number
+          format: double
+        penaltyValue:
+          type: number
+          format: double
+        discountValue:
+          type: number
+          format: double
+        totalValue:
+          type: number
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do total da compra ou transferência.
+        dueDate:
+          type: string
+          format: date-time
+        changeValue:
+          type: number
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do troco em espécie.
+        withdrawalValue:
+          type: string
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Saque</b>.<br /> Indica o valor do saque em espécie.
+      additionalProperties: false
+
+    WithdrawalDetail:
+      type: object
+      description: Informações retornadas em caso de decodificação de QR Code para Pix Saque.
+      properties:
+        changeAmountType:
+          type: string
+          description: Indica a possibilidade de alteração do valor do QR Code.
+        agentType:
+          type: string
+          description: Especifica o tipo de estabelecimento comercial que está fornecendo o saque.
+        providerIspb:
+          type: string
+          description: ISPB do provedor.
+      additionalProperties: false
+    
+    ChangeAmountDetail:
+        type: object
+        description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
+        properties:
+          changeAmountType:
+            type: string
+            description: Indica a possibilidade de alteração do valor do QR Code.
+          agentType:
+            type: string
+            description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
+
+    LocationResponse:
+      type: object
+      properties:
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          description: Retorna apenas na leitura de QR Codes estáticos.
+      additionalProperties: false
+
+    
   securitySchemes:
     Bearer:
       type: http
