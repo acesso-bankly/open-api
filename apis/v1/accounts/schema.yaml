@@ -10,10 +10,10 @@ paths:
     get:
       tags:
         - Conta de pagamentos
-      summary: Obtenha dados da conta de pagamentos.
+      summary: Consulta de dados de uma conta de pagamentos
       description: |
         <div class="bkly-ref-description">
-          <p>Opcionalmente você pode obter o saldo desta conta.</p> 
+          <p>Consulte todos os dados de uma conta de pagamentos. Opcionalmente, você pode obter o saldo dessa conta.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>  
       operationId: GetAccount
@@ -21,6 +21,11 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: '#/components/parameters/IncludeBalance'
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado.
@@ -50,7 +55,7 @@ paths:
     get:
       tags:
         - Conta pessoa física
-      summary: Obtenha as contas de pagamento de um cliente.
+      summary: Consulta das contas de pagamento de um cliente
       description: |
         <div class="bkly-ref-description">
           <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus respectivos status.</p> 
@@ -60,6 +65,11 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado.
@@ -88,7 +98,7 @@ paths:
     post:
       tags:
         - Conta pessoa física
-      summary: Crie uma conta de pagamentos pessoa física.
+      summary: Criação de conta de pagamentos pessoa física
       description: |
         <div class="bkly-ref-description">
           <p>O cliente poderá ter até 5 contas de pagamento, no entanto é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
@@ -106,6 +116,11 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
@@ -140,7 +155,7 @@ paths:
     get:
       tags:
         - Conta pessoa jurídica
-      summary: Obtenha as contas de pagamento de uma empresa.
+      summary: Consulta das contas de pagamento de uma empresa
       description: |
           <div class="bkly-ref-description">
             <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
@@ -150,6 +165,11 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       responses:
         '200':
           description: Recurso encontrado.
@@ -178,10 +198,10 @@ paths:
     post:
       tags:
         - Conta pessoa jurídica
-      summary: Crie uma conta de pagamentos para uma empresa (MEI, EI ou EIRELLI).
+      summary: Criação de conta de pagamentos para uma empresa (MEI, EI ou EIRELLI)
       description: |
         <div class="bkly-ref-description">
-          <p>A empresa poderá ter até 5 contas de pagamento, no entanto é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
+          <p>A empresa poderá ter até 5 contas de pagamento. Para isso, é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>  
         [block:callout]
@@ -196,6 +216,11 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey' 
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
       requestBody:
         content:
           application/json:
