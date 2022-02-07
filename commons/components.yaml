@@ -23,6 +23,15 @@ components:
         type: string
         default: 1
 
+    Authorization: 
+      name: authorization
+      in: header 
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type : string
+
     IdempotencyKey:
       name: Idempotency-Key
       in: header
