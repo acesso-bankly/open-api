@@ -622,8 +622,8 @@ components:
       - addressingKey
       type: object
       properties:
-        addressingKey: 
           $ref: '#/components/schemas/AddressingKey'
+        addressingKey: 
         account: 
           $ref: '#/components/schemas/Account'
       additionalProperties: false
@@ -651,6 +651,7 @@ components:
         branch:
           type: string
           nullable: true
+        compe:
         number:
           type: string
           nullable: true
@@ -725,6 +726,39 @@ components:
         name:
           type: string
           nullable: true
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+          nullable: true
+      additionalProperties: false
+
+    BankStatus:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        compe:
+          type: string
+          nullable: true
+          description: <code>compe</code> do banco do sender não é retornado em caso de Pix externo.
+        name:
+          type: string
+          nullable: true
+          description: <code>name</code> do banco do sender não é retornado em caso de Pix externo.
+      additionalProperties: false
+    
+    BankName:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code estático.
+        ispb: 
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code dinâmico.
+
       additionalProperties: false
 
     BankStatus:
@@ -763,11 +797,6 @@ components:
           nullable: true
         compe:
           type: string
-          nullable: true
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
           nullable: true
       additionalProperties: false
     
