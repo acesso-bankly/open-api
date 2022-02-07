@@ -46,6 +46,39 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /accounts/{accountNumber}/closure:
+    patch:
+      tags:
+        - Conta de pagamentos
+      summary: |
+        Encerramento de conta.
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite o encerramento da conta do cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.close</span>
+        </div>
+      operationId: CancelCustomerRegistration
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClosureRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /customers/{documentNumber}/accounts:
     get:
       tags:
@@ -330,7 +363,23 @@ components:
         number:
           $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
       additionalProperties: false
- 
+
+    ReasonType:
+      type: string
+      description: |
+        Motivo do encerramento. 
+        _Default: **HOLDER_REQUEST**_.
+      default: HOLDER_REQUEST
+      enum:
+        - HOLDER_REQUEST
+        - COMMERCIAL_DISAGREEMENT
+        
+    ClosureRequest:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/ReasonType'
+      additionalProperties: false 
 
   examples:
 
@@ -368,6 +417,13 @@ components:
           status: 'CLOSED'
       summary: Lista de contas de pagamento
 
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+      bearerFormat: JWT
+      
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
