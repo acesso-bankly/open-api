@@ -14,7 +14,7 @@ paths:
       tags:
         - Pessoa física
       summary: |
-        Obtenha o registro do cliente.
+        Obtenha o registro do cliente
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
@@ -100,7 +100,7 @@ paths:
       tags:
         - Pessoa física
       summary: |
-        Registre ou atualize dos dados de um cliente pessoa física.
+        Registre ou atualize dos dados de um cliente pessoa física
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e resultado você pode obter consultando o registro do cliente. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p>
@@ -140,7 +140,7 @@ paths:
       tags:
         - Pessoa física
       summary: |
-        Cancelamento de registro pessoa física.
+        Cancelamento de registro pessoa física
       description: |
         <div class="bkly-ref-description">
           <p>Solicite o o cancelamento de relacionamento do cliente pessoa física.</p> 
@@ -174,7 +174,7 @@ paths:
       tags:
         - Pessoa jurídica
       summary: |
-        Obtenha o registro da empresa.
+        Obtenha o registro da empresa
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
