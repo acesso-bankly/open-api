@@ -52,7 +52,7 @@ paths:
       tags:
         - Conta de pagamentos
       summary: |
-        Encerramento de conta.
+        Encerramento de conta
       description: |
         <div class="bkly-ref-description">
           <p>Solicite o encerramento da conta do cliente.</p> 
