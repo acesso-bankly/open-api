@@ -622,45 +622,10 @@ components:
       - addressingKey
       type: object
       properties:
-          $ref: '#/components/schemas/AddressingKey'
-        addressingKey: 
-        account: 
-          $ref: '#/components/schemas/Account'
-      additionalProperties: false
-
-    CreateEntryResponse:
-      type: object
-      properties:
         addressingKey:
           $ref: '#/components/schemas/AddressingKey'
-        account:
-          $ref: '#/components/schemas/PaymentAccount'
-        status:
-          $ref: '#/components/schemas/EntryStatus'
-        createdAt:
-          type: string
-          format: date-time
-        ownedAt:
-          type: string
-          format: date-time
-      additionalProperties: false
-      
-    PaymentAccount:
-      type: object
-      properties:
-        branch:
-          type: string
-          nullable: true
-        compe:
-        number:
-          type: string
-          nullable: true
-        type:
-          $ref: '#/components/schemas/AccountType'
-        holder:
-          $ref: '#/components/schemas/Holder'
-        bank:
-          $ref: '#/components/schemas/Bank'
+        account: 
+          $ref: '#/components/schemas/Account'
       additionalProperties: false
 
     EntryStatus:
@@ -669,32 +634,6 @@ components:
         - EXCLUDED
         - LOCKED_BY_CLAIM
       type: string
-   
-    Holder:
-      type: object
-      properties:
-        addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
-        account:
-          $ref: '#/components/schemas/PaymentAccount'
-        status:
-          $ref: '#/components/schemas/EntryStatus'
-        createdAt:
-          type: string
-          format: date-time
-        ownedAt:
-          type: string
-          description: Nome comercial (nome fantasia) da empresa. Esse campo é retornado apenas quando o Person é Pessoa Jurídica
-          nullable: true
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa.
-          nullable: true
-      additionalProperties: false
     
     HolderType:
       enum:
