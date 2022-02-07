@@ -617,13 +617,13 @@ components:
       additionalProperties: false
 
     CreateEntryRequest:
+      type: object
       required:
       - account
       - addressingKey
-      type: object
       properties:
-          $ref: '#/components/schemas/AddressingKey'
-        addressingKey: 
+        addressingKey:
+          $ref: '#/components/schemas/AddressingKey' 
         account: 
           $ref: '#/components/schemas/Account'
       additionalProperties: false
