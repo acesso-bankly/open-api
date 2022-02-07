@@ -21,11 +21,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: '#/components/parameters/IncludeBalance'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -65,11 +61,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -116,11 +108,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
@@ -165,11 +153,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -216,11 +200,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey' 
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
