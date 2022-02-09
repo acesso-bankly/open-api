@@ -224,7 +224,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "O cartão multíplo tem como principal caracteristica ter no mesmo plástico um número pré e um pós. Porém, um dos números ficará adormecido enquanto o outro estiver ativo."
+          "body": "O cartão múltiplo tem como principal característica ter no mesmo plástico um número pré e um pós. Porém, um dos números ficará adormecido enquanto o outro estiver ativo."
         }
         [/block]
       operationId: cardCreateMultipleCard
@@ -239,7 +239,7 @@ paths:
               $ref: "#/components/schemas/createCardRequest"
       responses:
         '202':
-          description: Cartão
+          description: A solicitação foi aceita e o cartão está sendo criado.
           content:
             application/json:
               schema:
@@ -326,7 +326,7 @@ paths:
       summary: Segunda via de cartão
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma segunda via de um cartão físico com as mesmas caracteristicas da primeira via.</p> 
+          <p>Crie uma segunda via de um cartão físico com as mesmas características da primeira via.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
         [block:callout]
@@ -550,14 +550,14 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres)
+          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Lista com os cartões pertecente ao documento.
+          description: Lista com os cartões pertecentes ao documento.
           content:
             application/json:
               schema:
@@ -685,7 +685,7 @@ paths:
         - name: activationCode
           in: path
           required: true
-          description: Código de ativação do cartão (12 caracteres)
+          description: Código de ativação do cartão (12 caracteres).
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
@@ -820,7 +820,7 @@ paths:
         - name: agency
           in: query
           required: false
-          description: Número de agência (4 dígitos)
+          description: Número de agência (4 dígitos).
           schema:
             type: string
         - name: account
@@ -831,14 +831,14 @@ paths:
         - name: documentNumber
           in: query
           required: false
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres)
+          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Lista com os cartões pertecente a conta.
+          description: Lista com os cartões pertecentes à conta.
           content:
             application/json:
               schema:
@@ -1351,7 +1351,7 @@ paths:
     patch:
       tags:
         - Status do cartão
-      summary: Altera o status do cartão
+      summary: Alteração do status do cartão
       description: O status do cartão poderá ser alterado para temporário ou definitivo.
       operationId: cardChangeCardStatus
       parameters:
@@ -1370,7 +1370,7 @@ paths:
               $ref: "#/components/schemas/changeCardStatusRequest"
       responses:
         '200':
-          description: Se o status foi alterado.
+          description: O status foi alterado com sucesso.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
@@ -1439,7 +1439,7 @@ paths:
     patch:
       tags:
       - Status do cartão
-      summary: Configuração do contactless.
+      summary: Configuração do contactless
       description: Ative ou desative a função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado, não será possível realizar transações com o uso de carteiras digitais.
       operationId: cardContactLess
       parameters:
@@ -1456,7 +1456,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Se realizou a alteração com sucesso.
+          description: Alteração realizada com sucesso.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
@@ -1539,7 +1539,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: A solicitação é recebida e retorna os dados dos lotes.
+          description: Solicitação recebida. O retorno traz os dados dos lotes.
         '204':
           description: Não foram encontrados lotes.              
         '400':
@@ -1595,7 +1595,7 @@ paths:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
-      description: Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias, e o valor máximo permitido no parâmetro <code>pageSize</code> é de 100.
+      description: Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias.
       operationId: cardTransactionsByCard
       parameters:
         - name: proxy
@@ -1610,6 +1610,7 @@ paths:
             type: string
         - name: pageSize
           in: query
+          description: O valor máximo permitido é de 100.
           required: false
           schema:
             type: integer
@@ -1627,7 +1628,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Lista as transações pertecente ao cartão, além das propriedades referente a páginação da consulta.
+          description: Lista as transações pertencentes ao cartão, além das propriedades referentes à paginação da consulta.
           content:
             application/json:
               schema:
@@ -1739,7 +1740,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: A solicitação é recebida e retorna o rastreio do cartão do proxy correspondente.
+          description: Solicitação recebida. O retorno é o rastreio do cartão do proxy correspondente.
           content:
             application/json:
               schema:
@@ -1837,10 +1838,10 @@ components:
       properties:
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).
+          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
         cardName:
           type: string
-          description: Nome que será impresso no cartão (não será permitido o uso de números, caracteres especiais e o tamanho máximo é de 19 caracteres).
+          description: Nome que será impresso no cartão (não será permitido o uso de números e caracteres especiais). Tamanho máximo de 19 caracteres.
         alias:
           type: string
           description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).
@@ -1855,7 +1856,7 @@ components:
           description: Identificador do programa que será vinculado ao cartão (se não informado, será utilizado o programa padrão associado para o parceiro).
         password:
           type: string
-          description: "Senha do cartão para realizar transações (preencher com quatro números. Exemplo: '9348')."
+          description: "Senha do cartão para realizar transações (preencha com quatro números. Exemplo: '9348')."
         address:
           type: object
           description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
@@ -1937,13 +1938,13 @@ components:
           description: Motivo da segunda via.
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números).
+          description: Número de documento de CPF ou CNPJ (informe somente os números).
         description:
           type: string
           description: Detalhes do cancelamento com qualquer informação considerada como relevante.
         password:
           type: string
-          description: "Senha do cartão atual (primeira via) para realizar transações (preencher com quatro campos números. Exemplo: '9348')."
+          description: "Senha do cartão atual (primeira via) para realizar transações (preencha com quatro campos números. Exemplo: '9348')."
         address:
           type: object
           description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente).
@@ -2262,7 +2263,7 @@ components:
         status:
           type: string
           $ref: "#/components/schemas/cardStatus"
-          description: Status para qua o cartão será modificado.
+          description: Status para o qual o cartão será modificado.
         password:
           type: string
           description: Senha de uso do cartão (4 dígitos).
@@ -2282,7 +2283,7 @@ components:
           description: Identificador da próxima página.
         hasLastPage:
           type: boolean
-          description: Indica se existe a próxima página na consuta.
+          description: Indica se existe a próxima página na consulta.
         transactions:
           type: array
           description: Transações do cartão.
@@ -2471,16 +2472,16 @@ components:
             properties:
               createdDate:
                 type: string
-                description: Data em que baixa adicionada (formato 'yyyy-MM-ddTHH:mm:ss').
+                description: Data em que a baixa foi adicionada (formato 'yyyy-MM-ddTHH:mm:ss').
               recipientName:
                 type: string
                 description: Nome do recebedor do cartão.
               recipientKinship:
                 type: string
-                description: Grau de parentêsco com o titular do cartão.
+                description: Grau de parentesco com o titular do cartão.
               documentNumber:
                 type: string
-                description: Documento do recebdor do cartão.
+                description: Documento do recebedor do cartão.
               attempts:
                 type: number
                 description: Quantidade de tentativas de entrega.
