@@ -15,7 +15,7 @@ paths:
       tags:
       - Criação de cartão
       summary: Cartão virtual
-      description: Responsável pela criação de um cartão virtual que será utilizado em compras não presenciais
+      description: Crie um cartão virtual que será utilizado em compras não presenciais.
       operationId: cardCreateVirtualCard
       parameters:
       - $ref: "#/components/parameters/apiVersion"
@@ -115,7 +115,7 @@ paths:
       tags:
         - Criação de cartão
       summary: Cartão físico
-      description: Responsável pela criação de um cartão físico que será embossado e entrege no endereço informado.
+      description: Crie um cartão físico que será embossado e entregue no endereço informado.
       operationId: cardCreatePhysicalCard
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -224,7 +224,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "O cartão multíplo tem como principal caracteristica ter no mesmo plástico um número pré e um pós, porém um dos números ficará adormecido enquanto o outro estiver ativo."
+          "body": "O cartão multíplo tem como principal caracteristica ter no mesmo plástico um número pré e um pós. Porém, um dos números ficará adormecido enquanto o outro estiver ativo."
         }
         [/block]
       operationId: cardCreateMultipleCard
@@ -326,7 +326,7 @@ paths:
       summary: Segunda via de cartão
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma segunda via de cartão um cartão físico com as mesmas caracteristicas da primeira via.</p> 
+          <p>Crie uma segunda via de um cartão físico com as mesmas caracteristicas da primeira via.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
         [block:callout]
@@ -411,7 +411,7 @@ paths:
       summary: Por proxy
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha dados de um cartão consultando pelo seu proxy.</p> 
+          <p>Consulte os dados de um cartão pelo seu proxy.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: GetCardByProxy
@@ -542,7 +542,7 @@ paths:
       summary: Por documento (CPF ou CNPJ)
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os cartões vinculado ao número de documento (CPF ou CNPJ) do titular.</p> 
+          <p>Consulte os cartões vinculados ao número de documento (CPF ou CNPJ) do titular.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetCardsByDocument
@@ -677,7 +677,7 @@ paths:
       summary: Por código de ativação
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os cartões através do seu código de ativação.</p> 
+          <p>Consulte os cartões através do seu código de ativação.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetByActivateCode
@@ -812,7 +812,7 @@ paths:
       summary: Por conta
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os cartões vinculados a uma conta de pagamentos.</p> 
+          <p>Consulte os cartões vinculados a uma conta de pagamentos.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetCardsByAccount
@@ -959,7 +959,7 @@ paths:
       summary: Dados de segurança do cartão
       description: |
         <div class="bkly-ref-description">
-          <p>Obtém os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
+          <p>Consulte os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: getDataPci
@@ -1059,7 +1059,7 @@ paths:
       tags:
         - Gestão de senha
       summary: Alterar senha
-      description: Altera a senha do cartão.
+      description: Altere a senha do cartão.
       operationId: cardChangeCardPassword
       parameters:
         - name: proxy
@@ -1148,7 +1148,7 @@ paths:
       tags:
         - Wallets
       summary: Gerar token
-      description: Realiza a geração do token com os dados criptografados do cartão para adição do cartão junto à uma carteira digital.
+      description: Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.
       operationId: GenerateTokenizationForWallet
       parameters:
         - name: proxy
@@ -1263,7 +1263,7 @@ paths:
       tags:
         - Status do cartão
       summary: Ativação de cartão
-      description: Realiza a ativação do cartão pela primeira vez.
+      description: Realize a ativação do cartão pela primeira vez.
       operationId: cardActivateCard
       parameters:
         - name: proxy
@@ -1352,7 +1352,7 @@ paths:
       tags:
         - Status do cartão
       summary: Altera o status do cartão
-      description: O status do cartão será alterado para um status que pode ser temporário e definitivo.
+      description: O status do cartão poderá ser alterado para temporário ou definitivo.
       operationId: cardChangeCardStatus
       parameters:
         - name: proxy
@@ -1440,7 +1440,7 @@ paths:
       tags:
       - Status do cartão
       summary: Configuração do contactless.
-      description: Permite a ativação/desativação da função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado não será possivel realizar transações com o uso de carteiras digital.
+      description: Ative ou desative a função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado, não será possível realizar transações com o uso de carteiras digitais.
       operationId: cardContactLess
       parameters:
         - name: proxy
@@ -1526,8 +1526,8 @@ paths:
     get:
       tags:
         - Status do cartão
-      summary: Consulta dos proximos status
-      description: Responsável por retornar todos os possiveis próximos status válidos para o cartão. Será considerado as permissões concedidas para o token informado na requisição.
+      summary: Consulta dos próximos status
+      description: Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o token informado na requisição.
       operationId: cardGetLots
       parameters:
         - name: proxy
@@ -1595,7 +1595,7 @@ paths:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
-      description: Obtém as transações realizadas no cartão de acordo com os filtros informados. Obs. A diferença entre a data de início e fim deverá ter o máximo de sete dias, e o valor máximo permitido no parâmetro PageSize é de 100.
+      description: Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias, e o valor máximo permitido no parâmetro <code>pageSize</code> é de 100.
       operationId: cardTransactionsByCard
       parameters:
         - name: proxy
@@ -1727,7 +1727,7 @@ paths:
       tags:
         - Rastreio de Cartões
       summary: Por proxy
-      description: Obtém o rastreio do cartão pelo seu proxy.
+      description: Obtenha o rastreio do cartão pelo seu proxy.
       operationId: trackingGetByProxy
       parameters:
         - name: proxy
@@ -1837,28 +1837,28 @@ components:
       properties:
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres)
+          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).
         cardName:
           type: string
-          description: Nome que será impresso no cartão (não será permitido o uso de números, caracteres especiais e o tamanho máximo é de 19 caracteres)
+          description: Nome que será impresso no cartão (não será permitido o uso de números, caracteres especiais e o tamanho máximo é de 19 caracteres).
         alias:
           type: string
-          description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres)
+          description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).
         bankAgency:
           type: string
-          description: Número de agência (4 dígitos)
+          description: Número de agência (4 dígitos).
         bankAccount:
           type: string
-          description: Número de conta que o cartão será vinculado
+          description: Número de conta que o cartão será vinculado.
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado será utilizado o programa padrão associado para o parceiro)
+          description: Identificador do programa que será vinculado ao cartão (se não informado, será utilizado o programa padrão associado para o parceiro).
         password:
           type: string
-          description: Senha do cartão para realizar transações (preencher com quatro números ex. '9348')
+          description: "Senha do cartão para realizar transações (preencher com quatro números. Exemplo: '9348')."
         address:
           type: object
-          description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente)
+          description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
           properties:
             zipCode:
               type: string
@@ -1915,7 +1915,7 @@ components:
       properties:
         reference:
           type: string
-          description: Link para documentação de integração
+          description: Link para documentação de integração.
         errors:
           type: array
           items:
@@ -1934,44 +1934,44 @@ components:
         status:
           type: string
           $ref: "#/components/schemas/duplicateCardStatus"
-          description: Motivo da segunda via
+          description: Motivo da segunda via.
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números)
+          description: Número de documento de CPF ou CNPJ (informar somente os números).
         description:
           type: string
-          description: Detalhes do cancelamento com qualquer informação considerada como relevante
+          description: Detalhes do cancelamento com qualquer informação considerada como relevante.
         password:
           type: string
-          description: Senha do cartão atual (primeira via) para realizar transações (preencher com quatro campos números ex. '9348')
+          description: "Senha do cartão atual (primeira via) para realizar transações (preencher com quatro campos números. Exemplo: '9348')."
         address:
           type: object
-          description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente)
+          description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente).
           properties:
             zipCode:
               type: string
-              description: CEP (informar somente os números)
+              description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro
+              description: Logradouro.
             number:
               type: string
-              description: Número
+              description: Número.
             neighborhood:
               type: string
-              description: Bairro
+              description: Bairro.
             complement:
               type: string
-              description: Complemento
+              description: Complemento.
             city:
               type: string
-              description: Cidade
+              description: Cidade.
             state:
               type: string
-              description: Estado (informar a UF)
+              description: Estado (informar a UF).
             country:
               type: string
-              description: País
+              description: País.
           required:
             - zipCode
             - address
@@ -2165,7 +2165,7 @@ components:
       properties:
         password:
           type: string
-          description: Senha informada na criação do cartão (4 dígitos)
+          description: Senha informada na criação do cartão (4 dígitos).
       required:
         - password
     
@@ -2208,50 +2208,50 @@ components:
       properties:
         data:
           type: string
-          description: Token gerado
+          description: Token gerado.
         lastFourDigits:
           type: string
-          description: Últimos quatro dígitos do cartão
+          description: Últimos quatro dígitos do cartão.
         phoneNumber:
           type: string
-          description: Número de contato do cliente
+          description: Número de contato do cliente.
         address:
           type: object
           properties:
             zipCode:
               type: string
-              description: CEP do endereço
+              description: CEP do endereço.
             address:
               type: string
-              description: Logradouro
+              description: Logradouro.
             number:
               type: string
-              description: Número
+              description: Número.
             neighborhood:
               type: string
-              description: Bairro
+              description: Bairro.
             complement:
               type: string
-              description: Complemento
+              description: Complemento.
             city:
               type: string
-              description: Cidade
+              description: Cidade.
             state:
               type: string
-              description: Estado (UF)
+              description: Estado (UF).
             country:
               type: string
-              description: País
+              description: País.
               
     activateCardRequest:
       type: object
       properties:
         activateCode:
           type: string
-          description: Código de ativação do cartão (12 caracteres)
+          description: Código de ativação do cartão (12 caracteres).
         password:
           type: string
-          description: Senha de uso do cartão (4 dígitos)
+          description: Senha de uso do cartão (4 dígitos).
       required:
         - activateCode
         - password
@@ -2446,7 +2446,7 @@ components:
               description: País.
             isActive:
               type: boolean
-              description: Situação de endereço de rastreio
+              description: Situação de endereço de rastreio.
         status:
           type: array
           description: Histórico de status do rastreio.
@@ -2480,10 +2480,10 @@ components:
                 description: Grau de parentêsco com o titular do cartão.
               documentNumber:
                 type: string
-                description: Documento do recebdor do cartão
+                description: Documento do recebdor do cartão.
               attempts:
                 type: number
-                description: Quantidade de tentativas de entrega
+                description: Quantidade de tentativas de entrega.
 
     trackingStatus:
       type: string
@@ -2500,7 +2500,7 @@ components:
       properties:
         reference:
           type: string
-          description: Link para documentação de integração
+          description: Link para documentação de integração.
         errors:
           type: array
           items:

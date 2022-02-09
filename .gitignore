@@ -1,1 +1,4 @@
 node_modules
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+.vs/open-api/v17/.suo
