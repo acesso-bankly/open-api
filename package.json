@@ -15,13 +15,13 @@
       "edit:holders": "npm run start && pm2 --name holders_api_oas start ./apis/v1/holders/oas.editor.js",
       "edit:accounts": "npm run start && pm2 --name holders_api_oas start ./apis/v1/accounts/oas.editor.js",
       "edit:cards": "npm run start && pm2 --name holders_api_oas start ./apis/v1/cards/oas.editor.js",
-      "edit:pix": "openapi-editor --file ./apis/v1/pix/schema.yaml --port 23007",
+      "edit:pix": "openapi-editor --file ./apis/v1/limites/schema.yaml --port 23007",
       "edit:ted": "openapi-editor --file ./apis/v1/ted/schema.yaml --port 23008",
       "edit:boletos": "openapi-editor --file ./apis/v1/boletos/schema.yaml --port 23009",
       "edit:paybill": "openapi-editor --file ./apis/v1/paybill/schema.yaml --port 23010",
       "edit:events": "npm run start && pm2 --name holders_api_oas start ./apis/v1/events/oas.editor.js",
       "edit:helpers": "openapi-editor --file ./apis/v1/helpers/schema.yaml --port 23012",
-      "edit:limites": "openapi-editor --file ./apis/v1/limites/schema.yaml --port 23013"
+      "edit:limites": "openapi-editor --file ./apis/v1/limites/schema.yaml --port 23030"
     },
     "repository": {
       "type": "git",
