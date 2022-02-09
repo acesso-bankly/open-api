@@ -10,10 +10,10 @@ paths:
     get:
       tags:
         - Conta de pagamentos
-      summary: Obtenha dados da conta de pagamentos.
+      summary: Consulta de dados de uma conta de pagamentos
       description: |
         <div class="bkly-ref-description">
-          <p>Opcionalmente você pode obter o saldo desta conta.</p> 
+          <p>Consulte todos os dados de uma conta de pagamentos. Opcionalmente, você pode obter o saldo dessa conta.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>  
       operationId: GetAccount
@@ -21,6 +21,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: '#/components/parameters/IncludeBalance'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -46,11 +47,51 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  /accounts/{accountNumber}/closure:
+    patch:
+      tags:
+        - Conta de pagamentos
+      summary: |
+        Encerramento de conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite o encerramento da conta do cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.close</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> de uma conta antes de solicitar o seu cancelamento."
+        }
+        [/block] 
+      operationId: CancelCustomerRegistration
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClosureRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /customers/{documentNumber}/accounts:
     get:
       tags:
         - Conta pessoa física
-      summary: Obtenha as contas de pagamento de um cliente.
+      summary: Consulta das contas de pagamento de um cliente
       description: |
         <div class="bkly-ref-description">
           <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus respectivos status.</p> 
@@ -60,6 +101,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -88,10 +130,10 @@ paths:
     post:
       tags:
         - Conta pessoa física
-      summary: Crie uma conta de pagamentos pessoa física.
+      summary: Criação de conta de pagamentos pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>O cliente poderá ter até 5 contas de pagamento, no entanto é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
+          <p>O cliente poderá ter até 5 contas de pagamento. No entanto, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>
         [block:callout]
@@ -106,6 +148,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
@@ -140,7 +183,7 @@ paths:
     get:
       tags:
         - Conta pessoa jurídica
-      summary: Obtenha as contas de pagamento de uma empresa.
+      summary: Consulta das contas de pagamento de uma empresa
       description: |
           <div class="bkly-ref-description">
             <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
@@ -150,6 +193,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
@@ -178,17 +222,17 @@ paths:
     post:
       tags:
         - Conta pessoa jurídica
-      summary: Crie uma conta de pagamentos para uma empresa (MEI, EI ou EIRELLI).
+      summary: Criação de conta de pagamentos para uma empresa (MEI, EI ou EIRELLI)
       description: |
         <div class="bkly-ref-description">
-          <p>A empresa poderá ter até 5 contas de pagamento, no entanto é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
+          <p>A empresa poderá ter até 5 contas de pagamento. Para isso, é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>  
         [block:callout]
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Considere o uso do header ```Idempotency-Key``` afim de evitar criar contas indesejadas."
+          "body": "Considere o uso do header ```Idempotency-Key```, a fim de evitar criar contas indesejadas."
         }
         [/block] 
       operationId: CreateBusinessAccount
@@ -196,6 +240,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey' 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
@@ -330,7 +375,23 @@ components:
         number:
           $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
       additionalProperties: false
- 
+
+    ReasonType:
+      type: string
+      description: |
+        Motivo do encerramento. 
+        _Default: **HOLDER_REQUEST**_.
+      default: HOLDER_REQUEST
+      enum:
+        - HOLDER_REQUEST
+        - COMMERCIAL_DISAGREEMENT
+        
+    ClosureRequest:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/ReasonType'
+      additionalProperties: false 
 
   examples:
 
@@ -368,6 +429,13 @@ components:
           status: 'CLOSED'
       summary: Lista de contas de pagamento
 
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua um token de autorização do tipo Bearer.
+      scheme: bearer
+      bearerFormat: JWT
+      
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

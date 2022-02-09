@@ -14,7 +14,7 @@ paths:
       tags:
         - Pessoa física
       summary: |
-        Obtenha o registro do cliente.
+        Consulta do registro do cliente
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
@@ -100,7 +100,7 @@ paths:
       tags:
         - Pessoa física
       summary: |
-        Registre ou atualize dos dados de um cliente pessoa física.
+        Registro dos dados de cliente pessoa física
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e resultado você pode obter consultando o registro do cliente. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p>
@@ -135,12 +135,53 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  '/customers/{documentNumber}/cancel':
+    patch:
+      tags:
+        - Pessoa física
+      summary: |
+        Offboarding de pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite o o cancelamento de relacionamento do cliente pessoa física.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> atreladas ao documento antes de solicitar o seu Offboarding."
+        }
+        [/block]
+      operationId: CancelCustomerRegistration
+      parameters:
+        - $ref: >-
+            http://localhost:3320/commons/components#/components/parameters/CustomerDocument
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   '/business/{documentNumber}':
     get:
       tags:
         - Pessoa jurídica
       summary: |
-        Obtenha o registro da empresa.
+        Cosulta do registro da empresa
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
@@ -252,7 +293,7 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registre ou atualize dos dados de um cliente pessoa física.
+      summary: Registro dos dados de cliente pessoa jurídica
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e resultado você pode obter consultando o registro da empresa. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p> 
@@ -274,6 +315,47 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RegisterBusinessRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  '/business/{documentNumber}/cancel':
+    patch:
+      tags:
+        - Pessoa jurídica
+      summary: |
+        Offboarding de pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite o o cancelamento de relacionamento do cliente pessoa jurídica.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: business.cancel</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> atreladas ao documento antes de solicitar o seu Offboarding."
+        }
+        [/block]
+      operationId: CancelBusinessRegistration
+      parameters:
+        - $ref: >-
+            http://localhost:3320/commons/components#/components/parameters/BusinessDocument
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelRequest'
       responses:
         '202':
           $ref: 'http://localhost:3320/commons/components#/components/responses/202'
@@ -607,6 +689,21 @@ components:
           nullable: true
           items:
             type: string
+      additionalProperties: false
+    ReasonType:
+      type: string
+      description: |
+        Motivo do cancelamento. 
+        _Default: **HOLDER_REQUEST**_.
+      default: HOLDER_REQUEST
+      enum:
+        - HOLDER_REQUEST
+        - COMMERCIAL_DISAGREEMENT
+    CancelRequest:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/ReasonType'
       additionalProperties: false
   securitySchemes:
     Bearer:

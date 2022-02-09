@@ -54,7 +54,7 @@ paths:
       tags:
         - Análise de documentos
       summary: |
-        Envie documentos (SELFIE, RG, CNH) para análise.
+        Envie documentos (SELFIE, RG, CNH, RNE, DNI, CRNM) para análise.
       description: |
         <div class="bkly-ref-description">
           <p>Essa análise é um pré-requisito para fluxo de onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
@@ -154,10 +154,13 @@ components:
       type: string
       description: |
         Tipo do documento.
-        _(RG, CNH, SELFIE)_
+        _(RG, CNH, RNE, CRNM, DNI, SELFIE)_
       enum:
         - RG
         - CNH
+        - RNE
+        - CRNM
+        - DNI
         - SELFIE
 
     DocumentSide:
