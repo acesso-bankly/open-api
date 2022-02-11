@@ -134,13 +134,13 @@ paths:
             schema:
               $ref: '#/components/schemas/MaximumLimitRequest'
       responses:
-        '201':
+        '200':
           description: |
             Sucesso na criação ou atualização do limite.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MaximumLimitRequest'
+                $ref: '#/components/schemas/MaximumLimitResponse'
         '400':
           description: |
             Há algum problema com sua requisição.
