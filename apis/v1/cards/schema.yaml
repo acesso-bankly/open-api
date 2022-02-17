@@ -1749,7 +1749,7 @@ paths:
                 response:
                   value:
                     createdDate: "2020-07-20T22:53:12"
-                    companyKey: "Acesso"
+                    correiosTrackingCode: "A2327692D592"
                     name: Jose da Silva
                     alias: Meu Cartão
                     address:
@@ -2406,9 +2406,9 @@ components:
         createdDate:
           type: string
           description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
-        companyKey:
+        correiosTrackingCode:
           type: string
-          description: Identificador da companhia.
+          description: Código de rastreio junto ao serviço dos correios.
         name:
           type: string
           description: Nome impresso no cartão.
@@ -2419,35 +2419,37 @@ components:
           type: string
           description: Data prevista de entrega do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
         address:
-          type: object
-          properties:
-            zipCode:
-              type: string
-              description: CEP.
-            address:
-              type: string
-              description: Logradouro.
-            number:
-              type: string
-              description: Número.
-            neighborhood:
-              type: string
-              description: Bairro.
-            complement:
-              type: string
-              description: Complemento.
-            city:
-              type: string
-              description: Cidade.
-            state:
-              type: string
-              description: Estado (formato UF).
-            country:
-              type: string
-              description: País.
-            isActive:
-              type: boolean
-              description: Situação de endereço de rastreio.
+          type: array
+          description: Lista de endereços do rastreio
+          items:
+            properties:
+              zipCode:
+                type: string
+                description: CEP.
+              address:
+                type: string
+                description: Logradouro.
+              number:
+                type: string
+                description: Número.
+              neighborhood:
+                type: string
+                description: Bairro.
+              complement:
+                type: string
+                description: Complemento.
+              city:
+                type: string
+                description: Cidade.
+              state:
+                type: string
+                description: Estado (formato UF).
+              country:
+                type: string
+                description: País.
+              isActive:
+                type: boolean
+                description: Situação de endereço de rastreio.
         status:
           type: array
           description: Histórico de status do rastreio.
