@@ -107,46 +107,6 @@ paths:
                 $ref: '#/components/schemas/GetBankslipByAuthenticationCodeResponse'
       security:
         - Bearer: []
-  /bankslip/{barcode}:
-    get:
-      tags:
-        - Emissão de boleto
-      summary: Obtenha dados do boleto por código de barras
-      description: Utilize para verificar o status do boleto ou outras informações
-      operationId: GetByBarcode
-      parameters:
-        - name: barcode
-          in: path
-          required: true
-          schema:
-            type: string
-            nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
-      security:
-        - Bearer: []
   /bankslip/{authenticationCode}/pdf:
     get:
       tags:
@@ -178,54 +138,6 @@ paths:
               description: Id correlação da operação requisitada.
               schema:
                 type: string
-  /bankslip/branch/{branch}/number/{number}/search:
-    get:
-      tags:
-        - Emissão de boleto
-      summary: Pesquisa de boletos por conta
-      description: Utilize para listar os boletos por conta
-      operationId: Search
-      parameters:
-        - name: request
-          in: query
-          schema:
-            $ref: '#/components/schemas/SearchRequest'
-        - name: branch
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: number
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
-      security:
-        - Bearer: []
   /bankslip/searchstatus/{date}:
     get:
       tags:
@@ -420,9 +332,6 @@ components:
           type: string
           description: Data de vencimento
           format: date-time
-        emissionFee:
-          type: boolean
-          description: Inclua a tarifa de emissão.
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
