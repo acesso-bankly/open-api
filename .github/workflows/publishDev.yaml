@@ -7,7 +7,7 @@ name: Sync OAS to ReadMe - DEV
 on:
   push:
     branches:
-      - 2ViaCartao
+      - 2viaCartao
 
 jobs:
   validate:
@@ -44,7 +44,7 @@ jobs:
             ./apis/v1/pix/schema.yaml
             ./apis/v1/limites/schema.yaml
   publish:
-    if: ${{ success() && github.ref=='refs/heads/2ViaCartao' }}
+    if: ${{ success() && github.ref=='refs/heads/2viaCartao' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
