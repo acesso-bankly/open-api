@@ -345,6 +345,12 @@ paths:
             type: string
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createDuplicateCardRequest"
       responses:
         '202':
           description: Cartão
