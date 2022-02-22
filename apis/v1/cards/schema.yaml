@@ -1749,18 +1749,13 @@ paths:
                 response:
                   value:
                     createdDate: "2020-07-20T22:53:12"
-                    correiosTrackingCode: "A2327692D592"
+                    externalTracking:
+                      code: "A2327692D592"
+                      partner: "CORREIOS"
                     name: Jose da Silva
                     alias: Meu Cartão
                     address:
-                      zipCode: "05402100"
-                      address: Avenida Rebouças
-                      number: "1368"
-                      neighborhood: Pinheiros
-                      complement: Em frente a Wizard
-                      city: São Paulo
-                      state: SP
-                      country: Brasil
+                      [ { zipCode: "05402100", address: Avenida Rebouças, number: "1368", neighborhood: Pinheiros, complement: Em frente a Wizard, city: São Paulo, state: SP, country: Brasil } ]
                     status:
                       [ { createdDate: "2020-07-20T22:53:12", type: Created, reason: Created  }, { createdDate: "2020-07-20T22:55:12", type: InProgress, reason: In route to delivery } ]
                     finalized:
@@ -2406,9 +2401,16 @@ components:
         createdDate:
           type: string
           description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
-        correiosTrackingCode:
-          type: string
-          description: Código de rastreio junto ao serviço dos correios.
+        externalTracking:
+          type: object
+          description: Objeto para rastreio de serviço externo
+          properties:
+            code:
+              type: string
+              description: Código de rastreio junto ao serviço externo.
+            partner: 
+              type: string
+              description: Nome do parceiro do serviço externo.
         name:
           type: string
           description: Nome impresso no cartão.
