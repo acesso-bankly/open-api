@@ -141,7 +141,7 @@ paths:
       tags:
         - Emissão de boleto
       summary: Impressão do boleto
-       description: |
+      description: |
         <div class="bkly-ref-description">
           <p>Realize a impressão em PDF do boleto emitido. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
