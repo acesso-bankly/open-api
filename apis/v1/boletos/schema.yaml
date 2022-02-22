@@ -10,8 +10,12 @@ paths:
     post:
       tags:
         - Emissão de boleto
-      summary: Solicite a emissão de boleto
-      description: Emita boletos
+      summary: Solicitação da emissão de boletos
+      description: |
+        <div class="bkly-ref-description">
+          <p>Emita boletos de depósito ou cobrança.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+        </div>  
       operationId: Create
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -61,8 +65,12 @@ paths:
     get:
       tags:
         - Emissão de boleto
-      summary: Obtenha dados do boleto
-      description: Utilize para verificar o status do boleto ou outras informações
+      summary: Consulta de status
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a consulta de status para ter acesso a todas as informações do boleto.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+        </div>  
       operationId: GetByAuthenticationCode
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -365,12 +373,13 @@ components:
     
     BankslipStatus:
       enum:
-        - Accepted
+        - Processed
         - Registered
+        - MarkedConciliation
+        - Conciliation
         - Settled
-        - Error
-        - Cancelled
-        - Expired
+        - CancelledByRecipient
+        - CancelledByDeadLine
       type: string
     
     PriceValue:
