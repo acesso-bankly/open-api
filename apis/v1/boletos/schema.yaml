@@ -10,16 +10,12 @@ paths:
     post:
       tags:
         - Emissão de boleto
-      summary: Solicite a emissão de um boleto de depósito
+      summary: Solicite a emissão de boleto
       description: Emita boletos
       operationId: Create
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -56,6 +52,9 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CreateBankslipResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+            
       security:
         - Bearer: []
   /bankslip/branch/{branch}/number/{number}/{authenticationCode}:
@@ -66,6 +65,8 @@ paths:
       description: Utilize para verificar o status do boleto ou outras informações
       operationId: GetByAuthenticationCode
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: branch
           in: path
           required: true
@@ -78,12 +79,6 @@ paths:
             type: string
         - name: authenticationCode
           in: path
-          required: true
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
           required: true
           schema:
             type: string
@@ -105,6 +100,10 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetBankslipByAuthenticationCodeResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
   /bankslip/{authenticationCode}/pdf:
@@ -124,20 +123,12 @@ paths:
             type: string
             description: Identificador de emissão do boleto
             format: uuid
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          description: Download do PDF
+          
   /bankslip/searchstatus/{date}:
     get:
       tags:
@@ -146,18 +137,14 @@ paths:
       description: Utilize para listar os status dos boletos por data
       operationId: SearchStatus
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: date
           in: path
           required: true
           schema:
             type: string
             format: date-time
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Recurso encontrado
@@ -186,12 +173,8 @@ paths:
       description: Cancela boletos
       operationId: SettlementCancellation
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -254,8 +237,10 @@ paths:
                 type: string
       security:
         - Bearer: []
+
 components:
   schemas:
+    
     Account:
       type: object
       properties:
@@ -268,11 +253,22 @@ components:
           description: Agência da conta.
           nullable: true
       additionalProperties: false
+      
+    AccountOnly:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número da conta.
+          nullable: true
+      additionalProperties: false
+    
     BankslipType:
       enum:
         - Deposit
         - Levy
       type: string
+    
     Address:
       type: object
       properties:
@@ -289,6 +285,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     Person:
       type: object
       properties:
@@ -304,9 +301,13 @@ components:
         address:
           $ref: '#/components/schemas/Address'
       additionalProperties: false
+   
     CreateBankslipRequest:
       required:
         - amount
+        - account
+        - documentNumber
+        - dueDate
       type: object
       properties:
         alias:
@@ -337,6 +338,7 @@ components:
         payer:
           $ref: '#/components/schemas/Person'
       additionalProperties: false
+    
     CreateBankslipResponse:
       type: object
       properties:
@@ -346,6 +348,7 @@ components:
           type: string
           format: uuid
       additionalProperties: false
+    
     GetBankslipByAuthenticationCodeRequest:
       required:
         - authenticationCode
@@ -359,6 +362,7 @@ components:
           description: Identificador de emissão do boleto
           format: uuid
       additionalProperties: false
+    
     BankslipStatus:
       enum:
         - Accepted
@@ -368,6 +372,7 @@ components:
         - Cancelled
         - Expired
       type: string
+    
     PriceValue:
       type: object
       properties:
@@ -379,6 +384,7 @@ components:
           type: number
           format: double
       additionalProperties: false
+    
     PaymentChannelType:
       enum:
         - Agency
@@ -389,6 +395,7 @@ components:
         - EletronicFile
         - DDA
       type: string
+    
     Payments:
       type: object
       properties:
@@ -404,6 +411,7 @@ components:
           type: string
           format: date-time
       additionalProperties: false
+    
     GetBankslipByAuthenticationCodeResponse:
       type: object
       properties:
@@ -422,7 +430,7 @@ components:
         status:
           $ref: '#/components/schemas/BankslipStatus'
         account:
-          $ref: '#/components/schemas/Account'
+          $ref: '#/components/schemas/AccountOnly'
         document:
           type: string
           nullable: true
@@ -448,6 +456,7 @@ components:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     GetBankslipByBarcodeResponse:
       type: object
       properties:
@@ -492,6 +501,7 @@ components:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     GeneratePDFRequest:
       required:
         - authenticationCode
@@ -503,6 +513,7 @@ components:
           description: Identificador de emissão do boleto
           format: uuid
       additionalProperties: false
+    
     SearchRequest:
       type: object
       properties:
@@ -517,43 +528,25 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     SearchItemResponse:
       type: object
       properties:
-        alias:
-          type: string
-          nullable: true
-        recipientOrigin:
-          $ref: '#/components/schemas/Person'
-        recipientFinal:
-          $ref: '#/components/schemas/Person'
-        payer:
-          $ref: '#/components/schemas/Person'
-        barcode:
-          type: string
-          nullable: true
-        digitable:
-          type: string
-          nullable: true
-        dueDate:
-          type: string
-          format: date-time
-        amount:
-          $ref: '#/components/schemas/PriceValue'
         authenticationCode:
           type: string
           nullable: true
-        emissionDate:
+        status:
+          $ref: '#/components/schemas/BankslipStatus'       
+        updatedAt:
           type: string
           format: date-time
-        status:
-          $ref: '#/components/schemas/BankslipStatus'
         payments:
           type: array
           items:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     SearchResponse:
       type: object
       properties:
@@ -566,6 +559,7 @@ components:
             $ref: '#/components/schemas/SearchItemResponse'
           nullable: true
       additionalProperties: false
+    
     SettlementBankslipCancellationRequest:
       required:
         - authenticationCode
@@ -579,6 +573,7 @@ components:
         account:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
+    
     SettlementBankslipPaymentRequest:
       required:
         - authenticationCode
@@ -592,6 +587,7 @@ components:
         account:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
+  
   securitySchemes:
     Bearer:
       type: http
