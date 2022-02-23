@@ -10,11 +10,11 @@ paths:
     post:
       tags:
         - Emissão de boleto
-      summary: Solicitação da emissão de boletos
+      summary: Solicitação de emissão de boletos
       description: |
         <div class="bkly-ref-description">
           <p>Emita boletos de depósito ou cobrança.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div>  
         [block:callout]
         {
@@ -78,17 +78,17 @@ paths:
     get:
       tags:
         - Emissão de boleto
-      summary: Consulta de status
+      summary: Consulta por authenticationCode
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a consulta de status para ter acesso a todas as informações do boleto.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Realize a consulta de dados por authenticationCode e obtenha todos os detalhes sobre o boleto pesquisado.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div>  
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações."
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-authenticationcode" target="_blank" rel="noopener noreferrer">Consulta por authenticationCode</a>."
         }
         [/block]
 
@@ -144,7 +144,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a impressão em PDF do boleto emitido. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {
@@ -183,8 +183,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os boletos emitidos que sofreram alteração de status em uma data específica.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-data" target="_blank" rel="noopener noreferrer">Consulta por data</a>."
+        }
+        [/block]
       operationId: SearchStatus
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -225,9 +232,16 @@ paths:
       summary: Solicitação de cancelamento de boleto
       description: |
         <div class="bkly-ref-description">
-          <p>Realize o cancelamento de um boleto a qualquer momento após seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
         </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/cancelamento-boleto" target="_blank" rel="noopener noreferrer">Cancelamento</a>."
+        }
+        [/block]
       operationId: SettlementCancellation
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -248,7 +262,7 @@ paths:
               $ref: '#/components/schemas/SettlementBankslipCancellationRequest'
       responses:
         '200':
-          description: Requisição de cancelamento foi aceita e está sendo processada.
+          description: A requisição de cancelamento foi aceita e está sendo processada.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -267,9 +281,16 @@ paths:
       summary: Simulação de pagamento de boleto
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a simulação do pagamento de boletos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Realize simulações de pagamentos de boletos.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pagamentos-de-boletos" target="_blank" rel="noopener noreferrer">Pagamentos</a>."
+        }
+        [/block]
       operationId: SettlementPayment
       parameters:
         - name: api-version
@@ -294,12 +315,24 @@ paths:
               $ref: '#/components/schemas/SettlementBankslipPaymentRequest'
       responses:
         '200':
-          description: Requisição foi aceita e está sendo processada
+          description: A requisição foi aceita e está sendo processada.
+          headers:
+            x-bankly-correlation-id:
+              description: Id de correlação da operação requisitada.
+              schema:
+                type: string
+        
+        '400':
+          description: Há algum problema com a sua requisição. Verifique se os valores dos campos enviados estão corretos e se o boleto possui um status válido para pagamento.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
               schema:
                 type: string
+
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+      
       security:
         - Bearer: []
 
@@ -329,7 +362,7 @@ components:
       additionalProperties: false
     
     BankslipType:
-      description: Caso este campo não seja especificado, nosso sistema gerará um boleto de depósito (Deposit) e vai desconsiderar as informações do pagador. 
+      description: Caso este campo não seja especificado, nosso sistema gerará um boleto de depósito (Deposit) e irá desconsiderar as informações do pagador. 
       enum:
         - Deposit
         - Levy
@@ -443,7 +476,7 @@ components:
         authenticationCode:
           minLength: 1
           type: string
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           format: uuid
       additionalProperties: false
     
@@ -634,7 +667,7 @@ components:
           $ref: '#/components/schemas/BankslipStatus'       
         updatedAt:
           type: string
-          description: Data em que os boletos sofreram a alterção.
+          description: Data em que o boleto sofreu alterção.
           format: date-time
         payments:
           type: array
@@ -689,7 +722,7 @@ components:
   securitySchemes:
     Bearer:
       type: http
-      description: Inclua o token de autorização do tipo Bearer
+      description: Inclua o token de autorização do tipo Bearer.
       scheme: bearer
       bearerFormat: JWT
       
