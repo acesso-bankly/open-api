@@ -15,7 +15,11 @@ paths:
       tags:
       - Criação de cartão
       summary: Cartão virtual
-      description: Crie um cartão virtual que será utilizado em compras não presenciais.
+      description:  |
+        <div class="bkly-ref-description">
+          <p>Crie um cartão virtual que será utilizado em compras não presenciais.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>  
       operationId: cardCreateVirtualCard
       parameters:
       - $ref: "#/components/parameters/apiVersion"
@@ -115,7 +119,11 @@ paths:
       tags:
         - Criação de cartão
       summary: Cartão físico
-      description: Crie um cartão físico que será embossado e entregue no endereço informado.
+      description:  |
+        <div class="bkly-ref-description">
+          <p>Crie um cartão físico que será embossado e entregue no endereço informado.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
       operationId: cardCreatePhysicalCard
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -966,7 +974,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
         </div>
       operationId: getDataPci
       parameters:
@@ -1065,7 +1073,11 @@ paths:
       tags:
         - Gestão de senha
       summary: Alterar senha
-      description: Altere a senha do cartão.
+      description:  |
+        <div class="bkly-ref-description">
+          <p>Altere a senha do cartão.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
+        </div>
       operationId: cardChangeCardPassword
       parameters:
         - name: proxy
@@ -1148,128 +1160,17 @@ paths:
             statusCode: 409
           '500':
             statusCode: 500
-     
-  /cards-pci/{proxy}/wallet/{wallet}/brand/{brand}:
-    post:
-      tags:
-        - Wallets
-      summary: Gerar token
-      description: Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.
-      operationId: GenerateTokenizationForWallet
-      parameters:
-        - name: proxy
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: wallet
-          in: path
-          required: true
-          schema:
-            type: string
-            $ref: "#/components/schemas/walletTypes"
-        - name: brand
-          in: path
-          required: true
-          schema:
-            type: string
-            $ref: "#/components/schemas/brandTypes"
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
-      responses:
-        '200':
-          description: Resultado da geração do token.
-          content:
-            application/json:
-              schema:
-                type: object
-                $ref: "#/components/schemas/cardTokenizationResponse"
-              examples:
-                response:
-                  value:
-                    - data: "mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801"
-                      lastFourDigits: "1534"
-                      phoneNumber: "11999999999"
-                      address:
-                        zipCode: "05402100"
-                        address: Avenida Rebouças
-                        number: "1368"
-                        neighborhood: Pinheiros
-                        complement: Em frente a Wizard
-                        city: São Paulo
-                        state: SP
-                        country: Brasil
-        '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
-        '401':
-          description: Sem autorização para realizar a solicitação.
-        '409':
-          description: Requisição em conflito com as regras de negócio contratado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
-        '500':
-          description: Ocorrência de erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
-      x-amazon-apigateway-auth:
-        type: NONE
-      x-amazon-apigateway-integration:
-        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards-pci/{proxy}/wallet/{wallet}/brand/{brand}
-        passthroughBehavior: when_no_match
-        connectionType: VPC_LINK
-        connectionId: m116y5
-        httpMethod: POST
-        type: http
-        requestParameters:
-          integration.request.path.proxy: method.request.path.proxy
-          integration.request.path.wallet: method.request.path.wallet
-          integration.request.path.brand: method.request.path.brand
-          integration.request.header.api-version: method.request.header.api-version
-          integration.request.header.Authorization: method.request.header.Authorization
-        responses:
-          '200':
-            statusCode: 200
-          '400':
-            statusCode: 400
-          '401':
-            statusCode: 401
-          '409':
-            statusCode: 409
-          '500':
-            statusCode: 500
             
   /cards/{proxy}/activate:
     patch:
       tags:
         - Status do cartão
       summary: Ativação de cartão
-      description: Realize a ativação do cartão pela primeira vez.
+      description:  |
+        <div class="bkly-ref-description">
+          <p>Realize a ativação do cartão pela primeira vez.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
       operationId: cardActivateCard
       parameters:
         - name: proxy
@@ -1358,7 +1259,11 @@ paths:
       tags:
         - Status do cartão
       summary: Alteração do status do cartão
-      description: O status do cartão poderá ser alterado para temporário ou definitivo.
+      description:   |
+        <div class="bkly-ref-description">
+          <p>O status do cartão poderá ser alterado para temporário ou definitivo.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
       operationId: cardChangeCardStatus
       parameters:
         - name: proxy
@@ -1446,7 +1351,11 @@ paths:
       tags:
       - Status do cartão
       summary: Configuração do contactless
-      description: Ative ou desative a função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado, não será possível realizar transações com o uso de carteiras digitais.
+      description:   |
+        <div class="bkly-ref-description">
+          <p>Ative ou desative a função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado, não será possível realizar transações com o uso de carteiras digitais.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
       operationId: cardContactLess
       parameters:
         - name: proxy
@@ -1533,7 +1442,11 @@ paths:
       tags:
         - Status do cartão
       summary: Consulta dos próximos status
-      description: Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o token informado na requisição.
+      description:   |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o token informado na requisição.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
       operationId: cardGetLots
       parameters:
         - name: proxy
@@ -1601,7 +1514,11 @@ paths:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
-      description: Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias.
+      description:   |
+        <div class="bkly-ref-description">
+          <p>Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
       operationId: cardTransactionsByCard
       parameters:
         - name: proxy
@@ -1734,7 +1651,11 @@ paths:
       tags:
         - Rastreio de Cartões
       summary: Por proxy
-      description: Obtenha o rastreio do cartão pelo seu proxy.
+      description:    |
+        <div class="bkly-ref-description">
+          <p>Obtenha o rastreio do cartão pelo seu proxy.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
       operationId: trackingGetByProxy
       parameters:
         - name: proxy
@@ -2192,58 +2113,6 @@ components:
           description: Senha de uso do cartão (4 dígitos).
       required:
         - password
-    
-    walletTypes:
-      type: string
-      enum:
-        - GooglePay
-        - ApplePay
-    
-    brandTypes:
-      type: string
-      enum:
-        - Visa
-        - Mastercard
-        
-    cardTokenizationResponse:
-      type: object
-      properties:
-        data:
-          type: string
-          description: Token gerado.
-        lastFourDigits:
-          type: string
-          description: Últimos quatro dígitos do cartão.
-        phoneNumber:
-          type: string
-          description: Número de contato do cliente.
-        address:
-          type: object
-          properties:
-            zipCode:
-              type: string
-              description: CEP do endereço.
-            address:
-              type: string
-              description: Logradouro.
-            number:
-              type: string
-              description: Número.
-            neighborhood:
-              type: string
-              description: Bairro.
-            complement:
-              type: string
-              description: Complemento.
-            city:
-              type: string
-              description: Cidade.
-            state:
-              type: string
-              description: Estado (UF).
-            country:
-              type: string
-              description: País.
               
     activateCardRequest:
       type: object
