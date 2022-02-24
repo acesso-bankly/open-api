@@ -20,10 +20,16 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto">Emissão de boleto</a> para mais informações."
+          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações."
         }
         [/block]
-        <blockquote class="callout callout_warning" theme="❗️"><h3 class="callout-heading false"><span class="callout-icon">❗️</span><p>Atenção</p></h3><p>Reforçamos nossa recomendação de que o parceiro adote a <a target="_blank" rel="noopener noreferrer" href="/docs/assinatura-hmac">assinatura HMAC</a> como meio de autenticação de sua API. Apenas ela poderá proteger seu endpoint de ataques de aplicações maliciosas.</p></blockquote>
+        <blockquote class="callout callout_warn" theme="🚧">
+        <h3 class="callout-heading false">
+        <span class="callout-icon">🚧</span>
+        <p>Atenção</p></h3><p>Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações.</p>
+        </blockquote>
+
+       
       operationId: Create
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
