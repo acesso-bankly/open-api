@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   title: Limites transacionais
   description: Na sessão  API de limites transacionais, você encontra serviços que
@@ -11,7 +11,7 @@ tags: []
 servers:
   - url: https://api.sandbox.bankly.com.br
 paths:
-  /api/holders/{documentNumber}/limits/{limitType}/features/{featureName}:
+  /holders/{documentNumber}/limits/{limitType}/features/{featureName}:
     get:
       tags:
         - Gestão de limites
@@ -99,7 +99,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
       - bearer: []
-  /api/holders/{documentNumber}/max-limits:
+  /holders/{documentNumber}/max-limits:
     put:
       tags:
         - Gestão de limites

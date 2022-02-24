@@ -345,6 +345,12 @@ paths:
             type: string
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createDuplicateCardRequest"
       responses:
         '202':
           description: Cartão
@@ -1749,18 +1755,13 @@ paths:
                 response:
                   value:
                     createdDate: "2020-07-20T22:53:12"
-                    companyKey: "Acesso"
+                    externalTracking:
+                      code: "A2327692D592"
+                      partner: "CORREIOS"
                     name: Jose da Silva
                     alias: Meu Cartão
                     address:
-                      zipCode: "05402100"
-                      address: Avenida Rebouças
-                      number: "1368"
-                      neighborhood: Pinheiros
-                      complement: Em frente a Wizard
-                      city: São Paulo
-                      state: SP
-                      country: Brasil
+                      [ { zipCode: "05402100", address: Avenida Rebouças, number: "1368", neighborhood: Pinheiros, complement: Em frente a Wizard, city: São Paulo, state: SP, country: Brasil } ]
                     status:
                       [ { createdDate: "2020-07-20T22:53:12", type: Created, reason: Created  }, { createdDate: "2020-07-20T22:55:12", type: InProgress, reason: In route to delivery } ]
                     finalized:
@@ -2406,9 +2407,16 @@ components:
         createdDate:
           type: string
           description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
-        companyKey:
-          type: string
-          description: Identificador da companhia.
+        externalTracking:
+          type: object
+          description: Objeto para rastreio de serviço externo
+          properties:
+            code:
+              type: string
+              description: Código de rastreio junto ao serviço externo.
+            partner: 
+              type: string
+              description: Nome do parceiro do serviço externo.
         name:
           type: string
           description: Nome impresso no cartão.
@@ -2419,35 +2427,37 @@ components:
           type: string
           description: Data prevista de entrega do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
         address:
-          type: object
-          properties:
-            zipCode:
-              type: string
-              description: CEP.
-            address:
-              type: string
-              description: Logradouro.
-            number:
-              type: string
-              description: Número.
-            neighborhood:
-              type: string
-              description: Bairro.
-            complement:
-              type: string
-              description: Complemento.
-            city:
-              type: string
-              description: Cidade.
-            state:
-              type: string
-              description: Estado (formato UF).
-            country:
-              type: string
-              description: País.
-            isActive:
-              type: boolean
-              description: Situação de endereço de rastreio.
+          type: array
+          description: Lista de endereços do rastreio
+          items:
+            properties:
+              zipCode:
+                type: string
+                description: CEP.
+              address:
+                type: string
+                description: Logradouro.
+              number:
+                type: string
+                description: Número.
+              neighborhood:
+                type: string
+                description: Bairro.
+              complement:
+                type: string
+                description: Complemento.
+              city:
+                type: string
+                description: Cidade.
+              state:
+                type: string
+                description: Estado (formato UF).
+              country:
+                type: string
+                description: País.
+              isActive:
+                type: boolean
+                description: Situação de endereço de rastreio.
         status:
           type: array
           description: Histórico de status do rastreio.
