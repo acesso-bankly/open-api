@@ -20,7 +20,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação Emissão de boletos para mais informações."
+          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto">Emissão de boleto</a> para mais informações."
         }
         [/block]
       operationId: Create
