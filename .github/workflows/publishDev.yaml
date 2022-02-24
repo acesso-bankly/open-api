@@ -122,4 +122,11 @@ jobs:
           readme-oas-key: ${{ secrets.LIMITS_API_README_OAS_KEY_DEV }}
           oas-file-path: './apis/v1/limites/schema.yaml'
           api-version: 'v0.05'
+          
+      - uses: readmeio/github-readme-sync@v2
+        name: Publish Bankslip API Reference to readme.io
+        with:
+          readme-oas-key: ${{ secrets.BANKSLIP_API_README_OAS_KEY_DEV }}
+          oas-file-path: './apis/v1/boletos/schema.yaml'
+          api-version: 'v0.05'
       

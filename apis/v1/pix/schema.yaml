@@ -75,8 +75,14 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cadastro-chaves" target="_blank" rel="noopener noreferrer">Cadastro de chaves</a>.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
+         [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cadastro-chaves" target="_blank" rel="noopener noreferrer">Cadastro de chaves</a>."
+        }
+        [/block]
         </div>
           
       operationId: CreateEntryAsync
@@ -122,13 +128,19 @@ paths:
     get:
       tags:
         - Diretório de chaves - DICT
-      summary: Consulta de vínculo de chave com uma conta
+      summary: Consulta de chave para transferência
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte os detalhes da conta vinculada a uma chave de endereçamento.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-por-chaves" target="_blank" rel="noopener noreferrer">Consulta por chaves</a>.</p>
+          <p>Consulte informações sobre a chave de endereçamento para a qual você realizará uma transferência Pix.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-por-chaves" target="_blank" rel="noopener noreferrer">Consulta por chaves</a>."
+        }
+        [/block]
       operationId: GetAsync
       parameters:
         - name: addressingKeyValue
@@ -183,9 +195,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> A chave a ser excluída não pode estar em um processo de reinvindicação. Se esse for o caso, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-exclusao-chaves" target="_blank" rel="noopener noreferrer">Exclusão chaves</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
+         [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-exclusao-chaves" target="_blank" rel="noopener noreferrer">Exclusão de chaves</a>."
+        }
+        [/block]
       operationId: DeleteAsync
       parameters:
         - name: addressingKeyValue
@@ -245,9 +263,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize transferências via Pix (manuais, por chave ou QR Code). Para isso, é necessário possuir uma conta aberta no Bankly.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cash-out" target="_blank" rel="noopener noreferrer">Pix cash-out</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cash-out" target="_blank" rel="noopener noreferrer">Transferência via Pix</a>."
+        }
+        [/block]
       operationId: CreatePixCashOutTransactionAsync
       parameters:
         - name: api-version
@@ -298,9 +322,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-devolucao" target="_blank" rel="noopener noreferrer">Devolução</a>.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-devolucao" target="_blank" rel="noopener noreferrer">Devolução</a>."
+        }
+        [/block]
       operationId: CreateRefundAsync
       parameters:
         - name: api-version
@@ -352,9 +382,16 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a consulta do status dos pagamentos realizados via Pix. Para isso, é necessário ter um <b>AuthenticationCode</b> válido.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-status" target="_blank" rel="noopener noreferrer">Consulta do status da transação</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-status" target="_blank" rel="noopener noreferrer">Consulta do status da transação</a>."
+        }
+        [/block]
+
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - name: accountNumber
@@ -416,9 +453,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-emissao-qrcode" target="_blank" rel="noopener noreferrer">Emissão de QR Code</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-emissao-qrcode" target="_blank" rel="noopener noreferrer">Emissão de QR Code</a>."
+        }
+        [/block]
       operationId: CreateStaticQRCodeAsync
       parameters:
         - name: api-version
@@ -467,9 +510,15 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
-          <p>Para informações mais detalhadas a respeito deste endpoint, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-decodificacao-qrcode" target="_blank" rel="noopener noreferrer">Decodificação de QR Code</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-decodificacao-qrcode" target="_blank" rel="noopener noreferrer">Decodificação de QR Code</a>."
+        }
+        [/block]
       operationId: DecodeQRCodeAsync
       parameters:
         - name: api-version

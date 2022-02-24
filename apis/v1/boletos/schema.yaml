@@ -10,16 +10,23 @@ paths:
     post:
       tags:
         - Emissão de boleto
-      summary: Solicitar a emissão de um boleto de depósito
-      description: Emita boletos
+      summary: Solicitação de emissão de boletos
+      description: |
+        <div class="bkly-ref-description">
+          <p>Emita boletos de depósito ou cobrança.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+        </div>  
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações."
+        }
+        [/block]
       operationId: Create
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -36,7 +43,7 @@ paths:
               $ref: '#/components/schemas/CreateBankslipRequest'
       responses:
         '202':
-          description: Requisição foi aceita e está sendo processada
+          description: A requisição foi aceita e está sendo processada.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -56,16 +63,39 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/CreateBankslipResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+        
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+            
       security:
         - Bearer: []
   /bankslip/branch/{branch}/number/{number}/{authenticationCode}:
     get:
       tags:
         - Emissão de boleto
-      summary: Obtenha dados do boleto
-      description: Utilize para verificar o status do boleto ou outras informações
+      summary: Consulta por authenticationCode
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a consulta de dados por authenticationCode e obtenha todos os detalhes sobre o boleto pesquisado.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+        </div>  
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-authenticationcode" target="_blank" rel="noopener noreferrer">Consulta por authenticationCode</a>."
+        }
+        [/block]
+
       operationId: GetByAuthenticationCode
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: branch
           in: path
           required: true
@@ -79,17 +109,12 @@ paths:
         - name: authenticationCode
           in: path
           required: true
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
+          description: Identificador único do boleto.
           schema:
             type: string
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -105,150 +130,82 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetBankslipByAuthenticationCodeResponse'
-      security:
-        - Bearer: []
-  /bankslip/{barcode}:
-    get:
-      tags:
-        - Emissão de boleto
-      summary: Obtenha dados do boleto por código de barras
-      description: Utilize para verificar o status do boleto ou outras informações
-      operationId: GetByBarcode
-      parameters:
-        - name: barcode
-          in: path
-          required: true
-          schema:
-            type: string
-            nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/GetBankslipByBarcodeResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
   /bankslip/{authenticationCode}/pdf:
     get:
       tags:
         - Emissão de boleto
-      summary: Imprimir boleto
-      description: Realiza a impressão em PDF do boleto emitido
+      summary: Impressão do boleto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a impressão em PDF do boleto emitido. </p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+        </div> 
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações."
+        }
+        [/block]
       operationId: GetPDF
       parameters:
         - name: authenticationCode
           in: path
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           required: true
           schema:
             minLength: 1
             type: string
-            description: Identificador de emissão do boleto
             format: uuid
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       responses:
         '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-  /bankslip/branch/{branch}/number/{number}/search:
-    get:
-      tags:
-        - Emissão de boleto
-      summary: Pesquisa de boletos por conta
-      description: Utilize para listar os boletos por conta
-      operationId: Search
-      parameters:
-        - name: request
-          in: query
-          schema:
-            $ref: '#/components/schemas/SearchRequest'
-        - name: branch
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: number
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/SearchResponse'
+          description: PDF para download disponibilizado com sucesso.
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
+          
   /bankslip/searchstatus/{date}:
     get:
       tags:
         - Emissão de boleto
-      summary: Pesquisa de boletos por data
-      description: Utilize para listar os status dos boletos por data
+      summary: Consulta de boletos por data
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os boletos emitidos que sofreram alteração de status em uma data específica.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+        </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-data" target="_blank" rel="noopener noreferrer">Consulta por data</a>."
+        }
+        [/block]
       operationId: SearchStatus
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: date
           in: path
           required: true
+          description: Informe a data a ser consultada no formato yyyy-MM-dd.
           schema:
             type: string
             format: date-time
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -264,22 +221,31 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/SearchResponse'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'  
       security:
         - Bearer: []
   /bankslip/cancel:
     delete:
       tags:
         - Cancelamento de boleto
-      summary: Solicitar o cancelamento de um boleto.
-      description: Cancela boletos
+      summary: Solicitação de cancelamento de boleto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
+        </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/cancelamento-boleto" target="_blank" rel="noopener noreferrer">Cancelamento</a>."
+        }
+        [/block]
       operationId: SettlementCancellation
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -296,20 +262,35 @@ paths:
               $ref: '#/components/schemas/SettlementBankslipCancellationRequest'
       responses:
         '200':
-          description: Requisição foi aceita e está sendo processada
+          description: A requisição de cancelamento foi aceita e está sendo processada.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
               schema:
                 type: string
+        
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+      
       security:
         - Bearer: []
   /bankslip/settlementpayment:
     post:
       tags:
-        - Baixa Efetiva
-      summary: Simular pagamento de um boleto.
-      description: Paga boletos
+        - Baixa efetiva
+      summary: Simulação de pagamento de boleto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize simulações de pagamentos de boletos.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+        </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pagamentos-de-boletos" target="_blank" rel="noopener noreferrer">Pagamentos</a>."
+        }
+        [/block]
       operationId: SettlementPayment
       parameters:
         - name: api-version
@@ -334,16 +315,30 @@ paths:
               $ref: '#/components/schemas/SettlementBankslipPaymentRequest'
       responses:
         '200':
-          description: Requisição foi aceita e está sendo processada
+          description: A requisição foi aceita e está sendo processada.
+          headers:
+            x-bankly-correlation-id:
+              description: Id de correlação da operação requisitada.
+              schema:
+                type: string
+        
+        '400':
+          description: Há algum problema com a sua requisição. Verifique se os valores dos campos enviados estão corretos e se o boleto possui um status válido para pagamento.
           headers:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
               schema:
                 type: string
+
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+      
       security:
         - Bearer: []
+
 components:
   schemas:
+    
     Account:
       type: object
       properties:
@@ -356,11 +351,23 @@ components:
           description: Agência da conta.
           nullable: true
       additionalProperties: false
+      
+    AccountOnly:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número da conta.
+          nullable: true
+      additionalProperties: false
+    
     BankslipType:
+      description: Caso este campo não seja especificado, nosso sistema gerará um boleto de depósito (Deposit) e irá desconsiderar as informações do pagador. 
       enum:
         - Deposit
         - Levy
       type: string
+    
     Address:
       type: object
       properties:
@@ -377,6 +384,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     Person:
       type: object
       properties:
@@ -392,9 +400,30 @@ components:
         address:
           $ref: '#/components/schemas/Address'
       additionalProperties: false
+
+    PersonEmissao:
+      description: Os dados do pagador são de preenchimento obrigatório em caso de emissão de boleto de cobrança.
+      type: object
+      properties:
+        document:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        tradeName:
+          type: string
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+      additionalProperties: false
+
     CreateBankslipRequest:
       required:
         - amount
+        - account
+        - documentNumber
+        - dueDate
       type: object
       properties:
         alias:
@@ -418,25 +447,25 @@ components:
           format: double
         dueDate:
           type: string
-          description: Data de vencimento
+          description: Data de vencimento no formato yyyy-MM-dd.
           format: date-time
-        emissionFee:
-          type: boolean
-          description: Inclua a tarifa de emissão.
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/PersonEmissao'
       additionalProperties: false
+    
     CreateBankslipResponse:
       type: object
       properties:
         account:
           $ref: '#/components/schemas/Account'
         authenticationCode:
+          description: Identificador único do boleto.
           type: string
           format: uuid
       additionalProperties: false
+    
     GetBankslipByAuthenticationCodeRequest:
       required:
         - authenticationCode
@@ -447,18 +476,21 @@ components:
         authenticationCode:
           minLength: 1
           type: string
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           format: uuid
       additionalProperties: false
+    
     BankslipStatus:
       enum:
-        - Accepted
+        - Processed
         - Registered
+        - MarkedConciliation
+        - Conciliation
         - Settled
-        - Error
-        - Cancelled
-        - Expired
+        - CancelledByRecipient
+        - CancelledByDeadLine
       type: string
+    
     PriceValue:
       type: object
       properties:
@@ -470,7 +502,9 @@ components:
           type: number
           format: double
       additionalProperties: false
+    
     PaymentChannelType:
+      description: Nome do canal de pagamento.
       enum:
         - Agency
         - SelfServiceTerminal
@@ -480,6 +514,7 @@ components:
         - EletronicFile
         - DDA
       type: string
+    
     Payments:
       type: object
       properties:
@@ -494,37 +529,46 @@ components:
         paidOutDate:
           type: string
           format: date-time
+          description: Data de pagamento do boleto.
       additionalProperties: false
+    
     GetBankslipByAuthenticationCodeResponse:
       type: object
       properties:
         authenticationCode:
           type: string
           format: uuid
+          description: Identificador único do boleto.
         updatedAt:
           type: string
           format: date-time
+          description: Data de atualização do status do boleto. 
         ourNumber:
           type: string
           nullable: true
+          description: Valor que relaciona o boleto ao seu emissor.
         digitable:
           type: string
           nullable: true
+          description: Linha digitável para pagamento do boleto. 
         status:
           $ref: '#/components/schemas/BankslipStatus'
         account:
-          $ref: '#/components/schemas/Account'
+          $ref: '#/components/schemas/AccountOnly'
         document:
           type: string
           nullable: true
+          description: Código de identificação do boleto.
         amount:
           $ref: '#/components/schemas/PriceValue'
         dueDate:
           type: string
           format: date-time
+          description: Data de vencimento do boleto.
         emissionDate:
           type: string
           format: date-time
+          description: Data de emissão do boleto.
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
@@ -539,6 +583,7 @@ components:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     GetBankslipByBarcodeResponse:
       type: object
       properties:
@@ -583,6 +628,7 @@ components:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     GeneratePDFRequest:
       required:
         - authenticationCode
@@ -591,9 +637,10 @@ components:
         authenticationCode:
           minLength: 1
           type: string
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           format: uuid
       additionalProperties: false
+    
     SearchRequest:
       type: object
       properties:
@@ -608,43 +655,27 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     SearchItemResponse:
       type: object
       properties:
-        alias:
-          type: string
-          nullable: true
-        recipientOrigin:
-          $ref: '#/components/schemas/Person'
-        recipientFinal:
-          $ref: '#/components/schemas/Person'
-        payer:
-          $ref: '#/components/schemas/Person'
-        barcode:
-          type: string
-          nullable: true
-        digitable:
-          type: string
-          nullable: true
-        dueDate:
-          type: string
-          format: date-time
-        amount:
-          $ref: '#/components/schemas/PriceValue'
         authenticationCode:
           type: string
+          description: Identificador único do boleto.
           nullable: true
-        emissionDate:
-          type: string
-          format: date-time
         status:
-          $ref: '#/components/schemas/BankslipStatus'
+          $ref: '#/components/schemas/BankslipStatus'       
+        updatedAt:
+          type: string
+          description: Data em que o boleto sofreu alterção.
+          format: date-time
         payments:
           type: array
           items:
             $ref: '#/components/schemas/Payments'
           nullable: true
       additionalProperties: false
+    
     SearchResponse:
       type: object
       properties:
@@ -657,36 +688,41 @@ components:
             $ref: '#/components/schemas/SearchItemResponse'
           nullable: true
       additionalProperties: false
+    
     SettlementBankslipCancellationRequest:
       required:
         - authenticationCode
+        - account
       type: object
       properties:
         authenticationCode:
           minLength: 1
           type: string
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           format: uuid
         account:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
+    
     SettlementBankslipPaymentRequest:
       required:
         - authenticationCode
+        - account
       type: object
       properties:
         authenticationCode:
           minLength: 1
           type: string
-          description: Identificador de emissão do boleto
+          description: Identificador único do boleto.
           format: uuid
         account:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
+  
   securitySchemes:
     Bearer:
       type: http
-      description: Inclua o token de autorização do tipo Bearer
+      description: Inclua o token de autorização do tipo Bearer.
       scheme: bearer
       bearerFormat: JWT
       

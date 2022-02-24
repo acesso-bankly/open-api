@@ -349,6 +349,13 @@ components:
             accountDetailedExample:
               $ref: '#/components/examples/invalidParameterErrorResponse'
     
+    '401':
+      description: |
+        Acesso não autorizado.
+      headers:
+        x-bkly-correlation-id:
+          $ref: '#/components/headers/CorrelationId'
+
     '403':
       description: |
         O acesso ao recurso foi negado pelo servidor.
