@@ -328,7 +328,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Devolução](docs/pix-devolucao)."
+          "body": "Para mais informações, confira a documentação [Devolução](/docs/pix-devolucao)."
         }
         [/block]
       operationId: CreateRefundAsync
@@ -388,7 +388,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta do status da transação](docs/pix-consulta-status)."
+          "body": "Para mais informações, confira a documentação [Consulta do status da transação](/docs/pix-consulta-status)."
         }
         [/block]
 
