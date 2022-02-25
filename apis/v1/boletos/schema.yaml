@@ -20,7 +20,7 @@ paths:
         {
           "type": "warn",
           "title": "Importante",
-          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/docs/o-que-testar) para mais informações."
+          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/docs/emissao-de-boleto) para mais informações."
         }
         [/block]
       operationId: Create

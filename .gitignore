@@ -2,3 +2,5 @@ node_modules
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/open-api/v17/.suo
+/.vs/OpenApi/v17/.suo
+/.vs/VSWorkspaceState.json
