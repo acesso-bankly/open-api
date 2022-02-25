@@ -328,7 +328,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Devolução](/docs.bankly.com.br/docs/pix-devolucao)."
+          "body": "Para mais informações, confira a documentação [Devolução](docs/pix-devolucao)."
         }
         [/block]
       operationId: CreateRefundAsync
