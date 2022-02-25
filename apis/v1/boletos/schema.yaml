@@ -20,16 +20,9 @@ paths:
         {
           "type": "warn",
           "title": "Importante",
-          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/reference/cartao-virtual) para mais informações."
+          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/docs/cartao-virtual) para mais informações."
         }
         [/block]
-        <blockquote class="callout callout_warn" theme="🚧">
-        <h3 class="callout-heading false">
-        <span class="callout-icon" color="#eea236">🚧</span>
-        <p color="#eea236">Importante</p></h3><p>Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações.</p>
-        </blockquote>
-
-       
       operationId: Create
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
