@@ -18,7 +18,7 @@ paths:
         </div>  
         [block:callout]
         {
-          "type": "warning",
+          "type": "warn",
           "title": "Importante",
           "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](https://docs.bankly.com.br/v0.05/reference/cartao-virtual) para mais informações."
         }
