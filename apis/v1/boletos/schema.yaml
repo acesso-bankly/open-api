@@ -88,7 +88,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-authenticationcode" target="_blank" rel="noopener noreferrer">Consulta por authenticationCode</a>."
+          "body": "Para mais informações, confira a documentação [Consulta por authenticationCode](/docs/consulta-boleto-por-authenticationcode)."
         }
         [/block]
 
@@ -150,7 +150,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira a documentação <a href="https://docs.bankly.com.br/docs/emissao-de-boleto" target="_blank" rel="noopener noreferrer">Emissão de boleto</a> para mais informações."
+          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira a documentação [Emissão de boleto](/docs/emissao-de-boleto) para mais informações."
         }
         [/block]
       operationId: GetPDF
@@ -189,7 +189,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/consulta-boleto-por-data" target="_blank" rel="noopener noreferrer">Consulta por data</a>."
+          "body": "Para mais informações, confira a documentação [Consulta por data](/docs/consulta-boleto-por-data)."
         }
         [/block]
       operationId: SearchStatus
@@ -239,7 +239,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/cancelamento-boleto" target="_blank" rel="noopener noreferrer">Cancelamento</a>."
+          "body": "Para mais informações, confira a documentação [Cancelamento](/docs/cancelamento-boleto)."
         }
         [/block]
       operationId: SettlementCancellation
@@ -288,7 +288,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pagamentos-de-boletos" target="_blank" rel="noopener noreferrer">Pagamentos</a>."
+          "body": "Para mais informações, confira a documentação [Pagamentos](/docs/pagamentos-de-boletos)."
         }
         [/block]
       operationId: SettlementPayment

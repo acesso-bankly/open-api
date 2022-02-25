@@ -80,7 +80,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cadastro-chaves" target="_blank" rel="noopener noreferrer">Cadastro de chaves</a>."
+          "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/pix-cadastro-chaves)."
         }
         [/block]
         </div>
@@ -138,7 +138,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-por-chaves" target="_blank" rel="noopener noreferrer">Consulta por chaves</a>."
+          "body": "Para mais informações, confira a documentação [Consulta de chaves para transferência](/docs/pix-consulta-por-chaves).
         }
         [/block]
       operationId: GetAsync
@@ -201,7 +201,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-exclusao-chaves" target="_blank" rel="noopener noreferrer">Exclusão de chaves</a>."
+          "body": "Para mais informações, confira a documentação [Exclusão de chaves](/docs/pix-exclusao-chaves)."
         }
         [/block]
       operationId: DeleteAsync
@@ -269,7 +269,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-cash-out" target="_blank" rel="noopener noreferrer">Transferência via Pix</a>."
+          "body": "Para mais informações, confira a documentação [Transferência via Pix](https://docs.bankly.com.br/docs/pix-cash-out)."
         }
         [/block]
       operationId: CreatePixCashOutTransactionAsync
@@ -328,7 +328,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-devolucao" target="_blank" rel="noopener noreferrer">Devolução</a>."
+          "body": "Para mais informações, confira a documentação [Devolução](/docs.bankly.com.br/docs/pix-devolucao)."
         }
         [/block]
       operationId: CreateRefundAsync
@@ -388,7 +388,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-consulta-status" target="_blank" rel="noopener noreferrer">Consulta do status da transação</a>."
+          "body": "Para mais informações, confira a documentação [Consulta do status da transação](docs/pix-consulta-status)."
         }
         [/block]
 
@@ -459,7 +459,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-emissao-qrcode" target="_blank" rel="noopener noreferrer">Emissão de QR Code</a>."
+          "body": "Para mais informações, confira a documentação [Emissão de QR Code](/docs/pix-emissao-qrcode)."
         }
         [/block]
       operationId: CreateStaticQRCodeAsync
@@ -516,7 +516,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/pix-decodificacao-qrcode" target="_blank" rel="noopener noreferrer">Decodificação de QR Code</a>."
+          "body": "Para mais informações, confira a documentação [Decodificação de QR Code](/docs/pix-decodificacao-qrcode)."
         }
         [/block]
       operationId: DecodeQRCodeAsync
