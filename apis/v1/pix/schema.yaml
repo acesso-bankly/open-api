@@ -269,7 +269,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Transferência via Pix](https://docs.bankly.com.br/docs/pix-cash-out)."
+          "body": "Para mais informações, confira a documentação [Transferência via Pix](/docs/pix-cash-out)."
         }
         [/block]
       operationId: CreatePixCashOutTransactionAsync
