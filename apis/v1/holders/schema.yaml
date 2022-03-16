@@ -110,7 +110,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: _APPROVED, REPROVED, REVOKED, BLOCKED_."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED, BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration

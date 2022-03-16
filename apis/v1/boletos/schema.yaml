@@ -144,7 +144,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a impressão em PDF do boleto emitido. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {

@@ -974,7 +974,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.read</span>
         </div>
       operationId: getDataPci
       parameters:
