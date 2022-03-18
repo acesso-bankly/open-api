@@ -35,7 +35,7 @@ components:
     IdempotencyKey:
       name: Idempotency-Key
       in: header
-      description: Chave de idempotêcia para a requisição (uuid v4).
+      description: Chave de idempotêcia para a requisição (UUID v4).
       required: false
       style: simple
       explode: false

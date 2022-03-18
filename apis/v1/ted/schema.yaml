@@ -71,7 +71,7 @@ paths:
       summary: Consulta por conta
       description: |
         <div class="bkly-ref-description">
-          <p>Retornamos todas as operações TED realizadas na conta informada</p> 
+          <p>Consulte todas as operações TED realizadas na conta informada.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
         </div>  
       parameters:
@@ -79,7 +79,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumberQuery'          
         - in: query 
           name: pageSize
-          description: Quantidade de itens para retornar a consulta
+          description: Quantidade de itens que devem retornar na consulta.
           schema:
             type : integer
         - in: query 
@@ -151,13 +151,13 @@ paths:
       summary: Consulta por código de autenticação
       description: |
         <div class="bkly-ref-description">
-          <p>Retornamos a operação TED referente ao código de autenticação informado</p> 
+          <p>Obtenha a operação TED referente ao código de autenticação informado.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
         </div>  
       parameters:
         - in: path 
           name: authenticationCode
-          description: Informação retornada ao efetuar transferência via TED.
+          description: Identificador retornado ao efetuar transferência via TED.
           required: true
           schema:
             type : string
