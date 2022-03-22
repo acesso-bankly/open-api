@@ -366,6 +366,7 @@ components:
       enum:
         - Deposit
         - Levy
+        - Invoice
       type: string
     
     Address:
@@ -417,7 +418,77 @@ components:
         address:
           $ref: '#/components/schemas/Address'
       additionalProperties: false
-
+    InterestTypes:
+      description: Regras para cálculo de juros.
+      enum:
+        - AmountPerCalendaryDay
+        - PercentPerMonth
+        - Free
+        - AmountPerBusinessDay
+        - PercentPerBusinessDay
+        - PercentPerMonthBusinessDay
+        - PercentPerYearBusinessDay
+      type: string
+    Interest:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          description: Data de início da incidencia de juros.
+        type:
+          $ref: '#/components/schemas/InterestTypes'
+        value:
+          description: Valor ou percentual do juros.
+          type: number
+          format: double
+      additionalProperties: false
+    FineTypes:
+      description: Regras para cálculo de multa.
+      enum:
+        - FixedAmount
+        - Percent
+        - Free
+      type: string
+    Fine:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          description: Data de início da incidencia de multa.
+        type:
+          $ref: '#/components/schemas/FineTypes'
+        value:
+          type: number
+          format: double
+          description: Valor ou percentual da multa.
+      additionalProperties: false
+    DiscountTypes:
+      description: Regras para cálculo de desconto.
+      enum:
+        - Free
+        - FixedAmountUntilLimitDate
+        - FixedPercentUntilLimitDate
+        - AmountPerCalendaryDay
+        - AmountPerBusinessDay
+        - PercentPerCalendaryDay
+        - PercentPerBusinessDay
+      type: string
+    Discount:
+      type: object
+      properties:
+        limitDate:
+          type: string
+          format: date-time
+          description: Data limite para cálculo do desconto.
+        type:
+          $ref: '#/components/schemas/DiscountTypes'
+        value:
+          type: number
+          format: double
+          description: Valor ou percentual do desconto.
+      additionalProperties: false
     CreateBankslipRequest:
       required:
         - amount
@@ -445,14 +516,32 @@ components:
           type: number
           description: Valor do boleto.
           format: double
+        minimumAmount:
+          type: number
+          description: Valor mínimo do boleto de cartão de crédito.
+          format: double
         dueDate:
           type: string
           description: Data de vencimento no formato yyyy-MM-dd.
           format: date-time
+        closePayment:
+          type: string
+          description: Data limite para pagamento após vencimento no formato yyyy-MM-dd.
+          format: date-time
+          nullable: true
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
           $ref: '#/components/schemas/PersonEmissao'
+        interest:
+          description: Juros para pagamento do boleto em atraso.
+          $ref: '#/components/schemas/Interest'
+        fine:
+          description: Multa para pagamento do boleto em atraso.
+          $ref: '#/components/schemas/Fine'
+        discounts:
+          description: Desconto para pagamento antecipado do boleto.
+          $ref: '#/components/schemas/Discount'
       additionalProperties: false
     
     CreateBankslipResponse:
@@ -561,6 +650,9 @@ components:
           description: Código de identificação do boleto.
         amount:
           $ref: '#/components/schemas/PriceValue'
+        minimumAmount:
+          description: Valor mínimo para pagamento do boleto de cartão de crédito.
+          $ref: '#/components/schemas/PriceValue'
         dueDate:
           type: string
           format: date-time
@@ -582,6 +674,15 @@ components:
           items:
             $ref: '#/components/schemas/Payments'
           nullable: true
+        interest:
+          $ref: '#/components/schemas/Interest'
+          description: Juros para pagamento do boleto em atraso.
+        fine:
+          $ref: '#/components/schemas/Fine'
+          description: Multa para pagamento do boleto em atraso.
+        discount:
+          $ref: '#/components/schemas/Discount'
+          description: Desconto para pagamento antecipado do boleto.
       additionalProperties: false
     
     GetBankslipByBarcodeResponse:
@@ -608,6 +709,9 @@ components:
           nullable: true
         amount:
           $ref: '#/components/schemas/PriceValue'
+        minimumAmount:
+          $ref: '#/components/schemas/PriceValue'
+          description: Valor mínimo para pagamento de boleto de cartão de crédito.
         dueDate:
           type: string
           format: date-time
@@ -627,6 +731,15 @@ components:
           items:
             $ref: '#/components/schemas/Payments'
           nullable: true
+        interest:
+          $ref: '#/components/schemas/Interest'
+          description: Juros para pagamento do boleto em atraso.
+        fine:
+          $ref: '#/components/schemas/Fine'
+          description: Multa para pagamento do boleto em atraso.
+        discount:
+          $ref: '#/components/schemas/Discount'
+          description: Desconto para pagamento antecipado do boleto.
       additionalProperties: false
     
     GeneratePDFRequest:
