@@ -133,7 +133,7 @@ paths:
       summary: Criação de conta de pagamentos pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>O cliente poderá ter até 5 contas de pagamento. No entanto, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
+          <p>Antes de criar uma conta de pagamento, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>
         [block:callout]
