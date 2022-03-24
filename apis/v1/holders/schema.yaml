@@ -403,6 +403,13 @@ components:
         - isPoliticallyExposedPerson
       type: object
       properties:
+        documentNumber:
+          maxLength: 11
+          minLength: 11
+          type: string
+          description: |
+            Número do documento CPF. 
+            **_Informe somente os números._**
         registerName:
           maxLength: 256
           minLength: 1
@@ -446,14 +453,6 @@ components:
             **_Um mesmo endereço de e-mail não poderá ser usado por dois
             clientes._**
           format: email
-        documentNumber:
-          maxLength: 11
-          minLength: 11
-          type: string
-          description: |
-            Número do documento CPF. 
-            **_Informe somente os números._**
-          readOnly: true
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
           type: boolean
