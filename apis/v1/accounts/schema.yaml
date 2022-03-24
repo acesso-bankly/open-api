@@ -136,18 +136,10 @@ paths:
           <p>Antes de criar uma conta de pagamento, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Considere o uso do header ```Idempotency-Key``` afim de evitar criar contas indesejadas."
-        }
-        [/block]  
       operationId: CreatePersonalAccount
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
