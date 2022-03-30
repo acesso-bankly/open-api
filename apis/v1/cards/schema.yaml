@@ -1808,7 +1808,7 @@ paths:
           integration.request.header.Authorization: method.request.header.Authorization
         responses:
           '201':
-            statusCode: 200
+            statusCode: 201
           '400':
             statusCode: 400
           '401':
