@@ -40,7 +40,6 @@ jobs:
             ./apis/v1/boletos/schema.yaml
             ./apis/v1/paybill/schema.yaml
             ./apis/v1/events/schema.yaml
-            ./apis/v1/helpers/schema.yaml
             ./apis/v1/pix/schema.yaml
             ./apis/v1/limites/schema.yaml
   publish:
