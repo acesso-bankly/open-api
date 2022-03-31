@@ -10,8 +10,13 @@ paths:
     get:
       tags:
         - Endereços
-      summary: Consulte endereço através do CEP.
-      description: Você pode consultar o endereço, através do CEP.
+      summary: Consulta de endereço por CEP
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize consultas de endereços através do código postal.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: zipcode.read</span>
+        </div>
+      
       operationId: GetAddress
       parameters:
         - name: zipCode
@@ -87,8 +92,19 @@ paths:
     get:
       tags:
         - Instituições Financeiras
-      summary: Liste instituições financeiras através do produto
-      description: Você pode listar instituições financeiras por produtos
+      summary: Listagem de instituições financeiras por produto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha a lista de instituições financeiras por produto.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: banklist.read</span>
+         [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Caso não seja enviado um valor no campo <code>product</code>, será assumido o valor padrão <b>TED</b>."
+        }
+        [/block]
+        </div>
       operationId: GetBanks
       parameters:
         - name: name
@@ -206,8 +222,8 @@ paths:
     get:
       tags:
         - Instituições Financeiras
-      summary: Consulte instituições financeiras através do ISPB ou Código
-      description: Você pode consultar a instituição financeira, através do ISPB ou Código Bancário
+      summary: Consulta de instituições financeiras por ISPB ou código bancário
+      description: Consulte informações sobre a instituição financeira através do ISPB ou código bancário.
       operationId: GetBank
       parameters:
         - name: id
@@ -285,8 +301,8 @@ paths:
     get:
       tags:
         - Endereços
-      summary: Liste cidades através da sigla do estado.
-      description: Você pode listar cidades através da sigla do estado.
+      summary: Listagem de cidades por sigla do estado
+      description: Obtenha a lista das cidades através da sigla do estado.
       operationId: GetAddress
       parameters:
         - name: state
