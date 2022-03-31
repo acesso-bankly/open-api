@@ -16,7 +16,6 @@ paths:
           <p>Realize consultas de endereços através do código postal.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: zipcode.read</span>
         </div>
-      
       operationId: GetAddress
       parameters:
         - name: zipCode
@@ -37,115 +36,16 @@ paths:
       responses:
         '200':
           description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-              example:
-                zipCode: '05402100'
-                addressLine: Avenida Rebouças
-                neighborhood: Pinheiros
-                city: São Paulo
-                state: SP
-                country: BR
         '400':
           description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
   
 components:
-  schemas:
-    Address:
-      type: object
-      properties:
-        zipCode:
-          type: string
-          description: O CEP correspondente ao endereço
-          nullable: true
-        addressLine:
-          type: string
-          description: Nome da rua (ou avenida)
-          nullable: true
-        neighborhood:
-          type: string
-          description: Nome do bairro ou distrito
-          nullable: true
-        city:
-          type: string
-          description: Nome da cidade
-          nullable: true
-        state:
-          type: string
-          description: "Sigla do estado brasileiro conforme a ISO 3166-2:BR.\r\n'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'"
-          nullable: true
-        country:
-          type: string
-          description: 'Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR.'
-          nullable: true
-      additionalProperties: false
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        propertyName:
-          type: string
-          nullable: true
-        messages:
-          type: array
-          items:
-            type: string
-          nullable: true
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-          nullable: true
-        reference:
-          type: integer
-          format: int32
-      additionalProperties: false
   securitySchemes:
     Bearer:
       type: http
