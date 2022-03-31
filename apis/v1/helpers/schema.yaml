@@ -303,7 +303,7 @@ paths:
         - Endereços
       summary: Listagem de cidades por sigla do estado
       description: Obtenha a lista das cidades através da sigla do estado.
-      operationId: GetAddress
+      operationId: GetCities
       parameters:
         - name: state
           in: path
