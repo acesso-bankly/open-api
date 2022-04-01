@@ -218,7 +218,180 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
-
+  /banklist/{id}:
+    get:
+      tags:
+        - Instituições Financeiras
+      summary: Consulta de instituições financeiras por ISPB ou código bancário
+      description: Consulte informações sobre a instituição financeira através do ISPB ou código bancário.
+      operationId: GetBank
+      parameters:
+        - name: id
+          in: path
+          description: O Id corresponde ao ISPB ou Code
+          required: true
+          schema:
+            type: string
+            description: O Id corresponde ao ISPB ou Code
+            nullable: true
+            example: '332'
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bank'
+              example:
+                name: Acesso Soluções De Pagamento S.A.
+                ispb: '13140088'
+                code: '332'
+                shortName: Acesso Solucoes Pagamento Sa
+                isSPIDirect: true
+                products:
+                  - TED
+                  - PIX
+        '400':
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Recurso não encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - Bearer: []
+  /states/{state}/cities:
+    get:
+      tags:
+        - Endereços
+      summary: Listagem de cidades por sigla do estado
+      description: Obtenha a lista das cidades através da sigla do estado.
+      operationId: GetAddress
+      parameters:
+        - name: state
+          in: path
+          description: "Sigla do estado brasileiro conforme a ISO 3166-2:BR.\r\n'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'"
+          required: true
+          schema:
+            type: string
+            description: "Sigla do estado brasileiro conforme a ISO 3166-2:BR.\r\n'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'"
+            nullable: true
+            example: SP
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                - Adamantina
+                - Adolfo
+                - Aguaí
+                - Águas da Prata
+                - Águas de Lindóia
+                - Águas de Santa Bárbara
+                - Águas de São Pedro
+                - Agudos
+                - Alambari
+                - Alfredo Marcondes
+                - Altair
+                - Altinópolis
+                - Alto Alegre
+                - Alumínio
+                - Álvares Florence
+                - Álvares Machado
+                - Álvaro de Carvalho
+                - Alvinlândia
+                - Americana
+                - Américo Brasiliense
+                - Américo de Campos
+                - Amparo
+        '400':
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Recurso não encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - Bearer: []
 components:
   schemas:
     Address:
