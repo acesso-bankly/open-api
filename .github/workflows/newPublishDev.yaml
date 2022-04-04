@@ -30,8 +30,8 @@ jobs:
         name: Validate schemas
         with:  
           files: |            
-            ./apis/v1/boletos/schema.yaml            
-            ./apis/v1/helpers/schema.yaml            
+            ./apis/v1/boletos/schema.yaml
+            ./apis/v1/helpers/schema.yaml
   publish:
     if: ${{ success() && github.ref=='refs/heads/testeRobozinho' }}
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
           find: ${{ env.COMPONENTS_LOCAL_URL }}
           replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
           regex: false
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Helpers API Reference to readme.io
         with:
