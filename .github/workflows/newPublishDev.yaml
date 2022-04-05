@@ -1,55 +1,13 @@
-env:
-  COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
-  SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
-  COMPONENTS_PATH: '/commons/components.yaml#'
-
-name: Sync OAS to ReadMe - NDEV
+name: NEW Sync OAS DEV
 on:
   push:
     branches:
       - testeRobozinho
-
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch      
-          
-      - uses: jacobtomlinson/gha-find-replace@2.0.0
-        name: Find and Replace Hostname
+      - uses: actions/checkout@v3
+      - uses: readmeio/rdme@vXX
         with:
-          find: ${{ env.COMPONENTS_LOCAL_URL }}
-          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
-          regex: false
-
-      - uses: mbowman100/swagger-validator-action@master
-        name: Validate schemas
-        with:  
-          files: |            
-            ./apis/v1/boletos/schema.yaml
-            ./apis/v1/helpers/schema.yaml
-  publish:
-    if: ${{ success() && github.ref=='refs/heads/testeRobozinho' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch      
-          
-      - uses: jacobtomlinson/gha-find-replace@2.0.0
-        name: Find and Replace Hostname
-        with:
-          find: ${{ env.COMPONENTS_LOCAL_URL }}
-          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
-          regex: false
-
-      - uses: readmeio/rdme@7.0.3
-        name: Publish Helpers API Reference to readme.io
-        with:
-          rdme: openapi './apis/v1/helpers/schema.yaml' --version=v0.05 --key=JBmFybf81zYjJaqEp83JpXuApq3okY79
+          rdme: openapi './apis/v1/helpers/schema.yaml' --key=JBmFybf81zYjJaqEp83JpXuApq3okY79 --version=v0.05
