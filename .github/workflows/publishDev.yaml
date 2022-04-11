@@ -63,47 +63,47 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/holders/schema.yaml' --id=${{ secrets.HOLDERS_API_README_ID_KEY_DEV }} --key=${{ secrets.HOLDERS_APIS_README_OAS_KEY }}
+          rdme: openapi './apis/v1/holders/schema.yaml' --id=${{ secrets.HOLDERS_API_README_ID_KEY_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Accounts API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID_DEV }} --key=${{ secrets.ACCOUNTS_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Auth API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/oauth/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID_DEV }} --key=${{ secrets.OAUTH_APIS_README_OAS_KEY }}
+          rdme: openapi './apis/v1/oauth/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.DOCUMENT_APIS_README_OAS_KEY }}
+          rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID_DEV }} --key=${{ secrets.EVENTS_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish PIX API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID_DEV }} --key=${{ secrets.PIX_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish TED API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID_DEV }} --key=${{ secrets.TED_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
         with: 
-          rdme: openapi './apis/v1/limites/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.LIMITS_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/limites/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io
         with: 
-          rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID_DEV }} --key=${{ secrets.CARDS_API_README_OAS_KEY }}
+          rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
