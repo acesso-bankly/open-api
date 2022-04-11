@@ -57,7 +57,6 @@ jobs:
       - uses: jacobtomlinson/gha-find-replace@2.0.0
         name: Find and Replace Hostname
         with:
-          rdme: openapi './apis/v1/boletos/schema.yaml' --id=${{ secrets.BOLETO_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           find: ${{ env.COMPONENTS_LOCAL_URL }}
           replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
           regex: false      
