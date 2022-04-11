@@ -124,11 +124,6 @@ jobs:
           api-version: 'v0.05'
           
       - uses: readmeio/rdme@7.0.3
-        name: Publish Bankslip API Reference to readme.io        
-        with:
-          rdme: openapi './apis/v1/boletos/schema.yaml' --version=v0.05 --key=JBmFybf81zYjJaqEp83JpXuApq3okY79             
-
-      - uses: readmeio/rdme@7.0.3
         name: Publish Helpers API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/helpers/schema.yaml' --version=v0.05 --key=JBmFybf81zYjJaqEp83JpXuApq3okY79
+          rdme: openapi './apis/v1/helpers/schema.yaml' --id=${{ secrets.HELPER_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
