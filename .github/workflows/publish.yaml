@@ -9,6 +9,15 @@ on:
     branches:
       - testeRobozinho
 
+inputs:
+  README_BOLETO_ID:
+    description: "Id de Boletos no ReadMe"
+    required: false
+    ${{if github.ref=='refs/heads/testeRobozinho' }}:
+      default: ${{ secrets.BOLETO_API_README_OAS_ID }}
+    ${{if github.ref=='refs/heads/develop' }}:
+      default: ${{ secrets.BOLETO_API_README_OAS_ID_DEV }}
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -136,6 +145,9 @@ jobs:
           readme-oas-key: ${{ secrets.BANKSLIP_API_README_OAS_KEY }} 
           oas-file-path: './apis/v1/helpers/schema.yaml'
           api-version: 'v1'
+
+      - name: Validando chave
+        run: echo ${{ inputs.README_BOLETO_ID }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
