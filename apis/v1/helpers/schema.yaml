@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 0.05.0
+  version: 1.0.0
   title: Serviços Auxiliares
   description: Consulte endereços, liste cidades e pesquise por instituições financeiras. 
 servers:
@@ -10,7 +10,7 @@ paths:
     get:
       tags:
         - Endereços
-      summary: Consulta de endereço brasileiro por CEP
+      summary: Consulta de endereço por CEP
       description: |
         <div class="bkly-ref-description">
           <p>Realize consultas de endereços através do código postal.</p>
