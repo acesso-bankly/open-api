@@ -7,7 +7,7 @@ name: Sync OAS to ReadMe
 on:
   push:
     branches:
-      - main
+      - testeRobozinho
 
 jobs:
   validate:
@@ -44,7 +44,7 @@ jobs:
             ./apis/v1/pix/schema.yaml
             ./apis/v1/limites/schema.yaml
   publish:
-    if: ${{ success() && github.ref=='refs/heads/main' }}
+    if: ${{ success() && github.ref=='refs/heads/testeRobozinho' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
