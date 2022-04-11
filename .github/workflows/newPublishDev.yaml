@@ -10,4 +10,4 @@ jobs:
       - uses: actions/checkout@v3
       - uses: readmeio/rdme@7.0.3
         with:
-          rdme: docs './apis/v1/helpers/schema.yaml' --key=JBmFybf81zYjJaqEp83JpXuApq3okY79 --version=v0.05
+          rdme: docs ./apis/v1/helpers/schema.yaml --key=JBmFybf81zYjJaqEp83JpXuApq3okY79 --version=v0.05
