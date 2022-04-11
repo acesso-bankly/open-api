@@ -2,21 +2,16 @@ env:
   COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
   SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
   COMPONENTS_PATH: '/commons/components.yaml#'
+  ${{if github.ref=='refs/heads/testeRobozinho' }}:
+    README_BOLETO_ID: ${{ secrets.BOLETO_API_README_OAS_ID }}
+  ${{if github.ref=='refs/heads/develop' }}:
+    README_BOLETO_ID: ${{ secrets.BOLETO_API_README_OAS_ID_DEV }}
 
 name: Sync OAS to ReadMe
 on:
   push:
     branches:
       - testeRobozinho
-
-inputs:
-  README_BOLETO_ID:
-    description: "Id de Boletos no ReadMe"
-    required: false
-    ${{if github.ref=='refs/heads/testeRobozinho' }}:
-      default: ${{ secrets.BOLETO_API_README_OAS_ID }}
-    ${{if github.ref=='refs/heads/develop' }}:
-      default: ${{ secrets.BOLETO_API_README_OAS_ID_DEV }}
 
 jobs:
   validate:
@@ -147,7 +142,7 @@ jobs:
           api-version: 'v1'
 
       - name: Validando chave
-        run: echo ${{ inputs.README_BOLETO_ID }}
+        run: echo ${{ env.README_BOLETO_ID }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
