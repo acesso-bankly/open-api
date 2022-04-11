@@ -2,10 +2,15 @@ env:
   COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
   SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
   COMPONENTS_PATH: '/commons/components.yaml#'
-  ${{if github.ref=='refs/heads/testeRobozinho' }}:
-    README_BOLETO_ID: ${{ secrets.BOLETO_API_README_OAS_ID }}
-  ${{if github.ref=='refs/heads/develop' }}:
-    README_BOLETO_ID: ${{ secrets.BOLETO_API_README_OAS_ID_DEV }}
+  
+  README_BOLETO_ID: ${{ 
+    if [[ github.ref=='refs/heads/testeRobozinho' ]];
+    then exit secrets.BOLETO_API_README_OAS_ID;
+    fi;
+
+    if [[ if github.ref=='refs/heads/develop' ]]
+    then exit secrets.BOLETO_API_README_OAS_ID_DEV;
+    fi; }}
 
 name: Sync OAS to ReadMe
 on:
