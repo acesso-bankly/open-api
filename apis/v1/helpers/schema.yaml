@@ -10,7 +10,7 @@ paths:
     get:
       tags:
         - Endereços
-      summary: Consulta de endereço por CEP
+      summary: Consulta de endereço brasileiro por CEP
       description: |
         <div class="bkly-ref-description">
           <p>Realize consultas de endereços através do código postal.</p>
