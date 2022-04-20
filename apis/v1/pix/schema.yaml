@@ -138,7 +138,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta de chaves para transferência](/docs/pix-consulta-por-chaves).
+          "body": "Para mais informações, confira a documentação [Consulta de chaves para transferência](/docs/pix-consulta-por-chaves)."
         }
         [/block]
       operationId: GetAsync
@@ -313,67 +313,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
       security:
         - Bearer: []
-  
-  /pix/cash-out:refund:
-    post:
-      tags:
-        - Pagamentos instantâneos
-      summary: Devolução de transferência Pix
-      description: |
-        <div class="bkly-ref-description">
-          <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
-        </div>
-        [block:callout]
-        {
-          "type": "info",
-          "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Devolução](/docs/pix-devolucao)."
-        }
-        [/block]
-      operationId: CreateRefundAsync
-      parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreatePixRefundRequest'
-      responses:
-        '202':
-          description: Devolução realizada com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreatePixRefundRequest'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-      
-      security:
-        - Bearer: []
-        
+
   /pix/cash-out/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
     get:
       tags:
@@ -444,7 +384,67 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: []
-  
+ 
+  /pix/cash-out:refund:
+    post:
+      tags:
+        - Pagamentos instantâneos
+      summary: Devolução de transferência Pix
+      description: |
+        <div class="bkly-ref-description">
+          <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Devolução](/docs/pix-devolucao)."
+        }
+        [/block]
+      operationId: CreateRefundAsync
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePixRefundRequest'
+      responses:
+        '202':
+          description: Devolução realizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixRefundRequest'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      
+      security:
+        - Bearer: []
+        
   /pix/qrcodes:
     post:
       tags:
@@ -806,10 +806,10 @@ components:
           nullable: true
         sender:
           $ref: '#/components/schemas/PersonRequestSender'
-        recipient:
-          $ref: '#/components/schemas/PersonRequestRecipient'
         initializationType:
           $ref: '#/components/schemas/PixInitializationType'
+        recipient:
+          $ref: '#/components/schemas/PersonRequestRecipient'
         endToEndId:
           type: string
           nullable: true
@@ -961,6 +961,7 @@ components:
       required:
         - branch
         - number
+        - type
       type: object
       properties:
         branch:
@@ -969,6 +970,14 @@ components:
         number:
           minLength: 1
           type: string
+        type:
+          enum:
+          - CHECKING
+          - SALARY
+          - SAVINGS
+          - PAYMENT
+          type: string
+          description: Informe o tipo de conta.
       additionalProperties: false
       
     AccountSenderResponse:
@@ -995,7 +1004,14 @@ components:
           minLength: 1
           type: string
           description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-    
+        type:
+          enum:
+          - CHECKING
+          - SALARY
+          - SAVINGS
+          - PAYMENT
+          type: string
+          description: Informe o tipo de conta.
     AccountRecipientResponse:
       type: object
       properties:
@@ -1085,18 +1101,9 @@ components:
     
     RefundCode:
       enum:
-        - AM05
-        - AM09
         - BE08
-        - DS28
-        - FOCR
         - FR01
         - MD06
-        - RUTA
-        - SL11
-        - SL12
-        - UPAY
-        - NARR
         - SL02
       type: string
       
