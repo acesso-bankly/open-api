@@ -335,7 +335,7 @@ paths:
     post:
       tags:
       - Mensagens
-      summary: Reenvie uma mensagem processada a partir do seu id de idempotência.
+      summary: Reprocessamento de mensagens
       description: Reenvie uma mensagem processada.
       operationId: ResendProcessedMessageAsync
       parameters:
