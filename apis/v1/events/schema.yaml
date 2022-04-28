@@ -247,11 +247,11 @@ paths:
               schema:
                 type: string
         '400':
-          description: ''
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          description: ''
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          description: ''
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /webhooks/processed-messages:
     get:
       tags:
