@@ -352,10 +352,10 @@ paths:
           type: string
           format: uuid
       - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        in: header
+        required: true
+        schema:
+          type: string
       - name: api-version
         in: header
         schema:
