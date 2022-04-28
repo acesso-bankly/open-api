@@ -379,7 +379,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
         '404':
-          description: Recurso não encontrado
+          description: Recurso não encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
