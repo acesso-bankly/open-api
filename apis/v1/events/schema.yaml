@@ -388,7 +388,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorResponse"
+                "$ref": "http://localhost:3320/commons/components#/components/responses/404"
         '500':
           description: Ocorreu algum erro inexperado no nosso servidor.
           headers:
