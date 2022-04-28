@@ -377,7 +377,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorResponse"
+                "$ref": "http://localhost:3320/commons/components#/components/responses/400"
         '404':
           description: Recurso não encontrado.
           headers:
