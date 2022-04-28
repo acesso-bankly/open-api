@@ -677,34 +677,7 @@ components:
             type: object
             additionalProperties: false
           nullable: true
-      additionalProperties: false
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        propertyName:
-          type: string
-          nullable: true
-        messages:
-          type: array
-          items:
-            type: string
-          nullable: true
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            "$ref": "#/components/schemas/Error"
-          nullable: true
-        reference:
-          type: string
-          nullable: true
-      additionalProperties: false  
+      additionalProperties: false   
     ProcessedMessageSearchResponseItem:
       type: object
       properties:
