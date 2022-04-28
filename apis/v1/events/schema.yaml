@@ -357,7 +357,7 @@ paths:
           type: string
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
