@@ -336,7 +336,7 @@ paths:
       tags:
       - Mensagens
       summary: Reprocessamento de mensagens
-      description: Reenvie uma mensagem processada.
+      description: <div class="bkly-ref-description"><p>Reenvie uma mensagem processada a partir do seu id de idempotência.</p><span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
       operationId: ResendProcessedMessageAsync
       parameters:
       - name: idempotencyKey
