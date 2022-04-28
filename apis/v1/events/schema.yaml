@@ -120,8 +120,9 @@ paths:
       summary: Consulta de configurações de webhook específico
       description: |
         <div class="bkly-ref-description">
-        <p>Realize a consulta das configurações de um webhook específico.</p> 
-        <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.read</span>
+          <p>Realize a consulta das configurações de um webhook específico.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: webhook.read</span>
         </div>  
       operationId: GetWebhookAsync
       parameters:
@@ -260,7 +261,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todas as mensagens processadas por um webhook Bankly em um determinado período.</p> 
-            <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.read</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.read</span>
         </div>  
       operationId: SearchProcessedMessageAsync
       parameters:
@@ -336,7 +337,11 @@ paths:
       tags:
       - Mensagens
       summary: Reprocessamento de mensagens
-      description: <div class="bkly-ref-description"><p>Reenvie uma mensagem processada a partir do seu id de idempotência.</p><span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Reenvie uma mensagem processada a partir do seu id de idempotência.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
+        </div>
       operationId: ResendProcessedMessageAsync
       parameters:
       - name: idempotencyKey
@@ -448,7 +453,7 @@ paths:
         -  Configurações dos webhooks
       summary: Habilitar uma configuração
       description: |
-       <div class="bkly-ref-description">
+        <div class="bkly-ref-description">
           <p>Habilite a configuração de um webhook vinculado a um evento Bankly.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
