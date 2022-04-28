@@ -373,38 +373,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProcessedMessageSearchResponse"
         '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "http://localhost:3320/commons/components#/components/responses/400"
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "http://localhost:3320/commons/components#/components/responses/404"
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "http://localhost:3320/commons/components#/components/responses/500"
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /webhooks/configurations/{id}/disable:
     patch:
       tags:
