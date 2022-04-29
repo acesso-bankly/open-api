@@ -332,7 +332,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-  /api/processed-messages/{idempotencyKey}:
+  /processed-messages/{idempotencyKey}:
     post:
       tags:
       - Mensagens

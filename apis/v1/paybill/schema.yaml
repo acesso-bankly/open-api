@@ -1,24 +1,497 @@
 openapi: 3.0.1
 info:
-  version: 1.0.0
-  title: Boletos
-  description: >-
-    Faça pagamentos de contas e convênios de forma simples e segura. Consulte também
-    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
-    sobre os fluxos de negócio.
-servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  title: Pagamento de contas
+  description: API para pagamento de contas de consumo e concessionárias.
+  version: '1.0'
+  servers:
+  - url: https://api.sandbox.bankly.com.br
+paths:
+  /bill-payment/validate:
+    post:
+      tags:
+        - Pagamento de contas
+        summary: Validação da linha digitável
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a validação da linha digitável para verificar se o título está apto a ser pago.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.validate</span>
+        </div> 
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
 
-paths: {}
-
-security:
-  - Bearer: []
-
-components: {}
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ValidateBillRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateBillRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ValidateBillRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ValidateBillRequest'
+      
+      responses:
+        '200':
+          description: A linha digitável foi validada.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ValidateBillResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateBillResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ValidateBillResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
   
-x-readme:
-  explorer-enabled: true
-  proxy-enabled: true
-  samples-enabled: true
-  samples-languages:
-    - curl
+  /bill-payment/confirm:
+    post:
+      tags:
+        - Pagamento de contas
+        summary: Confirmação do pagamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Confirme o pagamento do título para que ele seja efetivado.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.confirm</span>
+        </div> 
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
+       
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PayBillRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayBillRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PayBillRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PayBillRequest'
+      
+      responses:
+        '200':
+          description: O pagamento foi confirmado.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PayBillResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayBillResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PayBillResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+  
+  /bill-payment:
+    get:
+      tags:
+        - Consultas
+        summary: Consulta de pagamento por conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os pagamentos (completados ou não) realizados por uma conta específica.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.read</span>
+        </div> 
+        
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
+        - name: bankBranch
+          in: query
+          schema:
+            type: string
+        - name: bankAccount
+          in: query
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+            description: Número de itens por página que a consulta deve retornar.
+        - name: pageToken
+          in: query
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Recurso encontrado.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/QueryAccountResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryAccountResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/QueryAccountResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+
+
+  /bill-payment/detail:
+    get:
+      tags:
+        - Consultas
+        summary: Consulta por código de autenticação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os detalhes de um pagamento específico (completado ou não) por meio de seu código de autenticação (<code>authenticationCode</code>).</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.read</span>
+        </div> 
+      
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
+        - name: bankBranch
+          in: query
+          schema:
+            type: string
+        - name: bankAccount
+          in: query
+          schema:
+            type: string
+        - name: authenticationCode
+          in: query
+          schema:
+            type: string
+        
+      responses:
+        '200':
+          description: Recurso encontrado.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/QueryAutenticationCodeResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryAutenticationCodeResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/QueryAutenticationCodeResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+
+components:
+  schemas:
+    
+    BillBusinessHours:
+      type: object 
+      properties:
+        start:
+          type: string
+          nullable: true
+          description: Horário mínimo para realizar o pagamento.
+        end:
+          type: string
+          nullable: true
+          description: Horário máximo para realizar o pagamento.
+      additionalProperties: false
+    
+    BillCharges:
+      type: object
+      properties:
+        interestAmountCalculated:
+          type: number
+          format: double
+          description: Valor dos juros.
+        fineAmountCalculated:
+          type: number
+          format: double
+          description: Valor da multa.
+        discountAmount:
+          type: number
+          format: double
+          description: Valor do desconto.
+      additionalProperties: false
+    
+    BillPerson:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        documentNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    
+    PayBillRequest:
+      type: object
+      properties:
+        required:
+          - id
+          - bankBranch
+          - bankAccount
+          - amount
+      
+        id:
+          type: string
+          format: uuid
+          description: Linha digitável. 
+        bankBranch:
+          type: string
+          nullable: true
+        bankAccount:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    PayBillResponse:
+      type: object
+      properties:
+        authenticationCode:
+          type: string
+          format: uuid
+        settleDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+
+    PayBillStatus:
+      enum:
+        - Created
+        - Completed
+        - Canceled
+    
+    QueryAccountResponse:
+      type: object
+      properties:
+        nextPage:
+          type: string
+          nullable: true
+        authenticationCode:
+          type: string
+          format: uuid
+        bankBranch:
+          type: string
+          nullable: true
+        bankAccount:
+          type: string
+          nullable: true
+        paymentDate:
+          type: string
+          format: date-time
+        status: 
+          $ref: '#/components/schemas/PayBillStatus' 
+        companyKey:
+          type: string
+          nullable: true
+        documentNumber:
+          type: string
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+        digitable:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+        originalAmount:
+          type: number
+          format: double
+        assignor:
+          type: string
+          nullable: true
+        recipientDocument:
+          type: string
+          nullable: true
+        recipientName:
+          type: string
+          nullable: true
+        charges:
+          $ref: '#/components/schemas/BillCharges'
+        settleDate:
+          type: string
+          format: date-time
+          description: Data de liquidação do título.
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do título.
+        descritpion:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    QueryAutenticationCodeResponse:
+      type: object
+      properties:
+        authenticationCode:
+          type: string
+          format: uuid
+        bankBranch:
+          type: string
+          nullable: true
+        bankAccount:
+          type: string
+          nullable: true
+        paymentDate:
+          type: string
+          format: date-time
+        status: 
+          $ref: '#/components/schemas/PayBillStatus' 
+        companyKey:
+          type: string
+          nullable: true
+        documentNumber:
+          type: string
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+        digitable:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+        originalAmount:
+          type: number
+          format: double
+        assignor:
+          type: string
+          nullable: true
+        recipientDocument:
+          type: string
+          nullable: true
+        recipientName:
+          type: string
+          nullable: true
+        charges:
+          $ref: '#/components/schemas/BillCharges'
+        settleDate:
+          type: string
+          format: date-time
+          description: Data de liquidação do título.
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do título.
+        descritpion:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    ValidateBillRequest:
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+          description: Linha digitável. 
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    
+    ValidateBillResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único que será necessário no momento de confirmar o pagamento.
+        assignor:
+          type: string
+          nullable: true
+        recipient:
+          $ref: '#/components/schemas/BillPerson'
+        payer:
+          $ref: '#/components/schemas/BillPerson'
+        businessHours:
+          $ref: '#/components/schemas/BillBusinessHours'
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do título.
+        settleDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data em que o pagamento será liquidado.
+        nextSettle:
+          type: boolean
+          description: Informa se o título será liquidado no próximo dia útil.
+        originalAmount:
+          type: number
+          format: double
+          nullable: true
+        amount:
+          type: number
+          format: double
+          nullable: true
+        charges:
+          $ref: '#/components/schemas/BillCharges'
+        maxAmount:
+          type: number
+          format: double
+        minAmount:
+          type: number
+          format: double
+        allowChangeAmount:
+          type: boolean
+        digitable:
+          type: string
+          nullable: true
+      additionalProperties: false
