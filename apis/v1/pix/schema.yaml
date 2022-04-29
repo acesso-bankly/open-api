@@ -313,7 +313,67 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
       security:
         - Bearer: []
-
+  
+  /pix/cash-out:refund:
+    post:
+      tags:
+        - Pagamentos instantâneos
+      summary: Devolução de transferência Pix
+      description: |
+        <div class="bkly-ref-description">
+          <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Devolução](/docs/pix-devolucao)."
+        }
+        [/block]
+      operationId: CreateRefundAsync
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header 
+          required: true
+          schema:
+            type : string
+        - name: x-correlation-id
+          in: header 
+          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+          required: true
+          schema:
+            type : string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePixRefundRequest'
+      responses:
+        '202':
+          description: Devolução realizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePixRefundRequest'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      
+      security:
+        - Bearer: []
+        
   /pix/cash-out/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
     get:
       tags:
