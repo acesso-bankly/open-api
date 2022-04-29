@@ -3,14 +3,14 @@ info:
   title: Pagamento de contas
   description: API para pagamento de contas de consumo e concessionárias.
   version: '1.0'
-  servers:
+servers:
   - url: https://api.sandbox.bankly.com.br
 paths:
   /bill-payment/validate:
     post:
       tags:
         - Pagamento de contas
-        summary: Validação da linha digitável
+      summary: Validação da linha digitável
       description: |
         <div class="bkly-ref-description">
           <p>Realize a validação da linha digitável para verificar se o título está apto a ser pago.</p> 
@@ -56,7 +56,7 @@ paths:
     post:
       tags:
         - Pagamento de contas
-        summary: Confirmação do pagamento
+      summary: Confirmação do pagamento
       description: |
         <div class="bkly-ref-description">
           <p>Confirme o pagamento do título para que ele possa ser efetivado.</p> 
@@ -104,7 +104,7 @@ paths:
     get:
       tags:
         - Consultas
-        summary: Consulta de pagamento por conta
+      summary: Consulta de pagamento por conta
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os pagamentos (completados ou não) realizados por uma conta específica.</p> 
@@ -158,7 +158,7 @@ paths:
     get:
       tags:
         - Consultas
-        summary: Consulta por código de autenticação
+      summary: Consulta por código de autenticação
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os detalhes de um pagamento específico (completado ou não) por meio de seu código de autenticação (<code>authenticationCode</code>).</p> 
@@ -246,16 +246,14 @@ components:
           nullable: true
       additionalProperties: false
     
-    
     PayBillRequest:
       type: object
+      required:
+        - id
+        - bankBranch
+        - bankAccount
+        - amount
       properties:
-        required:
-          - id
-          - bankBranch
-          - bankAccount
-          - amount
-      
         id:
           type: string
           format: uuid
