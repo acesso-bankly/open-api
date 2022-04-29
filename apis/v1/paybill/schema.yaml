@@ -19,12 +19,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
 
       requestBody:
         content:
@@ -64,18 +59,13 @@ paths:
         summary: Confirmação do pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Confirme o pagamento do título para que ele seja efetivado.</p> 
+          <p>Confirme o pagamento do título para que ele possa ser efetivado.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.confirm</span>
         </div> 
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
        
       requestBody:
         content:
@@ -124,12 +114,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: bankBranch
           in: query
           schema:
@@ -169,7 +154,6 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
 
-
   /bill-payment/detail:
     get:
       tags:
@@ -184,12 +168,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: bankBranch
           in: query
           schema:
