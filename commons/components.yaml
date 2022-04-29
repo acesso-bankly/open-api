@@ -13,7 +13,9 @@ components:
     ApiVersion:
       name: api-version
       in: header
-      description: 
+      description: |
+        Versão da API.
+        _Atualmente estamos na **1.0**._
       required: true
       style: simple
       explode: false
@@ -319,7 +321,7 @@ components:
         - TO
     
     X-Correlation-Id:
-      type: uuid
+      type: string
       description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
 
   headers:
