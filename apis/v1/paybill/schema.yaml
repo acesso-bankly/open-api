@@ -10,10 +10,10 @@ paths:
     post:
       tags:
         - Pagamento de contas
-      summary: Validação da linha digitável
+      summary: Validação por meio da linha digitável
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a validação da linha digitável para verificar se o título está apto a ser pago.</p> 
+          <p>Realize a validação por meio da linha digitável para verificar se o título está apto a ser pago.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.validate</span>
         </div> 
       parameters:
