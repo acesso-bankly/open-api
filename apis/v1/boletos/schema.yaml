@@ -9,7 +9,7 @@ paths:
   /bankslip:
     post:
       tags:
-        - Emissão de boleto da Thamy
+        - Emissão de boleto
       summary: Solicitação de emissão de boletos
       description: |
         <div class="bkly-ref-description">
