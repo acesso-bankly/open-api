@@ -16,7 +16,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte a lista de chaves de endereçamento vinculadas a uma conta de pagamento.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.account.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.account.read</span>
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
@@ -75,15 +76,16 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
-         [block:callout]
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
+        </div>
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
           "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/pix-cadastro-chaves)."
         }
         [/block]
-        </div>
           
       operationId: CreateEntryAsync
       parameters:
@@ -197,7 +199,7 @@ paths:
           <p><b>Importante!</b> A chave a ser excluída não pode estar em um processo de reinvindicação. Se esse for o caso, é necessário aguardar o encerramento da disputa para realizar a exclusão.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.entries.delete</span>
         </div>
-         [block:callout]
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",

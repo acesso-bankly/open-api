@@ -14,7 +14,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os dados de uma conta de pagamentos. Opcionalmente, você pode obter o saldo dessa conta.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>  
       operationId: GetAccount
       parameters:
@@ -56,7 +57,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Solicite o encerramento da conta do cliente.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.close</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.close</span>
         </div>
         [block:callout]
         {
@@ -95,7 +97,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus respectivos status.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
       operationId: GetPersonalAccounts
       parameters:
@@ -134,7 +137,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Antes de criar uma conta de pagamento, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>
       operationId: CreatePersonalAccount
       parameters:
@@ -177,10 +181,11 @@ paths:
         - Conta pessoa jurídica
       summary: Consulta das contas de pagamento de uma empresa
       description: |
-          <div class="bkly-ref-description">
-            <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.read</span>
-          </div>  
+        <div class="bkly-ref-description">
+          <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.read</span>
+        </div>  
       operationId: GetBusinessAccounts
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
@@ -218,7 +223,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>A empresa poderá ter até 5 contas de pagamento. Para isso, é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: account.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>  
         [block:callout]
         {

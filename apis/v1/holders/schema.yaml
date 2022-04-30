@@ -18,7 +18,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: customer.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.read</span>
         </div>
       operationId: GetCustomerRegistration
       parameters:
@@ -104,7 +105,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e resultado você pode obter consultando o registro do cliente. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: customer.write</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.write</span>
         </div>      
         [block:callout]
         {
@@ -144,7 +146,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Solicite o o cancelamento de relacionamento do cliente pessoa física.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
         </div>
         [block:callout]
         {
@@ -185,7 +188,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: business.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: business.read</span>
         </div>      
       operationId: GetBusinessRegistration
       parameters:
@@ -297,7 +301,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e resultado você pode obter consultando o registro da empresa. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: business.write</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
         [block:callout]
         {
@@ -337,7 +342,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Solicite o o cancelamento de relacionamento do cliente pessoa jurídica.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: business.cancel</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: business.cancel</span>
         </div>
         [block:callout]
         {
