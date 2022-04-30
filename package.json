@@ -21,7 +21,7 @@
       "edit:paybill": "openapi-editor --file ./apis/v1/paybill/schema.yaml --port 23010",
       "edit:events": "npm run start && pm2 --name holders_api_oas start ./apis/v1/events/oas.editor.js",
       "edit:helpers": "openapi-editor --file ./apis/v1/helpers/schema.yaml --port 23012",
-      "edit:limites": "openapi-editor --file ./apis/v1/limites/schema.yaml --port 23030"
+      "edit:limits": "openapi-editor --file ./apis/v1/limits/schema.yaml --port 23030"
     },
     "repository": {
       "type": "git",
