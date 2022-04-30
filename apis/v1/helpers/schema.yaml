@@ -480,7 +480,7 @@ components:
           nullable: true
         isSPIDirect:
           type: boolean
-          description: Indica se a Instituição Participante é uma participante direto do SPI (PIX)
+          description: Indica se a Instituição Participante é uma participante direto do SPI (Pix)
           nullable: true
         products:
           type: array

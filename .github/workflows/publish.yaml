@@ -87,7 +87,7 @@ jobs:
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
-        name: Publish PIX API Reference to readme.io
+        name: Publish Pix API Reference to readme.io
         with:
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           

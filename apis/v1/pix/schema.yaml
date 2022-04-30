@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: PIX
-  description: Gerencie vínculo entre chaves e contas de pagamento e realize pagamentos através do sistema PIX®, a qualquer hora do dia ou da noite. Consulte também
+  title: Pix
+  description: Gerencie vínculo entre chaves e contas de pagamento e realize pagamentos através do sistema Pix®, a qualquer hora do dia ou da noite. Consulte também
     nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
     sobre os fluxos de negócio.
   version: '1.0'
