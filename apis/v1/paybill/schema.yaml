@@ -419,7 +419,6 @@ components:
           type: string
           description: Linha digitável. 
           nullable: true
-          readOnly: true
       additionalProperties: false
     
     ValidateBillResponse:
