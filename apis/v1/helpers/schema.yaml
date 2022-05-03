@@ -480,13 +480,13 @@ components:
           nullable: true
         isSPIDirect:
           type: boolean
-          description: Indica se a Instituição Participante é uma participante direto do SPI (PIX)
+          description: Indica se a Instituição Participante é uma participante direto do SPI (Pix)
           nullable: true
         products:
           type: array
           items:
             type: string
-          description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\n<example>PIX</example>"
+          description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\nExemplo: Pix."
           nullable: true
       additionalProperties: false  
 
