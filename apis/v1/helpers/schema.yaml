@@ -486,7 +486,7 @@ components:
           type: array
           items:
             type: string
-          description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\nExemplo: Pix"
+          description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\nExemplo: Pix."
           nullable: true
       additionalProperties: false  
 
