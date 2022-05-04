@@ -1745,7 +1745,120 @@ paths:
           '500':
             statusCode: 500
 
-         
+  /cards-pci/{proxy}/wallet/{wallet}/brand/{brand}:
+    post:
+      tags:
+        - Wallets
+      summary: Geração de token
+      description: Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.
+      operationId: GenerateTokenizationForWallet
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: wallet
+          in: path
+          required: true
+          schema:
+            type: string
+            $ref: "#/components/schemas/walletTypes"
+        - name: brand
+          in: path
+          required: true
+          schema:
+            type: string
+            $ref: "#/components/schemas/brandTypes"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Resultado da geração do token.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/cardTokenizationResponse"
+              examples:
+                response:
+                  value:
+                    - data: "mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801"
+                      lastFourDigits: "1534"
+                      phoneNumber: "11999999999"
+                      address:
+                        zipCode: "05402100"
+                        address: Avenida Rebouças
+                        number: "1368"
+                        neighborhood: Pinheiros
+                        complement: Em frente a Wizard
+                        city: São Paulo
+                        state: SP
+                        country: Brasil
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '409':
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+        '500':
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards-pci/{proxy}/wallet/{wallet}/brand/{brand}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: POST
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.path.wallet: method.request.path.wallet
+          integration.request.path.brand: method.request.path.brand
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500       
 security:
   - bearerAuth: []
   
@@ -2409,6 +2522,58 @@ components:
                 type: string
                 description: Mensagem explicativa do erro.
     
+    walletTypes:
+      type: string
+      enum:
+        - GooglePay
+        - ApplePay
+    
+    brandTypes:
+      type: string
+      enum:
+        - Visa
+        - Mastercard
+        
+    cardTokenizationResponse:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Token gerado.
+        lastFourDigits:
+          type: string
+          description: Últimos quatro dígitos do cartão.
+        phoneNumber:
+          type: string
+          description: Número de contato do cliente.
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: CEP do endereço.
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (UF).
+            country:
+              type: string
+              description: País.
+  
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
