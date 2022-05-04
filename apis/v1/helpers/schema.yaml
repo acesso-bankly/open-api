@@ -14,7 +14,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize consultas de endereços através do código postal.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: zipcode.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: zipcode.read</span>
         </div>
       
       operationId: GetAddress
@@ -96,7 +97,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha a lista de instituições financeiras por produto.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: banklist.read</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: banklist.read</span>
          [block:callout]
         {
           "type": "info",
@@ -489,7 +491,7 @@ components:
           description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\nExemplo: Pix."
           nullable: true
       additionalProperties: false  
-
+## TODO: colocar ponto final
   securitySchemes:
     Bearer:
       type: http

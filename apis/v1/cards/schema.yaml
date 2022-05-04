@@ -18,7 +18,8 @@ paths:
       description:  |
         <div class="bkly-ref-description">
           <p>Crie um cartão virtual que será utilizado em compras não presenciais.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>  
       operationId: cardCreateVirtualCard
       parameters:
@@ -122,7 +123,8 @@ paths:
       description:  |
         <div class="bkly-ref-description">
           <p>Crie um cartão físico que será embossado e entregue no endereço informado.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
       operationId: cardCreatePhysicalCard
       parameters:
@@ -226,7 +228,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie um cartão físico múltiplo (pré e pós) que será embossado e entrege no endereço informado pelo cliente.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
         [block:callout]
         {
@@ -335,7 +338,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie uma segunda via de um cartão físico com as mesmas características da primeira via.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
         [block:callout]
         {
@@ -426,7 +430,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dados de um cartão pelo seu proxy.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: GetCardByProxy
       parameters:
@@ -557,7 +562,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os cartões vinculados ao número de documento (CPF ou CNPJ) do titular.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetCardsByDocument
       parameters:
@@ -692,7 +698,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os cartões através do seu código de ativação.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetByActivateCode
       parameters:
@@ -827,7 +834,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os cartões vinculados a uma conta de pagamentos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetCardsByAccount
       parameters:
@@ -974,7 +982,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dados de PCI do cartão (PAN, CVV e data de validade).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.pci.read</span>
         </div>
       operationId: getDataPci
       parameters:
@@ -1073,10 +1082,11 @@ paths:
       tags:
         - Gestão de senha
       summary: Alterar senha
-      description:  |
+      description: |
         <div class="bkly-ref-description">
           <p>Altere a senha do cartão.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
         </div>
       operationId: cardChangeCardPassword
       parameters:
@@ -1166,10 +1176,11 @@ paths:
       tags:
         - Status do cartão
       summary: Ativação de cartão
-      description:  |
+      description: |
         <div class="bkly-ref-description">
           <p>Realize a ativação do cartão pela primeira vez.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: cardActivateCard
       parameters:
@@ -1259,10 +1270,11 @@ paths:
       tags:
         - Status do cartão
       summary: Alteração do status do cartão
-      description:   |
+      description: |
         <div class="bkly-ref-description">
           <p>O status do cartão poderá ser alterado para temporário ou definitivo.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: cardChangeCardStatus
       parameters:
@@ -1351,10 +1363,11 @@ paths:
       tags:
       - Status do cartão
       summary: Configuração do contactless
-      description:   |
+      description: |
         <div class="bkly-ref-description">
           <p>Ative ou desative a função contactless do cartão. Para cartões virtuais, caso o contactless fique desativado, não será possível realizar transações com o uso de carteiras digitais.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.update</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: cardContactLess
       parameters:
@@ -1442,10 +1455,11 @@ paths:
       tags:
         - Status do cartão
       summary: Consulta dos próximos status
-      description:   |
+      description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o token informado na requisição.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetLots
       parameters:
@@ -1514,10 +1528,11 @@ paths:
       tags:
         - Consulta de transações
       summary: Consulta de transações por cartão
-      description:   |
+      description: |
         <div class="bkly-ref-description">
           <p>Consulte as transações realizadas no cartão de acordo com os filtros informados. <br /> <b>Importante!</b> A diferença entre a data de início e de fim deverá ser de, no máximo, sete dias.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardTransactionsByCard
       parameters:
@@ -1651,10 +1666,11 @@ paths:
       tags:
         - Rastreio de Cartões
       summary: Por proxy
-      description:    |
+      description: |
         <div class="bkly-ref-description">
           <p>Obtenha o rastreio do cartão pelo seu proxy.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: trackingGetByProxy
       parameters:

@@ -12,12 +12,12 @@ paths:
     get:
       tags:
         - Análise de documentos
-      summary: |
-        Obtenha o resultado da análise do documento.
+      summary: Consulta do resultado da análise do documento
       description: |
         <div class="bkly-ref-description">
           <p>Você pode solicitar mais de um resultado, informando os tokens correspondentes às análises solicitadas.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
         </div>  
       operationId: GetDocumentAnalysis
       parameters:
@@ -53,12 +53,12 @@ paths:
     put:
       tags:
         - Análise de documentos
-      summary: |
-        Envie documentos (SELFIE, RG, CNH, RNE, DNI, CRNM) para análise.
+      summary: Envio de documentos (SELFIE, RG, CNH, RNE, DNI e CRNM) para análise
       description: |
         <div class="bkly-ref-description">
           <p>Essa análise é um pré-requisito para fluxo de onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>  
         [block:callout]
         {

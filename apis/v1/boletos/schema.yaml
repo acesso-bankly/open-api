@@ -14,7 +14,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Emita boletos de depósito ou cobrança.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div>  
         [block:callout]
         {
@@ -82,7 +83,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a consulta de dados por authenticationCode e obtenha todos os detalhes sobre o boleto pesquisado.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div>  
         [block:callout]
         {
@@ -144,7 +146,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a impressão em PDF do boleto emitido. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {
@@ -183,7 +186,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os boletos emitidos que sofreram alteração de status em uma data específica.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {
@@ -222,7 +226,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SearchResponse'
         '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'  
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
   /bankslip/cancel:
@@ -233,7 +237,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
         </div> 
         [block:callout]
         {
@@ -282,7 +287,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize simulações de pagamentos de boletos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div> 
         [block:callout]
         {

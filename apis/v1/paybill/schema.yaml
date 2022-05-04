@@ -14,7 +14,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a validação por meio da linha digitável para verificar se o título está apto a ser pago.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.validate</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: payment.validate</span>
         </div> 
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -60,7 +61,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Confirme o pagamento do título para que ele possa ser efetivado.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.confirm</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: payment.confirm</span>
         </div> 
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -108,7 +110,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os pagamentos (completados ou não) realizados por uma conta específica.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: payment.read</span>
         </div> 
         
       parameters:
@@ -164,7 +167,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os detalhes de um pagamento específico (completado ou não) por meio de seu código de autenticação (<code>authenticationCode</code>).</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: payment.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: payment.read</span>
         </div> 
       
       parameters:

@@ -42,7 +42,7 @@ jobs:
             ./apis/v1/events/schema.yaml
             ./apis/v1/helpers/schema.yaml
             ./apis/v1/pix/schema.yaml
-            ./apis/v1/limites/schema.yaml
+            ./apis/v1/limits/schema.yaml
   publish:
     if: ${{ success() && github.ref=='refs/heads/develop' }}
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
-        name: Publish PIX API Reference to readme.io
+        name: Publish Pix API Reference to readme.io
         with:
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
@@ -98,7 +98,7 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
         with: 
-          rdme: openapi './apis/v1/limites/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/limits/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io

@@ -19,7 +19,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte as configurações dos limites de uma feature (funcionalidade) específica.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: limits.read</span>
         </div>
       operationId: HolderController_getLimits
       parameters:
@@ -107,7 +108,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie ou atualize limites definidos pelo usuário.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.write</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: limits.write</span>
         </div>
       operationId: HolderController_putMaximumLimit
       parameters:
@@ -167,7 +169,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte as configurações dos limites personalizados para o usuário.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: limits.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: limits.read</span>
         </div>
       operationId: HolderController_getMaximumLimits
       parameters:
