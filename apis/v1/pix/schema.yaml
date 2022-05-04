@@ -595,7 +595,6 @@ paths:
         - Bearer: []
 components:
   schemas:
-    #TODO: descrição
     Account:
       required:
         - branch
@@ -611,8 +610,7 @@ components:
         type:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
-
-    #TODO: descrição
+   
     AccountRecipient:
       type: object
       properties:
@@ -631,9 +629,8 @@ components:
           - SAVINGS
           - PAYMENT
           type: string
-          description: Informe o tipo de conta.
+          description: Informe o tipo de conta.   
     
-    #TODO: descrição
     AccountRecipientResponse:
       type: object
       properties:
@@ -645,8 +642,7 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/AccountType'
-
-    #TODO: descrição
+    
     AccountSender:
       required:
         - branch
@@ -670,7 +666,6 @@ components:
           description: Informe o tipo de conta.
       additionalProperties: false
     
-    #TODO: descrição 
     AccountSenderResponse:
       type: object
       properties:
@@ -683,8 +678,7 @@ components:
         type:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
-    
-    #TODO: descrição 
+       
     AccountType:
       enum:
         - CHECKING
@@ -692,8 +686,7 @@ components:
         - SAVINGS
         - PAYMENT
       type: string
-
-    #TODO: descrição
+    
     AddressingKey:
       type: object
       properties:
@@ -713,8 +706,7 @@ components:
         - EVP
       type: string
       description: Tipo de chave de endereçamento do DICT.
-
-    #TODO: descrição
+    
     Bank:
       type: object
       properties:
@@ -733,8 +725,7 @@ components:
             $ref: '#/components/schemas/Error'
           nullable: true
       additionalProperties: false
-
-    #TODO: descrição
+    
     BankName:
       type: object
       properties:
@@ -745,8 +736,7 @@ components:
           type: string
           description: Retorna apenas em caso de leitura de QR Code dinâmico.
       additionalProperties: false
-
-    #TODO: descrição
+    
     BankRecipientResponse:
       type: object
       properties:
@@ -762,8 +752,7 @@ components:
           nullable: true
           description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
       additionalProperties: false
-
-    #TODO: descrição        
+          
     BankRequestRecipient:
       type: object
       properties:
@@ -771,16 +760,14 @@ components:
           type: string
           nullable: true
           description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-
-    #TODO: descrição
+   
     BankRequestSender:
       type: object
       properties:
         ispb:
           type: string
           nullable: true
-    
-    #TODO: descrição
+        
     BankSenderResponse:
       type: object
       properties:
@@ -794,8 +781,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
- 
-    #TODO: descrição
+     
     BankStatus:
       type: object
       properties:
@@ -822,15 +808,13 @@ components:
           agentType:
             type: string
             description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
-
-    #TODO: descrição
+    
     ChannelResponse:
       enum:
         - INTERNAL
         - EXTERNAL
       type: string
-
-    #TODO: descrição
+    
     CreateEntryRequest:
       type: object
       required:
@@ -842,8 +826,7 @@ components:
         account: 
           $ref: '#/components/schemas/Account'
       additionalProperties: false
- 
-    #TODO: descrição
+     
     CreatePixCashOutTransactionRequest:
       type: object
       properties:
@@ -888,8 +871,7 @@ components:
         - sender
         - initializationType
       additionalProperties: false  
-
-    #TODO: descrição   
+     
     CreatePixCashOutTransactionResponse:
       type: object
       properties:
@@ -915,8 +897,7 @@ components:
           type: string
           description: Identificador retornado nas operações de cash-out. Seu valor é utilizado para verificar os status da transação no endpoint de consulta de status.
       additionalProperties: false
-
-    #TODO: descrição
+   
     CreatePixRefundRequest:
       type: object
       required:
@@ -946,8 +927,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-
-    #TODO: descrição
+   
     CreateStaticQRCodeRequest:
       required:
         - addressingKey
@@ -980,8 +960,7 @@ components:
           type: string
           description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
       additionalProperties: false
-
-    #TODO: descrição    
+      
     DecodeQRCodeRequest:
       type: object
       required: 
@@ -990,16 +969,14 @@ components:
         encodedValue:
           type: string
       additionalProperties: false
-
-    #TODO: descrição  
+    
     EntryStatus:
       enum:
         - OWNED
         - EXCLUDED
         - LOCKED_BY_CLAIM
       type: string
-
-    #TODO: descrição
+  
     Error:
       type: object
       properties:
@@ -1010,8 +987,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-
-    #TODO: descrição
+  
     ErrorResponse:
       type: object
       properties:
@@ -1022,8 +998,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-
-    #TODO: descrição
+  
     GetEntryResponse:
       type: object
       properties:
@@ -1043,8 +1018,7 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-
-    #TODO: descrição
+  
     HolderGetEntryResponse:
       type: object
       properties:
@@ -1057,15 +1031,13 @@ components:
         document:
          type: string
       additionalProperties: false
-
-    #TODO: descrição
+ 
     HolderType:
       enum:
         - CUSTOMER
         - BUSINESS
       type: string
-
-    #TODO: descrição
+ 
     Location:
       type: object
       description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
@@ -1077,8 +1049,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    
-    #TODO: descrição
+     
     LocationResponse:
       type: object
       properties:
@@ -1090,7 +1061,6 @@ components:
           description: Retorna apenas na leitura de QR Codes estáticos.
       additionalProperties: false
     
-    #TODO: descrição
     Payment:
       type: object
       properties:
@@ -1123,7 +1093,6 @@ components:
           description: Retornado em caso de <b>decodificação de QR Code para Pix Saque</b>.<br /> Indica o valor do saque em espécie.
       additionalProperties: false
     
-    #TODO: descrição
     PersonalInformationHolder:
       type: object
       properties:
@@ -1152,7 +1121,6 @@ components:
           nullable: true
       additionalProperties: false
 
-    #TODO: descrição
     PersonRequestSender:
       type: object
       properties:
@@ -1172,7 +1140,6 @@ components:
         - name
         - account
   
-    #TODO: descrição
     PixInitializationType:
       enum:
         - Manual
@@ -1181,7 +1148,6 @@ components:
         - DynamicQrCode
       type: string
   
-    #TODO: descrição
     PixPerson:
       type: object
       properties:
@@ -1199,7 +1165,6 @@ components:
           nullable: true
       additionalProperties: false
 
-    #TODO: descrição 
     PixPersonRecipient:
       type: object
       properties:
@@ -1234,7 +1199,6 @@ components:
           nullable: true
       additionalProperties: false
 
-    #TODO: descrição
     PixTransferResponse:
       type: object
       properties:
@@ -1279,7 +1243,6 @@ components:
           nullable: true
       additionalProperties: false
     
-    #TODO: descrição
     PixTransferStatusResponse:
       enum:
         - IN_PROCESS
@@ -1288,14 +1251,12 @@ components:
         - CANCELED
       type: string
     
-    #TODO: descrição
     PixTransferTypeResponse:
       enum:
         - CASH_OUT
         - REFUND
       type: string
 
-    #TODO: descrição
     ProblemDetails:
       type: object
       properties:
@@ -1324,7 +1285,6 @@ components:
           readOnly: true
       additionalProperties: false
 
-    #TODO: Descrição
     RefundCode:
       enum:
         - BE08
