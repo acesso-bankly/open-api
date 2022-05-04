@@ -595,62 +595,7 @@ paths:
         - Bearer: []
 components:
   schemas:
-    AddressingKeyType:
-      enum:
-        - CPF
-        - CNPJ
-        - EMAIL
-        - PHONE
-        - EVP
-      type: string
-      description: Tipo de chave de endereçamento do DICT.
-
-    AddressingKey:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/AddressingKeyType'
-        value:
-          type: string
-          nullable: true
-      additionalProperties: false
-    
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        status:
-          type: integer
-          format: int32
-          nullable: true
-        detail:
-          type: string
-          nullable: true
-        instance:
-          type: string
-          nullable: true
-        extensions:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: false
-          nullable: true
-          readOnly: true
-      additionalProperties: false
-    
-    AccountType:
-      enum:
-        - CHECKING
-        - SALARY
-        - SAVINGS
-        - PAYMENT
-      type: string
-    
+    #TODO: descrição
     Account:
       required:
         - branch
@@ -667,43 +612,109 @@ components:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
 
-    CreateEntryRequest:
+    #TODO: descrição
+    AccountRecipient:
       type: object
-      required:
-      - account
-      - addressingKey
       properties:
-        addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
-        account: 
-          $ref: '#/components/schemas/Account'
-      additionalProperties: false
-
-    EntryStatus:
-      enum:
-        - OWNED
-        - EXCLUDED
-        - LOCKED_BY_CLAIM
-      type: string
+        branch:
+          minLength: 1
+          type: string
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+        number:
+          minLength: 1
+          type: string
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+        type:
+          enum:
+          - CHECKING
+          - SALARY
+          - SAVINGS
+          - PAYMENT
+          type: string
+          description: Informe o tipo de conta.
     
-    HolderType:
+    #TODO: descrição
+    AccountRecipientResponse:
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+        type:
+          $ref: '#/components/schemas/AccountType'
+
+    #TODO: descrição
+    AccountSender:
+      required:
+        - branch
+        - number
+        - type
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+        type:
+          enum:
+          - CHECKING
+          - SALARY
+          - SAVINGS
+          - PAYMENT
+          type: string
+          description: Informe o tipo de conta.
+      additionalProperties: false
+    
+    #TODO: descrição 
+    AccountSenderResponse:
+      type: object
+      properties:
+        branch:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+        type:
+          $ref: '#/components/schemas/AccountType'
+      additionalProperties: false
+    
+    #TODO: descrição 
+    AccountType:
       enum:
-        - CUSTOMER
-        - BUSINESS
+        - CHECKING
+        - SALARY
+        - SAVINGS
+        - PAYMENT
       type: string
 
-    HolderGetEntryResponse:
+    #TODO: descrição
+    AddressingKey:
       type: object
       properties:
         type:
-         type: string
-        name:
-         type: string
-        socialName: 
+          $ref: '#/components/schemas/AddressingKeyType'
+        value:
           type: string
-        document:
-         type: string
+          nullable: true
       additionalProperties: false
+
+    AddressingKeyType:
+      enum:
+        - CPF
+        - CNPJ
+        - EMAIL
+        - PHONE
+        - EVP
+      type: string
+      description: Tipo de chave de endereçamento do DICT.
+
+    #TODO: descrição
     Bank:
       type: object
       properties:
@@ -723,6 +734,68 @@ components:
           nullable: true
       additionalProperties: false
 
+    #TODO: descrição
+    BankName:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code estático.
+        ispb: 
+          type: string
+          description: Retorna apenas em caso de leitura de QR Code dinâmico.
+      additionalProperties: false
+
+    #TODO: descrição
+    BankRecipientResponse:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        compe:
+          type: string
+          nullable: true
+          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
+        name:
+          type: string
+          nullable: true
+          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
+      additionalProperties: false
+
+    #TODO: descrição        
+    BankRequestRecipient:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+
+    #TODO: descrição
+    BankRequestSender:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+    
+    #TODO: descrição
+    BankSenderResponse:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        compe:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+ 
+    #TODO: descrição
     BankStatus:
       type: object
       properties:
@@ -738,60 +811,39 @@ components:
           nullable: true
           description: <code>name</code> do banco do sender não é retornado em caso de Pix externo.
       additionalProperties: false
-    
-    BankName:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Retorna apenas em caso de leitura de QR Code estático.
-        ispb: 
-          type: string
-          description: Retorna apenas em caso de leitura de QR Code dinâmico.
-      additionalProperties: false
-    
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        compe:
-          type: string
-          nullable: true
-      additionalProperties: false
-    
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
-      additionalProperties: false
 
-    GetEntryResponse:
+    ChangeAmountDetail:
+        type: object
+        description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
+        properties:
+          changeAmountType:
+            type: string
+            description: Indica a possibilidade de alteração do valor do QR Code.
+          agentType:
+            type: string
+            description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
+
+    #TODO: descrição
+    ChannelResponse:
+      enum:
+        - INTERNAL
+        - EXTERNAL
+      type: string
+
+    #TODO: descrição
+    CreateEntryRequest:
       type: object
+      required:
+      - account
+      - addressingKey
       properties:
-        endToEndId:
-          type: string
-          nullable: true
         addressingKey:
           $ref: '#/components/schemas/AddressingKey'
-        holder:
-          $ref: '#/components/schemas/HolderGetEntryResponse'
-        status:
-          $ref: '#/components/schemas/EntryStatus'
-        createdAt:
-          type: string
-          format: date-time
-        ownedAt:
-          type: string
-          format: date-time
+        account: 
+          $ref: '#/components/schemas/Account'
       additionalProperties: false
-    
+ 
+    #TODO: descrição
     CreatePixCashOutTransactionRequest:
       type: object
       properties:
@@ -836,7 +888,8 @@ components:
         - sender
         - initializationType
       additionalProperties: false  
-         
+
+    #TODO: descrição   
     CreatePixCashOutTransactionResponse:
       type: object
       properties:
@@ -862,215 +915,8 @@ components:
           type: string
           description: Identificador retornado nas operações de cash-out. Seu valor é utilizado para verificar os status da transação no endpoint de consulta de status.
       additionalProperties: false
-      
-    PersonRequestSender:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountSender'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
-          nullable: true
-      additionalProperties: false
-      required:
-        - documentNumber
-        - name
-        - account
 
-    PersonRequestRecipient:
-      type: object
-      description: Os dados do recebedor <b>não</b> devem ser enviados em caso de pagamento por chave Pix e QR Code. 
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountRecipient'
-        bank:
-          $ref: '#/components/schemas/BankRequestRecipient'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).<br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta. Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa. <br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-          nullable: true
-      additionalProperties: false
-  
-    PixInitializationType:
-      enum:
-        - Manual
-        - Key
-        - StaticQrCode
-        - DynamicQrCode
-      type: string
-      
-    PixPersonSender:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountSenderResponse'
-        bank:
-          $ref: '#/components/schemas/BankSenderResponse'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
-          nullable: true
-      additionalProperties: false
-    
-    PixPerson:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountSenderResponse'
-        bank:
-          $ref: '#/components/schemas/BankStatus'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
-          nullable: true
-      additionalProperties: false
-      
-    PixPersonRecipient:
-      type: object
-      properties:
-        account:
-          $ref: '#/components/schemas/AccountRecipientResponse'
-        bank:
-          $ref: '#/components/schemas/BankRecipientResponse'
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ).
-          nullable: true
-        name:
-          type: string
-          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
-          nullable: true
-      additionalProperties: false
-    
-    AccountSender:
-      required:
-        - branch
-        - number
-        - type
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string
-        type:
-          enum:
-          - CHECKING
-          - SALARY
-          - SAVINGS
-          - PAYMENT
-          type: string
-          description: Informe o tipo de conta.
-      additionalProperties: false
-      
-    AccountSenderResponse:
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string
-        type:
-          $ref: '#/components/schemas/AccountType'
-      additionalProperties: false
-      
-    AccountRecipient:
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-        number:
-          minLength: 1
-          type: string
-          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-        type:
-          enum:
-          - CHECKING
-          - SALARY
-          - SAVINGS
-          - PAYMENT
-          type: string
-          description: Informe o tipo de conta.
-    AccountRecipientResponse:
-      type: object
-      properties:
-        branch:
-          minLength: 1
-          type: string
-        number:
-          minLength: 1
-          type: string
-        type:
-          $ref: '#/components/schemas/AccountType'
-          
-    BankRequestSender:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-         
-    BankRequestRecipient:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
-    
-    BankSenderResponse:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-        compe:
-          type: string
-          nullable: true
-        name:
-          type: string
-          nullable: true
-      additionalProperties: false
-      
-    BankRecipientResponse:
-      type: object
-      properties:
-        ispb:
-          type: string
-          nullable: true
-        compe:
-          type: string
-          nullable: true
-          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
-        name:
-          type: string
-          nullable: true
-          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
-      additionalProperties: false
-    
+    #TODO: descrição
     CreatePixRefundRequest:
       type: object
       required:
@@ -1100,15 +946,295 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-    
-    RefundCode:
+
+    #TODO: descrição
+    CreateStaticQRCodeRequest:
+      required:
+        - addressingKey
+        - recipientName
+      type: object
+      properties:
+        addressingKey:
+          $ref: '#/components/schemas/AddressingKey'
+        amount:
+          type: number
+          format: double
+          description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
+          nullable: true
+        recipientName:
+          minLength: 1
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        conciliationId:
+          type: string
+          nullable: true
+          description: Informe um valor que auxilie o parceiro a identificar a qual QR Code um determinado pagamento pertence.<br /> Esse campo é limitado a 25 caracteres e não aceita nenhum caractere especial.
+        categoryCode:
+          type: string
+          nullable: true
+        additionalData:
+          type: string
+          nullable: true
+        withdrawalProviderIspb:
+          type: string
+          description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
+      additionalProperties: false
+
+    #TODO: descrição    
+    DecodeQRCodeRequest:
+      type: object
+      required: 
+      - encodedValue
+      properties:
+        encodedValue:
+          type: string
+      additionalProperties: false
+
+    #TODO: descrição  
+    EntryStatus:
       enum:
-        - BE08
-        - FR01
-        - MD06
-        - SL02
+        - OWNED
+        - EXCLUDED
+        - LOCKED_BY_CLAIM
       type: string
-      
+
+    #TODO: descrição
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    #TODO: descrição
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        compe:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    #TODO: descrição
+    GetEntryResponse:
+      type: object
+      properties:
+        endToEndId:
+          type: string
+          nullable: true
+        addressingKey:
+          $ref: '#/components/schemas/AddressingKey'
+        holder:
+          $ref: '#/components/schemas/HolderGetEntryResponse'
+        status:
+          $ref: '#/components/schemas/EntryStatus'
+        createdAt:
+          type: string
+          format: date-time
+        ownedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+
+    #TODO: descrição
+    HolderGetEntryResponse:
+      type: object
+      properties:
+        type:
+         type: string
+        name:
+         type: string
+        socialName: 
+          type: string
+        document:
+         type: string
+      additionalProperties: false
+
+    #TODO: descrição
+    HolderType:
+      enum:
+        - CUSTOMER
+        - BUSINESS
+      type: string
+
+    #TODO: descrição
+    Location:
+      type: object
+      description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
+      properties:
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    #TODO: descrição
+    LocationResponse:
+      type: object
+      properties:
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          description: Retorna apenas na leitura de QR Codes estáticos.
+      additionalProperties: false
+    
+    #TODO: descrição
+    Payment:
+      type: object
+      properties:
+        baseValue:
+          type: number
+          format: double
+        interestValue:
+          type: number
+          format: double
+        penaltyValue:
+          type: number
+          format: double
+        discountValue:
+          type: number
+          format: double
+        totalValue:
+          type: number
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do total da compra ou transferência.
+        dueDate:
+          type: string
+          format: date-time
+        changeValue:
+          type: number
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do troco em espécie.
+        withdrawalValue:
+          type: string
+          format: double
+          description: Retornado em caso de <b>decodificação de QR Code para Pix Saque</b>.<br /> Indica o valor do saque em espécie.
+      additionalProperties: false
+    
+    #TODO: descrição
+    PersonalInformationHolder:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        document:
+          type: string
+        
+    PersonRequestRecipient:
+      type: object
+      description: Os dados do recebedor <b>não</b> devem ser enviados em caso de pagamento por chave Pix e QR Code. 
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountRecipient'
+        bank:
+          $ref: '#/components/schemas/BankRequestRecipient'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).<br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta. Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa. <br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          nullable: true
+      additionalProperties: false
+
+    #TODO: descrição
+    PersonRequestSender:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSender'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+      required:
+        - documentNumber
+        - name
+        - account
+  
+    #TODO: descrição
+    PixInitializationType:
+      enum:
+        - Manual
+        - Key
+        - StaticQrCode
+        - DynamicQrCode
+      type: string
+  
+    #TODO: descrição
+    PixPerson:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderResponse'
+        bank:
+          $ref: '#/components/schemas/BankStatus'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+
+    #TODO: descrição 
+    PixPersonRecipient:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountRecipientResponse'
+        bank:
+          $ref: '#/components/schemas/BankRecipientResponse'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+
+    PixPersonSender:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderResponse'
+        bank:
+          $ref: '#/components/schemas/BankSenderResponse'
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
+
+    #TODO: descrição
     PixTransferResponse:
       type: object
       properties:
@@ -1153,12 +1279,7 @@ components:
           nullable: true
       additionalProperties: false
     
-    ChannelResponse:
-      enum:
-        - INTERNAL
-        - EXTERNAL
-      type: string
-    
+    #TODO: descrição
     PixTransferStatusResponse:
       enum:
         - IN_PROCESS
@@ -1167,107 +1288,50 @@ components:
         - CANCELED
       type: string
     
+    #TODO: descrição
     PixTransferTypeResponse:
       enum:
         - CASH_OUT
         - REFUND
       type: string
-      
-    CreateStaticQRCodeRequest:
-      required:
-        - addressingKey
-        - recipientName
-      type: object
-      properties:
-        addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
-        amount:
-          type: number
-          format: double
-          description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
-          nullable: true
-        recipientName:
-          minLength: 1
-          type: string
-        location:
-          $ref: '#/components/schemas/Location'
-        conciliationId:
-          type: string
-          nullable: true
-          description: Informe um valor que auxilie o parceiro a identificar a qual QR Code um determinado pagamento pertence.<br /> Esse campo é limitado a 25 caracteres e não aceita nenhum caractere especial.
-        categoryCode:
-          type: string
-          nullable: true
-        additionalData:
-          type: string
-          nullable: true
-        withdrawalProviderIspb:
-          type: string
-          description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
-      additionalProperties: false
-      
-    Location:
-      type: object
-      description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
-      properties:
-        city:
-          type: string
-          nullable: true
-        zipCode:
-          type: string
-          nullable: true
-      additionalProperties: false
-    
-    DecodeQRCodeRequest:
-      type: object
-      required: 
-      - encodedValue
-      properties:
-        encodedValue:
-          type: string
-      additionalProperties: false
-    
-    PersonalInformationHolder:
+
+    #TODO: descrição
+    ProblemDetails:
       type: object
       properties:
         type:
           type: string
-        name:
+          nullable: true
+        title:
           type: string
-        document:
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
           type: string
-    
-    Payment:
-      type: object
-      properties:
-        baseValue:
-          type: number
-          format: double
-        interestValue:
-          type: number
-          format: double
-        penaltyValue:
-          type: number
-          format: double
-        discountValue:
-          type: number
-          format: double
-        totalValue:
-          type: number
-          format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do total da compra ou transferência.
-        dueDate:
+          nullable: true
+        instance:
           type: string
-          format: date-time
-        changeValue:
-          type: number
-          format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do troco em espécie.
-        withdrawalValue:
-          type: string
-          format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Saque</b>.<br /> Indica o valor do saque em espécie.
+          nullable: true
+        extensions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+          readOnly: true
       additionalProperties: false
+
+    #TODO: Descrição
+    RefundCode:
+      enum:
+        - BE08
+        - FR01
+        - MD06
+        - SL02
+      type: string
 
     WithdrawalDetail:
       type: object
@@ -1283,30 +1347,7 @@ components:
           type: string
           description: ISPB do provedor.
       additionalProperties: false
-    
-    ChangeAmountDetail:
-        type: object
-        description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
-        properties:
-          changeAmountType:
-            type: string
-            description: Indica a possibilidade de alteração do valor do QR Code.
-          agentType:
-            type: string
-            description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
 
-    LocationResponse:
-      type: object
-      properties:
-        city:
-          type: string
-          nullable: true
-        zipCode:
-          type: string
-          description: Retorna apenas na leitura de QR Codes estáticos.
-      additionalProperties: false
-
-    
   securitySchemes:
     Bearer:
       type: http

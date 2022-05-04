@@ -227,20 +227,26 @@ security:
   - Bearer: []
 components:
   schemas:
-
-    sender:
+    account:
       type: object
       properties:
-        document:
-          type: string
-        name:
-          type: string        
         branch:
           $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
-        account:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
-      additionalProperties: false
-        
+        number:
+          type: string
+        bank:
+          $ref: '#/components/schemas/bank'
+    
+    bank:
+      type: object
+      properties:
+        ispb:
+          type: string
+        name:
+          type: string
+        compe:
+          type: string
+   
     holderComplete:
       type: object
       properties:
@@ -251,26 +257,6 @@ components:
         account:
           $ref: '#/components/schemas/account'
           
-    account:
-      type: object
-      properties:
-        branch:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
-        number:
-          type: string
-        bank:
-          $ref: '#/components/schemas/bank'
-          
-    bank:
-      type: object
-      properties:
-        ispb:
-          type: string
-        name:
-          type: string
-        compe:
-          type: string
-  
     recipient:
       type: object
       properties:
@@ -294,6 +280,18 @@ components:
         - accountType
         - bankCode
 
+    sender:
+      type: object
+      properties:
+        document:
+          type: string
+        name:
+          type: string        
+        branch:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+        account:
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
+      additionalProperties: false
   securitySchemes:
     Bearer:
       type: http
