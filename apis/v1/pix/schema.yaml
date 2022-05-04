@@ -593,6 +593,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
+
 components:
   schemas:
     Account:
