@@ -72,7 +72,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Crie um pedido de portabilidade de chaves ou reinvidique a posse para outra instituição.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -115,7 +115,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Visualize um pedido de portabilidade de chaves ou reinvidicação a posse de outra instituição.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.claims.read</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -161,7 +161,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Cancele um pedido de reinvidicação de posse ou portabilidade.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -206,7 +206,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Registre a confirmaçaõd e um pedido de reinvidicação.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -251,7 +251,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
