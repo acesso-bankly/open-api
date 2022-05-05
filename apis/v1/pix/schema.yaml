@@ -103,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/CreateClaimResponse"
+                "$ref": "#/components/schemas/ClaimResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
@@ -112,8 +112,51 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
-    
-
+    get:
+      tags:
+        - Claims
+      summary: Visualização do pedido de reivindicação de chaves
+      description: |
+        <div class="bkly-ref-description">
+          <p>Visualize um pedido de portabilidade de chaves ou reinvidicação a posse de outra instituição.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: documentNumber
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: claimsFrom
+          in: query
+          schema:
+            $ref: "#/components/schemas/ClaimsFrom"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/ClaimStatus"
+      
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClaimResponse"
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+      security:
+        - Bearer: []
+        
   /pix/entries:
     post:
       tags:
@@ -908,6 +951,12 @@ components:
           nullable: true
       additionalProperties: false
 
+    ClaimsFrom:
+      enum:
+        - Claimer
+        - Donor
+      type: string
+
     ClaimPerson:
       enum:
         - DONOR
@@ -915,59 +964,32 @@ components:
         - SYSTEM
       type: string
 
-    ClaimType:
-      enum:
-        - PORTABILITY
-        - OWNERSHIP
-      description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reinvidicação (OWNERSHIP).
-      type: string
-    
-    ClaimStatus:
-      enum:
-        - OPEN
-        - WAITING_RESOLUTION
-        - CONFIRMED
-        - CANCELED
-        - COMPLETED
-      type: string
-    
-    CreateClaimRequest:
-      type: object
-      properties:
-        type:
-          $ref: "#/components/schemas/ClaimType"
-        addressingKey:
-          $ref: "#/components/schemas/AddressingKey"
-        claimer:
-          $ref: "#/components/schemas/ClaimAccount"
-      additionalProperties: false
-
-    CreateClaimResponse:
+    ClaimResponse:
       type: object
       properties:
         claimId:
           type: string
           nullable: true
         type:
-          "$ref": "#/components/schemas/ClaimType"
+          $ref: "#/components/schemas/ClaimType"
         addressingKey:
-          "$ref": "#/components/schemas/AddressingKey"
+          $ref: "#/components/schemas/AddressingKey"
         claimer:
-          "$ref": "#/components/schemas/ClaimAccount"
+          $ref: "#/components/schemas/ClaimAccount"
         donor:
-          "$ref": "#/components/schemas/ClaimAccount"
+          $ref: "#/components/schemas/ClaimAccount"
         status:
-          "$ref": "#/components/schemas/ClaimStatus"
+          $ref: "#/components/schemas/ClaimStatus"
         previousStatus:
-          "$ref": "#/components/schemas/ClaimStatus"
+          $ref: "#/components/schemas/ClaimStatus"
         confirmReason:
-          "$ref": "#/components/schemas/ClaimConfirmReason"
+          $ref: "#/components/schemas/ClaimConfirmReason"
         cancelReason:
-          "$ref": "#/components/schemas/ClaimCancelReason"
+          $ref: "#/components/schemas/ClaimCancelReason"
         confirmedBy:
-          "$ref": "#/components/schemas/ClaimPerson"
+          $ref: "#/components/schemas/ClaimPerson"
         canceledBy:
-          "$ref": "#/components/schemas/ClaimPerson"
+          $ref: "#/components/schemas/ClaimPerson"
         createdAt:
           type: string
           format: date-time
@@ -997,6 +1019,33 @@ components:
           nullable: true
       additionalProperties: false
     
+    ClaimType:
+      enum:
+        - PORTABILITY
+        - OWNERSHIP
+      description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reinvidicação (OWNERSHIP).
+      type: string
+    
+    ClaimStatus:
+      enum:
+        - OPEN
+        - WAITING_RESOLUTION
+        - CONFIRMED
+        - CANCELED
+        - COMPLETED
+      type: string
+    
+    CreateClaimRequest:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/ClaimType"
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        claimer:
+          $ref: "#/components/schemas/ClaimAccount"
+      additionalProperties: false
+ 
     CreateEntryRequest:
       type: object
       required:
