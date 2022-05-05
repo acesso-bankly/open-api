@@ -21,18 +21,13 @@ paths:
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header 
           required: true
@@ -180,6 +175,8 @@ paths:
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
           required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -223,6 +220,8 @@ paths:
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
           required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -266,6 +265,8 @@ paths:
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
           required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Pedido de reinvidicação completado..
@@ -299,15 +300,9 @@ paths:
           "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/pix-cadastro-chaves)."
         }
         [/block]
-          
       operationId: CreateEntryAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -335,7 +330,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: 'http://localhost:3320/commons/components#/components/responses/503'
-        
       security:
         - Bearer: []
 
@@ -358,18 +352,13 @@ paths:
         [/block]
       operationId: GetAsync
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
@@ -421,18 +410,13 @@ paths:
         [/block]
       operationId: DeleteAsync
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Deve informar o número do documento do cliente que solicita a exclusão da chave.
@@ -489,12 +473,7 @@ paths:
         [/block]
       operationId: CreatePixCashOutTransactionAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -549,6 +528,7 @@ paths:
 
       operationId: GetByAuthenticationCodeAsync
       parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
@@ -561,12 +541,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
@@ -619,12 +593,7 @@ paths:
         [/block]
       operationId: CreateRefundAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -679,12 +648,7 @@ paths:
         [/block]
       operationId: CreateStaticQRCodeAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -736,12 +700,7 @@ paths:
         [/block]
       operationId: DecodeQRCodeAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a leitura do QR Code.
@@ -1610,7 +1569,7 @@ components:
       enum:
         - CASH_OUT
         - REFUND
-      type: string
+      type: string      
 
     ProblemDetails:
       type: object
