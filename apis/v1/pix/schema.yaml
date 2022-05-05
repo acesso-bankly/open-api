@@ -94,7 +94,7 @@ paths:
               $ref: "#/components/schemas/CreateClaimRequest"
       responses:
         '201':
-          description: Claim created.
+          description: Pedido de reivindicação de chave criado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -156,7 +156,131 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
-        
+  
+  /pix/claims/{claimId}:cancel:
+    patch:
+      tags:
+        - Claims
+      summary: Cancelamento de um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Cancele um pedido de reinvidicação de posse ou portabilidade.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Entrypoint.Pix.Domain.Schemas.Requests.Dict.Claims.CancelClaimRequest"
+      responses:
+        '200':
+          description: Claim canceled.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+  
+  /pix/claims/{claimId}:confirm:
+    patch:
+      tags:
+        - Claims
+      summary: Confirmação de um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Registre a confirmaçaõd e um pedido de reinvidicação.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Entrypoint.Pix.Domain.Schemas.Requests.Dict.Claims.ConfirmClaimRequest"
+      responses:
+        '200':
+          description: Claim confirmed.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+  
+  /pix/claims/{claimId}:complete:
+    patch:
+      tags:
+        - Claims
+      summary: Completando um pedido de reivindicação de chaves
+      description: |
+        <div class="bkly-ref-description">
+          <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXX</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+      responses:
+        '200':
+          description: Pedido de reinvidicação completado..
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+      
   /pix/entries:
     post:
       tags:
