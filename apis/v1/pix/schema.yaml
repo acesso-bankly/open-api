@@ -70,7 +70,7 @@ paths:
       summary: Criação de um pedido de reivindicação de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>Crie um pedido de portabilidade de chaves ou reinvidique a posse para outra instituição.</p>
+          <p>Crie um pedido de portabilidade de chaves ou reivindique a posse para outra instituição.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
@@ -110,10 +110,10 @@ paths:
     get:
       tags:
         - Claims
-      summary: Visualização do pedido de reivindicação de chaves
+      summary: Visualização do pedido de reivindicação de chave
       description: |
         <div class="bkly-ref-description">
-          <p>Visualize um pedido de portabilidade de chaves ou reinvidicação a posse de outra instituição.</p>
+          <p>Visualize um pedido de portabilidade de chave ou reivindicação da posse para outra instituição.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.read</span>
         </div>
@@ -121,6 +121,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: documentNumber
           in: query
+          description: Número do documento do títular da conta.
           schema:
             type: string
             nullable: true
@@ -159,7 +160,7 @@ paths:
       summary: Cancelamento de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
-          <p>Cancele um pedido de reinvidicação de posse ou portabilidade.</p>
+          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
@@ -204,7 +205,7 @@ paths:
       summary: Confirmação de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
-          <p>Registre a confirmaçaõd e um pedido de reinvidicação.</p>
+          <p>Registre a confirmação de um pedido de reivindicação.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
         </div>
@@ -249,7 +250,7 @@ paths:
       summary: Completando um pedido de reivindicação de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido.</p>
+          <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido de reivindicação de chave.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
@@ -269,7 +270,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Pedido de reinvidicação completado..
+          description: Pedido de reivindicação completado..
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -689,7 +690,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
         [block:callout]
         {
@@ -766,6 +768,37 @@ paths:
       security:
         - Bearer: []
 
+  /pix/qrcodes/dynamic/payment:
+    post:
+      tags:
+        - QR Codes
+      summary: Emissão de QR Codes dinâmicos
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXXX</span>
+        </div>
+      operationId: CreateDynamicQRCodePaymentAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDynamicQRCodePaymentRequest"
+      responses:
+        '200':
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+      security:
+        - Bearer: []
 components:
   schemas:
     Account:
@@ -862,6 +895,34 @@ components:
         - PAYMENT
       type: string
     
+    AdditionalData:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        value:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+
     AddressingKey:
       type: object
       properties:
@@ -888,6 +949,7 @@ components:
       properties:
         ispb:
           type: string
+          description: "Identificador do sistema de pagamentos brasileiro."
           nullable: true
         compe:
           type: string
@@ -975,16 +1037,22 @@ components:
       additionalProperties: false
 
     ChangeAmountDetail:
-        type: object
-        description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
-        properties:
-          changeAmountType:
-            type: string
-            description: Indica a possibilidade de alteração do valor do QR Code.
-          agentType:
-            type: string
-            description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
-    
+      type: object
+      description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
+      properties:
+        changeAmountType:
+          type: string
+          description: Indica a possibilidade de alteração do valor do QR Code.
+        agentType:
+          type: string
+          description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
+  
+    ChangeAmountType:
+      enum:
+        - NOT_ALLOWED
+        - ALLOWED
+      type: string
+
     ChannelResponse:
       enum:
         - INTERNAL
@@ -1000,7 +1068,7 @@ components:
           nullable: true
         number:
           type: string
-          description: Número da conta
+          description: Número da conta.
           nullable: true
         bank:
           $ref: "#/components/schemas/ClaimBank"
@@ -1031,6 +1099,7 @@ components:
           nullable: true
         ispb:
           type: string
+          description: "Identificador do sistema de pagamentos brasileiro."
           nullable: true
       additionalProperties: false
 
@@ -1106,7 +1175,7 @@ components:
       enum:
         - PORTABILITY
         - OWNERSHIP
-      description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reinvidicação (OWNERSHIP).
+      description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reivindicação (OWNERSHIP).
       type: string
     
     ClaimStatus:
@@ -1141,6 +1210,40 @@ components:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
      
+    CreateDynamicQRCodePaymentRequest:
+      type: object
+      properties:
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        amount:
+          type: number
+          format: double
+        recipientName:
+          type: string
+          nullable: true
+        conciliationId:
+          type: string
+          nullable: true
+        additionalData:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdditionalData"
+          nullable: true
+        singlePayment:
+          type: boolean
+        payer:
+          $ref: "#/components/schemas/Payer"
+        changeAmountType:
+          $ref: "#/components/schemas/ChangeAmountType"
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+        payerRequestText:
+          type: string
+          nullable: true
+      additionalProperties: false
+
     CreatePixCashOutTransactionRequest:
       type: object
       properties:
@@ -1375,6 +1478,26 @@ components:
           description: Retorna apenas na leitura de QR Codes estáticos.
       additionalProperties: false
     
+    Payer:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PersonType"
+        tradingName:
+          type: string
+          nullable: true
+        address:
+          $ref: "#/components/schemas/Address"
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          nullable: true
+      additionalProperties: false
+
     Payment:
       type: object
       properties:
@@ -1454,6 +1577,12 @@ components:
         - name
         - account
   
+    PersonType:
+      enum:
+        - CUSTOMER
+        - BUSINESS
+      type: string
+
     PixInitializationType:
       enum:
         - Manual
