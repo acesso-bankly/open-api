@@ -103,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Entrypoint.Pix.Domain.Schemas.Responses.Dict.Claims.CreateClaimResponse"
+                "$ref": "#/components/schemas/CreateClaimResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
@@ -881,6 +881,22 @@ components:
           description: Informação sobre o banco.
       additionalProperties: false
     
+    ClaimCancelReason:
+      enum:
+        - CLAIMER_REQUEST
+        - DONOR_REQUEST
+        - ACCOUNT_CLOSURE
+        - FRAUD
+        - DEFAULT_OPERATION
+      type: string
+
+    ClaimConfirmReason:
+      enum:
+        - DONOR_REQUEST
+        - ACCOUNT_CLOSURE
+        - DEFAULT_OPERATION
+      type: string
+
     ClaimBank:
       type: object
       properties:
@@ -892,11 +908,27 @@ components:
           nullable: true
       additionalProperties: false
 
+    ClaimPerson:
+      enum:
+        - DONOR
+        - CLAIMER
+        - SYSTEM
+      type: string
+
     ClaimType:
       enum:
         - PORTABILITY
         - OWNERSHIP
       description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reinvidicação (OWNERSHIP).
+      type: string
+    
+    ClaimStatus:
+      enum:
+        - OPEN
+        - WAITING_RESOLUTION
+        - CONFIRMED
+        - CANCELED
+        - COMPLETED
       type: string
     
     CreateClaimRequest:
@@ -910,6 +942,61 @@ components:
           $ref: "#/components/schemas/ClaimAccount"
       additionalProperties: false
 
+    CreateClaimResponse:
+      type: object
+      properties:
+        claimId:
+          type: string
+          nullable: true
+        type:
+          "$ref": "#/components/schemas/ClaimType"
+        addressingKey:
+          "$ref": "#/components/schemas/AddressingKey"
+        claimer:
+          "$ref": "#/components/schemas/ClaimAccount"
+        donor:
+          "$ref": "#/components/schemas/ClaimAccount"
+        status:
+          "$ref": "#/components/schemas/ClaimStatus"
+        previousStatus:
+          "$ref": "#/components/schemas/ClaimStatus"
+        confirmReason:
+          "$ref": "#/components/schemas/ClaimConfirmReason"
+        cancelReason:
+          "$ref": "#/components/schemas/ClaimCancelReason"
+        confirmedBy:
+          "$ref": "#/components/schemas/ClaimPerson"
+        canceledBy:
+          "$ref": "#/components/schemas/ClaimPerson"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        resolutionLimitDate:
+          type: string
+          format: date-time
+          nullable: true
+        conclusionLimitDate:
+          type: string
+          format: date-time
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+          nullable: true
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    
     CreateEntryRequest:
       type: object
       required:
