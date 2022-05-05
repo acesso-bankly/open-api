@@ -1796,43 +1796,13 @@ paths:
                         state: SP
                         country: Brasil
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
-          description: Sem autorização para realizar a solicitação.
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '409':
-          description: Requisição em conflito com as regras de negócio contratado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '500':
-          description: Ocorrência de erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -2526,12 +2496,10 @@ components:
       type: string
       enum:
         - GooglePay
-        - ApplePay
     
     brandTypes:
       type: string
       enum:
-        - Visa
         - Mastercard
         
     cardTokenizationResponse:
