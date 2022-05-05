@@ -181,7 +181,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Entrypoint.Pix.Domain.Schemas.Requests.Dict.Claims.CancelClaimRequest"
+              "$ref": "#/components/schemas/ClaimResponse"
       responses:
         '200':
           description: Claim canceled.
@@ -226,7 +226,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/Entrypoint.Pix.Domain.Schemas.Requests.Dict.Claims.ConfirmClaimRequest"
+              "$ref": "#/components/schemas/ClaimResponse"
       responses:
         '200':
           description: Claim confirmed.
