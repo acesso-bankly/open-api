@@ -1,0 +1,23 @@
+name: ReadMe Pipeline
+on:
+  push
+
+jobs:
+  validate:
+    name: "Validando os arquivos YAML"
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./.validate.yaml
+  
+  deployDev:
+    name: "Deploy / Dev"
+    environment: development
+    needs: validate
+    runs-on: ubuntu-latest
+
+  deployProd:
+    name: "Deploy / Prod"
+    environment: production
+    needs: [validate, deployDev]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
