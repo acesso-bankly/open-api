@@ -777,7 +777,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.XXXXXXXXXXXXX</span>
+          <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
         </div>
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
