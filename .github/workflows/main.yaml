@@ -1,19 +1,26 @@
 name: ReadMe Pipeline
 on:
-  push
+  push:
+    branches:
+      - main
+      - develop
+      - feature/robozinho
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
   validate:
-    name: "Validando os arquivos YAML"
-    runs-on: ubuntu-latest
-    steps:
-      - run: ./.validate.yaml
+    uses: ./.validate.yaml
   
   deployDev:
     name: "Deploy / Dev"
     environment: development
     needs: validate
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
   deployProd:
     name: "Deploy / Prod"
@@ -21,3 +28,5 @@ jobs:
     needs: [validate, deployDev]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
