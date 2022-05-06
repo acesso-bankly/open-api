@@ -66,7 +66,7 @@ paths:
   /pix/claims:
     post:
       tags:
-        - Claims
+        - Portabilidade
       summary: Criação de um pedido de reivindicação de chaves
       description: |
         <div class="bkly-ref-description">
@@ -109,7 +109,7 @@ paths:
         - Bearer: []
     get:
       tags:
-        - Claims
+        - Portabilidade
       summary: Consulta do pedido de reivindicação de chave
       description: |
         <div class="bkly-ref-description">
@@ -156,7 +156,7 @@ paths:
   /pix/claims/{claimId}:cancel:
     patch:
       tags:
-        - Claims
+        - Portabilidade
       summary: Cancelamento de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
@@ -201,7 +201,7 @@ paths:
   /pix/claims/{claimId}:confirm:
     patch:
       tags:
-        - Claims
+        - Portabilidade
       summary: Confirmação de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
@@ -246,7 +246,7 @@ paths:
   /pix/claims/{claimId}:complete:
     patch:
       tags:
-        - Claims
+        - Portabilidade
       summary: Conclusão de um pedido de reivindicação de chaves
       description: |
         <div class="bkly-ref-description">
@@ -799,6 +799,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []
+
 components:
   schemas:
     Account:
