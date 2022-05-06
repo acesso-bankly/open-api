@@ -1494,7 +1494,7 @@ components:
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física trata-se do nome de registro e quando pessoa jurídica trata-se da Razão Social da empresa."
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da Razão Social da empresa."
           nullable: true
       additionalProperties: false
 
