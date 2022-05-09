@@ -1651,10 +1651,11 @@ paths:
       tags:
         - Rastreio de Cartões
       summary: Por proxy
-      description:    |
+      description: |
         <div class="bkly-ref-description">
           <p>Obtenha o rastreio do cartão pelo seu proxy.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: card.read</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: trackingGetByProxy
       parameters:
@@ -1735,7 +1736,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Atualize o endereço para uma nova tentativa de entrega.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: trackingUpdateAddress
