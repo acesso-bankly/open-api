@@ -1726,12 +1726,18 @@ paths:
             statusCode: 404
           '500':
             statusCode: 500
+  
   /cards/{proxy}/tracking/address:
     post:
       tags:
         - Rastreio de Cartões
       summary: Atualização de endereço
-      description: Atualiza o endereço para uma nova tentativa de entrega.
+      description: |
+        <div class="bkly-ref-description">
+          <p>Atualize o endereço para uma nova tentativa de entrega.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
       operationId: trackingUpdateAddress
       parameters:
         - name: proxy
@@ -1751,7 +1757,7 @@ paths:
         '201':
           description: Endereço cadastrado com sucesso.
         '400':
-            description: Existem erros no preenchimento da requisição.
+            description: Não é possível alterar o endereço, pois o seu cartão não está em custódia.
             content:
               application/json:
                 schema:
@@ -1764,19 +1770,10 @@ paths:
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
-          description: Rastreio de cartão não existente
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'   
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/trackingErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
-        
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
+
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1801,8 +1798,7 @@ paths:
             statusCode: 404
           '500':
             statusCode: 500
-
-         
+       
 security:
   - bearerAuth: []
   
@@ -1825,8 +1821,7 @@ components:
       in: header
       required: true
       schema:
-        type: string 
-        
+        type: string        
   schemas:
     createCardRequest:
       type: object
@@ -2468,32 +2463,32 @@ components:
     
     updateTrackingAddressRequest: 
           type: object
-          description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
+          description: Informações sobre endereço para tentativa de nova entrega.
           properties:
             zipCode:
               type: string
-              description: CEP (informar somente os números).
+              description: O CEP deve ser nacional e conter oito dígitos.
             address:
               type: string
-              description: Logradouro.
+              description: Nome do logradouro em que o cliente deseja receber o cartão.
             number:
               type: string
-              description: Número.
+              description: Número do imóvel com até 10 caracteres (se não existir, substitua por “S/N”).
             neighborhood:
               type: string
-              description: Bairro.
+              description: Bairro para nova entrega.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade para a entrega.
             state:
               type: string
-              description: Estado (informar a UF).
+              description: "Estado (UF) do novo endereço de entrega. Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
             country:
               type: string
-              description: País.
+              description: "Serão aceitos apenas endereços em território nacional. Deve-se respeitar o formato proposto pela ISO 3166-1. Exemplo: BR."
           required:
             - zipCode
             - address
