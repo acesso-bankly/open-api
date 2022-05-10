@@ -1,0 +1,59 @@
+env:
+  COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
+  SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
+  COMPONENTS_PATH: '/commons/components.yaml#'
+
+name: ReadMe Pipeline
+on:
+  # deixar somente o push, sem o filtro de branchs
+  push:
+    branches:
+      - main
+      - develop
+      - feature/robozinho
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Valadating files
+    steps:
+    - uses: actions/checkout@v2
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch      
+        
+    - uses: jacobtomlinson/gha-find-replace@2.0.0
+      name: Find and Replace Hostname
+      with:
+        find: ${{ env.COMPONENTS_LOCAL_URL }}
+        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
+        regex: false
+
+    - uses: mbowman100/swagger-validator-action@master
+      name: Validate schemas
+      with: 
+        files: |
+          */**.yaml
+          */**.yml
+  
+  deployDev:
+    name: "Deploy / Dev"
+    environment: development
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+  deployProd:
+    name: "Deploy / Prod"
+    environment: production
+    needs: [validate, deployDev]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
