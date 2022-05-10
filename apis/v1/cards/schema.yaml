@@ -1739,9 +1739,9 @@ paths:
           '401':
             statusCode: 401
           '404':
-            statusCode: 404
+            $ref: 'http://localhost:3320/commons/components#/components/responses/404'
           '500':
-            statusCode: 500
+            $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
   /cards/{proxy}/tracking/address:
     post:
@@ -1898,7 +1898,7 @@ paths:
           '409':
             statusCode: 409
           '500':
-            statusCode: 500       
+            statusCode: 500
 security:
   - bearerAuth: []
   
