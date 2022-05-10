@@ -186,6 +186,7 @@ paths:
       responses:
         '200':
           description: Reivindicação cancelada.
+
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -231,6 +232,7 @@ paths:
       responses:
         '200':
           description: Reivindicação confirmada.
+
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
