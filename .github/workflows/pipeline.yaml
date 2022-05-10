@@ -54,6 +54,7 @@ jobs:
   deployDev:
     name: "Deploy / Dev"
     environment: development
+    if: github.event_name == 'pull_request'
     needs: validate
     runs-on: ubuntu-latest
     steps:
