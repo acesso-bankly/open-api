@@ -185,7 +185,7 @@ paths:
               "$ref": "#/components/schemas/ClaimResponse"
       responses:
         '200':
-          description: Claim canceled.
+          description: Reivindicação cancelada.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -230,7 +230,7 @@ paths:
               "$ref": "#/components/schemas/ClaimResponse"
       responses:
         '200':
-          description: Claim confirmed.
+          description: Reivindicação confirmada.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.

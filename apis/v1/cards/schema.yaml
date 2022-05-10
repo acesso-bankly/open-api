@@ -1750,7 +1750,7 @@ paths:
       summary: Atualização de endereço
       description: |
         <div class="bkly-ref-description">
-          <p>Atualize o endereço para uma nova tentativa de entrega.</p>
+          <p>Atualize o endereço do destinatário para uma nova tentativa de entrega.</p>
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
@@ -2592,7 +2592,7 @@ components:
     
     updateTrackingAddressRequest: 
           type: object
-          description: Informações sobre endereço para tentativa de nova entrega.
+          description: Informações sobre endereço para nova tentativa de entrega.
           properties:
             zipCode:
               type: string
