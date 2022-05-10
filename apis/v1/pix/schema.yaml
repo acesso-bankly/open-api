@@ -121,7 +121,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: documentNumber
           in: query
-          description: Número do documento do títular da conta.
+          description: Número do documento do titular da conta.
           schema:
             type: string
             nullable: true
