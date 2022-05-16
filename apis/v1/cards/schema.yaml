@@ -68,11 +68,11 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#/components/schemas/cardErrorResponse409"
                 examples:
                   response:
                     value:
@@ -173,11 +173,11 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#/components/schemas/cardErrorResponse409"
                 examples:
                   response:
                     value:
@@ -285,11 +285,11 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#/components/schemas/cardErrorResponse409"
                 examples:
                   response:
                     value:
@@ -400,11 +400,11 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
+                  $ref: "#/components/schemas/cardErrorResponse409"
                 examples:
                   response:
                     value:
@@ -2018,7 +2018,25 @@ components:
               message:
                 type: string
                 description: Mensagem explicativa do erro.
-                
+      
+    cardErrorResponse409:
+      type: object
+      properties:
+        reference:
+          type: string
+          description: Link para documentação de integração.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: TRANSACTION_IN_COMPETITION.
+              message:
+                type: string
+                description: Mensagem explicativa do erro.
+
     createDuplicateCardRequest:
       type: object
       properties:

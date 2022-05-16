@@ -1241,6 +1241,7 @@ components:
           type: string
           format: date-time
           nullable: true
+          description: Quando esse campo não é informado, o QR Code expira em 24h.
         payerRequestText:
           type: string
           nullable: true
