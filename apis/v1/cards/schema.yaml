@@ -2032,10 +2032,10 @@ components:
             properties:
               code:
                 type: string
-                description: TRANSACTION_IN_COMPETITION.
+                description: TRANSACTION_IN_COMPETITION
               message:
                 type: string
-                description: Mensagem explicativa do erro.
+                description: Transaction already requested in execution.
 
     createDuplicateCardRequest:
       type: object
