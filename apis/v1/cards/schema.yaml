@@ -72,7 +72,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse409"
+                  $ref: "#/components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -177,7 +177,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse409"
+                  $ref: "#/components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -289,7 +289,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse409"
+                  $ref: "#/components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -404,7 +404,7 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/cardErrorResponse409"
+                  $ref: "#/components/schemas/cardErrorResponse"
                 examples:
                   response:
                     value:
@@ -2018,24 +2018,6 @@ components:
               message:
                 type: string
                 description: Mensagem explicativa do erro.
-      
-    cardErrorResponse409:
-      type: object
-      properties:
-        reference:
-          type: string
-          description: Link para documentação de integração.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                description: TRANSACTION_IN_COMPETITION
-              message:
-                type: string
-                description: Transaction already requested in execution.
 
     createDuplicateCardRequest:
       type: object
