@@ -1,5 +1,5 @@
 env:
-  COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
+  COMPONENTS_LOCAL_URL: './../../../commons/components.yaml#'
   SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
   COMPONENTS_PATH: '/commons/components.yaml#'
 
@@ -126,7 +126,6 @@ jobs:
         name: Publish Pay Bill API Reference to readme.io
         with:
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-
 
   deployProd:
     name: "Deploy / Prod"
