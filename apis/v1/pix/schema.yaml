@@ -21,18 +21,13 @@ paths:
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header 
           required: true
@@ -68,6 +63,228 @@ paths:
       security:
         - Bearer: []      
 
+  /pix/claims:
+    post:
+      tags:
+        - Portabilidade
+      summary: Criação de um pedido de reivindicação de chaves
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie um pedido de portabilidade de chaves ou reivindique a posse para outra instituição.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
+        </div>
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateClaimRequest"
+      responses:
+        '201':
+          description: Pedido de reivindicação de chave criado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ClaimResponse"
+        '400':
+          $ref: './../../../commons/components.yaml#/components/responses/400'
+        '500':
+          $ref: './../../../commons/components.yaml#/components/responses/500' 
+        '503':
+          $ref: './../../../commons/components.yaml#/components/responses/503'
+      security:
+        - Bearer: []
+    get:
+      tags:
+        - Portabilidade
+      summary: Consulta do pedido de reivindicação de chave
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte um pedido de portabilidade de chave ou reivindicação da posse para outra instituição.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.read</span>
+        </div>
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - name: documentNumber
+          in: query
+          description: Número do documento do titular da conta.
+          schema:
+            type: string
+            nullable: true
+        - name: claimsFrom
+          in: query
+          schema:
+            $ref: "#/components/schemas/ClaimsFrom"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/ClaimStatus"
+      
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClaimResponse"
+        '404':
+          $ref: './../../../commons/components.yaml#/components/responses/404'
+      security:
+        - Bearer: []
+  
+  /pix/claims/{claimId}:cancel:
+    patch:
+      tags:
+        - Portabilidade
+      summary: Cancelamento de um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
+        </div>
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ClaimResponse"
+      responses:
+        '200':
+          description: Reivindicação cancelada.
+
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+  
+  /pix/claims/{claimId}:confirm:
+    patch:
+      tags:
+        - Portabilidade
+      summary: Confirmação de um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Registre a confirmação de um pedido de reivindicação.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
+        </div>
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ClaimResponse"
+      responses:
+        '200':
+          description: Reivindicação confirmada.
+
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+  
+  /pix/claims/{claimId}:complete:
+    patch:
+      tags:
+        - Portabilidade
+      summary: Conclusão de um pedido de reivindicação de chaves
+      description: |
+        <div class="bkly-ref-description">
+          <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido de reivindicação de chave.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
+        </div>
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pedido de reivindicação completado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+      security:
+        - Bearer: []
+      
   /pix/entries:
     post:
       tags:
@@ -86,15 +303,9 @@ paths:
           "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/pix-cadastro-chaves)."
         }
         [/block]
-          
       operationId: CreateEntryAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -145,18 +356,13 @@ paths:
         [/block]
       operationId: GetAsync
       parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
@@ -208,18 +414,13 @@ paths:
         [/block]
       operationId: DeleteAsync
       parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Deve informar o número do documento do cliente que solicita a exclusão da chave.
@@ -276,12 +477,7 @@ paths:
         [/block]
       operationId: CreatePixCashOutTransactionAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -336,6 +532,7 @@ paths:
 
       operationId: GetByAuthenticationCodeAsync
       parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
@@ -348,12 +545,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a consulta.
@@ -406,12 +597,7 @@ paths:
         [/block]
       operationId: CreateRefundAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -466,12 +652,7 @@ paths:
         [/block]
       operationId: CreateStaticQRCodeAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -512,7 +693,8 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para que a leitura possa ser realizada, é obrigatório que o conteúdo do QR Code esteja em base64.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
         [block:callout]
         {
@@ -523,12 +705,7 @@ paths:
         [/block]
       operationId: DecodeQRCodeAsync
       parameters:
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a leitura do QR Code.
@@ -594,6 +771,37 @@ paths:
       security:
         - Bearer: []
 
+  /pix/qrcodes/dynamic/payment:
+    post:
+      tags:
+        - QR Codes
+      summary: Emissão de QR Codes dinâmicos
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.qrcode.create</span>
+        </div>
+      operationId: CreateDynamicQRCodePaymentAsync
+      parameters:
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDynamicQRCodePaymentRequest"
+      responses:
+        '200':
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: './../../../commons/components.yaml#/components/responses/400'
+      security:
+        - Bearer: []
 components:
   schemas:
     Account:
@@ -604,9 +812,11 @@ components:
       properties:
         branch:
           minLength: 1
+          description: Número da agência.
           type: string
         number:
           minLength: 1
+          description: Número da conta
           type: string
         type:
           $ref: '#/components/schemas/AccountType'
@@ -688,6 +898,34 @@ components:
         - PAYMENT
       type: string
     
+    AdditionalData:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        value:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Address:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        zipCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+
     AddressingKey:
       type: object
       properties:
@@ -695,6 +933,7 @@ components:
           $ref: '#/components/schemas/AddressingKeyType'
         value:
           type: string
+          description: Valor da chave a ser criada.
           nullable: true
       additionalProperties: false
 
@@ -706,13 +945,14 @@ components:
         - PHONE
         - EVP
       type: string
-      description: Tipo de chave de endereçamento do DICT.
+      description: "Tipo de chave de endereçamento do DICT. Exemplo: CPF, CNPJ ou EVP."
     
     Bank:
       type: object
       properties:
         ispb:
           type: string
+          description: "Identificador do sistema de pagamentos brasileiro."
           nullable: true
         compe:
           type: string
@@ -800,22 +1040,167 @@ components:
       additionalProperties: false
 
     ChangeAmountDetail:
-        type: object
-        description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
-        properties:
-          changeAmountType:
-            type: string
-            description: Indica a possibilidade de alteração do valor do QR Code.
-          agentType:
-            type: string
-            description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
-    
+      type: object
+      description: Informações retornadas em caso de decodificação de QR Code para Pix Troco.
+      properties:
+        changeAmountType:
+          type: string
+          description: Indica a possibilidade de alteração do valor do QR Code.
+        agentType:
+          type: string
+          description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
+  
+    ChangeAmountType:
+      enum:
+        - NOT_ALLOWED
+        - ALLOWED
+      type: string
+
     ChannelResponse:
       enum:
         - INTERNAL
         - EXTERNAL
       type: string
     
+    ClaimAccount:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+          nullable: true
+        number:
+          type: string
+          description: Número da conta.
+          nullable: true
+        bank:
+          $ref: "#/components/schemas/ClaimBank"
+          description: Informação sobre o banco.
+      additionalProperties: false
+    
+    ClaimCancelReason:
+      enum:
+        - CLAIMER_REQUEST
+        - DONOR_REQUEST
+        - ACCOUNT_CLOSURE
+        - FRAUD
+        - DEFAULT_OPERATION
+      type: string
+
+    ClaimConfirmReason:
+      enum:
+        - DONOR_REQUEST
+        - ACCOUNT_CLOSURE
+        - DEFAULT_OPERATION
+      type: string
+
+    ClaimBank:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        ispb:
+          type: string
+          description: "Identificador do sistema de pagamentos brasileiro."
+          nullable: true
+      additionalProperties: false
+
+    ClaimsFrom:
+      enum:
+        - Claimer
+        - Donor
+      type: string
+
+    ClaimPerson:
+      enum:
+        - DONOR
+        - CLAIMER
+        - SYSTEM
+      type: string
+
+    ClaimResponse:
+      type: object
+      properties:
+        claimId:
+          type: string
+          nullable: true
+        type:
+          $ref: "#/components/schemas/ClaimType"
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        claimer:
+          $ref: "#/components/schemas/ClaimAccount"
+        donor:
+          $ref: "#/components/schemas/ClaimAccount"
+        status:
+          $ref: "#/components/schemas/ClaimStatus"
+        previousStatus:
+          $ref: "#/components/schemas/ClaimStatus"
+        confirmReason:
+          $ref: "#/components/schemas/ClaimConfirmReason"
+        cancelReason:
+          $ref: "#/components/schemas/ClaimCancelReason"
+        confirmedBy:
+          $ref: "#/components/schemas/ClaimPerson"
+        canceledBy:
+          $ref: "#/components/schemas/ClaimPerson"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        resolutionLimitDate:
+          type: string
+          format: date-time
+          nullable: true
+        conclusionLimitDate:
+          type: string
+          format: date-time
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+          nullable: true
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    
+    ClaimType:
+      enum:
+        - PORTABILITY
+        - OWNERSHIP
+      description: Tipo do pedido, pode ser portabilidade (PORTABILITY) ou reivindicação (OWNERSHIP).
+      type: string
+    
+    ClaimStatus:
+      enum:
+        - OPEN
+        - WAITING_RESOLUTION
+        - CONFIRMED
+        - CANCELED
+        - COMPLETED
+      type: string
+    
+    CreateClaimRequest:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/ClaimType"
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        claimer:
+          $ref: "#/components/schemas/ClaimAccount"
+      additionalProperties: false
+ 
     CreateEntryRequest:
       type: object
       required:
@@ -828,6 +1213,40 @@ components:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
      
+    CreateDynamicQRCodePaymentRequest:
+      type: object
+      properties:
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        amount:
+          type: number
+          format: double
+        recipientName:
+          type: string
+          nullable: true
+        conciliationId:
+          type: string
+          nullable: true
+        additionalData:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdditionalData"
+          nullable: true
+        singlePayment:
+          type: boolean
+        payer:
+          $ref: "#/components/schemas/Payer"
+        changeAmountType:
+          $ref: "#/components/schemas/ChangeAmountType"
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+        payerRequestText:
+          type: string
+          nullable: true
+      additionalProperties: false
+
     CreatePixCashOutTransactionRequest:
       type: object
       properties:
@@ -1062,6 +1481,26 @@ components:
           description: Retorna apenas na leitura de QR Codes estáticos.
       additionalProperties: false
     
+    Payer:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PersonType"
+        tradingName:
+          type: string
+          nullable: true
+        address:
+          $ref: "#/components/schemas/Address"
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da Razão Social da empresa."
+          nullable: true
+      additionalProperties: false
+
     Payment:
       type: object
       properties:
@@ -1141,6 +1580,12 @@ components:
         - name
         - account
   
+    PersonType:
+      enum:
+        - CUSTOMER
+        - BUSINESS
+      type: string
+
     PixInitializationType:
       enum:
         - Manual
@@ -1256,7 +1701,7 @@ components:
       enum:
         - CASH_OUT
         - REFUND
-      type: string
+      type: string      
 
     ProblemDetails:
       type: object
