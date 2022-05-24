@@ -1,21 +1,21 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: Auth
+  title: Segurança
 servers:
   - url: 'https://login.sandbox.bankly.com.br'
 paths:
   /connect/token:
     post:
-      summary: Obtenha um token de acesso
+      tags:
+        - Auth
+      summary: Token de acesso
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha um token de acesso para a api desejada.</p> 
+          <p>Obtenha um token de acesso para a API desejada.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
         </div>
       operationId: PostAuth
-      tags:
-        - Token de acesso
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -50,6 +50,105 @@ paths:
                   value: 
                     error: "invalid_credentials"
                   summary: Exemplo de erro
+  /totp:
+    post:
+      tags:
+      - TOTP
+      summary: Geração do hash e do código numérico 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Gere um hash e um código numérico. O código numérico deverá ser enviado a seu cliente via mensagem (e-mail ou SMS, por exemplo), e o hash deverá ser armazenado para posterior validação.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
+      operationId: CreateTotpAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-bkly-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta. Insira apenas números, sem formatação (11 dígitos para CPF e 14 para CNPJ).
+          required: true
+          schema:
+            type: string
+      
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/CreateTotpRequest'
+      
+      responses:
+        '201':
+          description: Hash e código numérico gerados com sucesso.
+          headers: 
+            x-bkly-correlation-id: 
+              description: Id correlação da operação requisitada.
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTotpResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
+        '503':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
+      security:
+        - Bearer: []
+
+    patch:
+      tags:
+        - TOTP
+      summary: Validação do hash e do código numérico 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a validação do hash e do código numérico enviado por seu cliente.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: totp.validate</span>
+        </div>
+      operationId: ValidateTotpAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: x-bkly-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta. Insira apenas números, sem formatação (11 dígitos para CPF e 14 para CNPJ).
+          required: true
+          schema:
+            type: string
+      
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/ValidateTotpRequest'
+
+      responses:
+        '200':
+          description: Hash e código numérico validados com sucesso.
+          headers: 
+            x-bkly-correlation-id: 
+              description: Id correlação da operação requisitada.
+              schema: 
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateTotpResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
+        '503':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
+      security:
+        - Bearer: []
+      
 components:
   schemas:
     AuthForm:
@@ -79,6 +178,7 @@ components:
           description: |
             Escopo da api que deseja acessar. 
             Consulte a [lista de scope](https://docs.bankly.com.br/docs/scopes)
+    
     AuthResponse:
       type: object
       properties:
@@ -100,7 +200,60 @@ components:
         scope:
           type: string
           description: |
-            Escopo informado na solicitação do token de acesso.          
+            Escopo informado na solicitação do token de acesso. 
+    
+    CreateTotpRequest:
+      type: object
+      required:
+        - context
+        - operation
+        - data
+      properties: 
+        context: 
+          type: string
+          description: "Contexto de uso do TOTP. Exemplo: Pix."
+        operation: 
+          enum:
+            - Portability
+            - Ownership
+            - RegisterEntry
+          type: string
+        data:
+          type: string 
+          description: Campo dinâmico para que o parceiro insira as informações necessárias a serem enviadas, de acordo com a operação. 
+
+    CreateTotpResponse:
+      type: object
+      properties: 
+        hash:
+          type: string
+        code: 
+          type: string
+    
+    ValidateTotpRequest:
+      type: object
+      required:
+        - hash
+        - code
+      properties: 
+        hash: 
+          type: string
+          description: Hash retornado na geração do código TOTP.
+        code: 
+          type: string
+          maxLength: 6
+          minLength: 1
+          description: Código numérico informado pelo cliente. 
+
+    ValidateTotpResponse:
+      type: object
+      properties: 
+        hash: 
+          type: string
+        expirationInSeconds: 
+          type: integer
+          format: int32
+          description: Tempo de validade do hash em segundos.
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
