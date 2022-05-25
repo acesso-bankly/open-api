@@ -1943,7 +1943,7 @@ components:
           description: Número de conta que o cartão será vinculado.
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado, será utilizado o programa padrão associado para o parceiro).
+          description: Identificador do programa que será vinculado ao cartão.
         password:
           type: string
           description: "Senha do cartão para realizar transações (preencha com quatro números. Exemplo: '9348')."
