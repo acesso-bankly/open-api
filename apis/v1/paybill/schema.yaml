@@ -266,7 +266,7 @@ components:
         id:
           type: string
           format: uuid
-          description: Linha digitável. 
+          description: Código ID gerado na etapa de validação. 
         bankBranch:
           type: string
           nullable: true
