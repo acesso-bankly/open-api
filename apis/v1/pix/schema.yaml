@@ -6,7 +6,7 @@ info:
     sobre os fluxos de negócio.
   version: '1.0'
 servers:
-  - url: https://api.sandbox.bankly.com.br
+  - url: https://api-mtls.sandbox.bankly.com.br
 paths:
   /accounts/{accountNumber}/addressing-keys:
     get:
