@@ -6,7 +6,7 @@ info:
     (pré-pago), conheça mais sobre o seu cliente.
   version: '1.0'
 servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   '/document-analysis/{documentNumber}':
     get:

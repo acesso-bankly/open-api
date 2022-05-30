@@ -8,7 +8,7 @@ info:
     [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre
     os fluxos de negócio.
 servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   /cards/virtual:
     post:

@@ -5,7 +5,7 @@ info:
   description: >-
     Registre, atualize, exclua e consulte webhooks de eventos.
 servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   /webhooks/configurations:
     post:
