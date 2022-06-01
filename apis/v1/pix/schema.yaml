@@ -1376,6 +1376,7 @@ components:
         additionalData:
           type: string
           nullable: true
+          description: Campo livre para informações adicionais. Seu tamanho máximo é definido por 73 subtraído o tamanho da chave. Considerando que uma chave tem o tamanho mínimo de 9 caracteres, o tamanho máximo deste campo é 64. Esse campo <b>não</b> aceita caracteres especiais.
         withdrawalProviderIspb:
           type: string
           description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
