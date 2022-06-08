@@ -1054,6 +1054,7 @@ components:
         - NOT_ALLOWED
         - ALLOWED
       type: string
+      description: "Para que o usuário pagador possa alterar o valor a ser pago no momento da transação, esse campo deve ser preenchido com “ALOWED”. Caso contrário, informe \"NOT_ALLOWED\". Se esse campo não for enviado, o sistema assumirá que não é permitida a alteração do valor a ser pago."
 
     ChannelResponse:
       enum:
@@ -1220,19 +1221,24 @@ components:
         amount:
           type: number
           format: double
+          description: "Valor a ser pago. Caso esse campo não seja informado, o changeAmountType será automaticamente preenchido como “ALOWED” e o usuário pagador poderá alterar o valor do QR Code."
         recipientName:
           type: string
           nullable: true
+          description: "Nome do recebedor da transação."
         conciliationId:
           type: string
           nullable: true
+          description: "O ID de conciliação é uma informação utilizada para conciliação dos pagamentos. Ela permite que você identifique a qual QR Code um determinado pagamento pertence. Importante: esse campo deve ter no mínimo 26 e no máximo 35 caracteres, e não são aceitos caracteres especiais."
         additionalData:
           type: array
           items:
             $ref: "#/components/schemas/AdditionalData"
           nullable: true
+          description: "Lista contendo um ou mais subcampos, criados pelo emissor, para descrever informações adicionais. Este valor é somente leitura."
         singlePayment:
           type: boolean
+          description: "Para que um QR Code possa ser utilizado apenas uma vez, esse campo deve ser preenchido com true. Se este campo não for enviado ou estiver como false, será possível utilizá-lo em mais de um pagamento."
         payer:
           $ref: "#/components/schemas/Payer"
         changeAmountType:
@@ -1241,10 +1247,11 @@ components:
           type: string
           format: date-time
           nullable: true
-          description: Quando esse campo não é informado, o QR Code expira em 24h.
+          description: "Data e hora em que o QR Code deve expirar, no formato \"YYYY-MM-DD 00:00:00\". Caso esse campo não seja informado, o QR Code irá expirar em 24h."
         payerRequestText:
           type: string
           nullable: true
+          description: "Texto que o pagador visualizará no momento da transação."
       additionalProperties: false
 
     CreatePixCashOutTransactionRequest:
@@ -1484,23 +1491,24 @@ components:
     
     Payer:
       type: object
+      required:
+        - address
       properties:
         type:
           $ref: "#/components/schemas/PersonType"
-        tradingName:
-          type: string
-          nullable: true
+          description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica). Caso esse campo não seja informado, o sistema assume que o tipo de pagador é CUSTOMER."
         address:
           $ref: "#/components/schemas/Address"
         documentNumber:
           type: string
-          description: Número do documento (CPF ou CNPJ).
+          description: "Documento do pagador. Se o documento do pagador for informado, seu nome deverá ser enviado (name)."
           nullable: true
         name:
           type: string
-          description: "Nome de registro conforme consta no cadastro da conta.\r\nQuando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da Razão Social da empresa."
+          description: "Nome do pagador. Embora o nome do pagador não seja obrigatório, caso ele seja informado, será obrigatório informar seu documento (documentNumber)."
           nullable: true
       additionalProperties: false
+      description: "O único dado obrigatório do campo payer é o subcampo city, que deve ser preenchido com a cidade do pagador."
 
     Payment:
       type: object
