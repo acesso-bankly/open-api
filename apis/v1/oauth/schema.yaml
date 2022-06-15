@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: Segurança
+  title: Autenticação
 servers:
   - url: 'https://login.sandbox.bankly.com.br'
 paths:
@@ -52,8 +52,15 @@ paths:
                   summary: Exemplo de erro
   /totp:
     post:
+      summary: Geração do hash e do código numérico
+      description: |
+        <div class="bkly-ref-description">
+          <p>Gere um hash e um código numérico para a criação do TOTP.</p> 
+          <span class="bkly-ref-small-stable-tag">beta</span>
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
       tags:
-        - Totp
+        - TOTP
       operationId: CreateTotpAsync
       parameters:
         - name: api-version
@@ -62,9 +69,14 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
         - name: x-bkly-user-id
           in: header
-          description: Número do documento do usuário final (11 dígitos para CPF e 14 para
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para
             CNPJ).
           required: true
           schema:
@@ -76,7 +88,7 @@ paths:
               $ref: "#/components/schemas/CreateTotpRequest"
       responses:
         "201":
-          description: Recurso criado com sucesso.
+          description: Código criado com sucesso.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -87,35 +99,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreateTotpResponse"
         "400":
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         "500":
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
         "503":
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
     patch:
+      summary: Validação do hash e do código numérico
+      description: |
+        <div class="bkly-ref-description">
+          <p>Valide o código numérico recebido pelo cliente e o seu hash.</p> 
+          <span class="bkly-ref-small-stable-tag">beta</span>
+          <span class="bkly-ref-scope-tag">scope: totp.validate</span>
+        </div>
       tags:
-        - Totp
+        - TOTP
       parameters:
         - name: api-version
           in: header
@@ -123,9 +123,14 @@ paths:
           required: true
           schema:
             type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
         - name: x-bkly-user-id
           in: header
-          description: Número do documento do usuário final (11 dígitos para CPF e 14 para
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para
             CNPJ).
           required: true
           schema:
@@ -148,41 +153,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/ValidateTotpResponse"
         "400":
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         "404":
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         "500":
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
         "503":
-          description: O serviço está temporariamente indisponível.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
 
