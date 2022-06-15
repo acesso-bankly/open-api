@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: Auth
+  title: Segurança
 servers:
   - url: 'https://login.sandbox.bankly.com.br'
 paths:
@@ -50,6 +50,142 @@ paths:
                   value: 
                     error: "invalid_credentials"
                   summary: Exemplo de erro
+  /totp:
+    post:
+      tags:
+        - Totp
+      operationId: CreateTotpAsync
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: x-bkly-user-id
+          in: header
+          description: Número do documento do usuário final (11 dígitos para CPF e 14 para
+            CNPJ).
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTotpRequest"
+      responses:
+        "201":
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTotpResponse"
+        "400":
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "500":
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        "503":
+          description: O serviço está temporariamente indisponível.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+      security:
+        - Bearer: []
+    patch:
+      tags:
+        - Totp
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: x-bkly-user-id
+          in: header
+          description: Número do documento do usuário final (11 dígitos para CPF e 14 para
+            CNPJ).
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidateTotpRequest"
+      responses:
+        "200":
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidateTotpResponse"
+        "400":
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "404":
+          description: Recurso não encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+        "500":
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        "503":
+          description: O serviço está temporariamente indisponível.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+      security:
+        - Bearer: []
+
 components:
   schemas:
     AuthForm:
@@ -101,6 +237,91 @@ components:
           type: string
           description: |
             Escopo informado na solicitação do token de acesso.          
+    Context:
+      enum:
+        - Pix
+      type: string
+    CreateTotpRequest:
+      required:
+        - context
+        - data
+        - operation
+      type: object
+      properties:
+        userId:
+          type: string
+          nullable: true
+          readOnly: true
+        context:
+          $ref: "#/components/schemas/Context"
+        operation:
+          $ref: "#/components/schemas/Operation"
+        data: {}
+      additionalProperties: false
+    CreateTotpResponse:
+      type: object
+      properties:
+        hash:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Operation:
+      enum:
+        - Portability
+        - Ownership
+        - RegisterEntry
+      type: string
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    ValidateTotpRequest:
+      required:
+        - code
+        - hash
+      type: object
+      properties:
+        code:
+          maxLength: 6
+          minLength: 1
+          type: string
+        hash:
+          minLength: 1
+          type: string
+        userId:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    ValidateTotpResponse:
+      type: object
+      properties:
+        hash:
+          type: string
+          nullable: true
+        expirationInSeconds:
+          type: integer
+          format: int32
+      additionalProperties: false
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
