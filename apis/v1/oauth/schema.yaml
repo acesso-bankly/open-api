@@ -7,10 +7,10 @@ servers:
 paths:
   /connect/token:
     post:
-      summary: Obtenha um token de acesso
+      summary: Token de acesso
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha um token de acesso para a api desejada.</p> 
+          <p>Obtenha um token de acesso para a API desejada.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
         </div>
       operationId: PostAuth
@@ -56,7 +56,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Gere um hash e um código numérico para a criação do TOTP.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span>
+          <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: totp.create</span>
         </div>
       tags:
@@ -76,8 +76,7 @@ paths:
             type : string
         - name: x-bkly-user-id
           in: header
-          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para
-            CNPJ).
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para CNPJ).
           required: true
           schema:
             type: string
@@ -111,7 +110,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Valide o código numérico recebido pelo cliente e o seu hash.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span>
+          <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: totp.validate</span>
         </div>
       tags:
@@ -130,8 +129,7 @@ paths:
             type : string
         - name: x-bkly-user-id
           in: header
-          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para
-            CNPJ).
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para CNPJ).
           required: true
           schema:
             type: string
@@ -192,6 +190,7 @@ components:
           description: |
             Escopo da api que deseja acessar. 
             Consulte a [lista de scope](https://docs.bankly.com.br/docs/scopes)
+    
     AuthResponse:
       type: object
       properties:
@@ -214,10 +213,12 @@ components:
           type: string
           description: |
             Escopo informado na solicitação do token de acesso.          
+    
     Context:
       enum:
         - Pix
       type: string
+    
     CreateTotpRequest:
       required:
         - context
@@ -235,6 +236,7 @@ components:
           $ref: "#/components/schemas/Operation"
         data: {}
       additionalProperties: false
+    
     CreateTotpResponse:
       type: object
       properties:
@@ -245,12 +247,14 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     Operation:
       enum:
         - Portability
         - Ownership
         - RegisterEntry
       type: string
+    
     ProblemDetails:
       type: object
       properties:
@@ -271,6 +275,7 @@ components:
           type: string
           nullable: true
       additionalProperties: {}
+    
     ValidateTotpRequest:
       required:
         - code
@@ -289,6 +294,7 @@ components:
           nullable: true
           readOnly: true
       additionalProperties: false
+    
     ValidateTotpResponse:
       type: object
       properties:
