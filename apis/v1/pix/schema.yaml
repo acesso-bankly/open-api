@@ -76,12 +76,6 @@ paths:
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
@@ -130,12 +124,6 @@ paths:
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
@@ -194,12 +182,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
@@ -251,12 +233,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
@@ -308,12 +284,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
@@ -366,12 +336,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -434,12 +398,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -549,12 +507,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -628,12 +580,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -681,12 +627,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -742,12 +682,6 @@ paths:
           required: true
           schema:
             type : string
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header 
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -807,12 +741,6 @@ paths:
           required: true
           schema:
             type : string  
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: x-correlation-id
           in: header
           description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
@@ -881,12 +809,6 @@ paths:
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
         - name: authorization
           in: header
           required: true
