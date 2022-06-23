@@ -67,7 +67,7 @@ paths:
     post:
       tags:
         - Reivindicação de chaves
-      summary: Criação de um pedido de reivindicação de chaves
+      summary: Criação de pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
           <p>Crie um pedido de portabilidade de chaves ou reivindique a posse para outra instituição.</p>
@@ -115,7 +115,7 @@ paths:
     get:
       tags:
         - Reivindicação de chaves
-      summary: Consulta do pedido de reivindicação de chave
+      summary: Consulta dos pedidos de reivindicação
       description: |
         <div class="bkly-ref-description">
           <p>Consulte um pedido de portabilidade de chave ou reivindicação da posse para outra instituição.</p>
@@ -218,7 +218,7 @@ paths:
     patch:
       tags:
         - Reivindicação de chaves
-      summary: Confirmação de um pedido de reivindicação
+      summary: Confirmação do pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
           <p>Registre a confirmação de um pedido de reivindicação.</p>
@@ -269,7 +269,7 @@ paths:
     patch:
       tags:
         - Reivindicação de chaves
-      summary: Conclusão de um pedido de reivindicação de chaves
+      summary: Conclusão de pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
           <p>Após receber a confirmação do pedido do PSP doador, é preciso completar o pedido de reivindicação de chave.</p>
