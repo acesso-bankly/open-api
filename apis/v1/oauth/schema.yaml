@@ -1,16 +1,16 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: Auth
+  title: Autenticação
 servers:
   - url: 'https://login.sandbox.bankly.com.br'
 paths:
   /connect/token:
     post:
-      summary: Obtenha um token de acesso
+      summary: Token de acesso
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha um token de acesso para a api desejada.</p> 
+          <p>Obtenha um token de acesso para a API desejada.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
         </div>
       operationId: PostAuth
@@ -50,6 +50,117 @@ paths:
                   value: 
                     error: "invalid_credentials"
                   summary: Exemplo de erro
+  /totp:
+    post:
+      summary: Geração do hash e do código numérico
+      description: |
+        <div class="bkly-ref-description">
+          <p>Gere um hash e um código numérico para a criação do TOTP.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
+      tags:
+        - TOTP
+      operationId: CreateTotpAsync
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: x-bkly-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para CNPJ).
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTotpRequest"
+      responses:
+        "201":
+          description: Código criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTotpResponse"
+        "400":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        "500":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+        "503":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
+      security:
+        - Bearer: []
+    patch:
+      summary: Validação do hash e do código numérico
+      description: |
+        <div class="bkly-ref-description">
+          <p>Valide o código numérico recebido pelo cliente e o seu hash.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: totp.validate</span>
+        </div>
+      tags:
+        - TOTP
+      parameters:
+        - name: api-version
+          in: header
+          description: Versão da API. Atualmente estamos na 1.0.
+          required: true
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: x-bkly-user-id
+          in: header
+          description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para CNPJ).
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidateTotpRequest"
+      responses:
+        "200":
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidateTotpResponse"
+        "400":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        "404":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        "500":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+        "503":
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
+      security:
+        - Bearer: []
+
 components:
   schemas:
     AuthForm:
@@ -79,6 +190,7 @@ components:
           description: |
             Escopo da api que deseja acessar. 
             Consulte a [lista de scope](https://docs.bankly.com.br/docs/scopes)
+    
     AuthResponse:
       type: object
       properties:
@@ -101,6 +213,98 @@ components:
           type: string
           description: |
             Escopo informado na solicitação do token de acesso.          
+    
+    Context:
+      enum:
+        - Pix
+      type: string
+    
+    CreateTotpRequest:
+      required:
+        - context
+        - data
+        - operation
+      type: object
+      properties:
+        userId:
+          type: string
+          nullable: true
+          readOnly: true
+        context:
+          $ref: "#/components/schemas/Context"
+        operation:
+          $ref: "#/components/schemas/Operation"
+        data: {}
+      additionalProperties: false
+    
+    CreateTotpResponse:
+      type: object
+      properties:
+        hash:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    Operation:
+      enum:
+        - Portability
+        - Ownership
+        - RegisterEntry
+      type: string
+    
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: {}
+    
+    ValidateTotpRequest:
+      required:
+        - code
+        - hash
+      type: object
+      properties:
+        code:
+          maxLength: 6
+          minLength: 1
+          type: string
+        hash:
+          minLength: 1
+          type: string
+        userId:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    
+    ValidateTotpResponse:
+      type: object
+      properties:
+        hash:
+          type: string
+          nullable: true
+        expirationInSeconds:
+          type: integer
+          format: int32
+      additionalProperties: false
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

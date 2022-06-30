@@ -10,7 +10,7 @@
       "kill": "pm2 kill",
       "delete": "pm2 delete",
       "edit:commons": "openapi-editor --file ./commons/components/schema.yaml --port 23001",
-      "edit:oauth": "openapi-editor --file ./apis/v1/oauth/schema.yaml --port 23002",
+      "edit:oauth": "npm run start && pm2 --name oauth_api_oas start ./apis/v1/oauth/oas.editor.js",
       "edit:documents": "npm run start && pm2 --name holders_api_oas start ./apis/v1/documents/oas.editor.js",
       "edit:holders": "npm run start && pm2 --name holders_api_oas start ./apis/v1/holders/oas.editor.js",
       "edit:accounts": "npm run start && pm2 --name holders_api_oas start ./apis/v1/accounts/oas.editor.js",

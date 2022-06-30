@@ -8,7 +8,7 @@ info:
     [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre
     os fluxos de negócio.
 servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   /cards/virtual:
     post:
@@ -68,7 +68,7 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
@@ -173,7 +173,7 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
@@ -285,7 +285,7 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
@@ -400,7 +400,7 @@ paths:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: Criação em conflito com as regras de negócio contratado.
+            description: A requisição com os dados enviados já foi realizada e está em processamento.
             content:
               application/json:
                 schema:
@@ -1943,7 +1943,7 @@ components:
           description: Número de conta que o cartão será vinculado.
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado, será utilizado o programa padrão associado para o parceiro).
+          description: Identificador do programa que será vinculado ao cartão.
         password:
           type: string
           description: "Senha do cartão para realizar transações (preencha com quatro números. Exemplo: '9348')."
@@ -1990,6 +1990,7 @@ components:
         - bankAgency
         - bankAccount
         - password
+        - programId
         
     cardBuildingResponse:
       type: object
@@ -2018,7 +2019,7 @@ components:
               message:
                 type: string
                 description: Mensagem explicativa do erro.
-                
+
     createDuplicateCardRequest:
       type: object
       properties:

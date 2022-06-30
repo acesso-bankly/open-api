@@ -4,7 +4,7 @@ info:
   description: API para pagamento de contas de consumo e concessionárias.
   version: '1.0'
 servers:
-  - url: https://api.sandbox.bankly.com.br
+  - url: https://api-mtls.sandbox.bankly.com.br
 paths:
   /bill-payment/validate:
     post:
@@ -266,7 +266,7 @@ components:
         id:
           type: string
           format: uuid
-          description: Linha digitável. 
+          description: Código ID gerado na etapa de validação. 
         bankBranch:
           type: string
           nullable: true

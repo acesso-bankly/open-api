@@ -9,7 +9,7 @@ info:
   contact: {}
 tags: []
 servers:
-  - url: https://api.sandbox.bankly.com.br
+  - url: https://api-mtls.sandbox.bankly.com.br
 paths:
   /holders/{documentNumber}/limits/{limitType}/features/{featureName}:
     get:

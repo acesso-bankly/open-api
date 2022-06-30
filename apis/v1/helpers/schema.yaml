@@ -4,7 +4,7 @@ info:
   title: Serviços Auxiliares
   description: Consulte endereços, liste cidades e pesquise por instituições financeiras. 
 servers:
-  - url: 'https://api.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   /addresses/{zipCode}:
     get:
