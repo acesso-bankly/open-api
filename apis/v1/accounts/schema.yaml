@@ -48,6 +48,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /accounts/{accountNumber}/closure:
     patch:
       tags:
@@ -89,6 +90,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /customers/{documentNumber}/accounts:
     get:
       tags:
@@ -175,6 +177,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /business/{documentNumber}/accounts:
     get:
       tags:
