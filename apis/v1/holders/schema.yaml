@@ -24,15 +24,15 @@ paths:
       operationId: GetCustomerRegistration
       parameters:
         - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/CustomerDocument
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
+            ./../../../commons/components.yaml#/components/parameters/CustomerDocument
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ResultLevel'
       responses:
         '200':
           description: Recurso encontrado
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
@@ -90,13 +90,13 @@ paths:
                     updatedAt: '2021-08-31T21:21:58.754Z'
                   summary: Registro do cliente reprovado
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+          $ref: './../../../commons/components.yaml#/components/responses/404'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
     put:
       tags:
         - Pessoa física
@@ -117,8 +117,8 @@ paths:
         [/block]
       operationId: PutCustomerRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/CustomerDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
       requestBody:
         content:
           application/json:
@@ -126,17 +126,17 @@ paths:
               $ref: '#/components/schemas/RegisterCustomerRequest'
       responses:
         '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+          $ref: './../../../commons/components.yaml#/components/responses/202'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   '/customers/{documentNumber}/cancel':
     patch:
       tags:
@@ -159,8 +159,8 @@ paths:
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/CustomerDocument
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+            ./../../../commons/components.yaml#/components/parameters/CustomerDocument
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
       requestBody:
         content:
           application/json:
@@ -168,17 +168,17 @@ paths:
               $ref: '#/components/schemas/CancelRequest'
       responses:
         '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+          $ref: './../../../commons/components.yaml#/components/responses/202'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   '/business/{documentNumber}':
     get:
       tags:
@@ -193,15 +193,15 @@ paths:
         </div>      
       operationId: GetBusinessRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
+        - $ref: './../../../commons/components.yaml#/components/parameters/BusinessDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ResultLevel'
       responses:
         '200':
           description: Recurso encontrado
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
@@ -287,13 +287,13 @@ paths:
                     updatedAt: '2021-08-31T21:21:58.754Z'
                   summary: Registro da empresa reprovado
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+          $ref: './../../../commons/components.yaml#/components/responses/404'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
     put:
       tags:
         - Pessoa jurídica
@@ -313,8 +313,8 @@ paths:
         [/block]
       operationId: PutBusinessRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/BusinessDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
       requestBody:
         content:
           application/json:
@@ -322,17 +322,17 @@ paths:
               $ref: '#/components/schemas/RegisterBusinessRequest'
       responses:
         '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+          $ref: './../../../commons/components.yaml#/components/responses/202'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   '/business/{documentNumber}/cancel':
     patch:
       tags:
@@ -355,8 +355,8 @@ paths:
       operationId: CancelBusinessRegistration
       parameters:
         - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/BusinessDocument
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+            ./../../../commons/components.yaml#/components/parameters/BusinessDocument
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
       requestBody:
         content:
           application/json:
@@ -364,17 +364,17 @@ paths:
               $ref: '#/components/schemas/CancelRequest'
       responses:
         '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+          $ref: './../../../commons/components.yaml#/components/responses/202'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
 security:
   - Bearer: []
 components:
@@ -431,10 +431,10 @@ components:
           nullable: true
         phone:
           description: Telefone de contato do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: './../../../commons/components.yaml#/components/schemas/Phone'
         address:
           description: Endereço do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: './../../../commons/components.yaml#/components/schemas/Address'
         birthDate:
           maxLength: 10
           minLength: 10
@@ -505,10 +505,10 @@ components:
           nullable: true
         phone:
           description: Telefone de contato do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: './../../../commons/components.yaml#/components/schemas/Phone'
         address:
           description: Endereço do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: './../../../commons/components.yaml#/components/schemas/Address'
         birthDate:
           maxLength: 10
           minLength: 10
@@ -569,7 +569,7 @@ components:
           $ref: '#/components/schemas/BusinessSize'
         businessAddress:
           description: Endereço da empresa registrado no cartão CNPJ.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: './../../../commons/components.yaml#/components/schemas/Address'
         legalRepresentative:
           description: Representante legal da empresa.
           $ref: '#/components/schemas/LegalRepresentative'
@@ -593,10 +593,10 @@ components:
           nullable: true
         phone:
           description: Telefone de contato do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: './../../../commons/components.yaml#/components/schemas/Phone'
         address:
           description: Endereço informado no registro do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: './../../../commons/components.yaml#/components/schemas/Address'
         birthDate:
           description: Data de nascimento do cliente.
           type: string
@@ -653,7 +653,7 @@ components:
           type: string
         businessAddress:
           description: Endereço da empresa informado no registro.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: './../../../commons/components.yaml#/components/schemas/Address'
         status:
           description: Status da análise KYC realizada no registro da empresa.
           $ref: '#/components/schemas/Status'

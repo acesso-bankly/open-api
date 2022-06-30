@@ -19,16 +19,16 @@ paths:
         </div>  
       operationId: GetAccount
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/AccountNumber'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
         - $ref: '#/components/parameters/IncludeBalance'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: './../../../commons/components.yaml#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
@@ -39,15 +39,15 @@ paths:
                   accountDetailedExample:
                       $ref: '#/components/examples/accountDetailedExample'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   /accounts/{accountNumber}/closure:
     patch:
       tags:
@@ -69,8 +69,8 @@ paths:
         [/block] 
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/AccountNumber'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
       requestBody:
         content:
           application/json:
@@ -78,17 +78,17 @@ paths:
               $ref: '#/components/schemas/ClosureRequest'
       responses:
         '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+          $ref: './../../../commons/components.yaml#/components/responses/202'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   /customers/{documentNumber}/accounts:
     get:
       tags:
@@ -102,15 +102,15 @@ paths:
         </div>
       operationId: GetPersonalAccounts
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: './../../../commons/components.yaml#/components/parameters/CustomerDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
@@ -121,15 +121,15 @@ paths:
                   listOfAccounts:
                     $ref: '#/components/examples/listOfAccounts'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
     post:
       tags:
         - Conta pessoa física
@@ -142,9 +142,9 @@ paths:
         </div>
       operationId: CreatePersonalAccount
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: './../../../commons/components.yaml#/components/parameters/CustomerDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
@@ -155,9 +155,9 @@ paths:
           description: Recurso criado com sucesso.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
             Location:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/Location'
+              $ref: './../../../commons/components.yaml#/components/headers/Location'
           content:
             application/json:
               schema:
@@ -166,15 +166,15 @@ paths:
                   accountDetailedExample:
                       $ref: '#/components/examples/accountDetailedExample'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   /business/{documentNumber}/accounts:
     get:
       tags:
@@ -188,15 +188,15 @@ paths:
         </div>  
       operationId: GetBusinessAccounts
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: './../../../commons/components.yaml#/components/parameters/BusinessDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/Authorization'
       responses:
         '200':
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
           content:
             application/json:
               schema:
@@ -207,15 +207,15 @@ paths:
                   listOfAccounts:
                     $ref: '#/components/examples/listOfAccounts'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
     post:
       tags:
         - Conta pessoa jurídica
@@ -235,10 +235,10 @@ paths:
         [/block] 
       operationId: CreateBusinessAccount
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey' 
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: './../../../commons/components.yaml#/components/parameters/BusinessDocument'
+        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: './../../../commons/components.yaml#/components/parameters/IdempotencyKey' 
+        - $ref: './../../../commons/components.yaml#/components/parameters/Authorization'
       requestBody:
         content:
           application/json:
@@ -249,9 +249,9 @@ paths:
           description: Recurso criado com sucesso.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: './../../../commons/components.yaml#/components/headers/CorrelationId'
             Location:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/Location'
+              $ref: './../../../commons/components.yaml#/components/headers/Location'
           content:
             application/json:
               schema:
@@ -260,15 +260,15 @@ paths:
                   accountDetailedExample:
                       $ref: '#/components/examples/accountDetailedExample'
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          $ref: './../../../commons/components.yaml#/components/responses/400'
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+          $ref: './../../../commons/components.yaml#/components/responses/403'
         '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+          $ref: './../../../commons/components.yaml#/components/responses/409'
         '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+          $ref: './../../../commons/components.yaml#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+          $ref: './../../../commons/components.yaml#/components/responses/500'
   
 security:
   - Bearer: []
@@ -291,9 +291,9 @@ components:
   schemas:
     
     Error:
-      $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
+      $ref: ./../../../commons/components.yaml#/components/schemas/ErrorResponse
     ErrorResponse:
-      $ref: http://localhost:3320/commons/components#/components/schemas/Error
+      $ref: ./../../../commons/components.yaml#/components/schemas/Error
     
     Balance:
       description: Saldo da conta.
@@ -356,9 +356,9 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
         branch:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+          $ref: './../../../commons/components.yaml#/components/schemas/BankBranch'
         number:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
+          $ref: './../../../commons/components.yaml#/components/schemas/AccountNumber'
       additionalProperties: false
 
     AccountDetailedResponse:
@@ -369,9 +369,9 @@ components:
         status:
           $ref: '#/components/schemas/AccountStatus'
         branch:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
+          $ref: './../../../commons/components.yaml#/components/schemas/BankBranch'
         number:
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
+          $ref: './../../../commons/components.yaml#/components/schemas/AccountNumber'
       additionalProperties: false
 
     ReasonType:
