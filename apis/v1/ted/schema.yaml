@@ -26,8 +26,8 @@ paths:
           description: Guid para correlacionar o request.
           schema:
             type : string
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'     
-        - $ref: './../../../commons/components.yaml#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'     
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
       requestBody:
         content:
           application/json:
@@ -56,15 +56,15 @@ paths:
                     type: string
                     description: Código para consulta da transação
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '403':
-          $ref: './../../../commons/components.yaml#/components/responses/403'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
         '409':
-          $ref: './../../../commons/components.yaml#/components/responses/409'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     get:
       tags:
         - Operações via TED
@@ -75,8 +75,8 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
         </div>  
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/BankBranchQuery'          
-        - $ref: './../../../commons/components.yaml#/components/parameters/AccountNumberQuery'          
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BankBranchQuery'          
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumberQuery'          
         - in: query 
           name: pageSize
           description: Quantidade de itens que devem retornar na consulta.
@@ -93,7 +93,7 @@ paths:
           required: true
           schema:
             type : string
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       responses:
         '200':
           description: Retorna todas as transações do tipo TED feitas pela conta informada
@@ -135,15 +135,15 @@ paths:
                         updatedAt:
                           type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '403':
-          $ref: './../../../commons/components.yaml#/components/responses/403'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
         '409':
-          $ref: './../../../commons/components.yaml#/components/responses/409'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'                  
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'                  
   /fund-transfers/{authenticationCode}:
     get:
       tags:
@@ -179,7 +179,7 @@ paths:
           required: true
           schema:
             type : string
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       responses:
         '200':
           description: Retorna a transação do tipo TED referente ao authenticationCode informado
@@ -213,15 +213,15 @@ paths:
                   updatedAt:
                     type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '403':
-          $ref: './../../../commons/components.yaml#/components/responses/403'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
         '409':
-          $ref: './../../../commons/components.yaml#/components/responses/409'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'               
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'               
                      
 security:
   - Bearer: []
@@ -231,7 +231,7 @@ components:
       type: object
       properties:
         branch:
-          $ref: './../../../commons/components.yaml#/components/schemas/BankBranch'
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
         number:
           type: string
         bank:
@@ -267,7 +267,7 @@ components:
         bankCode:
           type: string
         branch:
-          $ref: './../../../commons/components.yaml#/components/schemas/BankBranch'
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
         account:
           type: string
         name:
@@ -288,9 +288,9 @@ components:
         name:
           type: string        
         branch:
-          $ref: './../../../commons/components.yaml#/components/schemas/BankBranch'
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/BankBranch'
         account:
-          $ref: './../../../commons/components.yaml#/components/schemas/AccountNumber'
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
       additionalProperties: false
   securitySchemes:
     Bearer:

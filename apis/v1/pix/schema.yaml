@@ -21,7 +21,7 @@ paths:
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
@@ -55,11 +55,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/AddressingKey'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'   
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'   
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'   
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
         '503':
-          $ref: './../../../commons/components.yaml#/components/responses/503' 
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
       security:
         - Bearer: []      
 
@@ -75,7 +75,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header
           required: true
@@ -105,11 +105,11 @@ paths:
               schema:
                 "$ref": "#/components/schemas/ClaimResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500' 
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
         '503':
-          $ref: './../../../commons/components.yaml#/components/responses/503'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
     get:
@@ -123,7 +123,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.read</span>
         </div>
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header
           required: true
@@ -159,7 +159,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ClaimResponse"
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
   
@@ -175,7 +175,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: claimId
           in: path
           required: true
@@ -226,7 +226,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
         </div>
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: claimId
           in: path
           required: true
@@ -277,7 +277,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: claimId
           in: path
           required: true
@@ -330,7 +330,7 @@ paths:
         [/block]
       operationId: CreateEntryAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -351,13 +351,13 @@ paths:
         '201':
           description: Chave cadastrada com sucesso.
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          $ref: './../../../commons/components.yaml#/components/responses/503'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
 
@@ -380,7 +380,7 @@ paths:
         [/block]
       operationId: GetAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
@@ -412,11 +412,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetEntryResponse'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          $ref: './../../../commons/components.yaml#/components/responses/503'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
   
@@ -438,7 +438,7 @@ paths:
         [/block]
       operationId: DeleteAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: addressingKeyValue
           in: path
           required: true
@@ -470,15 +470,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetEntryResponse'
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
-          $ref: './../../../commons/components.yaml#/components/responses/503'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
         
@@ -501,7 +501,7 @@ paths:
         [/block]
       operationId: CreatePixCashOutTransactionAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -526,13 +526,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreatePixCashOutTransactionResponse'
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'   
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
       security:
         - Bearer: []
 
@@ -556,7 +556,7 @@ paths:
 
       operationId: GetByAuthenticationCodeAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: accountNumber
           in: path
           required: true
@@ -594,11 +594,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/PixTransferResponse'
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: []
  
@@ -621,7 +621,7 @@ paths:
         [/block]
       operationId: CreateRefundAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -646,13 +646,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreatePixRefundRequest'
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       
       security:
         - Bearer: []
@@ -676,7 +676,7 @@ paths:
         [/block]
       operationId: CreateStaticQRCodeAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header 
           required: true
@@ -705,7 +705,7 @@ paths:
                     description: QR Code codificado em base64.
                     type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []      
   
@@ -729,7 +729,7 @@ paths:
         [/block]
       operationId: DecodeQRCodeAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: x-bkly-pix-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a leitura do QR Code.
@@ -787,11 +787,11 @@ paths:
                     description: Razão da emissão do QR Code.
          
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
 
@@ -808,7 +808,7 @@ paths:
         </div>
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
-        - $ref: './../../../commons/components.yaml#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: authorization
           in: header
           required: true
@@ -828,7 +828,7 @@ paths:
               schema:
                 type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []
 components:

@@ -52,13 +52,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/HookResponseSuccessResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '409':
-          $ref: './../../../commons/components.yaml#/components/responses/409'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     get:
       tags:
         - Configurações dos webhooks
@@ -110,11 +110,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/WebhookSearchResponse"  
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /webhooks/configurations/{id}:
     get:
       tags:
@@ -158,11 +158,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/HookResponseSuccessResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     patch:
       tags:
           - Configurações dos webhooks
@@ -209,11 +209,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/HookResponseSuccessResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     delete: 
       tags:
         - Configurações dos webhooks
@@ -252,11 +252,11 @@ paths:
               schema:
                 type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /webhooks/processed-messages:
     get:
       tags:
@@ -332,11 +332,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProcessedMessageSearchResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /processed-messages/{idempotencyKey}:
     post:
       tags:
@@ -379,11 +379,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProcessedMessageSearchResponse"
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          $ref: './../../../commons/components.yaml#/components/responses/404'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          $ref: "./../../../commons/components.yaml#/components/responses/500"
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /webhooks/configurations/{id}/disable:
     patch:
       tags:
@@ -422,11 +422,11 @@ paths:
               schema:
                 type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /configurations/{id}/enable:
     patch:
       tags:
@@ -466,11 +466,11 @@ paths:
               schema:
                 type: string
         '400':
-          $ref: './../../../commons/components.yaml#/components/responses/400'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
-          $ref: './../../../commons/components.yaml#/components/responses/422'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: './../../../commons/components.yaml#/components/responses/500'
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
 
 components:
   schemas:
