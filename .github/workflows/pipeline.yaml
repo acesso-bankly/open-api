@@ -20,15 +20,7 @@ jobs:
     - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch      
-        
-    - uses: jacobtomlinson/gha-find-replace@2.0.0
-      name: Find and Replace Hostname
-      if: ${{ success() && github.event_name != 'pull_request' }}
-      with:
-        find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
-        regex: false
+      id: extract_branch
 
     - uses: mbowman100/swagger-validator-action@master
       name: Validate schemas
