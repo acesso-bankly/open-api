@@ -1,0 +1,182 @@
+openapi: 3.0.1
+info:
+  title: Tarifas
+  description: Aplicação de tarifas sobre os produtos Bankly. 
+  version: '1.0'
+servers:
+  - url: https://api-mtls.sandbox.bankly.com.br
+paths:
+  /fee:
+    post:
+      summary: Criação de tarifa
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie tarifas para os produtos que você oferece aos seus clientes.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: fee.create</span>
+        </div>  
+        
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/schemas/X-Correlation-Id'
+      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFeeCommand'
+      responses:
+        '202':
+          description: Recurso criado.
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+      security:
+        - Bearer: []
+
+  /fee/branches/{bankBranch}/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
+      get:
+        summary: Consulta de tarifas
+        description: |
+          <div class="bkly-ref-description">
+            <p>Realize a consulta das tarifas aplicadas aos produtos de uma determinada conta.</p> 
+            <span class="bkly-ref-small-beta-tag">beta</span> 
+            <span class="bkly-ref-scope-tag">scope: fee.read</span>
+          </div>  
+        parameters:
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+          - $ref: 'http://localhost:3320/commons/components#/components/schemas/X-Correlation-Id'
+          - name: AuthenticationCode
+            in: path
+            required: true
+            description: Valor retornado no response de criação da tarifa.
+            schema:
+              type: string
+              format: uuid
+          - name: BankBranch
+            in: path
+            required: true
+            schema:
+              type: string
+          - name: AccountNumber
+            in: path
+            required: true
+            schema:
+              type: string
+
+        responses:
+          '200':
+            description: Recurso encontrado. 
+          '400':
+            $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+          '403':
+            $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+              
+        security:
+          - Bearer: []
+
+components:
+  schemas:
+    account:
+      type: object
+      required:
+        - branch
+        - number
+      properties:
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    createFeeCommand:
+      type: object
+      required:
+        - transactionId
+        - transactionType
+        - amount
+        - description
+        - recipient
+        - payer
+        - createdAt
+        - updatedAt
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+          nullable: true 
+          description: Informe um GUID. Esse campo não obrigatório para cobranças do tipo (transactionType) OTHER.
+        transactionType:
+          $ref: '#/components/schemas/transactionType'
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+        recipient:
+          $ref: '#/components/schemas/recipient'
+        payer:
+          $ref: '#/components/schemas/payer'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+
+    payer:
+      type: object
+      required:
+        - account
+        - documentNumber
+      properties:
+        account:
+          $ref: '#/components/schemas/account'
+        documentNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    recipient:
+      type: object
+      required:
+        - account
+        - documentNumber
+      properties:
+        account:
+          $ref: '#/components/schemas/account'
+        documentNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    transactionType:
+      enum:
+        - TED
+        - PIX
+        - BILL
+        - BANKSLIP
+        - OTHER
+      type: string
+    
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer.
+      scheme: bearer
+      bearerFormat: JWT
+      
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true
+  samples-languages:
+    - curl

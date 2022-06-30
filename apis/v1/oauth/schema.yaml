@@ -14,8 +14,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
         </div>
       operationId: PostAuth
-      tags:
-        - Token de acesso
       requestBody:
         content:
           application/x-www-form-urlencoded:

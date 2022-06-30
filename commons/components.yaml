@@ -127,7 +127,7 @@ components:
     X-Correlation-Id:  
       name: x-correlation-id
       in: header 
-      description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+      description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
       required: true
       schema:
         $ref: '#/components/schemas/X-Correlation-Id'
@@ -322,7 +322,7 @@ components:
     
     X-Correlation-Id:
       type: string
-      description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
+      description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
 
   headers:
     CorrelationId:
