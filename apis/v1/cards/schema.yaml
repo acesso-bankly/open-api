@@ -909,8 +909,6 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '204':
-          description: Não há cartões criados para a conta fornecida.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
@@ -924,6 +922,8 @@ paths:
                       errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Não há cartões criados para a conta fornecida.
         '409':
             description: Requisição em conflito com as regras de negócio contratado.
             content:

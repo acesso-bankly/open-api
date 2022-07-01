@@ -17,7 +17,7 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    name: Valadating files
+    name: Validating files
     steps:
     - uses: actions/checkout@v2
         
