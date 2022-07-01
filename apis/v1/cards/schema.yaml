@@ -626,8 +626,6 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '204':
-          description: Não há cartões criados para o documento fornecido.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
@@ -639,6 +637,8 @@ paths:
                     value:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '404':
+          description: Não há cartões criados para o documento fornecido.
         '401':
           description: Sem autorização para realizar a solicitação.
         '409':
@@ -762,8 +762,6 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '204':
-          description: Não há cartões criados para o código de ativação fornecido.
         '400':
             description: Existem erros no preenchimento da requisição.
             content:
@@ -775,6 +773,8 @@ paths:
                     value:
                       reference: https://bankly.readme.io/reference
                       errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '204':
+          description: Não há cartões criados para o código de ativação fornecido.
         '401':
           description: Sem autorização para realizar a solicitação.
         '409':
