@@ -2,6 +2,8 @@ env:
   COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
   SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
   COMPONENTS_PATH: '/commons/components.yaml#'
+  ORIGIN_BRANCH: ${{ github.head_ref }}
+  TARGET_BRANCH: ${{ github.base_ref }}
 
 name: ReadMe Pipeline
 on:
@@ -17,27 +19,13 @@ jobs:
     name: Valadating files
     steps:
     - uses: actions/checkout@v2
-
-    - name: Extract branch name
-      if: ${{ github.event_name != 'pull_request' }}
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch     
-
-    - name: Extract branch name if is Pull Request
-      if: ${{ github.event_name == 'pull_request' }}
-      env:
-        BASE_BRANCH: ${{ github.head_ref }}
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${BASE_BRANCH#refs/heads/})"
-      id: extract_branch_pr     
         
     - uses: jacobtomlinson/gha-find-replace@2.0.0
       name: Find and Replace Hostname
       if: ${{ success() && github.event_name != 'pull_request' }}
       with:
         find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
+        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.TARGET_BRANCH, env.COMPONENTS_PATH ) }}
         regex: false
 
     - uses: jacobtomlinson/gha-find-replace@2.0.0
@@ -45,7 +33,7 @@ jobs:
       if: ${{ success() && github.event_name == 'pull_request' }}
       with:
         find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch_pr.outputs.branch, env.COMPONENTS_PATH ) }}
+        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
         regex: false
 
     - uses: mbowman100/swagger-validator-action@master
