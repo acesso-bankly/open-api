@@ -7,7 +7,6 @@ env:
 
 name: ReadMe Pipeline
 on:
-  push:
   pull_request:
     branches:
       - main
@@ -60,18 +59,15 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch      
-          
+      - uses: actions/checkout@v2   
+
       - uses: jacobtomlinson/gha-find-replace@2.0.0
         name: Find and Replace Hostname
+        if: ${{ success() && github.event_name == 'pull_request' }}
         with:
           find: ${{ env.COMPONENTS_LOCAL_URL }}
-          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, steps.extract_branch.outputs.branch, env.COMPONENTS_PATH ) }}
-          regex: false      
+          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
+          regex: false
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
