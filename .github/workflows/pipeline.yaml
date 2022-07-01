@@ -3,7 +3,6 @@ env:
   SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
   COMPONENTS_PATH: '/commons/components.yaml#'
   ORIGIN_BRANCH: ${{ github.head_ref }}
-  TARGET_BRANCH: ${{ github.base_ref }}
 
 name: ReadMe Pipeline
 on:
@@ -27,7 +26,7 @@ jobs:
       if: ${{ success() && github.event_name != 'pull_request' }}
       with:
         find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.TARGET_BRANCH, env.COMPONENTS_PATH ) }}
+        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
         regex: false
 
     - uses: jacobtomlinson/gha-find-replace@2.0.0
