@@ -1,27 +1,22 @@
 {
     "name": "bankly-open-api-reference",
     "version": "1.0.0",
-    "description": "bankly's open api reference",
+    "description": "Bankly's Open Api Reference",
     "main": "index.js",
     "scripts": {
-      "start": "pm2 kill && pm2 --name bankly_oas start --force index.js",
-      "list": "pm2 list",
-      "stop": "pm2 stop",
-      "kill": "pm2 kill",
-      "delete": "pm2 delete",
-      "edit:commons": "openapi-editor --file ./commons/components/schema.yaml --port 23001",
-      "edit:oauth": "npm run start && pm2 --name oauth_api_oas start ./apis/v1/oauth/oas.editor.js",
-      "edit:documents": "npm run start && pm2 --name holders_api_oas start ./apis/v1/documents/oas.editor.js",
-      "edit:holders": "npm run start && pm2 --name holders_api_oas start ./apis/v1/holders/oas.editor.js",
-      "edit:accounts": "npm run start && pm2 --name holders_api_oas start ./apis/v1/accounts/oas.editor.js",
-      "edit:cards": "npm run start && pm2 --name holders_api_oas start ./apis/v1/cards/oas.editor.js",
-      "edit:pix": "openapi-editor --file ./apis/v1/pix/schema.yaml --port 23007",
-      "edit:ted": "openapi-editor --file ./apis/v1/ted/schema.yaml --port 23008",
-      "edit:boletos": "openapi-editor --file ./apis/v1/boletos/schema.yaml --port 23009",
-      "edit:paybill": "openapi-editor --file ./apis/v1/paybill/schema.yaml --port 23010",
-      "edit:events": "npm run start && pm2 --name holders_api_oas start ./apis/v1/events/oas.editor.js",
-      "edit:helpers": "openapi-editor --file ./apis/v1/helpers/schema.yaml --port 23012",
-      "edit:limits": "openapi-editor --file ./apis/v1/limits/schema.yaml --port 23030"
+      "start": "pm2 kill && pm2 --name bankly_oas start --force index.js && start http://localhost:3320/reference/",
+      "edit:oauth": "npm start && start http://localhost:3320/reference/?urls.primaryName=oauth",
+      "edit:documents": "npm start && start http://localhost:3320/reference/?urls.primaryName=documents",
+      "edit:holders": "npm start && start http://localhost:3320/reference/?urls.primaryName=holders",
+      "edit:accounts": "npm start && start http://localhost:3320/reference/?urls.primaryName=accounts",
+      "edit:cards": "npm start && start http://localhost:3320/reference/?urls.primaryName=cards",
+      "edit:pix": "npm start && start http://localhost:3320/reference/?urls.primaryName=pix",
+      "edit:ted": "npm start && start http://localhost:3320/reference/?urls.primaryName=ted",
+      "edit:boletos": "npm start && start http://localhost:3320/reference/?urls.primaryName=boletos",
+      "edit:paybill": "npm start && start http://localhost:3320/reference/?urls.primaryName=paybill",
+      "edit:events": "npm start && start http://localhost:3320/reference/?urls.primaryName=events",
+      "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
+      "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits"
     },
     "repository": {
       "type": "git",
@@ -35,23 +30,18 @@
       "restful",
       "openapi"
     ],
-    "contributors": [
-      "(in alphabetical order)",
-      "Fernando Seguim <fseguim@acesso.com>"
-    ],
     "license": "SEE LICENSE IN ./LICENSE",
     "bugs": {
       "url": "https://servicedesk.bankly.com.br"
     },
-    "homepage": "https://bankly.com.br",
+    "homepage": "https://docs.bankly.com.br",
     "dependencies": {
-      "commander": "^8.2.0",
+      "commander": "^9.3.0",
       "cors": "^2.8.5",
-      "express": "^4.17.1",
-      "ip": "^1.1.5",
-      "nodemon": "^2.0.13",
-      "openapi-editor": "^0.3.0",
-      "pm2": "^5.1.2",
-      "swagger-ui-express": "^4.1.6"
+      "express": "^4.18.1",
+      "ip": "^1.1.8",
+      "nodemon": "^2.0.18",
+      "pm2": "^5.2.0",
+      "swagger-ui-express": "^4.4.0"
     }
   }
