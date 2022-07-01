@@ -27,7 +27,7 @@ jobs:
     - name: Extract branch name if is Pull Request
       if: ${{ github.event_name == 'pull_request' }}
       env:
-        BASE_BRANCH: ${{ github.base_ref }}
+        BASE_BRANCH: ${{ github.head_ref }}
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${BASE_BRANCH#refs/heads/})"
       id: extract_branch_pr     
