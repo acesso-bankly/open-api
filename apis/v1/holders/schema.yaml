@@ -10,6 +10,46 @@ servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
   '/customers/{documentNumber}':
+    put:
+      tags:
+        - Pessoa física
+      summary: |
+        Registro dos dados de cliente pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o registro de um cliente pessoa física. Caso o cadastro do cliente já exista, seus dados serão sobrepostos. O pedido de registro será analisado e o resultado poderá ser obtido por meio de consulta do registro do cliente.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.write</span>
+        </div>      
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
+        }
+        [/block]
+      operationId: PutCustomerRegistration
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterCustomerRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     get:
       tags:
         - Pessoa física
@@ -17,7 +57,7 @@ paths:
         Consulta do registro do cliente
       description: |
         <div class="bkly-ref-description">
-          <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
+          <p>Obtenha um resultado resumido (BASIC) ou detalhado (DETAILED) dos dados de registro de um cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.read</span>
         </div>
@@ -29,7 +69,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
@@ -97,46 +137,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-    put:
-      tags:
-        - Pessoa física
-      summary: |
-        Registro dos dados de cliente pessoa física
-      description: |
-        <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e resultado você pode obter consultando o registro do cliente. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: customer.write</span>
-        </div>      
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED, BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
-        }
-        [/block]
-      operationId: PutCustomerRegistration
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterCustomerRequest'
-      responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   '/customers/{documentNumber}/cancel':
     patch:
       tags:
@@ -179,7 +179,47 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   '/business/{documentNumber}':
+    put:
+      tags:
+        - Pessoa jurídica
+      summary: Registro dos dados de cliente pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o registro de um cliente pessoa jurídica. Caso o cadastro do cliente já exista, seus dados serão sobrepostos. O pedido de registro será analisado e o resultado poderá ser obtido por meio de consulta do registro da empresa.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: business.write</span>
+        </div>        
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED e BLOCKED_."
+        }
+        [/block]
+      operationId: PutBusinessRegistration
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterBusinessRequest'
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     get:
       tags:
         - Pessoa jurídica
@@ -187,7 +227,7 @@ paths:
         Cosulta do registro da empresa
       description: |
         <div class="bkly-ref-description">
-          <p>Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p> 
+          <p>Obtenha um resultado resumido (BASIC) ou detalhado (DETAILED) dos dados de registro de uma empresa.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.read</span>
         </div>      
@@ -198,7 +238,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
@@ -294,45 +334,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-    put:
-      tags:
-        - Pessoa jurídica
-      summary: Registro dos dados de cliente pessoa jurídica
-      description: |
-        <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e resultado você pode obter consultando o registro da empresa. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: business.write</span>
-        </div>        
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED, BLOCKED_."
-        }
-        [/block]
-      operationId: PutBusinessRegistration
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterBusinessRequest'
-      responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   '/business/{documentNumber}/cancel':
     patch:
       tags:
@@ -375,28 +377,30 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
 security:
   - Bearer: []
+
 components:
   schemas:
     BusinessType:
       description: |
-        Tipo da empresa.
-        (MEI, EI, EIRELLI)
+        Tipo da empresa (MEI, EI, EIRELLI).
       type: string
       enum:
         - MEI
         - EI
         - EIRELI
+    
     BusinessSize:
       description: |
-        Porte da empresa.
-        (MEI, ME, EPP)
+        Porte da empresa (MEI, ME, EPP).
       type: string
       enum:
         - MEI
         - ME
         - EPP
+    
     LegalRepresentative:
       required:
         - documentNumber
@@ -414,20 +418,17 @@ components:
           minLength: 11
           type: string
           description: |
-            Número do documento CPF. 
-            **_Informe somente os números._**
+            Número do documento CPF. Informe somente números.
         registerName:
           maxLength: 256
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação _(RG, CNH)_ do
-            cliente.
+            Nome conforme consta no documento de identificação _(RG e CNH)_ do cliente.
         socialName:
           type: string
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. [Saiba
-            mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais na documentação [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
           nullable: true
         phone:
           description: Telefone de contato do representante legal da empresa.
@@ -440,30 +441,26 @@ components:
           minLength: 10
           type: string
           description: |
-            Data de nascimento do cliente. 
-            _O cliente deve possuir no mínimo **16 anos**._
+            Data de nascimento do cliente. O cliente deve ter no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
           description: >
-            Nome da mãe do cliente conforme consta no documento de
-            identificação.
+            Nome da mãe do cliente conforme consta no documento de identificação.
           nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
           description: >
-            Endereço de e-mail. 
-
-            **_Um mesmo endereço de e-mail não poderá ser usado por dois
-            clientes._**
+            Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
           type: boolean
           default: false
       additionalProperties: false
+    
     Status:
       type: string
       description: Status do cliente.
@@ -474,12 +471,14 @@ components:
         - REVOKED
         - CANCELED
         - BLACKLISTED
+    
     Profile:
       type: string
       description: Perfil do cliente.
       enum:
         - COMPLETE
         - SIMPLE
+    
     RegisterCustomerRequest:
       required:
         - registerName
@@ -495,13 +494,12 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação _(RG, CNH)_ do
+            Nome conforme consta no documento de identificação _(RG e CNH)_ do
             cliente.
         socialName:
           type: string
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. [Saiba
-            mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais na documentação [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
           nullable: true
         phone:
           description: Telefone de contato do cliente.
@@ -514,30 +512,26 @@ components:
           minLength: 10
           type: string
           description: |
-            Data de nascimento do cliente. 
-            _O cliente deve possuir no mínimo **16 anos**._
+            Data de nascimento do cliente. O cliente deve possuir no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
           description: >
-            Nome da mãe do cliente conforme consta no documento de
-            identificação.
+            Nome da mãe do cliente conforme consta no documento de identificação.
           nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
           description: >
-            Endereço de e-mail. 
-
-            **_Um mesmo endereço de e-mail não poderá ser usado por dois
-            clientes._**
+            Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
           type: boolean
           default: false
       additionalProperties: false
+    
     RegisterBusinessRequest:
       required:
         - businessName
@@ -553,10 +547,10 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: Razão social da empresa.
+          description: Razão social da empresa. <b>Importante:</b> não é possível enviar caracteres especiais neste campo.
         tradingName:
           type: string
-          description: Nome fantasia da empresa.
+          description: Nome fantasia da empresa. <b>Importante:</b> não é possível enviar caracteres especiais neste campo.
           nullable: true
         businessEmail:
           type: string
@@ -574,6 +568,7 @@ components:
           description: Representante legal da empresa.
           $ref: '#/components/schemas/LegalRepresentative'
       additionalProperties: false
+   
     CustomerResponse:
       type: object
       properties:
@@ -582,13 +577,12 @@ components:
           type: string
         registerName:
           description: >-
-            Nome conforme consta no documento de identificação _(RG, CNH)_ do
+            Nome conforme consta no documento de identificação _(RG e CNH)_ do
             cliente.
           type: string
         socialName:
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. [Saiba
-            mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais na documentação [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
           type: string
           nullable: true
         phone:
@@ -636,6 +630,7 @@ components:
           items:
             type: string
       additionalProperties: false
+    
     BusinessResponse:
       type: object
       properties:
@@ -659,18 +654,15 @@ components:
           $ref: '#/components/schemas/Status'
         businessType:
           description: |
-            Tipo da empresa.
-            _(MEI, EI, EIRELLI, LTDA, SA)_
+            Tipo da empresa (MEI, EI, EIRELLI, LTDA, SA).
           $ref: '#/components/schemas/BusinessType'
         businessSize:
           description: |
-            Porte da empresa.
-            _(MEI, ME, EPP, SMALL, MEDIUM, LARGE)_
+            Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
           $ref: '#/components/schemas/BusinessSize'
         owners:
           description: >-
-            Lista de sócios da empresa como consta no Quadro dos Sócios e
-            Administradores (QSA).
+            Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA).
           type: array
           items:
             $ref: '#/components/schemas/LegalRepresentative'
@@ -695,6 +687,7 @@ components:
           items:
             type: string
       additionalProperties: false
+    
     ReasonType:
       type: string
       description: |
@@ -704,18 +697,21 @@ components:
       enum:
         - HOLDER_REQUEST
         - COMMERCIAL_DISAGREEMENT
+    
     CancelRequest:
       type: object
       properties:
         reason:
           $ref: '#/components/schemas/ReasonType'
       additionalProperties: false
+  
   securitySchemes:
     Bearer:
       type: http
       description: Inclua o token de autorização do tipo Bearer
       scheme: bearer
       bearerFormat: JWT
+
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

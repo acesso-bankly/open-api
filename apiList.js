@@ -5,6 +5,7 @@ module.exports = [
 	"documents",
 	"events",
 	"helpers",
+	"holders",
 	"limits",
 	"oauth",
 	"paybill",
