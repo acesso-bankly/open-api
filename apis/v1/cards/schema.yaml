@@ -2238,6 +2238,7 @@ components:
         - StrayedCanceled
         - Inactive
         - DeathCanceled
+        - LockedByPendingPayment 
         - LostOrTheftCanceled
         - WithoutMovementLocked
         - TemporarilyUserLocked

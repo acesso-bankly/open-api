@@ -81,7 +81,6 @@ jobs:
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
-        if: 
         with:
           rdme: openapi './apis/v1/holders/schema.yaml' --id=${{ secrets.HOLDERS_API_README_ID_KEY_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
