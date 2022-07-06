@@ -385,9 +385,13 @@ components:
         (MEI, EI, EIRELLI)
       type: string
       enum:
+        - Undefined
         - MEI
         - EI
         - EIRELI
+        - LTDA
+        - SA
+        - TS
     BusinessSize:
       description: |
         Porte da empresa.
@@ -409,6 +413,15 @@ components:
         - isPoliticallyExposedPerson
       type: object
       properties:
+        incomeDeclared:
+          type: number
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Renda declarada.
+          format: double
+          nullable: true
+        participationPercentage:
+          type: string
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Percentual de participação (0 a 100).
+          nullable: true
         documentNumber:
           maxLength: 11
           minLength: 11
@@ -459,10 +472,34 @@ components:
             **_Um mesmo endereço de e-mail não poderá ser usado por dois
             clientes._**
           format: email
+        tradingName:
+          type: string
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Nome fantasia da empresa. Apenas para sócio pessoa jurídica.
+          nullable: true
+        businessName:
+          type: string
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Razão social da empresa. Apenas para sócio pessoa jurídica.
+          nullable: true
+        businessType:
+          "$ref": "#/components/schemas/BusinessType"
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+        legalRepresentatives:
+          type: array
+          items:
+            "$ref": "#/components/schemas/LegalRepresentative"
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Representantes legais da empresa. Apenas para sócio pessoa
+            jurídica.
+          nullable: true
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
           type: boolean
           default: false
+        owners:
+          type: array
+          items:
+            "$ref": "#/components/schemas/LegalRepresentative"
+          description: Somente retornado para clientes do tipo LTDA / SA / TS. Sócios da empresa. Apenas para sócio pessoa jurídica.
+          nullable: true
       additionalProperties: false
     Status:
       type: string
@@ -688,6 +725,25 @@ components:
           type: string
           format: date-time
           nullable: true
+        cnaeCode:
+          type: string
+          nullable: true
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+        legalNature:
+          type: string
+          nullable: true
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+        annualBilling:
+          type: number
+          format: double
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+        openingDate:
+          type: string
+          format: date-time
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+        phone:
+          "$ref": "#/components/schemas/Phone"
+          description: Somente retornado para clientes do tipo LTDA / SA / TS.
         reasons:
           description: Motivos de reprovação do registro da empresa.
           type: array
@@ -704,6 +760,22 @@ components:
       enum:
         - HOLDER_REQUEST
         - COMMERCIAL_DISAGREEMENT
+    Phone:
+      required:
+      - countryCode
+      - number
+      type: object
+      properties:
+        countryCode:
+          minLength: 1
+          type: string
+          description: Código DDI do país. Por enquanto é permitido apenas 55 ou +55
+            (Brasil).
+        number:
+          minLength: 1
+          type: string
+          description: Número de telefone incluindo DDD.
+      additionalProperties: false
     CancelRequest:
       type: object
       properties:
