@@ -222,7 +222,7 @@ paths:
     post:
       tags:
         - Conta pessoa jurídica
-      summary: Criação de conta de pagamentos para uma empresa (MEI, EI ou EIRELLI)
+      summary: Criação de conta de pagamentos para uma empresa
       description: |
         <div class="bkly-ref-description">
           <p>A empresa poderá ter até 5 contas de pagamento. Para isso, é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
