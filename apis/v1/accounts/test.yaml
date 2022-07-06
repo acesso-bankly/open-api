@@ -8,305 +8,6 @@ info:
 servers:
 - url: https://api.sandbox.bankly.com.br
 paths:
-  "/baas/accounts/{accountNumber}":
-    get:
-      tags:
-      - Conta de Pagamento
-      summary: Obtenha dados da conta de pagamento.
-      description: Opcionalmente você pode obter o saldo desta conta.
-      operationId: GetAccountByAccountNumberAsync
-      parameters:
-      - name: accountNumber
-        in: path
-        description: Número da conta.
-        required: true
-        schema:
-          minLength: 1
-          type: string
-          description: Número da conta.
-      - name: includeBalance
-        in: query
-        description: Inclua o saldo da conta na pesquisa.
-        schema:
-          type: boolean
-          description: Inclua o saldo da conta na pesquisa.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PaymentAccountResponse"
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-  "/baas/accounts/{accountNumber}/closure":
-    patch:
-      tags:
-      - Conta de Pagamento
-      summary: Encerramento da conta
-      description: Solicite o encerramento da conta do cliente.
-      operationId: CloseAsync
-      parameters:
-      - name: accountNumber
-        in: path
-        required: true
-        schema:
-          type: string
-          nullable: true
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CloseAccountRequest"
-      responses:
-        '202':
-          description: Requisição foi aceita e está sendo processada
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-  "/baas/business/{documentNumber}":
-    put:
-      tags:
-      - Abertura de conta jurídica (MEI, EI ou EIRELI).
-      summary: Registre (ou substitua) uma nova empresa (MEI, EI ou EIRELI).
-      description: O pedido de registro será analisado e resultado você pode obter
-        consultando o registro da empresa. Caso a empresa não exista ela será criada,
-        se já existir e o cadastro tenha sido previamente reprovado, seus dados serão
-        sobrepostos. Após o registro aprovado considere utilizar o enpoint PATCH (em
-        construção) para atualizações cadastrais.
-      operationId: RegisterBusinessAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CNPJ da empresa. Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CNPJ da empresa. Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RegisterPersonalBusinessRequest"
-      responses:
-        '202':
-          description: Requisição foi aceita e está sendo processada
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '409':
-          description: A solicitação atual conflitou com o recurso existente no servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-    get:
-      tags:
-      - Abertura de conta jurídica (MEI, EI ou EIRELI).
-      summary: Obtenha o registro da empresa.
-      description: Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).
-      operationId: GetBusinessRegistrationAsync
-      parameters:
-      - name: resultLevel
-        in: query
-        schema:
-          "$ref": "#/components/schemas/ResultLevels"
-      - name: documentNumber
-        in: path
-        description: Número do documento CNPJ da empresa. Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CNPJ da empresa. Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/BusinessDetailedResponse"
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ProblemDetails"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
   "/baas/business/{documentNumber}/accounts":
     post:
       tags:
@@ -523,454 +224,6 @@ paths:
                 "$ref": "#/components/schemas/ErrorResponse"
       security:
       - Bearer: []
-  "/baas/corporation-business/{documentNumber}":
-    put:
-      tags:
-      - Abertura de conta jurídica (LTDA, SA ou TS).
-      summary: Registre (ou substitua) uma nova empresa (LTDA, SA ou TS).
-      description: O pedido de registro será analisado e resultado você pode obter
-        consultando o registro da empresa. Caso a empresa não exista ela será criada,
-        se já existir e o cadastro tenha sido previamente reprovado, seus dados serão
-        sobrepostos. Após o registro aprovado considere utilizar o enpoint PATCH (em
-        construção) para atualizações cadastrais.
-      operationId: RegisterCorporationBusinessAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CNPJ da empresa. Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CNPJ da empresa. Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RegisterCorporationBusinessRequest"
-      responses:
-        '201':
-          description: Requisição foi aceita e está sendo processada
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '409':
-          description: A solicitação atual conflitou com o recurso existente no servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-  "/baas/customers/{documentNumber}":
-    put:
-      tags:
-      - Abertura de conta pessoal
-      summary: Registre (ou substitua) um novo cliente pessoa física.
-      description: O pedido de registro será analisado e resultado você pode obter
-        consultando o registro do cliente. Caso o cliente não exista ele será criado,
-        se já existir e o cadastro tenha sido previamente reprovado, seus dados serão
-        sobrepostos. Após o registro aprovado considere utilizar o enpoint PATCH (em
-        construção) para atualizações cadastrais.
-      operationId: RegisterCustomerAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CPF do cliente . Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/RegisterCustomerRequest"
-      responses:
-        '202':
-          description: Requisição foi aceita e está sendo processada
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '409':
-          description: A solicitação atual conflitou com o recurso existente no servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-    get:
-      tags:
-      - Abertura de conta pessoal
-      summary: Obtenha o registro do cliente.
-      description: Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).
-      operationId: GetCustomersRegistrationAsync
-      parameters:
-      - name: resultLevel
-        in: query
-        description: Tipo de retorno da API. BASIC ou DETAILED
-        schema:
-          "$ref": "#/components/schemas/ResultLevels"
-      - name: documentNumber
-        in: path
-        description: Número do documento CPF do cliente . Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/CustomerDetailedResponse"
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ProblemDetails"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-  "/baas/customers/{documentNumber}/accounts":
-    post:
-      tags:
-      - Abertura de conta pessoal
-      summary: Crie uma conta de pagamento.
-      description: IMPORTANTE! É necessário ter o registro do titular (pessoa física)
-        previamente aprovado.
-      operationId: CreatePersonalAccountAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CPF do cliente . Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CreatePaymentAccountRequest"
-      responses:
-        '201':
-          description: Recurso criado com sucesso
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PaymentAccountResponse"
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-    get:
-      tags:
-      - Abertura de conta pessoal
-      summary: Obtenha as contas de um cliente.
-      description: Retornaremos uma lista com todas as contas desse cliente, independentemente
-        de seus respectivos status.
-      operationId: GetCustomerAccountsAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CPF do cliente . Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Recurso encontrado
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/PaymentAccountBasicResponse"
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ProblemDetails"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
-  "/baas/customers/{documentNumber}/cancel":
-    patch:
-      tags:
-      - Abertura de conta pessoal
-      summary: Cancelamento do cliente pessoa física
-      description: Solicitação de cancelamento do vínculo com o cliente pessoa física.
-      operationId: CloseAsync
-      parameters:
-      - name: documentNumber
-        in: path
-        description: Número do documento CPF do cliente . Informe somente os números.
-        required: true
-        schema:
-          minLength: 1
-          pattern: "^[0-9]*$"
-          type: string
-          description: Número do documento CPF do cliente . Informe somente os números.
-      - name: api-version
-        in: header
-        description: Versão da API. Atualmente estamos na 1.0.
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/CancelCustomerHolderRequest"
-      responses:
-        '202':
-          description: Requisição foi aceita e está sendo processada
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        '400':
-          description: Há algum problema com a sua requisição.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-        '404':
-          description: Recurso não encontrado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ProblemDetails"
-        '500':
-          description: Ocorreu algum erro inexperado no nosso servidor.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-      security:
-      - Bearer: []
   "/baas/document-analysis/{documentNumber}":
     put:
       tags:
@@ -1111,6 +364,86 @@ paths:
                 "$ref": "#/components/schemas/DocumentAnalysisResponse"
         '404':
           description: Recurso não encontrado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Ocorreu algum erro inexperado no nosso servidor.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+      security:
+      - Bearer: []
+  
+  "/baas/corporation-business/{documentNumber}":
+    put:
+      tags:
+      - Abertura de conta jurídica (LTDA, SA ou TS).
+      summary: Registre (ou substitua) uma nova empresa (LTDA, SA ou TS).
+      description: O pedido de registro será analisado e resultado você pode obter
+        consultando o registro da empresa. Caso a empresa não exista ela será criada,
+        se já existir e o cadastro tenha sido previamente reprovado, seus dados serão
+        sobrepostos. Após o registro aprovado considere utilizar o enpoint PATCH (em
+        construção) para atualizações cadastrais.
+      operationId: RegisterCorporationBusinessAsync
+      parameters:
+      - name: documentNumber
+        in: path
+        description: Número do documento CNPJ da empresa. Informe somente os números.
+        required: true
+        schema:
+          minLength: 1
+          pattern: "^[0-9]*$"
+          type: string
+          description: Número do documento CNPJ da empresa. Informe somente os números.
+      - name: api-version
+        in: header
+        description: Versão da API. Atualmente estamos na 1.0.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RegisterCorporationBusinessRequest"
+      responses:
+        '201':
+          description: Requisição foi aceita e está sendo processada
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+            Location:
+              description: Localização do recurso recém-criado ou em análise.
+              schema:
+                type: string
+        '400':
+          description: Há algum problema com a sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '409':
+          description: A solicitação atual conflitou com o recurso existente no servidor.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
