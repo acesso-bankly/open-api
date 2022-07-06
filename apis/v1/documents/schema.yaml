@@ -153,8 +153,7 @@ components:
     DocumentType:
       type: string
       description: |
-        Tipo do documento.
-        _(RG, CNH, RNE, CRNM, DNI, SELFIE)_
+        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
       enum:
         - RG
         - CNH
@@ -166,8 +165,7 @@ components:
     DocumentSide:
       type: string
       description: |
-        Lado do documento.
-        _(FRONT, BACK)_
+        Lado do documento (FRONT ou BACK). Quando o tipo do documento for SELFIE, este parâmetro será desprezado.
       enum:
         - FRONT
         - BACK
@@ -444,8 +442,7 @@ components:
         image:
           type: string
           description: |
-            Arquivo da imagem. Não deve ser superior à **1 MB**.
-            _A resolução deve ser compatível com VGA. [Saiba mais](https://en.wikipedia.org/wiki/Video_Graphics_Array)._
+            Arquivo da imagem. Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
           format: binary
           nullable: true
    
