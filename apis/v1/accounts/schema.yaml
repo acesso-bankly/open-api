@@ -273,6 +273,105 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
+  /accounts/{accountNumber}/income-report:
+    get:
+      tags:
+        - Informe de Rendimentos
+      summary: Obtenha os dados do Informe de Rendimento de uma conta de pagamento.
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Obtenha os dados do Informe de Rendimento de uma conta de pagamento. Opcionalmente você pode obter informando o ano calendário desejado, o padrão é sempre o ano vigente.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: income.report.read</span>
+        </div>  
+      operationId: GetIncomeReportByAccountNumberAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: calendar
+          in: query
+          description: Ano Calendário, por padrão é o ano vigente da declaração do IR.
+          schema:
+            type: integer
+            description: Ano Calendário, por padrão é o ano vigente da declaração do IR.
+            format: int32
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/IncomeReportResponse"
+        '204':
+          description: Recurso encontrado, mas não existe conteúdo na sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+      - Bearer: []
+  /accounts/{accountNumber}/income-report/print:
+    get:
+      tags:
+        - Informe de Rendimentos
+      summary: Obtenha o Informe de Rendimento de uma conta de pagamento em formato de arquivo.
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Obtenha o Informe de Rendimento de uma conta de pagamento em formato de arquivo. Opcionalmente você pode obter informando o ano calendário desejado, o padrão é sempre o ano vigente.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: income.report.read</span>
+        </div>
+      operationId: PrintIncomeReportByAccountNumberAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/AccountNumber'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: calendar
+          in: query
+          description: Ano Calendário, por padrão é o ano vigente da declaração do IR.
+          schema:
+            type: integer
+            description: Ano Calendário, por padrão é o ano vigente da declaração do IR.
+            format: int32
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PrintIncomeReportResponse"
+        '204':
+          description: Recurso encontrado, mas não existe conteúdo na sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+      - Bearer: []
+
 security:
   - Bearer: []
 
@@ -295,6 +394,7 @@ components:
     
     Error:
       $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
+    
     ErrorResponse:
       $ref: http://localhost:3320/commons/components#/components/schemas/Error
     
@@ -353,6 +453,86 @@ components:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
 
+    PrintIncomeReportResponse:
+      type: object
+      properties:
+        fileName:
+          type: string
+          nullable: true
+        contentType:
+          type: string
+          nullable: true
+        incomeFile:
+          type: string
+          nullable: true
+      additionalProperties: false
+    IncomeReportResponse:
+      type: object
+      properties:
+        payerSource:
+          "$ref": "#/components/schemas/Holder"
+        holder:
+          "$ref": "#/components/schemas/Holder"
+        account:
+          "$ref": "#/components/schemas/Account"
+        balances:
+          type: array
+          items:
+            "$ref": "#/components/schemas/IncomeBalance"
+          nullable: true
+        netIncome:
+          "$ref": "#/components/schemas/Income"
+      additionalProperties: false
+    
+    Account:
+      type: object
+      properties:
+        branch:
+          type: string
+          nullable: true
+          description: Número da agência bancária.
+        number:
+          type: string
+          nullable: true
+          description: Número da conta.
+      additionalProperties: false
+
+    Income:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    IncomeBalance:
+      type: object
+      properties:
+        year:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Holder:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        documentNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+    
     AccountBasicResponse:
       type: object
       properties:
