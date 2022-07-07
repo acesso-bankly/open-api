@@ -276,11 +276,11 @@ paths:
   /accounts/{accountNumber}/income-report:
     get:
       tags:
-        - Informe de Rendimentos
+        - Dados para informe de rendimentos
       summary: Obtenha os dados do Informe de Rendimento de uma conta de pagamento.
       description: | 
         <div class="bkly-ref-description">
-          <p>Obtenha os dados do Informe de Rendimento de uma conta de pagamento. Opcionalmente você pode obter informando o ano calendário desejado, o padrão é sempre o ano vigente.</p> 
+          <p>Obtenha os dados do Informe de Rendimento de uma conta de pagamento. A consulta padrão utiliza o ano vigente, mas você também pode obter os dados informando o ano calendário desejado.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: income.report.read</span>
         </div>  
@@ -297,7 +297,7 @@ paths:
             format: int32
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -325,11 +325,11 @@ paths:
   /accounts/{accountNumber}/income-report/print:
     get:
       tags:
-        - Informe de Rendimentos
+        - Informe de rendimentos em PDF
       summary: Obtenha o Informe de Rendimento de uma conta de pagamento em formato de arquivo.
       description: | 
         <div class="bkly-ref-description">
-          <p>Obtenha o Informe de Rendimento de uma conta de pagamento em formato de arquivo. Opcionalmente você pode obter informando o ano calendário desejado, o padrão é sempre o ano vigente.</p> 
+          <p>Obtenha o Informe de Rendimento de uma conta de pagamento em formato PDF. A consulta padrão utiliza o ano vigente, mas você também pode obter os dados informando o ano calendário desejado.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: income.report.read</span>
         </div>
@@ -346,7 +346,7 @@ paths:
             format: int32
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.

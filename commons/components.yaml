@@ -168,7 +168,7 @@ components:
       additionalProperties: false
 
     CustomerDocument:
-      description: Número do documento CPF do cliente do cliente pessoal ou representante.
+      description: Número do documento CPF do cliente do cliente pessoal ou representante legal.
       type: string
       maxLength: 11
       minLength: 11
