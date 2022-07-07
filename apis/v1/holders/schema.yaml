@@ -300,7 +300,7 @@ paths:
       summary: Registro de pessoa jurídica (MEI, ME, EI ou EIRELI)
       description: |
         <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e resultado você pode obter consultando o registro da empresa. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p> 
+          <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
@@ -386,11 +386,7 @@ paths:
         <div class="bkly-ref-description">
           <p>
             Registre (ou substitua) uma nova empresa (LTDA, SA ou TS).
-            O pedido de registro será analisado e resultado você pode obter
-            consultando o registro da empresa. Caso a empresa não exista ela será criada,
-            se já existir e o cadastro tenha sido previamente reprovado, seus dados serão
-            sobrepostos. Após o registro aprovado considere utilizar o enpoint PATCH (em
-            construção) para atualizações cadastrais.
+            O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.
           </p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
@@ -463,12 +459,12 @@ components:
       properties:
         incomeDeclared:
           type: number
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Renda declarada.
+          description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / SA / TS.
           format: double
           nullable: true
         participationPercentage:
           type: string
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Percentual de participação (0 a 100).
+          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         documentNumber:
           maxLength: 11
@@ -485,7 +481,7 @@ components:
         socialName:
           type: string
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+            Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
           nullable: true
         phone:
           description: Telefone de contato do representante legal da empresa.
@@ -498,7 +494,7 @@ components:
           minLength: 10
           type: string
           description: |
-            Data de nascimento do cliente. _O cliente deve possuir no mínimo **16 anos**._
+            Data de nascimento do cliente. O cliente deve possuir no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
@@ -514,11 +510,11 @@ components:
           format: email
         tradingName:
           type: string
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Nome fantasia da empresa. Apenas para sócio pessoa jurídica.
+          description: Nome fantasia da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         businessName:
           type: string
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Razão social da empresa. Apenas para sócio pessoa jurídica.
+          description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         businessType:
           "$ref": "#/components/schemas/BusinessType"
@@ -527,8 +523,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/LegalRepresentative"
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Representantes legais da empresa. Apenas para sócio pessoa
-            jurídica.
+          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
@@ -538,7 +533,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/LegalRepresentative"
-          description: Somente retornado para clientes do tipo LTDA / SA / TS. Sócios da empresa. Apenas para sócio pessoa jurídica.
+          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
       additionalProperties: false
     
@@ -575,11 +570,11 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação _(RG, CNH)_ do cliente.
+            Nome conforme consta no documento de identificação (RG, CNH) do cliente.
         socialName:
           type: string
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
           nullable: true
         phone:
           description: Telefone de contato do cliente.
@@ -682,7 +677,7 @@ components:
           nullable: true
         socialName:
           type: string
-          description: Nome pelo qual a pessoa [gostaria de ser chamada](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física. 
+          description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física. 
           nullable: true
         phone:
           "$ref": "#/components/schemas/Phone"
@@ -791,11 +786,11 @@ components:
       properties:
         startDate:
           type: string
-          description: Data de Início da procuração
+          description: Data de início da procuração.
           format: date-time
         endDate:
           type: string
-          description: Data Fim da procuração
+          description: Data do fim da procuração.
           format: date-time
       additionalProperties: false        
     Address:
@@ -817,7 +812,7 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: Logradouro (Nome da rua, avenida, etc).
+          description: Logradouro (Nome da rua, avenida etc.).
         buildingNumber:
           maxLength: 10
           minLength: 1
@@ -826,7 +821,7 @@ components:
         complement:
           maxLength: 256
           type: string
-          description: 'Complemento do endereço. Exemplo: Apto 123, Casa B, etc.'
+          description: 'Complemento do endereço. Exemplo: Apto 123, Casa B etc.'
           nullable: true
         neighborhood:
           maxLength: 256
@@ -858,7 +853,7 @@ components:
           nullable: true
         socialName:
           type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. [Saiba mais](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
           nullable: true
         birthDate:
           type: string
@@ -874,7 +869,7 @@ components:
           nullable: true
         isPoliticallyExposedPerson:
           type: boolean
-          description: Pessoal exposta politicamente.
+          description: Pessoa exposta politicamente.
         registerName:
           type: string
           description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
