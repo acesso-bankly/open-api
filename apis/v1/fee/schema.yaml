@@ -11,7 +11,7 @@ paths:
       summary: Criação de tarifa
       description: |
         <div class="bkly-ref-description">
-          <p>Crie tarifas para os produtos que você oferece aos seus clientes.</p> 
+          <p>Crie tarifas para as transações realizadas com os produtos que você oferece aos seus clientes.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: fee.create</span>
         </div>  
@@ -29,6 +29,10 @@ paths:
       responses:
         '202':
           description: Recurso criado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFeeCommand'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '403':
@@ -70,6 +74,10 @@ paths:
         responses:
           '200':
             description: Recurso encontrado. 
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/responseFeeCommand'
           '400':
             $ref: 'http://localhost:3320/commons/components#/components/responses/400'
           '403':
@@ -94,6 +102,9 @@ components:
           nullable: true
       additionalProperties: false
 
+    accountSimple:
+      type: string
+
     createFeeCommand:
       type: object
       required:
@@ -116,9 +127,11 @@ components:
         amount:
           type: number
           format: double
+          description: Valor da tarifa em BRL. 
         description:
           type: string
           nullable: true
+          description: Descrição da tarifa.
         recipient:
           $ref: '#/components/schemas/recipient'
         payer:
@@ -130,6 +143,7 @@ components:
           type: string
           format: date-time
           nullable: true
+          description: Data de atualização da tarifa (no dia da criação da tarifa, esse campo envia o mesmo valor que o campo <code>createdAt</code>).
       additionalProperties: false
 
     payer:
@@ -143,6 +157,15 @@ components:
         documentNumber:
           type: string
           nullable: true
+      additionalProperties: false
+    
+    payerResponse:
+      type: object
+      properties:
+        branch:
+         type: string
+        account:
+          type: string      
       additionalProperties: false
 
     recipient:
@@ -158,12 +181,39 @@ components:
           nullable: true
       additionalProperties: false
 
+    responseFeeCommand:
+      type: object
+      properties:
+        authenticationCode: 
+          type: string
+          description: Código identificador.
+        transactionType:
+          $ref: '#/components/schemas/transactionType'        
+        amount:
+          type: number
+          format: double
+          description: Valor da tarifa em BRL.         
+        status:
+          type: string
+          enum:
+            - CREATED
+            - CANCELED
+            - DONE
+            - UNDONE
+        description:
+          type: string
+          nullable: true
+          description: Descrição da tarifa.     
+        accountNumber: 
+          $ref: '#/components/schemas/accountSimple'
+        payer:
+          $ref: '#/components/schemas/payerResponse'
+
+      
+        
     transactionType:
       enum:
         - TED
-        - PIX
-        - BILL
-        - BANKSLIP
         - OTHER
       type: string
     
