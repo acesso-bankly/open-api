@@ -16,29 +16,6 @@ $ git clone https://github.com/acesso-bankly/open-api.git && cd ./open-api
 $ npm install && npm start
 ```
 
-## Abrindo um editor
-
-```
-$ npm run edit:{api}
-```
-
-{apis}:
-
-- oauth
-- documents
-- holders
-- accounts
-- cards
-- pix
-- ted
-- boletos
-- paybill
-- events
-- helpers
-
-**⚠️ IMPORTANTE! Não é possível editar duas APIs ao mesmo tempo.**
-
-
 # Como contribuir
 
 ### **Passo 1:** 

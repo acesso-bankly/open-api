@@ -106,7 +106,6 @@ components:
       in: query
       description: |
         Tipo de retorno da API.
-        _(BASIC, DETAILED)_
       required: false
       style: form
       explode: true

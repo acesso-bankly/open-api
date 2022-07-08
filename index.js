@@ -1,64 +1,33 @@
 const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
+const apiList = require('./apiList')
 
 const app = express();
 const port = 3320;
+let urls = []
 
 app.use(cors());
+app.use("/commons/components", express.static(__dirname + "/commons/components.yaml"));
 
-// commons components
-app.use(
-  "/commons/components",
-  express.static(__dirname + "/commons/components.yaml")
-);
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-// documents api
-app.use(
-  "/documents/schema",
-  express.static(__dirname + "/apis/v1/documents/schema.yaml")
-);
+apiList.forEach(element => {
+  app.use(
+    `/${element}/schema`,
+    express.static(__dirname + `/apis/v1/${element}/schema.yaml`)
+  );
+  urls.push({
+    url: `/${element}/schema`,
+    name: capitalizeFirstLetter(element),
+  })
+});
 
-// holders api
-app.use(
-  "/holders/schema",
-  express.static(__dirname + "/apis/v1/holders/schema.yaml")
-);
-
-// accounts api
-app.use(
-  "/accounts/schema",
-  express.static(__dirname + "/apis/v1/accounts/schema.yaml")
-);
-
-// cards api
-app.use(
-  "/cards/schema",
-  express.static(__dirname + "/apis/v1/cards/schema.yaml")
-);
-
-var options = {
+const options = {
   explorer: true,
-  swaggerOptions: {
-    urls: [
-      {
-        url: "/documents/schema",
-        name: "Documents",
-      },
-      {
-        url: "/holders/schema",
-        name: "Holders",
-      },
-      {
-        url: "/accounts/schema",
-        name: "Accounts",
-      },
-      {
-        url: "/cards/schema",
-        name: "Cards",
-      },
-    ],
-  },
+  swaggerOptions: { urls: urls },
 };
 
 app.use("/reference", swaggerUi.serve, swaggerUi.setup(null, options));
