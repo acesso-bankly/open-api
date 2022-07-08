@@ -53,19 +53,19 @@ paths:
           - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
           - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
           - $ref: 'http://localhost:3320/commons/components#/components/schemas/X-Correlation-Id'
-          - name: AuthenticationCode
+          - name: authenticationCode
             in: path
             required: true
             description: Valor retornado no response de criação da tarifa.
             schema:
               type: string
               format: uuid
-          - name: BankBranch
+          - name: bankBranch
             in: path
             required: true
             schema:
               type: string
-          - name: AccountNumber
+          - name: accountNumber
             in: path
             required: true
             schema:
