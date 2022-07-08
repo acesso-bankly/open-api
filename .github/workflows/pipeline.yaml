@@ -53,6 +53,7 @@ jobs:
           ./apis/v1/paybill/schema.yaml
           ./apis/v1/pix/schema.yaml
           ./apis/v1/ted/schema.yaml
+          ./apis/v1/fee/schema.yaml
   
   deployDev:
     name: "Deploy / Dev"
@@ -138,6 +139,11 @@ jobs:
         name: Publish Pay Bill API Reference to readme.io
         with:
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+        
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Fee Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/fee/schema.yaml' --id=${{ secrets.FEE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
   deployProd:
     name: "Deploy / Prod"
@@ -214,3 +220,8 @@ jobs:
         name: Publish Pay Bill API Reference to readme.io
         with:
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Fee Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/fee/schema.yaml' --id=${{ secrets.FEE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
