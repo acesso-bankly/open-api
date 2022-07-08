@@ -4,6 +4,7 @@ module.exports = [
 	"cards",
 	"documents",
 	"events",
+	"fee",
 	"helpers",
 	"holders",
 	"limits",

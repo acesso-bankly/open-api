@@ -16,7 +16,7 @@
       "edit:paybill": "npm start && start http://localhost:3320/reference/?urls.primaryName=paybill",
       "edit:events": "npm start && start http://localhost:3320/reference/?urls.primaryName=events",
       "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
-      "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits"
+      "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits",
       "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee"
     },
     "repository": {
