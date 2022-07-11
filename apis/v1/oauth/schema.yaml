@@ -7,6 +7,8 @@ servers:
 paths:
   /connect/token:
     post:
+      tags:
+        - Token 
       summary: Token de acesso
       description: |
         <div class="bkly-ref-description">
@@ -50,6 +52,8 @@ paths:
                   summary: Exemplo de erro
   /totp:
     post:
+      tags:
+        - TOTP 
       summary: Geração do hash e do código numérico
       description: |
         <div class="bkly-ref-description">
@@ -104,6 +108,8 @@ paths:
       security:
         - Bearer: []
     patch:
+      tags:
+        - TOTP 
       summary: Validação do hash e do código numérico
       description: |
         <div class="bkly-ref-description">

@@ -8,6 +8,8 @@ servers:
 paths:
   /fee:
     post:
+      tags:
+        - Criação 
       summary: Criação de tarifa
       description: |
         <div class="bkly-ref-description">
@@ -42,6 +44,8 @@ paths:
 
   /fee/branches/{bankBranch}/accounts/{accountNumber}/authenticationcode/{authenticationCode}:
       get:
+        tags:
+        - Consulta 
         summary: Consulta de tarifas
         description: |
           <div class="bkly-ref-description">
