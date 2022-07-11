@@ -61,8 +61,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: totp.create</span>
         </div>
-      tags:
-        - TOTP
       operationId: CreateTotpAsync
       parameters:
         - name: api-version
@@ -117,8 +115,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: totp.validate</span>
         </div>
-      tags:
-        - TOTP
       parameters:
         - name: api-version
           in: header
