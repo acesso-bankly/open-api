@@ -224,7 +224,7 @@ paths:
       tags:
         - Pessoa jurídica
       summary: |
-        Cosulta do registro da empresa
+        Consulta do registro da empresa
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha um resultado resumido (BASIC) ou detalhado (DETAILED) dos dados de registro de uma empresa.</p> 
