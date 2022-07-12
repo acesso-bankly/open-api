@@ -157,8 +157,7 @@ paths:
         [/block]
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/CustomerDocument
+        - $ref: http://localhost:3320/commons/components#/components/parameters/CustomerDocument
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       requestBody:
         content:
@@ -947,9 +946,7 @@ components:
           description: Número do documento CPF do cliente.
           type: string
         registerName:
-          description: >-
-            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do
-            cliente.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
           type: string
         socialName:
           description: >
@@ -1032,8 +1029,7 @@ components:
             Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
           $ref: '#/components/schemas/BusinessSize'
         owners:
-          description: >-
-            Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA).
+          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA).
           type: array
           items:
             $ref: '#/components/schemas/LegalRepresentative'

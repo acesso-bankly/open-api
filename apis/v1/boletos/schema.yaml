@@ -75,6 +75,7 @@ paths:
             
       security:
         - Bearer: []
+  
   /bankslip/branch/{branch}/number/{number}/{authenticationCode}:
     get:
       tags:
@@ -138,6 +139,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
+  
   /bankslip/{authenticationCode}/pdf:
     get:
       tags:
@@ -229,6 +231,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
+  
   /bankslip/cancel:
     delete:
       tags:
@@ -279,6 +282,7 @@ paths:
       
       security:
         - Bearer: []
+  
   /bankslip/settlementpayment:
     post:
       tags:

@@ -112,6 +112,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: []
+  
   /document-analysis/{documentNumber}/corporation-business:
     put:
       tags:

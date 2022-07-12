@@ -39,12 +39,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID. 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
         '200':
           description: Chave encontrada.
@@ -336,12 +331,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
           application/json:
@@ -398,12 +388,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
         '200':
           description: Recurso encontrado.
@@ -456,12 +441,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
         '200':
           description: Chave excluída com sucesso.
@@ -507,12 +487,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
           application/json:
@@ -580,12 +555,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
         '200':
           description: Consulta retornada com sucesso.
@@ -627,12 +597,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
           application/json:
@@ -682,12 +647,7 @@ paths:
           required: true
           schema:
             type : string
-        - name: x-correlation-id
-          in: header 
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
           application/json:
@@ -741,12 +701,7 @@ paths:
           required: true
           schema:
             type : string  
-        - name: x-correlation-id
-          in: header
-          description: Informe um GUID v4, gerado randomicamente. A cada requisição, deve-se gerar um novo GUID.
-          required: true
-          schema:
-            type: string 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
           application/json:

@@ -89,6 +89,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+  
   /banklist:
     get:
       tags:
@@ -220,6 +221,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+  
   /banklist/{id}:
     get:
       tags:
@@ -299,6 +301,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+  
   /states/{state}/cities:
     get:
       tags:

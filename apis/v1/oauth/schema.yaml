@@ -50,6 +50,7 @@ paths:
                   value: 
                     error: "invalid_credentials"
                   summary: Exemplo de erro
+  
   /totp:
     post:
       summary: Geração do hash e do código numérico

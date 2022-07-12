@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: '[Nome da API. Ex: Gestão de Contas, Gestão de Cartões]'
-  description: >-
+  description: |
     [Breve descrição da API.]
 servers:
   - url: 'https://api.sandbox.bankly.com.br'

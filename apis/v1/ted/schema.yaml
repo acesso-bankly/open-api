@@ -2,10 +2,7 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: TED
-  description: >-
-    Realize transferencias de valores através do canal de pagamentos TED.
-    Consulte também nossa [documentação](https://bankly.readme.io/v1.0/docs/)
-    para mais detalhes sobre os fluxos de negócio.
+  description: Realize transferencias de valores através do canal de pagamentos TED. Consulte também nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre os fluxos de negócio.
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
@@ -20,12 +17,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.create</span>
         </div>  
       parameters:
-        - in: header
-          name: x-correlation-id
-          required: true
-          description: Guid para correlacionar o request.
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'     
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
       requestBody:
@@ -87,12 +79,7 @@ paths:
           description: Token identificador da próxima página solicitada.
           schema:
             type : integer
-        - in: header
-          name: x-correlation-id
-          description: Guid para correlacionar o request.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       responses:
         '200':
@@ -144,6 +131,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'                  
+  
   /fund-transfers/{authenticationCode}:
     get:
       tags:
@@ -173,12 +161,7 @@ paths:
           required: true
           schema:
             type : string
-        - in: header
-          name: x-correlation-id
-          description: Guid para correlacionar o request.
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       responses:
         '200':

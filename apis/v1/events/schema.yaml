@@ -2,8 +2,7 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: Webhooks
-  description: >-
-    Registre, atualize, exclua e consulte webhooks de eventos.
+  description: Registre, atualize, exclua e consulte webhooks de eventos.
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
@@ -115,6 +114,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /webhooks/configurations/{id}:
     get:
       tags:
@@ -257,6 +257,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /webhooks/processed-messages:
     get:
       tags:
@@ -337,6 +338,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /processed-messages/{idempotencyKey}:
     post:
       tags:
@@ -384,6 +386,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
+  
   /webhooks/configurations/{id}/disable:
     patch:
       tags:
@@ -427,6 +430,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
   /configurations/{id}/enable:
     patch:
       tags:
