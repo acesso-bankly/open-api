@@ -398,7 +398,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/RegisterCorporationBusinessRequest"
+              $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
       responses:
         '201':
           description: Requisição foi aceita e está sendo processada
@@ -515,12 +515,12 @@ components:
           description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         businessType:
-          "$ref": "#/components/schemas/BusinessType"
+          $ref: "#/components/schemas/BusinessType"
           description: Somente retornado para clientes do tipo LTDA / SA / TS.
         legalRepresentatives:
           type: array
           items:
-            "$ref": "#/components/schemas/LegalRepresentative"
+            $ref: "#/components/schemas/LegalRepresentative"
           description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
         isPoliticallyExposedPerson:
@@ -530,7 +530,7 @@ components:
         owners:
           type: array
           items:
-            "$ref": "#/components/schemas/LegalRepresentative"
+            $ref: "#/components/schemas/LegalRepresentative"
           description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
           nullable: true
       additionalProperties: false
@@ -678,9 +678,9 @@ components:
           description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física. 
           nullable: true
         phone:
-          "$ref": "#/components/schemas/Phone"
+          $ref: "#/components/schemas/Phone"
         address:
-          "$ref": "#/components/schemas/Address"
+          $ref: "#/components/schemas/Address"
         birthDate:
           type: string
           description: Data de nascimento do sócio. Apenas para sócio pessoa física.
@@ -702,21 +702,21 @@ components:
           description: Razão social da empresa. Apenas para sócio pessoa jurídica.
           nullable: true
         businessType:
-          "$ref": "#/components/schemas/BusinessType"
+          $ref: "#/components/schemas/BusinessType"
         isPoliticallyExposedPerson:
           type: boolean
           description: Pessoa exposta politicamente. Apenas para sócio pessoa física.
         legalRepresentatives:
           type: array
           items:
-            "$ref": "#/components/schemas/LegalRepresentative"
+            $ref: "#/components/schemas/LegalRepresentative"
           description: Representantes legais da empresa. Apenas para sócio pessoa
             jurídica.
           nullable: true
         owners:
           type: array
           items:
-            "$ref": "#/components/schemas/Owner"
+            $ref: "#/components/schemas/Owner"
           description: Sócios da empresa. Apenas para sócio pessoa jurídica.
           nullable: true
       additionalProperties: false
@@ -745,7 +745,7 @@ components:
           type: string
           nullable: true
         legalRepresentative:
-          "$ref": "#/components/schemas/Image"
+          $ref: "#/components/schemas/Image"
       additionalProperties: false
       
     Image:
@@ -783,9 +783,9 @@ components:
       type: object
       properties:
         businessType:
-          "$ref": "#/components/schemas/CorporationBusinessType"
+          $ref: "#/components/schemas/CorporationBusinessType"
         businessSize:
-          "$ref": "#/components/schemas/CorporationBusinessSize"
+          $ref: "#/components/schemas/CorporationBusinessSize"
         cnaeCode:
           type: string
           description: Código Cnae.
@@ -803,17 +803,17 @@ components:
           description: Faturamento anual da empresa.
           format: double
         phone:
-          "$ref": "#/components/schemas/Phone"
+          $ref: "#/components/schemas/Phone"
         legalRepresentatives:
           type: array
           items:
-            "$ref": "#/components/schemas/LegalRepresentativePerson"
+            $ref: "#/components/schemas/LegalRepresentativePerson"
           description: Representantes legais da empresa.
           nullable: true
         owners:
           type: array
           items:
-            "$ref": "#/components/schemas/Owner"
+            $ref: "#/components/schemas/Owner"
           description: Sócios da empresa.
           nullable: true
         businessName:
@@ -831,9 +831,9 @@ components:
           format: email
           nullable: true
         businessAddress:
-          "$ref": "#/components/schemas/Address"
+          $ref: "#/components/schemas/Address"
         documentation:
-          "$ref": "#/components/schemas/Documentation"
+          $ref: "#/components/schemas/Documentation"
       additionalProperties: false
     PowerOfAttorney:
       type: object
@@ -900,7 +900,7 @@ components:
       type: object
       properties:
         powerOfAttorney:
-          "$ref": "#/components/schemas/PowerOfAttorney"
+          $ref: "#/components/schemas/PowerOfAttorney"
         memberQualification:
           type: string
           description: Qualificação de integrante.
@@ -929,9 +929,9 @@ components:
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
           nullable: true
         phone:
-          "$ref": "#/components/schemas/Phone"
+          $ref: "#/components/schemas/Phone"
         address:
-          "$ref": "#/components/schemas/Address"
+          $ref: "#/components/schemas/Address"
         documentNumber:
           type: string
           description: Número do documento CPF. Informe somente os números.
@@ -1064,7 +1064,7 @@ components:
           format: date-time
           description: Somente retornado para clientes do tipo LTDA / SA / TS.
         phone:
-          "$ref": "#/components/schemas/Phone"
+          $ref: "#/components/schemas/Phone"
           description: Somente retornado para clientes do tipo LTDA / SA / TS.
         reasons:
           description: Motivos de reprovação do registro da empresa.

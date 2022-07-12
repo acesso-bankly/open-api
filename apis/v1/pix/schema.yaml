@@ -98,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ClaimResponse"
+                $ref: "#/components/schemas/ClaimResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
@@ -192,7 +192,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/ClaimResponse"
+              $ref: "#/components/schemas/ClaimResponse"
       responses:
         '200':
           description: Reivindicação cancelada.
@@ -243,7 +243,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/ClaimResponse"
+              $ref: "#/components/schemas/ClaimResponse"
       responses:
         '200':
           description: Reivindicação confirmada.

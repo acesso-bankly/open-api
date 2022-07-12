@@ -151,7 +151,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/FileTokenResponse"
+                $ref: "#/components/schemas/FileTokenResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
