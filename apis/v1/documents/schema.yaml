@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
-  '/document-analysis/{documentNumber}':
+  /document-analysis/{documentNumber}:
     get:
       tags:
         - Análise de documentos
@@ -112,11 +112,49 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: []
+  /document-analysis/{documentNumber}/corporation-business:
+    put:
+      tags:
+        - Análise de documentos
+      summary: Envio de documentos para Onboarding de Pessoa Jurídica (LTDA, SA e TS)
+      operationId: UploadDocumentOnboardingPJLTDASATS
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                documentType:
+                  type: string
+                  description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE,
+                    BALANCE_SHEET ou POWER_OF_ATTORNEY)
+                file:
+                  type: string
+                  format: binary
+                  description: Arquivo do documento. Não deve ser superior à 8.5
+                    MB. Apenas arquivos com a extensão '.pdf'.
+      responses:
+        '201':
+          description: Requisição foi aceita
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FileTokenResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+        - bearer: []
 security:
   - Bearer: []
 components:
-  parameters:
-    
+  parameters:  
     ResultLevel:
       name: resultLevel
       in: query
@@ -445,7 +483,16 @@ components:
             Arquivo da imagem. Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
           format: binary
           nullable: true
-   
+    
+    FileTokenResponse:
+      required:
+        - token
+      type: object
+      description: Token que será utilizado no processo de onboarding de pessoa jurídica.
+      properties:
+        token:
+          type: string
+
   responses:
     '202':
       description: Requisição foi aceita e está sendo processada.

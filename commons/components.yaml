@@ -45,8 +45,7 @@ components:
     CustomerDocument:
       name: documentNumber
       in: path
-      description: |
-        Número do documento CPF do cliente pessoal ou representante legal da empresa. Informe somente os números.
+      description: Número do documento CPF do cliente pessoal ou representante legal da empresa. Informe somente os números.
       required: true
       style: simple
       explode: false
@@ -56,9 +55,7 @@ components:
     BusinessDocument:
       name: documentNumber
       in: path
-      description: |
-        Número do documento CNPJ da empresa. 
-        **_Informe somente os números._**
+      description: Número do documento CNPJ da empresa. Informe somente os números.
       required: true
       style: simple
       explode: false
