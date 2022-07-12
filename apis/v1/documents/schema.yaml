@@ -56,7 +56,7 @@ paths:
       summary: Envio de documentos (SELFIE, RG, CNH, RNE, DNI e CRNM) para análise
       description: |
         <div class="bkly-ref-description">
-          <p>Essa análise é um pré-requisito para fluxo de onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
+          <p>Essa análise é um pré-requisito para fluxo de Onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>  
@@ -64,7 +64,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "A análise acontece de forma assíncrona, considere consultar o status da análise antes de avançar com as etapas do onboarding completo ou atualização cadastral."
+          "body": "A análise acontece de forma assíncrona, considere consultar o status da análise antes de avançar com as etapas do Onboarding completo ou atualização cadastral."
         }
         [/block]
       operationId: UploadDocument
@@ -121,7 +121,7 @@ paths:
       operationId: UploadDocumentOnboardingPJLTDASATS
       description: |
         <div class="bkly-ref-description">
-          <p>Essa análise é um pré-requisito para fluxo de onboarding para clientes pessoa jurídica (LTDA, SA e TS).</p>
+          <p>Essa análise é um pré-requisito para fluxo de Onboarding para clientes pessoa jurídica (LTDA, SA e TS).</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
