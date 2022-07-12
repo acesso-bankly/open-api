@@ -722,6 +722,60 @@ components:
           description: Sócios da empresa. Apenas para sócio pessoa jurídica.
           nullable: true
       additionalProperties: false
+    Documentation:
+      type: object
+      required:
+        - articlesOfIncorporation
+        - lastContractChange
+        - balanceSheet
+        - legalRepresentative
+      properties:
+        articlesOfIncorporation:
+          description: Id correspondente do documento do contrato social ou estatuto social da empresa.
+          type: string
+          nullable: true
+        lastContractChange:
+          description: Id correspondente do documento da última alteração contratual ou última ata de eleição.
+          type: string
+          nullable: true
+        balanceSheet:
+          description: Id correspondente do documento de declaração de faturamento dos últimos 12 meses ou balanço social.
+          type: string
+          nullable: true
+        powerOfAttorney: 
+          description:  Id correspondente do documento de procuração pública legal.
+          type: string
+          nullable: true
+        legalRepresentative:
+          "$ref": "#/components/schemas/Image"
+      additionalProperties: false
+      
+    Image:
+      type: object
+      description: Documentos de ao menos um dos representantes legais, é possível usar o RG, CNH, RNE, DNI e CRNM. 
+      required:
+        - documentNumber
+        - selfie
+        - idCardFront
+        - idCardBack
+      properties:
+        documentNumber:
+          description: Número do documento.
+          type: string
+          nullable: true
+        selfie:
+          description: Foto do representante legal.
+          type: string
+          nullable: true
+        idCardFront:
+          description: Imagem da frente do documento.
+          type: string
+          nullable: true
+        idCardBack: 
+          description: Imagem de trás do documento.
+          type: string
+          nullable: true
+      additionalProperties: false
     RegisterCorporationBusinessRequest:
       required:
         - businessAddress
@@ -780,6 +834,8 @@ components:
           nullable: true
         businessAddress:
           "$ref": "#/components/schemas/Address"
+        documentation:
+          "$ref": "#/components/schemas/Documentation"
       additionalProperties: false
     PowerOfAttorney:
       type: object
