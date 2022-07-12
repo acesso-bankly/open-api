@@ -477,7 +477,7 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
+            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
         socialName:
           type: string
           description: >
@@ -570,7 +570,7 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação (RG, CNH) do cliente.
+            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
         socialName:
           type: string
           description: >
@@ -673,7 +673,7 @@ components:
           nullable: true
         registerName:
           type: string
-          description: Nome conforme consta no documento de identificação (RG ou CNH). Apenas para sócio pessoa física.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM). Apenas para sócio pessoa física.
           nullable: true
         socialName:
           type: string
@@ -928,7 +928,7 @@ components:
           description: Pessoa exposta politicamente.
         registerName:
           type: string
-          description: Nome conforme consta no documento de identificação (RG ou CNH) do cliente.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
           nullable: true
         phone:
           "$ref": "#/components/schemas/Phone"
@@ -949,7 +949,7 @@ components:
           type: string
         registerName:
           description: >-
-            Nome conforme consta no documento de identificação _(RG e CNH)_ do
+            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do
             cliente.
           type: string
         socialName:
