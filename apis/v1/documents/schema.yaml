@@ -118,6 +118,12 @@ paths:
         - Análise de documentos
       summary: Envio de documentos para Onboarding de Pessoa Jurídica (LTDA, SA e TS)
       operationId: UploadDocumentOnboardingPJLTDASATS
+      description: |
+        <div class="bkly-ref-description">
+          <p>Essa análise é um pré-requisito para fluxo de onboarding para clientes pessoa jurídica (LTDA, SA e TS).</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
+        </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -488,7 +494,7 @@ components:
       required:
         - token
       type: object
-      description: Token que será utilizado no processo de onboarding de pessoa jurídica.
+      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
       properties:
         token:
           type: string

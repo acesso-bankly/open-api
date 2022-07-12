@@ -102,7 +102,7 @@ paths:
       summary: Registro de pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e resultado você pode obter consultando o registro do cliente. Caso o cliente não exista ele será criado, caso contrario seus dados serão sobrepostos.</p>
+          <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro do cliente. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.write</span>
         </div>      
@@ -355,9 +355,8 @@ paths:
         [/block]
       operationId: CancelBusinessRegistration
       parameters:
-        - $ref: >-
-            http://localhost:3320/commons/components#/components/parameters/BusinessDocument
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: http://localhost:3320/commons/components#/components/parameters/BusinessDocument
+        - $ref: http://localhost:3320/commons/components#/components/parameters/ApiVersion
       requestBody:
         content:
           application/json:
