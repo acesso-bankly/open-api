@@ -10,10 +10,10 @@ paths:
     post:
       tags:
         - Autorizador 3DS
-      summary: Simulador de criação do desafio
+      summary: Simulador de criação do challengeId
       description:  |
         <div class="bkly-ref-description">
-          <p>Teste o fluxo de autenticação 3DS, simulando a criação do desafio que será enviado a seu cliente. </p> 
+          <p>Teste o fluxo de autenticação 3DS, simulando a criação do challengeId, id da transação gerado para identificar o desafio que deverá ser enviado a seu cliente. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: card.network.transactions.3ds.write</span>
         </div>
