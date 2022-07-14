@@ -2,6 +2,7 @@ module.exports = [
 	"accounts",
 	"boletos",
 	"cards",
+	"cards/transactions",
 	"documents",
 	"events",
 	"fee",
