@@ -10,7 +10,7 @@ paths:
     post:
       tags:
         - Autorizador 3DS
-      summary: Simulador de criação do challengeId
+      summary: Simulação de criação do challengeId
       description:  |
         <div class="bkly-ref-description">
           <p>Teste o fluxo de autenticação 3DS, simulando a criação do challengeId, id da transação gerado para identificar o desafio que deverá ser enviado a seu cliente. </p> 
@@ -151,7 +151,8 @@ components:
     
     ChallengeAmount:
       required:
-        - currency
+       - value
+       - currency
       type: object
       properties:
         value:
@@ -170,7 +171,7 @@ components:
       properties:
         id:
           type: string
-          description: Este valor corresponde ao challengeId que será utilizado na confirmação do desafio.
+          description: Este valor corresponde ao <code>challengeId</code>, que será utilizado na confirmação do desafio.
         
   securitySchemes:
     Bearer:
