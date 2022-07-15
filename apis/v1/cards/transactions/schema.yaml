@@ -123,6 +123,7 @@ components:
       
     ConfirmChallengeCommand:
       required:
+        - allowTransaction
         - documentNumber
       type: object
       properties:
