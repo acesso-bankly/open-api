@@ -135,11 +135,19 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - documentType
+                - file
               properties:
                 documentType:
                   type: string
                   description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE,
                     BALANCE_SHEET ou POWER_OF_ATTORNEY)
+                  enum:
+                    - ARTICLES_OF_INCORPORATION
+                    - LAST_CONTRACT_CHANGE
+                    - BALANCE_SHEET
+                    - POWER_OF_ATTORNEY
                 file:
                   type: string
                   format: binary

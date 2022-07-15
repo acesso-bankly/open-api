@@ -379,7 +379,7 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registro de pessoa jurídica (LTDA, SA ou TS).
+      summary: Registro de pessoa jurídica (LTDA, SA ou TS)
       description: | 
         <div class="bkly-ref-description">
           <p>
