@@ -1,48 +1,49 @@
 {
-    "name": "bankly-open-api-reference",
-    "version": "1.0.0",
-    "description": "Bankly's Open Api Reference",
-    "main": "index.js",
-    "scripts": {
-      "start": "pm2 kill && pm2 --name bankly_oas start --force index.js && start http://localhost:3320/reference/",
-      "edit:oauth": "npm start && start http://localhost:3320/reference/?urls.primaryName=oauth",
-      "edit:documents": "npm start && start http://localhost:3320/reference/?urls.primaryName=documents",
-      "edit:holders": "npm start && start http://localhost:3320/reference/?urls.primaryName=holders",
-      "edit:accounts": "npm start && start http://localhost:3320/reference/?urls.primaryName=accounts",
-      "edit:cards": "npm start && start http://localhost:3320/reference/?urls.primaryName=cards",
-      "edit:pix": "npm start && start http://localhost:3320/reference/?urls.primaryName=pix",
-      "edit:ted": "npm start && start http://localhost:3320/reference/?urls.primaryName=ted",
-      "edit:boletos": "npm start && start http://localhost:3320/reference/?urls.primaryName=boletos",
-      "edit:paybill": "npm start && start http://localhost:3320/reference/?urls.primaryName=paybill",
-      "edit:events": "npm start && start http://localhost:3320/reference/?urls.primaryName=events",
-      "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
-      "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits",
-      "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/acesso-bankly/open-api.git"
-    },
-    "keywords": [
-      "bankly",
-      "baas",
-      "apis",
-      "rest",
-      "restful",
-      "openapi"
-    ],
-    "license": "SEE LICENSE IN ./LICENSE",
-    "bugs": {
-      "url": "https://servicedesk.bankly.com.br"
-    },
-    "homepage": "https://docs.bankly.com.br",
-    "dependencies": {
-      "commander": "^9.3.0",
-      "cors": "^2.8.5",
-      "express": "^4.18.1",
-      "ip": "^1.1.8",
-      "nodemon": "^2.0.18",
-      "pm2": "^5.2.0",
-      "swagger-ui-express": "^4.4.0"
-    }
+  "name": "bankly-open-api-reference",
+  "version": "1.0.0",
+  "description": "Bankly's Open Api Reference",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 kill && pm2 --name bankly_oas start --force index.js && start http://localhost:3320/reference/",
+    "edit:oauth": "npm start && start http://localhost:3320/reference/?urls.primaryName=oauth",
+    "edit:documents": "npm start && start http://localhost:3320/reference/?urls.primaryName=documents",
+    "edit:holders": "npm start && start http://localhost:3320/reference/?urls.primaryName=holders",
+    "edit:accounts": "npm start && start http://localhost:3320/reference/?urls.primaryName=accounts",
+    "edit:cards": "npm start && start http://localhost:3320/reference/?urls.primaryName=cards",
+    "edit:pix": "npm start && start http://localhost:3320/reference/?urls.primaryName=pix",
+    "edit:ted": "npm start && start http://localhost:3320/reference/?urls.primaryName=ted",
+    "edit:boletos": "npm start && start http://localhost:3320/reference/?urls.primaryName=boletos",
+    "edit:paybill": "npm start && start http://localhost:3320/reference/?urls.primaryName=paybill",
+    "edit:events": "npm start && start http://localhost:3320/reference/?urls.primaryName=events",
+    "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
+    "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits",
+    "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee",
+    "edit:credit": "npm start && start http://localhost:3320/reference/?urls.primaryName=credit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acesso-bankly/open-api.git"
+  },
+  "keywords": [
+    "bankly",
+    "baas",
+    "apis",
+    "rest",
+    "restful",
+    "openapi"
+  ],
+  "license": "SEE LICENSE IN ./LICENSE",
+  "bugs": {
+    "url": "https://servicedesk.bankly.com.br"
+  },
+  "homepage": "https://docs.bankly.com.br",
+  "dependencies": {
+    "commander": "^9.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "ip": "^1.1.8",
+    "nodemon": "^2.0.18",
+    "pm2": "^5.2.0",
+    "swagger-ui-express": "^4.4.0"
   }
+}
