@@ -1,7 +1,7 @@
 env:
-  COMPONENTS_LOCAL_URL: 'http://localhost:3320/commons/components#'
-  SERVER_URL: 'https://raw.githubusercontent.com/acesso-bankly/open-api/'
-  COMPONENTS_PATH: '/commons/components.yaml#'
+  COMPONENTS_LOCAL_URL: "http://localhost:3320/commons/components#"
+  SERVER_URL: "https://raw.githubusercontent.com/acesso-bankly/open-api/"
+  COMPONENTS_PATH: "/commons/components.yaml#"
   ORIGIN_BRANCH: ${{ github.head_ref }}
 
 name: ReadMe Pipeline
@@ -19,42 +19,43 @@ jobs:
     runs-on: ubuntu-latest
     name: Validating files
     steps:
-    - uses: actions/checkout@v2
-        
-    - uses: jacobtomlinson/gha-find-replace@2.0.0
-      name: Find and Replace Hostname
-      if: ${{ success() && github.event_name != 'pull_request' }}
-      with:
-        find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
-        regex: false
+      - uses: actions/checkout@v2
 
-    - uses: jacobtomlinson/gha-find-replace@2.0.0
-      name: Find and Replace Hostname
-      if: ${{ success() && github.event_name == 'pull_request' }}
-      with:
-        find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
-        regex: false
+      - uses: jacobtomlinson/gha-find-replace@2.0.0
+        name: Find and Replace Hostname
+        if: ${{ success() && github.event_name != 'pull_request' }}
+        with:
+          find: ${{ env.COMPONENTS_LOCAL_URL }}
+          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
+          regex: false
 
-    - uses: mbowman100/swagger-validator-action@master
-      name: Validate schemas
-      with: 
-        files: |
-          ./apis/v1/accounts/schema.yaml
-          ./apis/v1/boletos/schema.yaml
-          ./apis/v1/cards/schema.yaml
-          ./apis/v1/documents/schema.yaml
-          ./apis/v1/events/schema.yaml
-          ./apis/v1/helpers/schema.yaml
-          ./apis/v1/holders/schema.yaml
-          ./apis/v1/limits/schema.yaml
-          ./apis/v1/oauth/schema.yaml
-          ./apis/v1/paybill/schema.yaml
-          ./apis/v1/pix/schema.yaml
-          ./apis/v1/ted/schema.yaml
-          ./apis/v1/fee/schema.yaml
-  
+      - uses: jacobtomlinson/gha-find-replace@2.0.0
+        name: Find and Replace Hostname
+        if: ${{ success() && github.event_name == 'pull_request' }}
+        with:
+          find: ${{ env.COMPONENTS_LOCAL_URL }}
+          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
+          regex: false
+
+      - uses: mbowman100/swagger-validator-action@master
+        name: Validate schemas
+        with:
+          files: |
+            ./apis/v1/accounts/schema.yaml
+            ./apis/v1/boletos/schema.yaml
+            ./apis/v1/cards/schema.yaml
+            ./apis/v1/documents/schema.yaml
+            ./apis/v1/events/schema.yaml
+            ./apis/v1/helpers/schema.yaml
+            ./apis/v1/holders/schema.yaml
+            ./apis/v1/limits/schema.yaml
+            ./apis/v1/oauth/schema.yaml
+            ./apis/v1/paybill/schema.yaml
+            ./apis/v1/pix/schema.yaml
+            ./apis/v1/ted/schema.yaml
+            ./apis/v1/fee/schema.yaml
+            ./apis/v1/credit/schema.yaml
+
   deployDev:
     name: "Deploy / Dev"
     environment: development
@@ -62,7 +63,7 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
 
       - uses: jacobtomlinson/gha-find-replace@2.0.0
         name: Find and Replace Hostname
@@ -79,7 +80,7 @@ jobs:
           find: ${{ env.COMPONENTS_LOCAL_URL }}
           replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
           regex: false
-      
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
         with:
@@ -89,41 +90,46 @@ jobs:
         name: Publish Accounts API Reference to readme.io
         with:
           rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Auth API Reference to readme.io
         with:
           rdme: openapi './apis/v1/oauth/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
         with:
           rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
         with:
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Pix API Reference to readme.io
         with:
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish TED API Reference to readme.io
         with:
           rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-      
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
-        with: 
+        with:
           rdme: openapi './apis/v1/limits/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io
-        with: 
+        with:
           rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Credit API Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
@@ -139,7 +145,7 @@ jobs:
         name: Publish Pay Bill API Reference to readme.io
         with:
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-        
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Fee Reference to readme.io
         with:
@@ -152,15 +158,15 @@ jobs:
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2  
-          
+      - uses: actions/checkout@v2
+
       - uses: jacobtomlinson/gha-find-replace@2.0.0
         name: Find and Replace Hostname
         with:
           find: ${{ env.COMPONENTS_LOCAL_URL }}
           replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
-          regex: false      
-      
+          regex: false
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
         with:
@@ -170,41 +176,46 @@ jobs:
         name: Publish Accounts API Reference to readme.io
         with:
           rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Auth API Reference to readme.io
         with:
           rdme: openapi './apis/v1/oauth/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
         with:
           rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
         with:
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Pix API Reference to readme.io
         with:
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+
       - uses: readmeio/rdme@7.0.3
         name: Publish TED API Reference to readme.io
         with:
           rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-      
+
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
-        with: 
+        with:
           rdme: openapi './apis/v1/limits/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io
-        with: 
+        with:
           rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Credit API Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
