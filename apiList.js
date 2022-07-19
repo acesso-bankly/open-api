@@ -11,5 +11,6 @@ module.exports = [
 	"oauth",
 	"paybill",
 	"pix",
-	"ted"
+	"ted",
+	"credit"
 ]

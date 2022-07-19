@@ -22,3 +22,4 @@
 - [] paybill (pagamento de contas)
 - [] events (feed de eventos e webhooks)
 - [] holpers (lista de banco e busca de endereços)
+- [] credit (gestão de crédito)
