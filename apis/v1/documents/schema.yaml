@@ -151,8 +151,7 @@ paths:
                 file:
                   type: string
                   format: binary
-                  description: Arquivo do documento. Não deve ser superior à 8.5
-                    MB. Apenas arquivos com a extensão '.pdf'.
+                  description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
       responses:
         '201':
           description: Requisição foi aceita
