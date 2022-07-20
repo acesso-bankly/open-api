@@ -54,7 +54,7 @@ jobs:
           ./apis/v1/pix/schema.yaml
           ./apis/v1/ted/schema.yaml
           ./apis/v1/fee/schema.yaml
-          ./apis/cards/transactions/schema.yaml
+          ./apis/v1/cards/transactions/schema.yaml
   
   deployDev:
     name: "Deploy / Dev"
