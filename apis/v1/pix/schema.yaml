@@ -251,11 +251,11 @@ paths:
             type: string
             nullable: true
       requestBody:
+        required: true 
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/ClaimCancelReason"
-            required: true 
       responses:
         '200':
           description: Reivindicação cancelada.
