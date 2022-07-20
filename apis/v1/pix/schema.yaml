@@ -168,7 +168,7 @@ paths:
       summary: Completando um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
-          <p>Complete o pedido de reivindicação de porre ou portabilidade de chave assim que seu status estiver como CONFIRMED.</p>
+          <p>Complete o pedido de reivindicação de <b>posse</b> de chave assim que seu status estiver como CONFIRMED.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
