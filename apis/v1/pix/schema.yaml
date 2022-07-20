@@ -251,11 +251,10 @@ paths:
             type: string
             nullable: true
       requestBody:
-        required: true 
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ClaimCancelReason"
+              $ref: "#/components/schemas/ClaimCancelRequest"
       responses:
         '200':
           description: Reivindicação cancelada.
@@ -307,7 +306,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ClaimConfirmReason"
+              $ref: "#/components/schemas/ClaimConfirmRequest"
       responses:
         '200':
           description: Reivindicação confirmada.
@@ -1087,13 +1086,28 @@ components:
         - DEFAULT_OPERATION
       type: string
 
+    ClaimCancelRequest:
+      type: object
+      required:
+      - reason
+      properties:
+        reason:
+          $ref: "#/components/schemas/ClaimCancelReason"
+    
     ClaimConfirmReason:
       enum:
         - DONOR_REQUEST
         - ACCOUNT_CLOSURE
         - DEFAULT_OPERATION
       type: string
-      
+
+    ClaimConfirmRequest:
+      type: object
+      required:
+      - reason
+      properties:
+        reason:
+          $ref: "#/components/schemas/ClaimConfirmReason"
 
     ClaimBank:
       type: object
