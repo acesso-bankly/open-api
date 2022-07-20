@@ -303,6 +303,7 @@ paths:
             type: string
             nullable: true
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -1092,7 +1093,6 @@ components:
         - ACCOUNT_CLOSURE
         - DEFAULT_OPERATION
       type: string
-      required: true 
       
 
     ClaimBank:
