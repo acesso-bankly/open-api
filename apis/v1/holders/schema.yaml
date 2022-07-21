@@ -401,7 +401,7 @@ paths:
               $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
       responses:
         '201':
-          description: Requisição foi aceita e está sendo processada
+          description: Requisição foi aceita e está sendo processada.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
