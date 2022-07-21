@@ -379,11 +379,11 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registro de pessoa jurídica (LTDA, SA ou TS)
+      summary: Registro de pessoa jurídica (LTDA, S.A. ou TS)
       description: | 
         <div class="bkly-ref-description">
           <p>
-            Registre (ou substitua) uma nova empresa (LTDA, SA ou TS).
+            Registre (ou substitua) uma nova empresa (LTDA, S.A. ou TS).
             O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.
           </p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
@@ -426,7 +426,7 @@ security:
 components:
   schemas:
     BusinessType:
-      description: Tipo da empresa (MEI, EI, EIRELLI, LTDA, SA ou TS).
+      description: Tipo da empresa (MEI, EI, EIRELLI, LTDA, S.A. ou TS).
       type: string
       enum:
         - MEI
@@ -457,12 +457,12 @@ components:
       properties:
         incomeDeclared:
           type: number
-          description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           format: double
           nullable: true
         participationPercentage:
           type: string
-          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         documentNumber:
           maxLength: 11
@@ -474,12 +474,10 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: >
-            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
         socialName:
           type: string
-          description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
           nullable: true
         phone:
           description: Telefone de contato do representante legal da empresa.
@@ -491,37 +489,34 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: |
-            Data de nascimento do cliente. O cliente deve possuir no mínimo **16 anos**.
+          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
-          description: >
-            Nome da mãe do cliente conforme consta no documento de identificação.
+          description: Nome da mãe do representante legal conforme consta no documento de identificação.
           nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
-          description: >
-            Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         tradingName:
           type: string
-          description: Nome fantasia da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Nome fantasia da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         businessType:
           $ref: "#/components/schemas/BusinessType"
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         legalRepresentatives:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         isPoliticallyExposedPerson:
           description: Identificação do cliente como pessoa politicamente exposta.
@@ -531,7 +526,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / SA / TS.
+          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
     
@@ -780,6 +775,12 @@ components:
         - businessName
         - businessSize
         - businessType
+        - cnaeCode
+        - legalNature
+        - openingDate
+        - annualBilling
+        - phone
+        - legalRepresentative
       type: object
       properties:
         businessType:
@@ -814,7 +815,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Owner"
-          description: Sócios da empresa.
+          description: Sócios da empresa. Campo obrigatório para empresas no formato LTDA;
           nullable: true
         businessName:
           maxLength: 256
@@ -911,22 +912,22 @@ components:
           nullable: true
         birthDate:
           type: string
-          description: Data de nascimento do cliente. O cliente deve possuir no mínimo 16 anos.
+          description: Data de nascimento do representante legal. O cliente deve possuir no mínimo 16 anos.
           format: date-time
         motherName:
           type: string
-          description: Nome da mãe do cliente conforme consta no documento de identificação.
+          description: Nome da mãe do representante legal conforme consta no documento de identificação.
           nullable: true
         email:
           type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois representante legal.
           nullable: true
         isPoliticallyExposedPerson:
           type: boolean
           description: Pessoa exposta politicamente.
         registerName:
           type: string
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
           nullable: true
         phone:
           $ref: "#/components/schemas/Phone"
@@ -1022,7 +1023,7 @@ components:
           $ref: '#/components/schemas/Status'
         businessType:
           description: |
-            Tipo da empresa (MEI, EI, EIRELLI, LTDA, SA).
+            Tipo da empresa (MEI, EI, EIRELLI, LTDA, S.A.).
           $ref: '#/components/schemas/BusinessType'
         businessSize:
           description: |
@@ -1050,22 +1051,22 @@ components:
         cnaeCode:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         legalNature:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         annualBilling:
           type: number
           format: double
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         openingDate:
           type: string
           format: date-time
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         phone:
           $ref: "#/components/schemas/Phone"
-          description: Somente retornado para clientes do tipo LTDA / SA / TS.
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         reasons:
           description: Motivos de reprovação do registro da empresa.
           type: array

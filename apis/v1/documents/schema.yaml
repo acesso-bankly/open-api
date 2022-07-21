@@ -117,16 +117,15 @@ paths:
     put:
       tags:
         - Análise de documentos
-      summary: Envio de documentos para Onboarding de Pessoa Jurídica (LTDA, SA e TS)
+      summary: Envio de documentos para Onboarding de Pessoa Jurídica (LTDA, S.A. e TS)
       operationId: UploadDocumentOnboardingPJLTDASATS
       description: |
         <div class="bkly-ref-description">
-          <p>Essa análise é um pré-requisito para fluxo de Onboarding para clientes pessoa jurídica (LTDA, SA e TS).</p>
+          <p>Essa análise é um pré-requisito para fluxo de Onboarding para clientes pessoa jurídica (LTDA, S.A. e TS).</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
       requestBody:
@@ -134,24 +133,8 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: object
-              required:
-                - documentType
-                - file
-              properties:
-                documentType:
-                  type: string
-                  description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE,
-                    BALANCE_SHEET ou POWER_OF_ATTORNEY)
-                  enum:
-                    - ARTICLES_OF_INCORPORATION
-                    - LAST_CONTRACT_CHANGE
-                    - BALANCE_SHEET
-                    - POWER_OF_ATTORNEY
-                file:
-                  type: string
-                  format: binary
-                  description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
+              $ref: "#/components/schemas/CorporateDocumenteRequest"
+             
       responses:
         '201':
           description: Requisição foi aceita
@@ -196,6 +179,26 @@ components:
           type: string
   
   schemas:
+
+    CorporateDocumenteRequest:
+      type: object
+      required:
+        - documentType
+        - file
+      properties:
+        documentType:
+          type: string
+          description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE, BALANCE_SHEET ou POWER_OF_ATTORNEY)
+          enum:
+            - ARTICLES_OF_INCORPORATION
+            - LAST_CONTRACT_CHANGE
+            - BALANCE_SHEET
+            - POWER_OF_ATTORNEY
+        file:
+          type: string
+          format: binary
+          description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
+
     Error:
       $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
 
