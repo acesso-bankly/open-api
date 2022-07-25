@@ -69,7 +69,7 @@ paths:
         - name: challengeId
           in: path
           required: true
-          description: Id retornado após a criação do desafio.
+          description: Id recebido via webhook e que foi associado ao desafio enviado ao cliente do parceiro. No caso de sandbox, trata-se do id retornado na simulação de criação do challengeId.
           schema:
             type: string
             nullable: true
