@@ -9,7 +9,7 @@ paths:
   /card-network-transactions/simulator/challenge:
     post:
       tags:
-        - Autorizador 3DS
+        - Autenticação 3DS
       summary: Simulação de criação do challengeId
       description:  |
         <div class="bkly-ref-description">
@@ -57,7 +57,7 @@ paths:
   /card-network-transactions/authentication/challenge/{challengeId}/confirm:
     patch:
       tags:
-        - Autorizador 3DS
+        - Autenticação 3DS
       summary: Confirmação do desafio
       description:  |
         <div class="bkly-ref-description">
