@@ -400,7 +400,7 @@ paths:
             schema:
               $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
       responses:
-        '201':
+        '202':
           description: Requisição foi aceita e está sendo processada.
           headers:
             x-bkly-correlation-id:
@@ -765,7 +765,7 @@ components:
           type: string
           nullable: true
         idCardBack: 
-          description: Imagem de trás do documento.
+          description: Imagem do verso do documento.
           type: string
           nullable: true
       additionalProperties: false
