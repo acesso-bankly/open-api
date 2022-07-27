@@ -10,7 +10,7 @@ paths:
     post:
       tags:
         - Autenticação 3DS
-      summary: Simulação de criação do challengeId
+      summary: Simulação de criação do desafio (challengeId)
       description:  |
         <div class="bkly-ref-description">
           <p>Teste o fluxo de autenticação 3DS, simulando a criação do challengeId, id da transação gerado para identificar o desafio que deverá ser enviado a seu cliente. </p> 
@@ -42,12 +42,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateChallengeSimulatorCommand'
       responses:
-        '201':
+        '202':
           description: Desafio criado com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ChallengeSimulatorResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '500':
@@ -149,7 +145,7 @@ components:
         - APP
         - BROWSER
       type: string
-      description: Selecione o canal por meio do qual seu cliente receberá o desafio.
+      description: Selecione o canal por meio do qual é realizada a tentativa de compra.
     
     ChallengeMerchant:
       required:
@@ -178,13 +174,6 @@ components:
           minLength: 3
           type: string
       additionalProperties: false
-    
-    ChallengeSimulatorResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Este valor corresponde ao <code>challengeId</code>, que será utilizado na confirmação do desafio.
         
   securitySchemes:
     Bearer:
