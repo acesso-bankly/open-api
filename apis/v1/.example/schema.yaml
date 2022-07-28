@@ -7,7 +7,21 @@ info:
 servers:
   - url: 'https://api.sandbox.bankly.com.br'
 
-paths: {}
+paths: 
+  /cards/credits/customers:
+    post:
+      tags:
+        - Criar nova análise de crédito
+      summary: Análise de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Cria uma nova análise de crédito para o cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+        </div>
+      operationId: cardCreateVirtualCard
+      responses:
+        "401":
+          description: Sem autorização para realizar a solicitação.
 
 security:
   - Bearer: []

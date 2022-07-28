@@ -3,6 +3,7 @@ module.exports = [
 	"boletos",
 	"cards",
 	"cards/transactions",
+	"cards/credits",
 	"documents",
 	"events",
 	"fee",

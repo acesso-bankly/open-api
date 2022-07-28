@@ -19,43 +19,44 @@ jobs:
     runs-on: ubuntu-latest
     name: Validating files
     steps:
-    - uses: actions/checkout@v2
-        
-    - uses: jacobtomlinson/gha-find-replace@2.0.0
-      name: Find and Replace Hostname
-      if: ${{ success() && github.event_name != 'pull_request' }}
-      with:
-        find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
-        regex: false
+      - uses: actions/checkout@v2
+          
+      - uses: jacobtomlinson/gha-find-replace@2.0.0
+        name: Find and Replace Hostname
+        if: ${{ success() && github.event_name != 'pull_request' }}
+        with:
+          find: ${{ env.COMPONENTS_LOCAL_URL }}
+          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, 'refs/heads/main', env.COMPONENTS_PATH ) }}
+          regex: false
 
-    - uses: jacobtomlinson/gha-find-replace@2.0.0
-      name: Find and Replace Hostname
-      if: ${{ success() && github.event_name == 'pull_request' }}
-      with:
-        find: ${{ env.COMPONENTS_LOCAL_URL }}
-        replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
-        regex: false
+      - uses: jacobtomlinson/gha-find-replace@2.0.0
+        name: Find and Replace Hostname
+        if: ${{ success() && github.event_name == 'pull_request' }}
+        with:
+          find: ${{ env.COMPONENTS_LOCAL_URL }}
+          replace: ${{ format('{0}{1}{2}', env.SERVER_URL, env.ORIGIN_BRANCH, env.COMPONENTS_PATH ) }}
+          regex: false
 
-    - uses: mbowman100/swagger-validator-action@master
-      name: Validate schemas
-      with: 
-        files: |
-          ./apis/v1/accounts/schema.yaml
-          ./apis/v1/boletos/schema.yaml
-          ./apis/v1/cards/schema.yaml
-          ./apis/v1/documents/schema.yaml
-          ./apis/v1/events/schema.yaml
-          ./apis/v1/helpers/schema.yaml
-          ./apis/v1/holders/schema.yaml
-          ./apis/v1/limits/schema.yaml
-          ./apis/v1/oauth/schema.yaml
-          ./apis/v1/paybill/schema.yaml
-          ./apis/v1/pix/schema.yaml
-          ./apis/v1/ted/schema.yaml
-          ./apis/v1/fee/schema.yaml
-          ./apis/v1/cards/transactions/schema.yaml
-  
+      - uses: mbowman100/swagger-validator-action@master
+        name: Validate schemas
+        with: 
+          files: |
+            ./apis/v1/accounts/schema.yaml
+            ./apis/v1/boletos/schema.yaml
+            ./apis/v1/cards/schema.yaml
+            ./apis/v1/documents/schema.yaml
+            ./apis/v1/events/schema.yaml
+            ./apis/v1/helpers/schema.yaml
+            ./apis/v1/holders/schema.yaml
+            ./apis/v1/limits/schema.yaml
+            ./apis/v1/oauth/schema.yaml
+            ./apis/v1/paybill/schema.yaml
+            ./apis/v1/pix/schema.yaml
+            ./apis/v1/ted/schema.yaml
+            ./apis/v1/fee/schema.yaml
+            ./apis/v1/cards/transactions/schema.yaml
+            ./apis/v1/cards/credits/schema.yaml
+    
   deployDev:
     name: "Deploy / Dev"
     environment: development
@@ -151,6 +152,11 @@ jobs:
         with:
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Credit Card Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/cards/credits/schema.yaml' --id=${{ secrets.CREDITCARD_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -236,3 +242,8 @@ jobs:
         name: Publish Card Transactions to Reference to readme.io
         with:
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Credit Card to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/cards/credits/schema.yaml' --id=${{ secrets.CREDITCARD_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
