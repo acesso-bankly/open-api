@@ -1910,7 +1910,7 @@ paths:
           <p>Antes de emitir um cartão de crédito, solicite uma análise de crédito para seu cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
-      operationId: cardCreateVirtualCard
+      operationId: creditAnalysisCreate
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
