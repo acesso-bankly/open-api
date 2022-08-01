@@ -173,6 +173,7 @@ components:
           maxLength: 3
           minLength: 3
           type: string
+          description: "Código [ISO 4217](https://pt.wikipedia.org/wiki/ISO_4217) da moeda utilizada. Exemplo: \"986\" para BRL."
       additionalProperties: false
         
   securitySchemes:
