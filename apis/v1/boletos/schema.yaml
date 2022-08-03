@@ -376,6 +376,7 @@ components:
       enum:
         - Deposit
         - Levy
+        - Invoice
       type: string
     
     Address:
@@ -463,8 +464,93 @@ components:
           $ref: '#/components/schemas/BankslipType'
         payer:
           $ref: '#/components/schemas/PersonEmissao'
+        minimumAmount: 
+          type: number
+          format: double
+          description: Valor mínimo do pagamento do boleto (específico e obrigatório para boletos de cartão de crédito).
+        closePayment:
+          type: string
+          description: Data limite (yyyy-MM-dd) para o pagamento do boleto após o seu vencimento. Esse campo é de preenchimento obrigatório para a aplicação de juros e/ou multas. Em caso de juros, o valor informado nesse campo corresponde à data em que os juros param de incidir sobre o valor do boleto.
+          format: date-time
+        interest:
+          $ref: '#/components/schemas/BankslipInterest'
+        fine:
+          $ref: '#/components/schemas/BankslipFine'
+        discounts:
+          $ref: '#/components/schemas/BankslipDiscounts'
       additionalProperties: false
     
+    BankslipInterest:
+      type: object
+      description: Campo obrigatório somente para especificações da incidência de juros após o vencimento. Caso esse campo não seja preenchido, considera-se que não há incidência de juros no boleto. 
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          description: Data de início para cálculo dos juros (yyyy-MM-dd). Os juros serão aplicados a pagamentos realizados a partir da data informada nesse campo.
+        value:
+          type: number
+          format: double
+          description: valor monetário ou percentual dos juros, dependendo da configuração do campo `type`.
+        type:
+          $ref: '#/components/schemas/BankslipInterestTypes'
+
+    BankslipInterestTypes:
+      type: string
+      enum:
+        - AmountPerBusinessDay
+        - AmountPerCalendaryDay
+        - Free
+        - PercentPerMonth
+        - PercentPerMonthBusinessDay
+      description: Regra para cálculo dos juros.
+
+    BankslipFine:
+      type: object
+      description: Campo obrigatório somente para especificações da incidência de multa após vencimento. Caso esse campo não seja preenchido, considera-se que não há incidência de multa no boleto.
+      properties:
+        startDate:
+          type: string
+          format: date-time
+          description: Data de início para cálculo da multa (yyyy-MM-dd). A multa será aplicada a pagamentos realizados a partir da data informada nesse campo.
+        value:
+          type: number
+          format: double
+          description: Valor monetário ou percentual da multa, dependendo da configuração do campo `type`.
+        type:
+          $ref: '#/components/schemas/BankslipFineTypes'
+
+    BankslipFineTypes:
+      type: string
+      enum:
+        - FixedAmount
+        - Free
+        - Percent
+      description: Tipo de regra aplicada à multa.
+
+    BankslipDiscounts:
+      type: object
+      description: Especificação para incidência de desconto para pagamento em até um dia antes da data de vencimento.
+      properties:
+        limitDate:
+          type: string
+          format: date-time
+          description: Data limite (yyyy-MM-dd) para incidência de desconto (considera-se desde a data de emissão até um dia antes do vencimento).
+        value:
+          type: number
+          format: double
+          description: Valor monetário ou percentual do desconto, dependendo da configuração do campo `type`
+        type:
+          $ref: '#/components/schemas/BankslipDiscountsTypes'
+
+    BankslipDiscountsTypes:
+      type: string
+      enum:
+        - FixedAmountUntilLimitDate
+        - FixedPercentUntilLimitDate
+        - Free
+      description: Tipo de regra para cálculo do desconto.
+
     CreateBankslipResponse:
       type: object
       properties:
