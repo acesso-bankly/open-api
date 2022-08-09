@@ -690,7 +690,7 @@ paths:
           '500':
             statusCode: 500
 
-  /cards/activatecode/{activationCode}:
+  /cards/activateCode/{activationCode}:
     get:
       tags:
         - Consulta de Cartões
