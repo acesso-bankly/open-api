@@ -339,7 +339,7 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
-  /processed-messages/{idempotencyKey}:
+  /webhooks/processed-messages/{idempotencyKey}:
     post:
       tags:
       - Mensagens
@@ -431,7 +431,7 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
-  /configurations/{id}/enable:
+  /webhooks/configurations/{id}/enable:
     patch:
       tags:
         -  Configurações dos webhooks
