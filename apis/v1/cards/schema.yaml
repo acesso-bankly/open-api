@@ -1965,7 +1965,7 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
 
-  /cards/credits/customers/{documentNumber}/contracts/{contract}:
+  /cards/credits/document/{documentNumber}/contracts/{contract}:
     get:
       tags:
         - Análise de crédito
@@ -2517,6 +2517,8 @@ components:
             - type
             - value
             - countryCode
+        address:
+          $ref: "#/components/schemas/address"
       required:
         - programId
         - documentNumber
@@ -2527,6 +2529,7 @@ components:
         - sex
         - email
         - phone
+        - address
     
     createCustomerResponse:
       type: object
