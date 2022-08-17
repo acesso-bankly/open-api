@@ -1,0 +1,265 @@
+openapi: 3.0.1
+info:
+  title: Core Close Friends
+  description: Bookmarks management.
+  version: '1.0'
+paths:
+  /bookmarks/{documentNumber}/enable:
+    patch:
+      tags:
+        - Gestão de favorecidos
+      summary: Ativação de favorecido
+      description: |
+        <div class="bkly-ref-description">
+          <p>Ative uma conta cadastrada como favorecida.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+      responses:
+        '200':
+          description: Success
+  /bookmarks/{documentNumber}/disable:
+    patch:
+      tags:
+      - Bookmarks
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+      responses:
+        '200':
+          description: Success
+  /business/{documentNumber}/bookmarks:
+    post:
+      tags:
+      - Business
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+      responses:
+        '200':
+          description: Success
+  /business/{documentNumber}/bookmarks/{contactDocumentNumber}:
+    get:
+      tags:
+      - Business
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+        - name: contactDocumentNumber
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+      responses:
+        '200':
+          description: Success
+  /custumer/{documentNumber}/bookmarks:
+    post:
+      tags:
+      - Custumer
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/BookmarkCommand"
+      responses:
+        '200':
+          description: Success
+  /custumer/{documentNumber}/bookmarks/{contactDocumentNumber}:
+    get:
+      tags:
+      - Custumer
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+        - name: contactDocumentNumber
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+      responses:
+        '200':
+          description: Success
+components:
+  parameters:
+    ContactDocumentNumber:
+      name: contactDocumentNumber
+      in: path
+      required: true
+      schema:
+        minLength: 1
+        type: string
+
+    DocumentNumber:
+      name: documentNumber
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+  
+  schemas:
+    EnableBookmarkCommand:
+      required:
+      - contactDocumentNumber
+      type: object
+      properties:
+        contactDocumentNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    DisableBookmarkCommand:
+      required:
+      - contactDocumentNumber
+      type: object
+      properties:
+        contactDocumentNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    Contact:
+      required:
+      - documentNumber
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        documentNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    AccountType:
+      enum:
+      - Checking
+      - Salary
+      - Savings
+      - Payment
+      type: string
+    Bank:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Account:
+      type: object
+      properties:
+        branch:
+          type: string
+          nullable: true
+        number:
+          type: string
+          nullable: true
+        type:
+          "$ref": "#/components/schemas/AccountType"
+        bank:
+          "$ref": "#/components/schemas/Bank"
+      additionalProperties: false
+    BookmarkCommand:
+      type: object
+      properties:
+        contact:
+          "$ref": "#/components/schemas/Contact"
+        account:
+          "$ref": "#/components/schemas/Account"
+      additionalProperties: false
+    RouteParameters:
+      required:
+      - contactDocumentNumber
+      - documentNumber
+      type: object
+      properties:
+        documentNumber:
+          minLength: 1
+          type: string
+        contactDocumentNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer.
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- Bearer: []
+x-explorer-enabled: true
+x-samples-enabled: true
+x-samples-languages:
+- csharp
+- javascript
+- node
+- go
+- java
+- kotlin
+- php
+- python
+- ruby
+- swift
+- cplusplus
+- powershell
+- curl
