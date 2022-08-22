@@ -481,6 +481,8 @@ paths:
                       country: Brasil
                     historyStatus:
                       [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                    wallets:
+                      [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
                     activatedAt: null
                     lastUpdatedAt: "2020-07-20T22:55:12"
                     isActivated: false
@@ -617,6 +619,8 @@ paths:
                         country: Brasil
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                      wallets:
+                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -753,6 +757,8 @@ paths:
                         country: Brasil
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                      wallets:
+                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -900,6 +906,8 @@ paths:
                         country: Brasil
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
+                      wallets:
+                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -2289,6 +2297,24 @@ components:
                 type: string
                 $ref: "#/components/schemas/cardStatus"
                 description: Status aplicado.
+        wallets:
+          type: array
+          description: Identificação das carteiras virtuais que o cartão encontra-se habilitado.
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+                $ref: "#/components/schemas/walletStatus"
+                description: Status do cartão na carteira.
+              walletType:
+                type: string
+                $ref: "#/components/schemas/walletTypes"
+                description: Identificador da carteira que o cartão encontra-se vinculado.
+              walletFlowAdd:
+                type: string
+                $ref: "#/components/schemas/walletFlows"
+                description: Classificação do fluxo que o cartão recebeu ao entrar na carteira.
         activatedAt:
           type: string
           description: Data da ativação do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
@@ -3058,7 +3084,20 @@ components:
       type: string
       enum:
         - GooglePay
+          
+    walletStatus:
+      type: string
+      enum:
+        - Approved
+        - Denied
       
+    walletFlows:
+      type: string
+      enum:
+        - Undefined
+        - GreenPatch
+        - YellowPatch
+
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
