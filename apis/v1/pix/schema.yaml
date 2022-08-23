@@ -8,6 +8,235 @@ info:
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
+  /bookmarks/{documentNumber}/enable:
+    patch:
+      tags:
+        - Gestão de contas favorecidas
+      summary: Ativação de conta favorecida
+      description: |
+        <div class="bkly-ref-description">
+          <p>Ative uma conta como favorecida.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/EnableBookmarkCommand"
+      responses:
+        '202':
+          description: Conta favorecida ativada com sucesso
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+  /bookmarks/{documentNumber}/disable:
+    patch:
+      tags:
+        - Gestão de contas favorecidas
+      summary: Desativação de conta favorecida
+      description: |
+        <div class="bkly-ref-description">
+          <p>Desative uma conta como favorecida.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/DisableBookmarkCommand"
+      responses:
+        '204':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+  /business/{documentNumber}/bookmarks:
+    get:
+      tags:
+        - Gestão de contas favorecidas
+      summary: "[Pessoa jurídica] Consulta de contas favorecidas"
+      description: |
+        <div class="bkly-ref-description">
+          <p>Por meio deste endpoint, pessoas jurídicas podem listar todas as contas favorecidas atreladas a sua conta.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+      - $ref: "#/components/parameters/DocumentNumber"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json-patch+json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            text/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            application/*+json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '204':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
+  /business/{documentNumber}/bookmarks/{contactDocumentNumber}:
+    get:
+      tags:
+        - Gestão de contas favorecidas
+      summary: Consulta de uma conta favorecida
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte uma conta favorecida.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+        - $ref: "#/components/parameters/ContactDocumentNumber"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json-patch+json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            application/*+json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+  /customers/{documentNumber}/bookmarks:
+    get:
+      tags:
+        - Gestão de contas favorecidas
+      summary: "[Pessoa física] Consulta de contas favorecidas"
+      description: |
+        <div class="bkly-ref-description">
+          <p>Por meio deste endpoint, pessoas físicas podem listar todas as contas favorecidas atreladas a sua conta.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+      - $ref: "#/components/parameters/DocumentNumber"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json-patch+json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            text/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+            application/*+json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/BookmarkCommand"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '204':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
+  /customers/{documentNumber}/bookmarks/{contactDocumentNumber}:
+    get:
+      tags:
+        - Gestão de contas favorecidas
+      summary: Consulta de uma conta favorecida
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte uma conta favorecida.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+        </div>
+      operationId: XXXXXXX
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+        - name: contactDocumentNumber
+          in: path
+          required: true
+          schema:
+            minLength: 1
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json-patch+json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+            application/*+json:
+              schema:
+                "$ref": "#/components/schemas/BookmarkCommand"
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+  
+
   /accounts/{accountNumber}/addressing-keys:
     get:
       tags:
@@ -802,9 +1031,128 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []
+
 components:
+  parameters:
+    ContactDocumentNumber:
+      name: contactDocumentNumber
+      description: número do documento do favorecido (CPF ou CNPJ).
+      in: path
+      required: true
+      schema:
+        minLength: 1
+        type: string
+    DocumentNumber:
+      name: documentNumber
+      description: número do documento do cliente (CPF ou CNPJ).
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
   
   schemas:
+    EnableBookmarkCommand:
+      required:
+      - contactDocumentNumber
+      type: object
+      properties:
+        contactDocumentNumber:
+          description: número do documento do favorecido (CPF ou CNPJ).
+          minLength: 1
+          type: string
+      additionalProperties: false
+    DisableBookmarkCommand:
+      required:
+      - contactDocumentNumber
+      type: object
+      properties:
+        contactDocumentNumber:
+          description: número do documento do favorecido (CPF ou CNPJ).
+          minLength: 1
+          type: string
+      additionalProperties: false
+    Contact:
+      required:
+      - documentNumber
+      - name
+      type: object
+      properties:
+        name:
+          description: nome de registro ou social do favorecido; 
+          minLength: 1
+          type: string
+        documentNumber:
+          description: número do documento (CPF ou CNPJ) do favorecido; 
+          minLength: 1
+          type: string
+        status:
+          description: situação da conta favorecida (Enabled - Disabled or Active - Inactive);
+          minLength: 1
+          type: string
+      additionalProperties: false
+    FavoredAccountType:
+      enum:
+      - Checking
+      - Salary
+      - Savings
+      - Payment
+      type: string
+    FavoredAccountBank:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        code:
+          description: código do banco;
+          type: string
+          nullable: true
+        name:
+          description: nome do banco;
+          type: string
+          nullable: true
+      additionalProperties: false
+    FavoredAccount:
+      type: object
+      properties:
+        branch:
+          description: nome da agência;
+          type: string
+          nullable: true
+        number:
+          description: número da conta favorecida;
+          type: string
+          nullable: true
+        type:
+          "$ref": "#/components/schemas/FavoredAccountType"
+        bank:
+          "$ref": "#/components/schemas/FavoredAccountBank"
+      additionalProperties: false
+    BookmarkCommand:
+      type: object
+      properties:
+        contact:
+          "$ref": "#/components/schemas/Contact"
+        account:
+          type: array
+          items:
+            "$ref": "#/components/schemas/FavoredAccount"
+      additionalProperties: false
+    RouteParameters:
+      required:
+      - contactDocumentNumber
+      - documentNumber
+      type: object
+      properties:
+        documentNumber:
+          minLength: 1
+          type: string
+        contactDocumentNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    
     Account:
       required:
         - branch
