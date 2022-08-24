@@ -54,10 +54,10 @@ paths:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Consulta de uma conta favorecida"
+      summary: "[Pessoa física] Consulta de um favorecido"
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte uma conta favorecida.</p>
+          <p>Consulte um favorecido e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
         </div>
@@ -94,10 +94,10 @@ paths:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Consulta de contas favorecidas"
+      summary: "[Pessoa física] Consulta de todos os favorecidos"
       description: |
         <div class="bkly-ref-description">
-          <p>Por meio deste endpoint, pessoas físicas podem listar todas as contas favorecidas atreladas a sua conta.</p>
+          <p>Consulte todos os favorecidos cadastrados e suas respectivas contas. </p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
         </div>
@@ -179,10 +179,10 @@ paths:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Consulta de uma conta favorecida"
+      summary: "[Pessoa jurídica] Consulta de um favorecido"
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte uma conta favorecida.</p>
+          <p>Consulte um favorecido e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
         </div>
@@ -214,10 +214,10 @@ paths:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Consulta de contas favorecidas"
+      summary: "[Pessoa jurídica] Consulta de todos os favorecidos"
       description: |
         <div class="bkly-ref-description">
-          <p>Por meio deste endpoint, pessoas jurídicas podem listar todas as contas favorecidas atreladas a sua conta.</p>
+          <p>Consulte todos os favorecidos cadastrados e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
         </div>
