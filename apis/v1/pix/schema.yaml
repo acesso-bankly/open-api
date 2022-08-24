@@ -8,7 +8,7 @@ info:
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
-  /bookmarks/{documentNumber}/enable:
+  /customers/{documentNumber}/bookmarks/{contactDocumentNumber}/enable:
     patch:
       tags:
         - Gestão de contas favorecidas
@@ -22,20 +22,7 @@ paths:
       operationId: XXXXXXX
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              "$ref": "#/components/schemas/EnableBookmarkCommand"
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/EnableBookmarkCommand"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/EnableBookmarkCommand"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/EnableBookmarkCommand"
+        - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         '202':
           description: Conta favorecida ativada com sucesso
@@ -43,7 +30,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-  /bookmarks/{documentNumber}/disable:
+  /business/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
         - Gestão de contas favorecidas
@@ -57,20 +44,7 @@ paths:
       operationId: XXXXXXX
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
-      requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              "$ref": "#/components/schemas/DisableBookmarkCommand"
-          application/json:
-            schema:
-              "$ref": "#/components/schemas/DisableBookmarkCommand"
-          text/json:
-            schema:
-              "$ref": "#/components/schemas/DisableBookmarkCommand"
-          application/*+json:
-            schema:
-              "$ref": "#/components/schemas/DisableBookmarkCommand"
+        - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         '204':
           $ref: 'http://localhost:3320/commons/components#/components/responses/204'
@@ -139,16 +113,16 @@ paths:
           content:
             application/json-patch+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             application/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             text/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             application/*+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '400':
@@ -221,16 +195,16 @@ paths:
           content:
             application/json-patch+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             application/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             text/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
             application/*+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommand"
+                "$ref": "#/components/schemas/BookmarkCommandResponse"
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '400':
@@ -1052,26 +1026,7 @@ components:
         nullable: true
   
   schemas:
-    EnableBookmarkCommand:
-      required:
-      - contactDocumentNumber
-      type: object
-      properties:
-        contactDocumentNumber:
-          description: número do documento do favorecido (CPF ou CNPJ).
-          minLength: 1
-          type: string
-      additionalProperties: false
-    DisableBookmarkCommand:
-      required:
-      - contactDocumentNumber
-      type: object
-      properties:
-        contactDocumentNumber:
-          description: número do documento do favorecido (CPF ou CNPJ).
-          minLength: 1
-          type: string
-      additionalProperties: false
+    
     Contact:
       required:
       - documentNumber
@@ -1129,7 +1084,7 @@ components:
         bank:
           "$ref": "#/components/schemas/FavoredAccountBank"
       additionalProperties: false
-    BookmarkCommand:
+    BookmarkCommandResponse:
       type: object
       properties:
         contact:
