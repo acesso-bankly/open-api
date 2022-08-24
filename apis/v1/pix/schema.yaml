@@ -503,6 +503,11 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          required: true
+          schema:
+            type: string
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -663,6 +668,11 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          required: true
+          schema:
+            type: string
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
