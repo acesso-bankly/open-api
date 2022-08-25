@@ -136,10 +136,10 @@ paths:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: Ativação de conta favorecida para pessoa jurídica
+      summary: Ativação de favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
-          <p>Ative uma conta como favorecida.</p>
+          <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.enable</span>
         </div>
@@ -159,10 +159,10 @@ paths:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: Desativação de conta favorecida para pessoa jurídica
+      summary: Desativação de favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
-          <p>Desative uma conta como favorecida.</p>
+          <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.disable</span>
         </div>
@@ -219,7 +219,7 @@ paths:
       summary: Consulta de todos os favorecidos para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte todos os favorecidos cadastrados e suas respectivas contas.</p>
+          <p>Consulte todos os favorecidos cadastrados, independente de seus respectivos status.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
