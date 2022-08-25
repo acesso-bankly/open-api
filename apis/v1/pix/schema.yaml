@@ -11,7 +11,7 @@ paths:
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}/enable:
     patch:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Ativação de favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
@@ -33,7 +33,7 @@ paths:
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Desativação de favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
@@ -53,7 +53,7 @@ paths:
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Consulta de um favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
@@ -79,7 +79,7 @@ paths:
   /customers/{documentNumber}/bookmarks:
     get:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Consulta de todos os favorecidos para pessoa física
       description: |
         <div class="bkly-ref-description">
@@ -107,7 +107,7 @@ paths:
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/enable:
     patch:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Ativação de favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
@@ -129,7 +129,7 @@ paths:
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Desativação de favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
@@ -149,7 +149,7 @@ paths:
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Consulta de um favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
@@ -175,7 +175,7 @@ paths:
   /business/{documentNumber}/bookmarks:
     get:
       tags:
-        - Gestão de contas favorecidas
+        - Gestão de favorecidos
       summary: Consulta de todos os favorecidos para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
