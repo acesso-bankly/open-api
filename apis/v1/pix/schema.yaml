@@ -12,246 +12,234 @@ paths:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Ativação de conta favorecida"
+      summary: Ativação de favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>Ative uma conta como favorecida.</p>
+          <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.enable</span>
         </div>
-      operationId: XXXXXXX
+      operationId: EnableBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
+          description: número do CPF do cliente. Informe somente números.
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '202':
+        "202":
           description: Conta favorecida ativada com sucesso
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Desativação de conta favorecida"
+      summary: Desativação de favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>Desative uma conta como favorecida.</p>
+          <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.disable</span>
         </div>
-      operationId: XXXXXXX
+      operationId: DisableBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
+          description: número do CPF do cliente. Informe somente números.
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '204':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        "204":
+          $ref: "http://localhost:3320/commons/components#/components/responses/204"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Consulta de um favorecido"
+      summary: Consulta de um favorecido para pessoa física
       description: |
         <div class="bkly-ref-description">
           <p>Consulte um favorecido e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
         </div>
-      operationId: XXXXXXX
+      operationId: GetBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
-        - name: contactDocumentNumber
-          in: path
-          required: true
-          schema:
-            minLength: 1
-            type: string
+          description: número do CPF do cliente. Informe somente números.
+        - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json-patch+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             application/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             text/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             application/*+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+                $ref: "#/components/schemas/BookmarkCommandResponse"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
   /customers/{documentNumber}/bookmarks:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa física] Consulta de todos os favorecidos"
+      summary: Consulta de todos os favorecidos para pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte todos os favorecidos cadastrados e suas respectivas contas. </p>
+          <p>Consulte todos os favorecidos cadastrados, independente de seus respectivos status. </p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
         </div>
-      operationId: XXXXXXX
+      operationId: ListBookmarksForCustomerAsync
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
+        description: número do CPF do cliente. Informe somente números.
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json-patch+json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
+                  $ref: "#/components/schemas/BookmarkCommandResponse"
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
+                  $ref: "#/components/schemas/BookmarkCommandResponse"
             text/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
+                  $ref: "#/components/schemas/BookmarkCommandResponse"
             application/*+json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '204':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
+                  $ref: "#/components/schemas/BookmarkCommandResponse"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "204":
+          $ref: "http://localhost:3320/commons/components#/components/responses/204"
 
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/enable:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Ativação de conta favorecida"
+      summary: Ativação de conta favorecida para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
           <p>Ative uma conta como favorecida.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.enable</span>
         </div>
-      operationId: XXXXXXX
+      operationId: EnableBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
+          description: número do CNPJ do cliente. Informe somente números.
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '202':
+        "202":
           description: Conta favorecida ativada com sucesso
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Desativação de conta favorecida"
+      summary: Desativação de conta favorecida para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
           <p>Desative uma conta como favorecida.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.disable</span>
         </div>
-      operationId: XXXXXXX
+      operationId: DisableBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
+          description: número do CNPJ do cliente. Informe somente números.
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '204':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        "204":
+          $ref: "http://localhost:3320/commons/components#/components/responses/204"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Consulta de um favorecido"
+      summary: Consulta de um favorecido para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
           <p>Consulte um favorecido e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
-      operationId: XXXXXXX
+      operationId: GetBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
+          description: número do CNPJ do cliente. Informe somente números.
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json-patch+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             application/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             text/json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
+                $ref: "#/components/schemas/BookmarkCommandResponse"
             application/*+json:
               schema:
-                "$ref": "#/components/schemas/BookmarkCommandResponse"
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+                $ref: "#/components/schemas/BookmarkCommandResponse"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
   /business/{documentNumber}/bookmarks:
     get:
       tags:
         - Gestão de contas favorecidas
-      summary: "[Pessoa jurídica] Consulta de todos os favorecidos"
+      summary: Consulta de todos os favorecidos para pessoa jurídica
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todos os favorecidos cadastrados e suas respectivas contas.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:xxxxxxxx</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
-      operationId: XXXXXXX
+      operationId: ListBookmarksForBusinessAsync
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
+        description: número do CNPJ do cliente. Informe somente números.
       responses:
-        '200':
+        "200":
           description: Success
           content:
-            application/json-patch+json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
             application/json:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
-            text/json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
-            application/*+json:
-              schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/BookmarkCommand"
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '204':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
+                  $ref: "#/components/schemas/BookmarkCommandResponse"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "204":
+          $ref: "http://localhost:3320/commons/components#/components/responses/204"
   
 
   /accounts/{accountNumber}/addressing-keys:
@@ -267,7 +255,7 @@ paths:
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - name: accountNumber
           in: path
           required: true
@@ -285,22 +273,22 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
       responses:
-        '200':
+        "200":
           description: Chave encontrada.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AddressingKey'
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'   
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
-        '503':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
+                  $ref: "#/components/schemas/AddressingKey"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"   
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"   
+        "503":
+          $ref: "http://localhost:3320/commons/components#/components/responses/503" 
       security:
         - Bearer: []      
 
@@ -316,7 +304,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - name: authorization
           in: header
           required: true
@@ -1053,7 +1041,7 @@ components:
   parameters:
     ContactDocumentNumber:
       name: contactDocumentNumber
-      description: número do documento do favorecido (CPF ou CNPJ).
+      description: número do documento do favorecido (CPF ou CNPJ). Informe somente números.
       in: path
       required: true
       schema:
@@ -1061,7 +1049,6 @@ components:
         type: string
     DocumentNumber:
       name: documentNumber
-      description: número do documento do cliente (CPF ou CNPJ).
       in: path
       required: true
       schema:
@@ -1071,9 +1058,6 @@ components:
   schemas:
     
     Contact:
-      required:
-      - documentNumber
-      - name
       type: object
       properties:
         name:
@@ -1096,7 +1080,7 @@ components:
       - Savings
       - Payment
       type: string
-    FavoredAccountBank:
+    FavoredBank:
       type: object
       properties:
         ispb:
@@ -1125,32 +1109,20 @@ components:
         type:
           "$ref": "#/components/schemas/FavoredAccountType"
         bank:
-          "$ref": "#/components/schemas/FavoredAccountBank"
+          "$ref": "#/components/schemas/FavoredBank"
       additionalProperties: false
-    BookmarkCommandResponse:
+    BookmarkDetailedResponse:
       type: object
       properties:
-        contact:
-          "$ref": "#/components/schemas/Contact"
-        account:
-          type: array
-          items:
-            "$ref": "#/components/schemas/FavoredAccount"
+          contact:
+              $ref: "#/components/schemas/Contact"
+          accounts:
+              type: array
+              items: {$ref: "#/components/schemas/FavoredAccount"}
+              nullable: true
       additionalProperties: false
-    RouteParameters:
-      required:
-      - contactDocumentNumber
-      - documentNumber
-      type: object
-      properties:
-        documentNumber:
-          minLength: 1
-          type: string
-        contactDocumentNumber:
-          minLength: 1
-          type: string
-      additionalProperties: false
-    
+
+
     Account:
       required:
         - branch
