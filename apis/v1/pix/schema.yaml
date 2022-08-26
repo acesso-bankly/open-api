@@ -25,7 +25,7 @@ paths:
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         "202":
-          description: Relacionamento de confiança ativado com sucesso
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "422":
@@ -49,9 +49,12 @@ paths:
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         "204":
-          description: Relacionamento de confiança desativado com sucesso
+          description: A requisição foi aceita e está sendo processada.
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}:
@@ -107,10 +110,10 @@ paths:
                   $ref: "#/components/schemas/Contact"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        "204":
-          $ref: "http://localhost:3320/commons/components#/components/responses/204"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/enable:
     patch:
@@ -129,7 +132,7 @@ paths:
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         "202":
-          description: Relacionamento de confiança ativado com sucesso
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "422":
@@ -153,7 +156,8 @@ paths:
         - $ref: "#/components/parameters/ContactDocumentNumber"
       responses:
         "204":
-          description: Relacionamento de confiança desativado com sucesso
+          description: A requisição foi aceita e está sendo processada.
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '500':
@@ -211,8 +215,8 @@ paths:
                   $ref: "#/components/schemas/Contact"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        "204":
-          $ref: "http://localhost:3320/commons/components#/components/responses/204"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
