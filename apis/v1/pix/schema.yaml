@@ -30,8 +30,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "422":
           $ref: "http://localhost:3320/commons/components#/components/responses/422"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
@@ -55,8 +55,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "422":
           $ref: "http://localhost:3320/commons/components#/components/responses/422"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /customers/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
@@ -83,8 +83,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /customers/{documentNumber}/bookmarks:
     get:
       tags:
@@ -137,8 +137,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "422":
           $ref: "http://localhost:3320/commons/components#/components/responses/422"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}/disable:
     patch:
       tags:
@@ -160,8 +160,8 @@ paths:
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /business/{documentNumber}/bookmarks/{contactDocumentNumber}:
     get:
       tags:
@@ -188,8 +188,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "400":
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   /business/{documentNumber}/bookmarks:
     get:
       tags:
@@ -217,8 +217,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "404":
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
   
 
   /accounts/{accountNumber}/addressing-keys:
@@ -1095,9 +1095,9 @@ components:
           type: string
           nullable: true
         type:
-          "$ref": "#/components/schemas/FavoredAccountType"
+          $ref: "#/components/schemas/FavoredAccountType"
         bank:
-          "$ref": "#/components/schemas/FavoredBank"
+          $ref: "#/components/schemas/FavoredBank"
       additionalProperties: false
     BookmarkDetailedResponse:
       type: object
