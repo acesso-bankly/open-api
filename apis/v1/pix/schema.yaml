@@ -173,7 +173,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
-      operationId: GetBookmarksForCustomerAsync
+      operationId: GetBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
