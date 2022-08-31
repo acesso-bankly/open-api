@@ -17,7 +17,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:customer.bookmark.enable</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
         </div>
       operationId: EnableBookmarksForCustomerAsync
       parameters:
@@ -41,7 +41,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:customer.bookmark.disable</span>
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
         </div>
       operationId: DisableBookmarksForCustomerAsync
       parameters:
@@ -122,7 +122,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:business.bookmark.enable</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
         </div>
       operationId: EnableBookmarksForBusinessAsync
       parameters:
@@ -146,7 +146,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope:business.bookmark.disable</span>
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
         </div>
       operationId: DisableBookmarksForBusinessAsync
       parameters:
