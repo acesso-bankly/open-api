@@ -372,7 +372,7 @@ paths:
       security:
         - Bearer: []
   
-  /pix/claims/{claimId}:complete:
+  /pix/claims/{claimId}/complete:
     patch:
       tags:
         - Reivindicação de chaves
@@ -424,7 +424,7 @@ paths:
       security:
         - Bearer: []
         
-  /pix/claims/{claimId}:cancel:
+  /pix/claims/{claimId}/cancel:
     patch:
       tags:
         - Reivindicação de chaves
@@ -482,7 +482,7 @@ paths:
       security:
         - Bearer: []
   
-  /pix/claims/{claimId}:confirm:
+  /pix/claims/{claimId}/confirm:
     patch:
       tags:
         - Reivindicação de chaves
