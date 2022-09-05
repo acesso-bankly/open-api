@@ -24,11 +24,7 @@ paths:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "202":
           $ref: "http://localhost:3320/commons/components#/components/responses/202"
@@ -56,11 +52,7 @@ paths:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "204":
           description: A requisição foi aceita e está sendo processada.
@@ -87,11 +79,7 @@ paths:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
           description: Success
@@ -122,11 +110,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/CustomerDocumentNumber"
       - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-      - name: authorization
-        in: header
-        required: true
-        schema:
-          type : string
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
           description: Success
@@ -161,11 +145,7 @@ paths:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "202":
           $ref: "http://localhost:3320/commons/components#/components/responses/202"
@@ -193,11 +173,7 @@ paths:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "204":
           description: A requisição foi aceita e está sendo processada.
@@ -224,11 +200,7 @@ paths:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
           description: Success
@@ -259,11 +231,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/BusinessDocumentNumber"
       - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-      - name: authorization
-        in: header
-        required: true
-        schema:
-          type : string
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
           description: Success
