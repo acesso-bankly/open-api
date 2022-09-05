@@ -23,6 +23,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "202":
           $ref: "http://localhost:3320/commons/components#/components/responses/202"
@@ -47,6 +53,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "204":
           description: A requisição foi aceita e está sendo processada.
@@ -70,6 +82,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "200":
           description: Success
@@ -97,6 +115,12 @@ paths:
       operationId: ListBookmarksForCustomerAsync
       parameters:
       - $ref: "#/components/parameters/CustomerDocumentNumber"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+      - name: authorization
+        in: header
+        required: true
+        schema:
+          type : string
       responses:
         "200":
           description: Success
@@ -128,6 +152,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "202":
           $ref: "http://localhost:3320/commons/components#/components/responses/202"
@@ -152,6 +182,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "204":
           description: A requisição foi aceita e está sendo processada.
@@ -175,6 +211,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
         - $ref: "#/components/parameters/ContactDocumentNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
       responses:
         "200":
           description: Success
@@ -202,6 +244,12 @@ paths:
       operationId: ListBookmarksForBusinessAsync
       parameters:
       - $ref: "#/components/parameters/BusinessDocumentNumber"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+      - name: authorization
+        in: header
+        required: true
+        schema:
+          type : string
       responses:
         "200":
           description: Success
