@@ -15,7 +15,7 @@ paths:
     post:
       tags:
       - Cartão No Name
-      summary: Criação de cartão em Lote
+      summary: Criação de cartão em lote
       description: |
         <div class="bkly-ref-description">
           <p>Crie um lote de cartões sem vínculo com uma conta (Cartão No Name).</p> 
