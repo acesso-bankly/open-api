@@ -115,10 +115,10 @@ paths:
     get:
       tags:
       - Cartão No Name
-      summary: Consulta de lotes por companyKey
+      summary: Consulta de lotes por company key
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os dados de todos os lotes de uma companyKey específica. </p> 
+          <p>Obtenha os dados de todos os lotes de uma company key específica. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -128,7 +128,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Sucesso
+          description: Solicitação recebida com sucesso
           content:
             application/json:
               schema:
@@ -295,7 +295,7 @@ paths:
       summary: Consulta por lote
       description: |
         <div class="bkly-ref-description">
-          <p>Obtém os dados do lote.</p> 
+          <p>Obtenha os dados do lote.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -306,11 +306,12 @@ paths:
           required: true
           schema:
             type: string
+            description: Id do lote a ser consultado
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: A solicitação é recebida e retorna os dados do lote e proxy dos cartões.
+          description: Solicitação recebida com sucesso
           content:
             application/json:
               schema:
