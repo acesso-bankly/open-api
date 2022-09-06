@@ -10,6 +10,191 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
+
+  /lots/:
+    post:
+      tags:
+      - Cartão No Name
+      summary: Criação de cartão em Lote
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie um lote de cartões sem vínculo com uma conta (Card No Name).</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+        </div>
+      operationId: cardCreateCardsInLot
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardsInLotRequest"
+      responses:
+        '202':
+          description: A solicitação foi aceita e o cartão em lote está sendo criado.
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Program Id must not be empty. ], reasons: [] },
+                              { code: required, message: [ Quantity Cards must not be empty. ], reasons: [] },
+                              { code: required, message: [ Address must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+            description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 115, message: [ Program does not belong to lot! ], reasons: [] }]
+        '409':
+            description: Requisição em conflito com as regras de negócio contratada.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+          uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+          passthroughBehavior: when_no_match
+          connectionType: VPC_LINK
+          connectionId: m116y5
+          httpMethod: POST
+          type: http
+          requestParameters:
+            integration.request.header.api-version: method.request.header.api-version
+            integration.request.header.Authorization: method.request.header.Authorization
+          responses:
+            '202':
+              statusCode: 202
+            '400':
+              statusCode: 400
+            '401':
+              statusCode: 401
+            '406':
+              statusCode: 406
+            '409':
+              statusCode: 409
+            '500':
+              statusCode: 500
+    get:
+      tags:
+      - Cartão No Name
+      summary: Consulta de lotes por companyKey
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtém os dados de todos os lotes de uma companyKey específica. </p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+        </div>
+      operationId: cardGetLots
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardLotsResponse"
+              examples:
+                response:
+                  value:
+                    lotId: "LT01"
+                    quantityOrder: 1000
+                    companyKey: "Acesso"
+                    dateOrder: "2021-06-07T08:30:40"
+                    programId: 1
+        '204':
+          description: Não foram encontrados lotes.              
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '204':
+            statusCode: 204      
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '500':
+            statusCode: 500
+  
+  /cards/{activateCode}/bindNoName:
+    get:
+
+  /lots/{id}:
+    get:
+
+
+  
   /cards/virtual:
     post:
       tags:
@@ -57,7 +242,7 @@ paths:
         '401':
           description: Sem autorização para realizar a solicitação.
         '406':
-            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+            description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
             content:
               application/json:
                 schema:
@@ -2026,6 +2211,77 @@ components:
       schema:
         type: string        
   schemas:
+    createCardsInLotRequest:
+      type: object
+      properties:
+        programId:
+          type: integer
+          description: Identificador do programa que será vinculado ao cartão (se não informado será utilizado o programa padrão associado para o parceiro)
+        quantityCards:
+          type: integer
+          description: Quantidade de cartões em lote
+        paymentDay:
+          type: integer
+          description: Dia de pagamento do cartão
+        address:
+          type: object
+          description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente)
+          properties:
+            zipCode:
+              type: string
+              description: CEP (informar somente os números).
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (informar a UF).
+            country:
+              type: string
+              description: País.
+          required:
+            - zipCode
+            - address
+            - number
+            - neighborhood
+            - city
+            - state
+            - country
+      required:
+      - programId
+      - quantityCards
+    
+    cardLotsResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+        quantityOrder:
+          type: integer
+          description: Quantidade de cartões solicitados.    
+        companyKey:
+          type: string
+          description: Identificador da companhia.
+        dateOrder:
+          type: string
+          description: Data da solicitação de criação do lote.
+        programId:
+          type: integer
+          description: Identificador do programa vinculado ao cartão.
+
     academicDegree:
       type: string
       description: Grau de instrução do cliente.
