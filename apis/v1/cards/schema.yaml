@@ -35,6 +35,10 @@ paths:
       responses:
         '202':
           description: A solicitação foi aceita e o cartão em lote está sendo criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createCardInLotResponse"
         '400':
           description: Existem erros no preenchimento da requisição.
           content:
@@ -2452,6 +2456,13 @@ components:
       - programId
       - quantityCards
     
+    createCardInLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+
     cardLotsResponse:
       type: object
       properties:
