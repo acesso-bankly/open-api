@@ -2409,16 +2409,16 @@ components:
       properties:
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado, o programa padrão será utilziado.)
+          description: Identificador do programa que será vinculado ao cartão (se não informado, o programa padrão será utilizado.)
         quantityCards:
           type: integer
-          description: Quantidade de cartões em lote
+          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000)
         paymentDay:
           type: integer
           description: Dia de pagamento do cartão
         address:
           type: object
-          description: Informações sobre o endereço de entrega (se não for informado será utilizado o endereço de cadastro do cliente)
+          description: Informações sobre o endereço de entrega (se não informado, será utilizado o endereço de cadastro do cliente)
           properties:
             zipCode:
               type: string
@@ -2545,7 +2545,7 @@ components:
           description: Número da conta ao qual o cartão será vinculado.
         alias:
           type: string
-          description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
+          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
         documentNumber:
           type: string
           description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
