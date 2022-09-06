@@ -189,9 +189,199 @@ paths:
   
   /cards/{activateCode}/bindNoName:
     get:
+      tags:
+      - Cartão No Name
+      summary: Vínculo de Cartão com Conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realiza o vínculo do cartão a uma conta, ativando o cartão e definindo uma nova senha.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+        </div>
+      operationId: cardbindNoName
+      parameters:
+        - name: activateCode
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código de ativação do cartão (12 caracteres)
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/bindNoNameRequest"
+      responses:
+        '200':
+          description: Vínculo realizado.
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                              { code: required, message: [ Document must not be empty. ], reasons: [] },
+                              { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                              { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: O cartão não existe.
+        '409':
+            description: Requisição em conflito com as regras de negócio contratadas.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{activateCode}/bindNoName
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: PATCH
+        type: http
+        requestParameters:
+          integration.request.path.activateCode: method.request.path.activateCode
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
 
   /lots/{id}:
     get:
+      tags:
+      - Cartão No Name
+      summary: Consulta por lote
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtém os dados do lote.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+        </div>
+      operationId: cardGetLotById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: A solicitação é recebida e retorna os dados do lote e proxy dos cartões.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardLotResponse"
+              examples:
+                response:
+                  value:
+                    lotId: "LT01"
+                    quantityOrder: 1000
+                    companyKey: "Acesso"
+                    dateOrder: "2021-06-07T08:30:40"
+                    programId: 1
+                    address:
+                      zipCode: "05402100"
+                      address: Avenida Rebouças
+                      number: "1368"
+                      neighborhood: Pinheiros
+                      complement: Em frente a Wizard
+                      city: São Paulo
+                      state: SP
+                      country: Brasil
+                    cards: [
+                        "2500011000021160417",
+                        "2500011000068618940" 
+                    ]
+        '400':
+            description: Existem erros no preenchimento da requisição.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Lote não encontrado.
+        '500':
+            description: Ocorrência de erro inesperado.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/cardErrorResponse"
+                examples:
+                  response:
+                    value:
+                      reference: https://bankly.readme.io/reference
+                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/{id}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.id: method.request.path.id
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '500':
+            statusCode: 500
 
 
   
@@ -2216,7 +2406,7 @@ components:
       properties:
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado será utilizado o programa padrão associado para o parceiro)
+          description: Identificador do programa que será vinculado ao cartão (se não informado, o programa padrão será utilziado.)
         quantityCards:
           type: integer
           description: Quantidade de cartões em lote
@@ -2225,7 +2415,7 @@ components:
           description: Dia de pagamento do cartão
         address:
           type: object
-          description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente)
+          description: Informações sobre o endereço de entrega (se não for informado será utilizado o endereço de cadastro do cliente)
           properties:
             zipCode:
               type: string
@@ -2282,6 +2472,80 @@ components:
           type: integer
           description: Identificador do programa vinculado ao cartão.
 
+    cardLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+        quantityOrder:
+          type: integer
+          description: Quantidade de cartões solicitados.    
+        companyKey:
+          type: string
+          description: Identificador da companhia.
+        dateOrder:
+          type: string
+          description: Data da solicitação de criação do lote.
+        programId:
+          type: integer
+          description: Identificador do programa vinculado ao cartão.
+        cards: 
+          type: array
+          description: Proxy dos cartões.
+        address:
+          type: object
+          properties:
+            zipCode:
+              type: string
+              description: CEP.
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (formato UF).
+            country:
+              type: string
+              description: País.
+    
+    bindNoNameRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Senha de uso do cartão (4 dígitos).
+        bankAgency:
+          type: string
+          description: Número da agência (4 dígitos).
+        bankAccount:
+          type: string
+          description: Número da conta ao qual o cartão será vinculado.
+        alias:
+          type: string
+          description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
+        documentNumber:
+          type: string
+          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
+      required:
+        - documentNumber
+        - password
+        - bankAccount
+        - bankAgency
+    
+    
     academicDegree:
       type: string
       description: Grau de instrução do cliente.
