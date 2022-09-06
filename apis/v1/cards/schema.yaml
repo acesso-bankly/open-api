@@ -20,7 +20,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Crie um lote de cartões sem vínculo com uma conta (Cartão No Name).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
       operationId: cardCreateCardsInLot
       parameters:
@@ -116,7 +116,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Obtenha os dados de todos os lotes de uma companyKey específica. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetLotsByCompanyKey
       parameters:
@@ -196,7 +196,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Vincule um cartão a uma conta, ativando o cartão e definindo uma nova senha.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: cardbindNoName
       parameters:
@@ -293,7 +293,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Obtém os dados do lote.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: XXXX</span>
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: cardGetLotById
       parameters:
