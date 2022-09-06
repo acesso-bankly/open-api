@@ -118,7 +118,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: XXXX</span>
         </div>
-      operationId: cardGetLots
+      operationId: cardGetLotsByCompanyKey
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
