@@ -18,7 +18,7 @@ paths:
       summary: Criação de cartão em Lote
       description: |
         <div class="bkly-ref-description">
-          <p>Crie um lote de cartões sem vínculo com uma conta (Card No Name).</p> 
+          <p>Crie um lote de cartões sem vínculo com uma conta (Cartão No Name).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: XXXX</span>
         </div>
@@ -114,7 +114,7 @@ paths:
       summary: Consulta de lotes por companyKey
       description: |
         <div class="bkly-ref-description">
-          <p>Obtém os dados de todos os lotes de uma companyKey específica. </p> 
+          <p>Obtenha os dados de todos os lotes de uma companyKey específica. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: XXXX</span>
         </div>
@@ -191,10 +191,10 @@ paths:
     get:
       tags:
       - Cartão No Name
-      summary: Vínculo de Cartão com Conta
+      summary: Vinculação do cartão com uma conta bancária
       description: |
         <div class="bkly-ref-description">
-          <p>Realiza o vínculo do cartão a uma conta, ativando o cartão e definindo uma nova senha.</p> 
+          <p>Vincule um cartão a uma conta, ativando o cartão e definindo uma nova senha.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: XXXX</span>
         </div>
@@ -382,7 +382,6 @@ paths:
             statusCode: 404
           '500':
             statusCode: 500
-
 
   
   /cards/virtual:
