@@ -6,6 +6,46 @@ info:
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
+  
+  /api/accounts/{accountNumber}/pockets:
+    post:
+      tags:
+        - Gestão de conta pocket
+      summary: Criação de conta pocket
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma conta pocket. IMPORTANTE! É necessário ter uma conta de pagamento ativa.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">XXXX</span>
+        </div>
+      operationId: CreatePocketAsync
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          schema: {type: string, nullable: true}
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/CreatePocketRequest"
+      responses:
+        "201":
+          description: "Recurso criado com sucesso"
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: "Localização do recurso recém-criado ou em análise.", schema: {type: string}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/PocketAccountBasicResponse"}}}
+        "400":
+          description: "Há algum problema com a sua requisição."
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+        "500":
+          description: "Ocorreu algum erro inesperado no nosso servidor."
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+
+  
   /accounts/{accountNumber}:
     get:
       tags:
