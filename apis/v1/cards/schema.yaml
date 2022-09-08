@@ -13,7 +13,7 @@ paths:
   /lots/:
     post:
       tags:
-        - Cartão No Name
+        - Cartões No Name
       summary: Criação de cartão em lote
       description: |
         <div class="bkly-ref-description">
@@ -113,13 +113,13 @@ paths:
               statusCode: 500
   
   /cards/{activateCode}/bindNoName:
-    get:
+    patch:
       tags:
-        - Cartão No Name
+        - Cartões No Name
       summary: Vinculação do cartão com uma conta bancária
       description: |
         <div class="bkly-ref-description">
-          <p>Vincule um cartão a uma conta, ativando o cartão e definindo uma nova senha.</p> 
+          <p>Vincule um cartão a uma conta, para que seja possível ativá-lo e para que se possa definir uma nova senha para ele.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
@@ -130,7 +130,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Código de ativação do cartão (12 caracteres)
+            description: Código de ativação do cartão (12 caracteres).
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       requestBody:
@@ -181,8 +181,7 @@ paths:
                 response:
                   value:
                     reference: https://bankly.readme.io/reference
-                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
-      
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]   
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -213,11 +212,11 @@ paths:
   /lots/{id}:
     get:
       tags:
-        - Cartão No Name
+        - Cartões No Name
       summary: Consulta por lote
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os dados do lote.</p> 
+          <p>Obtenha os dados de um lote específico de cartões.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -228,12 +227,12 @@ paths:
           required: true
           schema:
             type: string
-            description: Id do lote a ser consultado
+            description: Id do lote a ser consultado.
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Solicitação recebida com sucesso
+          description: Solicitação recebida com sucesso.
           content:
             application/json:
               schema:
@@ -313,7 +312,7 @@ paths:
   /lots:
     get:
       tags:
-        - Cartão No Name
+        - Cartões No Name
       summary: Consulta de lotes por company key
       description: |
         <div class="bkly-ref-description">
@@ -327,7 +326,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Solicitação recebida com sucesso
+          description: Solicitação recebida com sucesso.
           content:
             application/json:
               schema:
@@ -2411,16 +2410,16 @@ components:
       properties:
         programId:
           type: integer
-          description: Identificador do programa que será vinculado ao cartão (se não informado, o programa padrão será utilizado.)
+          description: Identificador do programa que será vinculado ao cartão (se não informado, o programa padrão será utilizado).
         quantityCards:
           type: integer
-          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000)
+          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000).
         paymentDay:
           type: integer
-          description: Dia de pagamento do cartão
+          description: Dia de pagamento do cartão.
         address:
           type: object
-          description: Informações sobre o endereço de entrega (se não informado, será utilizado o endereço de cadastro do cliente)
+          description: Informações sobre o endereço de entrega (se não informado, será utilizado o endereço de cadastro do cliente).
           properties:
             zipCode:
               type: string
