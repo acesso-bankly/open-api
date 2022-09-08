@@ -76,15 +76,15 @@ paths:
     /api/pockets/{pocketAccountNumber}:
         get:
             tags:
-                - 'Abertura de Conta Pocket.'
-            summary: 'Obtenha dados da conta pocket.'
-            description: 'Opcionalmente você pode obter o saldo desta conta pocket.'
+              - Abertura de Conta Pocket
+            summary: Obtenha dados da conta pocket
+            description: Opcionalmente você pode obter o saldo desta conta pocket.
             operationId: GetPocketAsync
             parameters:
                 -
                     name: pocketAccountNumber
                     in: path
-                    description: 'Número da conta pocket.'
+                    description: Número da conta pocket.
                     required: true
                     schema: {type: string, description: 'Número da conta pocket.', nullable: true}
                 -
@@ -111,50 +111,43 @@ paths:
                     description: 'Ocorreu algum erro inesperado no nosso servidor.'
                     headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
                     content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
-            security:
-                -
-                    Bearer: []
-    /api/pockets/{pocketAccountNumber}/transactions/redeems:
-        post:
-            tags:
-                - 'Abertura de Conta Pocket.'
-            summary: 'Faça o resgate de um valor da conta pocket para conta de pagamento.'
-            description: 'IMPORTANTE! É necessário ter uma conta de pagamento ativa.'
-            operationId: CreateReedemTransactionAsync
-            parameters:
-                -
-                    name: pocketAccountNumber
-                    in: path
-                    required: true
-                    schema: {type: string, nullable: true}
-                -
-                    name: api-version
-                    in: header
-                    description: 'Versão da API. Atualmente estamos na 1.0.'
-                    required: true
-                    schema: {type: string}
-            requestBody:
-                content:
-                    application/json: {schema: {$ref: '#/components/schemas/PocketTransactionRequest'}}
-            responses:
-                '202':
-                    description: 'Requisição foi aceita e está sendo processada'
-                    headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
-                '400':
-                    description: 'Há algum problema com a sua requisição.'
-                    headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
-                    content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
-                '404':
-                    description: 'Recurso não encontrado.'
-                    headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
-                    content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
-                '500':
-                    description: 'Ocorreu algum erro inesperado no nosso servidor.'
-                    headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
-                    content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
-            security:
-                -
-                    Bearer: []
+		/api/pockets/{pocketAccountNumber}/transactions/redeems:
+			post:
+				tags:
+					- 'Abertura de Conta Pocket.'
+				summary: 'Faça o resgate de um valor da conta pocket para conta de pagamento.'
+				description: 'IMPORTANTE! É necessário ter uma conta de pagamento ativa.'
+				operationId: CreateReedemTransactionAsync
+				parameters:
+					- name: pocketAccountNumber
+						in: path
+						required: true
+						schema: {type: string, nullable: true}
+					- name: api-version
+						in: header
+						description: 'Versão da API. Atualmente estamos na 1.0.'
+						required: true
+						schema: {type: string}
+				requestBody:
+						content:
+								application/json: {schema: {$ref: '#/components/schemas/PocketTransactionRequest'}}
+				responses:
+						'202':
+								description: 'Requisição foi aceita e está sendo processada'
+								headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
+						'400':
+								description: 'Há algum problema com a sua requisição.'
+								headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
+								content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
+						'404':
+								description: 'Recurso não encontrado.'
+								headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
+								content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
+						'500':
+								description: 'Ocorreu algum erro inesperado no nosso servidor.'
+								headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}}
+								content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}
+				
     /api/pockets/{pocketAccountNumber}/transactions/deposits:
         post:
             tags:
@@ -1115,6 +1108,7 @@ components:
                     type: string
                     nullable: true
             additionalProperties: false
+        
         CreatePocketRequest:
             type: object
             properties:
@@ -1132,6 +1126,7 @@ components:
                     nullable: true
                     readOnly: true
             additionalProperties: false
+        
         PocketAccountBasicResponse:
             type: object
             properties:
