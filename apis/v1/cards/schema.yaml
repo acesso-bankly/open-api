@@ -2478,7 +2478,7 @@ components:
           description: Identificador da companhia.
         dateOrder:
           type: string
-          description: Data da solicitação de criação do lote.
+          description: Data da solicitação de criação do lote. Preencher no formato 'yyyy-mm-ddThh:mm:ss'
         programId:
           type: integer
           description: Identificador do programa vinculado ao cartão.
@@ -2497,7 +2497,7 @@ components:
           description: Identificador da companhia.
         dateOrder:
           type: string
-          description: Data da solicitação de criação do lote.
+          description: Data da solicitação de criação do lote. Preencher no formato 'yyyy-mm-ddThh:mm:ss'
         programId:
           type: integer
           description: Identificador do programa vinculado ao cartão.
