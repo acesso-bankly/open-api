@@ -10,14 +10,21 @@ paths:
   /api/accounts/{accountNumber}/pockets:
     post:
       tags:
-        - Gestão de conta pocket
+        - Conta pocket
       summary: Criação de conta pocket
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma conta pocket. IMPORTANTE! É necessário ter uma conta de pagamento ativa.</p> 
+          <p>Crie uma conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">XXXX</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Para que seja possível criar uma conta pocket, é necessário ter uma conta de pagamento ativa."
+        }
+        [/block]
       operationId: CreatePocketAsync
       parameters:
         - name: accountNumber
@@ -33,22 +40,22 @@ paths:
               $ref: "#/components/schemas/CreatePocketRequest"
       responses:
         '201':
-          description: "Recurso criado com sucesso"
+          description: Recurso criado com sucesso.
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: "Localização do recurso recém-criado ou em análise.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/PocketAccountBasicResponse"}}}
         '400':
-          description: "Há algum problema com a sua requisição."
+          description: Há algum problema com a sua requisição.
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
         '500':
-          description: "Ocorreu algum erro inesperado no nosso servidor."
+          description: Ocorreu algum erro inesperado no nosso servidor.
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
 
   /api/pockets/{pocketAccountNumber}:
     get:
       tags:
-        - Gestão de conta pocket
+        - Conta pocket
       summary: Consulta de dados de uma conta pocket
       description: |
         <div class="bkly-ref-description">
@@ -79,14 +86,21 @@ paths:
   /api/pockets/{pocketAccountNumber}/transactions/redeems:
     post:
       tags:
-        - Gestão de conta pocket
+        - Conta pocket
       summary: Resgate de valor da conta pocket para conta de pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Resgate o valor da conta pocket para a conta de pagamento. IMPORTANTE! É necessário ter uma conta de pagamento ativa.</p> 
+          <p>Transfira um valor da conta pocket para a conta de pagamento.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">XXXX</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Para que seja possível a transferência, é necessário ter uma conta de pagamento ativa."
+        }
+        [/block]
       operationId: CreateReedemTransactionAsync
       parameters:
         - $ref: "#/components/parameters/PocketAccountNumber"
@@ -115,14 +129,21 @@ paths:
   /api/pockets/{pocketAccountNumber}/transactions/deposits:
     post:
       tags:
-        - Gestão de conta pocket
+        - Conta pocket
       summary: Depósito para uma conta pocket
       description: |
         <div class="bkly-ref-description">
-          <p>Deposite um valor em uma conta pocket. IMPORTANTE! É necessário ter uma conta de pagamento ativa.</p> 
+          <p>Deposite um valor da conta de pagamento para a conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">XXXX</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Para que seja possível o depósito, é necessário ter uma conta de pagamento ativa."
+        }
+        [/block]
       operationId: CreateDepositTransactionAsync
       parameters:
         - $ref: "#/components/parameters/PocketAccountNumber"
@@ -537,7 +558,6 @@ components:
       additionalProperties: false
 
 
-    
     Error:
       $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
     
