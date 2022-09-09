@@ -87,7 +87,7 @@ paths:
     post:
       tags:
         - Conta pocket
-      summary: Resgate de valor da conta pocket para conta de pagamento
+      summary: Resgate de um valor da conta pocket para conta de pagamento
       description: |
         <div class="bkly-ref-description">
           <p>Transfira um valor da conta pocket para a conta de pagamento.</p> 
@@ -113,7 +113,7 @@ paths:
               $ref: "#/components/schemas/PocketTransactionRequest"
       responses:
         '202':
-            description: Requisição foi aceita e está sendo processada.
+            description: A requisição foi aceita e está sendo processada.
             headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
         '400':
           description: Há algum problema com a sua requisição.
@@ -158,7 +158,7 @@ paths:
               $ref: "#/components/schemas/PocketTransactionRequest"
       responses:
         '202':
-          description: Requisição foi aceita e está sendo processada.
+          description: A requisição foi aceita e está sendo processada.
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
         '400':
           description: Há algum problema com a sua requisição.
