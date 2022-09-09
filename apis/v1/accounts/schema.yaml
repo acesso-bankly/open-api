@@ -56,7 +56,7 @@ paths:
     get:
       tags:
         - Conta pocket
-      summary: Consulta de dados de uma conta pocket
+      summary: Consulta dos dados de uma conta pocket
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dado e, opcionalmente, obtenha o saldo de uma conta pocket.</p> 
