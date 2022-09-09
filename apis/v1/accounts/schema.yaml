@@ -32,15 +32,15 @@ paths:
             schema:
               $ref: "#/components/schemas/CreatePocketRequest"
       responses:
-        "201":
+        '201':
           description: "Recurso criado com sucesso"
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: "Localização do recurso recém-criado ou em análise.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/PocketAccountBasicResponse"}}}
-        "400":
+        '400':
           description: "Há algum problema com a sua requisição."
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
-        "500":
+        '500':
           description: "Ocorreu algum erro inesperado no nosso servidor."
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
@@ -58,15 +58,8 @@ paths:
         </div>
       operationId: GetPocketAsync
       parameters:
-        - name: pocketAccountNumber
-          in: path
-          description: Número da conta pocket.
-          required: true
-          schema: {type: string, description: "Número da conta pocket.", nullable: true}
-        - name: includeBalance
-          in: query
-          description: Inclua o saldo da conta na pesquisa.
-          schema: {type: boolean, description: "Inclua o saldo da conta na pesquisa."}
+        - $ref: "#/components/parameters/PocketAccountNumber"
+        - $ref: "#/components/parameters/IncludeBalance"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
@@ -96,10 +89,7 @@ paths:
         </div>
       operationId: CreateReedemTransactionAsync
       parameters:
-        - name: pocketAccountNumber
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
+        - $ref: "#/components/parameters/PocketAccountNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
@@ -122,6 +112,43 @@ paths:
               headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
               content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
 
+  /api/pockets/{pocketAccountNumber}/transactions/deposits:
+    post:
+      tags:
+        - Gestão de conta pocket
+      summary: Depósito para uma conta pocket
+      description: |
+        <div class="bkly-ref-description">
+          <p>Deposite um valor em uma conta pocket. IMPORTANTE! É necessário ter uma conta de pagamento ativa.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">XXXX</span>
+        </div>
+      operationId: CreateDepositTransactionAsync
+      parameters:
+        - $ref: "#/components/parameters/PocketAccountNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      requestBody:
+        content:
+          application/json: {schema: {$ref: "#/components/schemas/PocketTransactionRequest"}}
+      responses:
+          '202':
+              description: Requisição foi aceita e está sendo processada.
+              headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
+          '400':
+              description: Há algum problema com a sua requisição.
+              headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+              content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          '404':
+              description: Recurso não encontrado.
+              headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+              content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          '500':
+              description: Ocorreu algum erro inesperado no nosso servidor.
+              headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+              content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+  
+  
   /accounts/{accountNumber}:
     get:
       tags:
@@ -406,6 +433,15 @@ components:
       schema:
         type: boolean
         default: false
+
+    PocketAccountNumber:
+      name: pocketAccountNumber
+      in: path
+      required: true
+      schema: 
+        type: string
+        description: Número da conta pocket.
+        nullable: true
   
   schemas:
     
