@@ -290,7 +290,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível criar uma conta pocket, é necessário ter uma conta de pagamento ativa."
+          "body": "Para criar uma conta pocket, é necessário ter uma conta de pagamento ativa."
         }
         [/block]
       operationId: CreatePocketAsync
