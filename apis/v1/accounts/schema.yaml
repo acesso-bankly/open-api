@@ -7,7 +7,7 @@ servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
   
-  /api/accounts/{accountNumber}/pockets:
+  /accounts/{accountNumber}/pockets:
     post:
       tags:
         - Conta pocket
@@ -52,7 +52,7 @@ paths:
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
 
-  /api/pockets/{pocketAccountNumber}:
+  /pockets/{pocketAccountNumber}:
     get:
       tags:
         - Conta pocket
@@ -83,7 +83,7 @@ paths:
             headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
             content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
   
-  /api/pockets/{pocketAccountNumber}/transactions/redeems:
+  /pockets/{pocketAccountNumber}/transactions/redeems:
     post:
       tags:
         - Conta pocket
@@ -126,7 +126,7 @@ paths:
               headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
               content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
 
-  /api/pockets/{pocketAccountNumber}/transactions/deposits:
+  /pockets/{pocketAccountNumber}/transactions/deposits:
     post:
       tags:
         - Conta pocket
