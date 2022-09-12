@@ -119,7 +119,7 @@ paths:
       summary: Vinculação do cartão com uma conta bancária
       description: |
         <div class="bkly-ref-description">
-          <p>Vincule um cartão a uma conta, para que seja possível ativá-lo e para que se possa definir uma senha para ele.</p> 
+          <p>Vincule um cartão a uma conta, para que ele seja ativado e para que seja possível definir uma senha para ele.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
