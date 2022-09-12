@@ -10,7 +10,7 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
-  /lots/:
+  /cards/batches/:
     post:
       tags:
         - Cartões No Name
@@ -112,25 +112,25 @@ paths:
             '500':
               statusCode: 500
   
-  /cards/{activateCode}/bindNoName:
+  /cards/{authenticationCode}/bindNoName:
     patch:
       tags:
         - Cartões No Name
       summary: Vinculação do cartão com uma conta bancária
       description: |
         <div class="bkly-ref-description">
-          <p>Vincule um cartão a uma conta, para que seja possível ativá-lo e para que se possa definir uma nova senha para ele.</p> 
+          <p>Vincule um cartão a uma conta, para que seja possível ativá-lo e para que se possa definir uma senha para ele.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: cardbindNoName
       parameters:
-        - name: activateCode
+        - name: authenticationCode
           in: path
           required: true
           schema:
             type: string
-            description: Código de ativação do cartão (12 caracteres).
+            description: Código de autenticação do cartão (12 caracteres).
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       requestBody:
@@ -209,7 +209,7 @@ paths:
           '500':
             statusCode: 500
 
-  /lots/{id}:
+  /cards/batches/:{batchId}:
     get:
       tags:
         - Cartões No Name
@@ -222,7 +222,7 @@ paths:
         </div>
       operationId: cardGetLotById
       parameters:
-        - name: id
+        - name: batchId
           in: path
           required: true
           schema:
@@ -309,7 +309,7 @@ paths:
           '500':
             statusCode: 500
 
-  /lots:
+  /cards/batches:
     get:
       tags:
         - Cartões No Name
@@ -389,6 +389,7 @@ paths:
           '500':
             statusCode: 500
   
+
   /cards/virtual:
     post:
       tags:
@@ -2457,6 +2458,7 @@ components:
         - programId
         - quantityCards
         - address
+    
     createCardInLotResponse:
       type: object
       properties:
