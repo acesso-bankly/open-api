@@ -137,7 +137,7 @@ components:
           type: string
           nullable: true
         propertyName:
-          description: Parametro ou propriedade com problema. Somente será retornado quando o erro for de sintaxe (Bad Request). 
+          description: Parâmetro ou propriedade com problema. Somente será retornado quando o erro for de sintaxe (Bad Request). 
           type: string
           nullable: true
         messages:

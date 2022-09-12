@@ -316,7 +316,7 @@ paths:
       summary: Consulta dos lotes
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha os dados de todos os lotes de cartões. </p> 
+          <p>Obtenha os dados de todos os lotes de cartões. </p>  
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -2457,7 +2457,6 @@ components:
         - programId
         - quantityCards
         - address
-    
     createCardInLotResponse:
       type: object
       properties:
