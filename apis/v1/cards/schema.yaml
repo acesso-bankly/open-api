@@ -2462,14 +2462,14 @@ components:
     createCardInLotResponse:
       type: object
       properties:
-        lotId:
+        batchId:
           type: string
           description: Id do lote.
 
     cardLotsResponse:
       type: object
       properties:
-        lotId:
+        batchId:
           type: string
           description: Id do lote.
         quantityOrder:
@@ -2488,7 +2488,7 @@ components:
     cardLotResponse:
       type: object
       properties:
-        lotId:
+        batchId:
           type: string
           description: Id do lote.
         quantityOrder:
