@@ -258,17 +258,6 @@ paths:
                         "2500011000021160417",
                         "2500011000068618940" 
                     ]
-        '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
@@ -339,21 +328,10 @@ paths:
                     companyKey: "Acesso"
                     dateOrder: "2021-06-07T08:30:40"
                     programId: 1
-        '204':
-          description: Não foram encontrados lotes.              
-        '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Não foram encontrados lotes para essa company key.              
         '500':
           description: Ocorrência de erro inesperado.
           content:
