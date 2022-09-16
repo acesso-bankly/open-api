@@ -213,7 +213,7 @@ paths:
     get:
       tags:
         - Cartões No Name
-      summary: Consulta por lote
+      summary: Consulta de lote por ID
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha os dados de um lote específico de cartões.</p> 
