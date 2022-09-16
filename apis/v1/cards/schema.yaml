@@ -112,7 +112,7 @@ paths:
             '500':
               statusCode: 500
   
-  /cards/{authenticationCode}/bindNoName:
+  /cards/activateCode/{activateCode}/binding/:
     patch:
       tags:
         - Cartões No Name
@@ -125,12 +125,12 @@ paths:
         </div>
       operationId: cardbindNoName
       parameters:
-        - name: authenticationCode
+        - name: activateCode
           in: path
           required: true
           schema:
             type: string
-            description: Código de autenticação do cartão (12 caracteres).
+            description: Código de ativação do cartão (12 caracteres).
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       requestBody:
@@ -209,7 +209,7 @@ paths:
           '500':
             statusCode: 500
 
-  /cards/batches/:{batchId}:
+  /cards/batches/:{lotId}:
     get:
       tags:
         - Cartões No Name
@@ -222,7 +222,7 @@ paths:
         </div>
       operationId: cardGetLotById
       parameters:
-        - name: batchId
+        - name: lotId
           in: path
           required: true
           schema:
@@ -2462,22 +2462,19 @@ components:
     createCardInLotResponse:
       type: object
       properties:
-        batchId:
+        lotId:
           type: string
           description: Id do lote.
 
     cardLotsResponse:
       type: object
       properties:
-        batchId:
+        lotId:
           type: string
           description: Id do lote.
         quantityOrder:
           type: integer
           description: Quantidade de cartões solicitados.    
-        companyKey:
-          type: string
-          description: Identificador da companhia.
         dateOrder:
           type: string
           description: Data da solicitação de criação do lote.
@@ -2488,7 +2485,7 @@ components:
     cardLotResponse:
       type: object
       properties:
-        batchId:
+        lotId:
           type: string
           description: Id do lote.
         quantityOrder:
