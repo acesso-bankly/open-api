@@ -258,6 +258,20 @@ paths:
                         "2500011000021160417",
                         "2500011000068618940" 
                     ]
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                            { code: required, message: [ Document must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
@@ -328,6 +342,20 @@ paths:
                     companyKey: "Acesso"
                     dateOrder: "2021-06-07T08:30:40"
                     programId: 1
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                            { code: required, message: [ Document must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
