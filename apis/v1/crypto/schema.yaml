@@ -309,20 +309,19 @@ components:
       properties:
         totalAmount:
           type: integer
-          description: 
+          description: XXX
         amount:
           type: integer
-          description: 
+          description: XXX
         amountCrypto:
           type: integer
-          description:  
+          description: XXX
         tax:
           type: integer
-          description: 
+          description: XXX
         detailRescue:
-          type: string
-          description:
-          schema: $ref: "#/components/schemas/DetailRescue"
+          description: XXX 
+          $ref: "#/components/schemas/DetailRescue"
       required:
         - "totalAmount"
         - "amount"
@@ -331,15 +330,15 @@ components:
         - "detailRescue"
 
 
-    detailRescue:
+    DetailRescue:
       type: object
       properties:
         account: 
           type: string
-          description:
+          description: XXX
         authorizationCode: 
           type: string
-          description: 
+          description: XXX
       required:
         - "account"
         - "authorizationCode"
@@ -383,7 +382,7 @@ components:
         price:
           type: integer
           nullable: true
-          description: 
+          description: XXX 
         createdAt:
           type: string
           nullable: true
@@ -391,15 +390,15 @@ components:
         expiratedAt:
           type: string
           nullable: true
-          description: 
+          description: XXX
         balanceFiat: 
           type: integer
           nullable: true
-          description:   
+          description: XXX
         balanceCrypto:
           type: integer
           nullable: true
-          description:  
+          description: XXX 
         referenceTax:
           type: string
           nullable: true
@@ -407,11 +406,11 @@ components:
         orderLimit:
           type: string
           nullable: true
-          description:  
+          description: XXX 
         totalAlowed:
           type: integer
           nullable: true
-          description:  
+          description: XXX 
   
       additionalProperties: false
     

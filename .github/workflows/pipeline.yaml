@@ -55,6 +55,7 @@ jobs:
             ./apis/v1/ted/schema.yaml
             ./apis/v1/fee/schema.yaml
             ./apis/v1/cards/transactions/schema.yaml
+            ./apis/v1/crypto/schema.yaml
     
   deployDev:
     name: "Deploy / Dev"
@@ -151,6 +152,11 @@ jobs:
         with:
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Crypto to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -236,3 +242,8 @@ jobs:
         name: Publish Card Transactions to Reference to readme.io
         with:
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Crypto to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}

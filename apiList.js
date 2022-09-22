@@ -4,6 +4,7 @@ module.exports = [
 	"cards",
 	"cards/transactions",
 	"cards/credits",
+	"crypto",
 	"documents",
 	"events",
 	"fee",
@@ -14,4 +15,5 @@ module.exports = [
 	"paybill",
 	"pix",
 	"ted"
+	
 ]
