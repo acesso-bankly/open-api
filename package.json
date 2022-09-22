@@ -18,7 +18,7 @@
       "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
       "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits",
       "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee",
-      "edit:CRYPTO": "npm start && start http://localhost:3320/reference/?urls.primaryName=crypto"
+      "edit:crypto": "npm start && start http://localhost:3320/reference/?urls.primaryName=crypto"
     },
     "repository": {
       "type": "git",
