@@ -1,0 +1,466 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Criptomoedas
+servers:
+  - url: 'https://login.sandbox.bankly.com.br'
+paths:
+  /cryptos/prices:
+    get:
+      tags:
+        - Operações com criptomoedas 
+      summary: Cotação de criptomoedas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a cotação do valor para compra e venda de criptomoeda.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/Currency'
+      responses:
+        '200':
+          description: Recurso encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'             
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'  
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '405':
+          description: Recurso acessado com método não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '406': 
+          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '415':
+          description: Formato de payload não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '429':
+          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string 
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+        - Bearer: []
+  
+  /cryptos/graphs:
+    get:
+      tags:
+        - Operações com criptomoedas  
+      summary: Cotação de criptomoedas por período 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a cotação de criptomoedas de um período específico.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/Currency'
+        - $ref: '#/components/parameters/Period'
+      
+      responses:
+        '200':
+          description: Recurso encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'  
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '405':
+          description: Recurso acessado com método não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '406': 
+          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '415':
+          description: Formato de payload não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '429':
+          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string 
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+      security:
+        - Bearer: []
+
+  /cryptos/orders:
+    post:
+      tags:
+        - Operações com criptomoedas  
+      summary: Criação de ordem de compra e venda de criptomoedas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/Currency'
+        - $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+
+      responses:
+        '200':
+          description: Recurso criado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse' 
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'  
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '405':
+          description: Recurso acessado com método não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '406': 
+          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '415':
+          description: Formato de payload não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '429':
+          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string 
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+      security:
+        - Bearer: []
+
+  /cryptos/orders/{orderId}/executions:
+    post:
+      tags:
+        - Operações com criptomoedas  
+      summary: Execução de ordem de compra e venda de criptomoedas 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+        </div>
+
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - name: orderId
+          in: path
+          required: true
+          description: 
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderExecutions'
+
+      responses:
+        '200': ???
+           
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'  
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '405':
+          description: Recurso acessado com método não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '406': 
+          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '415':
+          description: Formato de payload não suportado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '429':
+          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string 
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+      
+      security:
+        - Bearer: []
+
+
+components:
+  schemas:
+    CreateOrder:
+      type: object
+      properties:
+        account:
+          type: string
+          description: Número da conta regular do cliente.
+        typeOrder:
+          type: string
+          description: "Tipo de ordem (compra ou venda)."
+          enum:
+            - BUY
+            - SELL
+      required:
+        - "account"
+        - "typeOrder"
+      
+    CreateOrderExecutions:
+      type: object
+      properties:
+        totalAmount:
+          type: integer
+          description: 
+        amount:
+          type: integer
+          description: 
+        amountCrypto:
+          type: integer
+          description:  
+        tax:
+          type: integer
+          description: 
+        detailRescue:
+          type: string
+          description:
+          schema: $ref: "#/components/schemas/DetailRescue"
+      required:
+        - "totalAmount"
+        - "amount"
+        - "amountCrypto"
+        - "tax"
+        - "detailRescue"
+
+
+    detailRescue:
+      type: object
+      properties:
+        account: 
+          type: string
+          description:
+        authorizationCode: 
+          type: string
+          description: 
+      required:
+        - "account"
+        - "authorizationCode"
+
+
+    GraphResponse:
+      type: object
+      properties:
+        currency:
+          type: string
+          nullable: true
+          description: Código da criptomoeda.
+        period:
+          type: string
+          nullable: true
+          description: Período consultado.
+        price:
+          type: integer
+          nullable: true
+          description: Preço da criptomoeda.
+        createdAt:
+          type: string
+          nullable: true
+          description: Data da consulta.
+
+    OrderResponse:
+      type: object
+      properties: 
+        entityId:
+          type: string
+          nullable: true
+          description: Identificador da transação.
+        typeOrder:
+          type: string
+          nullable: true
+          description: Tipo de ordem (compra ou venda).
+        account:
+          type: string
+          nullable: true
+          description: Conta de destino da transação.
+        price:
+          type: integer
+          nullable: true
+          description: 
+        createdAt:
+          type: string
+          nullable: true
+          description: Data de criação da ordem.
+        expiratedAt:
+          type: string
+          nullable: true
+          description: 
+        balanceFiat: 
+          type: integer
+          nullable: true
+          description:   
+        balanceCrypto:
+          type: integer
+          nullable: true
+          description:  
+        referenceTax:
+          type: string
+          nullable: true
+          description: Taxa de referência aplicada sobre o valor da operação. 
+        orderLimit:
+          type: string
+          nullable: true
+          description:  
+        totalAlowed:
+          type: integer
+          nullable: true
+          description:  
+  
+      additionalProperties: false
+    
+    Periods:
+      enum:
+        - DAY
+        - WEEK
+        - MONTH
+        - YEAR 
+      type: string
+    
+    PriceResponse:
+      type: object
+      properties:
+        finalPrice:
+          type: integer
+          nullable: true
+          description: Preço final da criptomoeda.
+        currency:
+          type: string
+          nullable: true
+          description: Código da criptomoeda.
+      additionalProperties: false
+    
+
+  parameters:
+    Currency:
+      name: currency
+      in: query
+      description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
+      required: true
+      schema:
+        type: string 
+        default: false
+
+    Period:
+      name: period
+      in: query
+      description: "Informe o período que deseja exibir."
+      required: true
+      schema:
+         $ref: "#/components/schemas/Periods"
+    
+  
+
+
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true
+  samples-languages:
+    - curl
