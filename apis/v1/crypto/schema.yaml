@@ -230,7 +230,7 @@ paths:
         - name: orderId
           in: path
           required: true
-          description: 
+          description: Valor retornado no campo <code>entityId</code> do endpoint de Criação de ordem de compra e venda de criptomoedas.
 
       requestBody:
         content:
@@ -239,8 +239,12 @@ paths:
               $ref: '#/components/schemas/CreateOrderExecutions'
 
       responses:
-        '200': ???
-           
+        '200':
+          description: Recurso criado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionsResponse'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
@@ -285,7 +289,6 @@ paths:
       security:
         - Bearer: []
 
-
 components:
   schemas:
     CreateOrder:
@@ -308,41 +311,73 @@ components:
       type: object
       properties:
         totalAmount:
-          type: integer
-          description: XXX
+          type: number 
+          description: Valor total de compra ou venda das criptomoedas.
         amount:
-          type: integer
-          description: XXX
+          type: number
+          description: Valor de compra ou venda das criptomoedas sem taxa.
         amountCrypto:
-          type: integer
-          description: XXX
+          type: number
+          description: Valor em criptomoeda. 
         tax:
-          type: integer
-          description: XXX
-        detailRescue:
-          description: XXX 
-          $ref: "#/components/schemas/DetailRescue"
+          type: number
+          description: Valor da taxa aplicada à operação.
       required:
         - "totalAmount"
         - "amount"
         - "amountCrypto"
         - "tax"
-        - "detailRescue"
 
-
-    DetailRescue:
+    ExecutionsResponse:
       type: object
       properties:
-        account: 
+        entityId:
           type: string
-          description: XXX
-        authorizationCode: 
+          nullable: true
+          description: Identificador da transação informado no campo <code>orderId</code>.
+        currency:
           type: string
-          description: XXX
-      required:
-        - "account"
-        - "authorizationCode"
-
+          nullable: true
+          description: Código da criptomoeda.
+        typeOrder:
+          type: string
+          nullable: true
+          description: Tipo de ordem (compra ou venda).
+        account:
+          type: string
+          description: Número da conta regular do cliente.
+        createdAt:
+          type: string
+          nullable: true
+          description: Data de criação da execução da ordem de compra ou venda.
+        executedAt:
+          type: string
+          nullable: true
+          description: Data em que a ordem foi executada.
+        expiratedAt:
+          type: string
+          nullable: true
+          description: Data de expiração da execução da ordem.
+        price:
+          type: number
+          nullable: true
+          description: Preço da criptomoeda.
+        amountCrypto:
+          type: number
+          description: Valor em criptomoeda. 
+        tax:
+          type: number
+          description: Valor da taxa aplicada à operação.
+        amount:
+          type: number
+          description: Valor de compra ou venda das criptomoedas sem a taxa.
+        status:
+          description: Situação da ordem de execução de compra ou venda.
+          schema:
+          $ref: "#/components/schemas/Status"        
+        percentageTax:
+          type: number
+          description: Percentual de taxa aplicada. 
 
     GraphResponse:
       type: object
@@ -362,7 +397,7 @@ components:
         createdAt:
           type: string
           nullable: true
-          description: Data da consulta.
+          description: Data relativa ao período informado pelo cliente.
 
     OrderResponse:
       type: object
@@ -370,7 +405,7 @@ components:
         entityId:
           type: string
           nullable: true
-          description: Identificador da transação.
+          description: Identificador da transação que deve ser informado no campo <code>orderId</code> do endpoint de execução de ordem de compra e venda.
         typeOrder:
           type: string
           nullable: true
@@ -378,11 +413,11 @@ components:
         account:
           type: string
           nullable: true
-          description: Conta de destino da transação.
+          description: Número da conta regular do cliente.
         price:
           type: integer
           nullable: true
-          description: XXX 
+          description: Preço atual da criptomoeda.
         createdAt:
           type: string
           nullable: true
@@ -390,15 +425,15 @@ components:
         expiratedAt:
           type: string
           nullable: true
-          description: XXX
+          description: Data de expiração da ordem.
         balanceFiat: 
           type: integer
           nullable: true
-          description: XXX
+          description: Saldo em Real que o cliente possui na conta principal.
         balanceCrypto:
           type: integer
           nullable: true
-          description: XXX 
+          description: Saldo que o cliente possui em criptomoedas. 
         referenceTax:
           type: string
           nullable: true
@@ -406,12 +441,11 @@ components:
         orderLimit:
           type: string
           nullable: true
-          description: XXX 
+          description: Valor mínimo de compra e venda de criptomoedas.  
         totalAlowed:
           type: integer
           nullable: true
-          description: XXX 
-  
+          description: Valor da criptomoeda multiplicada pelo valor do <code>balanceCrypto</code>.
       additionalProperties: false
     
     Periods:
@@ -435,7 +469,10 @@ components:
           description: Código da criptomoeda.
       additionalProperties: false
     
-
+    Status:
+      enum:
+      - EXECUTED 
+    
   parameters:
     Currency:
       name: currency
@@ -454,9 +491,6 @@ components:
       schema:
          $ref: "#/components/schemas/Periods"
     
-  
-
-
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
