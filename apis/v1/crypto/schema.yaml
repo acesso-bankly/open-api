@@ -14,6 +14,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a cotação do valor para compra e venda de criptomoeda.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
+           <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -78,7 +79,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a cotação de criptomoedas de um período específico.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -145,7 +146,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.write</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -219,7 +220,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: totp.create</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.write</span>
         </div>
 
       parameters:
@@ -335,7 +336,7 @@ components:
           type: string
           nullable: true
           description: Identificador da transação informado no campo <code>orderId</code>.
-        currency:
+        coin:
           type: string
           nullable: true
           description: Código da criptomoeda.
@@ -358,6 +359,10 @@ components:
           type: string
           nullable: true
           description: Data de expiração da execução da ordem.
+        companyKey:
+          type: string
+          nullable: true
+          description: Chave que identifica o parceiro dentro do Bankly.
         price:
           type: number
           nullable: true
@@ -470,8 +475,14 @@ components:
       additionalProperties: false
     
     Status:
-      enum:
-      - EXECUTED 
+      enum: 
+      - CREATED
+      - PENDING
+      - EXECUTED
+      - COMPLETED
+      - CANCELED
+      - ERROR
+      - WORKING
     
   parameters:
     Currency:
