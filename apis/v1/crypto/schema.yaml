@@ -468,7 +468,7 @@ components:
     PriceResponse:
       type: array
       items:
-       $ref: '#/components/schemas/PriceResponseObject'
+        $ref: '#/components/schemas/PriceResponseObject'
 
     PriceResponseObject:
       type: object
@@ -508,8 +508,7 @@ components:
       in: query
       description: "Informe o período que deseja exibir."
       required: true
-      schema:
-         $ref: "#/components/schemas/Periods"
+      $ref: "#/components/schemas/Periods"
     
 x-readme:
   explorer-enabled: true
