@@ -378,13 +378,17 @@ components:
           description: Valor de compra ou venda das criptomoedas sem a taxa.
         status:
           description: Situação da ordem de execução de compra ou venda.
-          schema:
           $ref: "#/components/schemas/Status"        
         percentageTax:
           type: number
           description: Percentual de taxa aplicada. 
 
     GraphResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/GraphResponseObject'
+        
+    GraphResponseObject:
       type: object
       properties:
         currency:
@@ -462,6 +466,11 @@ components:
       type: string
     
     PriceResponse:
+      type: array
+      items:
+       $ref: '#/components/schemas/PriceResponseObject'
+
+    PriceResponseObject:
       type: object
       properties:
         finalPrice:
