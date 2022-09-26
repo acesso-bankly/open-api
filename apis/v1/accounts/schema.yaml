@@ -360,11 +360,7 @@ paths:
         in: query
         description: "Agência da conta regular, o padrão é 0001."
         schema: {type: string, description: "Agência da conta regular, o default é a agência 0001.", nullable: true}
-      - name: api-version
-        in: header
-        description: "Versão da API. Atualmente estamos na 1.0."
-        required: true
-        schema: {type: string}
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       responses:
         '200':
             description: "Recurso encontrado"
@@ -582,6 +578,17 @@ security:
 components: 
 
   parameters:
+
+    IncludeBalance:
+      name: includeBalance
+      in: query
+      description: Inclua o saldo da conta na pesquisa.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: boolean
+        default: false
 
     PocketNumber:
       name: pocketNumber
