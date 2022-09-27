@@ -613,7 +613,7 @@ components:
         useCase:
           minLength: 1
           type: string
-          description: "Caso de uso da pocket, por exemplo CORPORATE_EXPENSES."
+          description: "Especificação da finalidade da pocket. Exemplo: CORPORATE_EXPENSES"
         beneficiary:
           $ref: "#/components/schemas/Beneficiary"
         accountNumber:
