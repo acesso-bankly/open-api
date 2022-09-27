@@ -234,6 +234,8 @@ paths:
           description: Valor retornado no campo <code>entityId</code> do endpoint de Criação de ordem de compra e venda de criptomoedas.
           schema:
             type: string
+            nullable: true
+      
       requestBody:
         content:
           application/json:
