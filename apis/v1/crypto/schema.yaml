@@ -457,14 +457,6 @@ components:
           description: Valor da criptomoeda multiplicada pelo valor do <code>balanceCrypto</code>.
       additionalProperties: false
     
-    Periods:
-      enum:
-        - DAY
-        - WEEK
-        - MONTH
-        - YEAR 
-      type: string
-    
     PriceResponse:
       type: array
       items:
@@ -508,8 +500,14 @@ components:
       in: query
       description: "Informe o período que deseja exibir."
       required: true
-      $ref: "#/components/schemas/Periods"
-    
+      schema: 
+        enum:
+          - DAY
+          - WEEK
+          - MONTH
+          - YEAR 
+        type: string
+      
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
