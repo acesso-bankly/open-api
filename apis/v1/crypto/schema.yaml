@@ -432,11 +432,11 @@ components:
         createdAt:
           type: string
           nullable: true
-          description: Data de criação da ordem.
+          description: Data e horário de criação da ordem (formato DateTime).
         expiratedAt:
           type: string
           nullable: true
-          description: Data de expiração da ordem.
+          description: Data e horário de expiração da ordem (formato DateTime).
         balanceFiat: 
           type: integer
           nullable: true
