@@ -152,7 +152,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: '#/components/parameters/Currency'
-        - $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
 
       requestBody:
@@ -226,7 +226,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: orderId
           in: path
@@ -234,7 +234,6 @@ paths:
           description: Valor retornado no campo <code>entityId</code> do endpoint de Criação de ordem de compra e venda de criptomoedas.
           schema:
             type: string
-            nullable: true
       
       requestBody:
         content:
