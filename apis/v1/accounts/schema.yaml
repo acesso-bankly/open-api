@@ -325,11 +325,11 @@ paths:
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
     get:
       tags:
-          - "Abertura de Conta Pocket."
-      summary: "Consulta dos dados das contas pockets."
+      - Conta pocket
+      summary: Consulta dos dados das contas pockets
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha uma lista com todas as contas pockets associadas a conta de pagamento solicitada. Opcionalmente, é possivel filtrar pelo status e pelo tipo da conta pocket.</p> 
+          <p>Obtenha uma lista com todas as contas pockets associadas á conta de pagamento solicitada. Opcionalmente, é possivel filtrar pelo status e pelo tipo da conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">XXXX</span>
         </div>
@@ -337,29 +337,23 @@ paths:
       parameters:
       - name: accountNumber
         in: path
-        description: "Número da conta regular."
         required: true
         schema: {type: string, description: "Número da conta regular.", nullable: true}
       - name: pocketType
         in: query
-        description: "Tipo da Pocket, exemplo: Pocket_BRL."
         schema: {type: string, description: "Tipo da Pocket, exemplo: Pocket_BRL.", nullable: true}
       - name: status
         in: query
-        description: "Status da conta Pocket."
         schema: {type: string, description: "Status da conta Pocket.", nullable: true}
       - name: size
         in: query
-        description: "Quantidade de itens a serem retornados na paginação."
         schema: {type: integer, description: "Quantidade de itens a serem retornado na paginação.", format: int32}
       - name: page
         in: query
-        description: "Pagina a ser retornada."
         schema: {type: integer, description: "Pagina a ser retornada.", format: int32}
       - name: branch
         in: query
-        description: "Agência da conta regular, o padrão é 0001."
-        schema: {type: string, description: "Agência da conta regular, o default é a agência 0001.", nullable: true}
+        schema: {type: string, description: "Agência da conta regular (o padrão é 0001).", nullable: true}
       - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       responses:
         '200':
@@ -412,7 +406,7 @@ paths:
       summary: Consulta do saldo de uma conta pocket
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte o saldo disponível, bloqueado, em processamento e o total.</p> 
+          <p>Consulte o saldo disponível, bloqueado, em processamento e o total de uma conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">XXXX</span>
         </div>
@@ -611,20 +605,20 @@ components:
         currency:
           minLength: 1
           type: string
-          description: 'Moeda para criação da pocket account.'
+          description: "Sigla da moeda utilizada, de acordo com a ISO 4217."
         label:
           minLength: 1
           type: string
-          description: 'Label para criação da pocket account.'
+          description: "Label para criação da pocket account."
         useCase:
           minLength: 1
           type: string
-          description: 'Caso de uso da pocket, por exemplo CORPORATE_EXPENSES'
+          description: "Caso de uso da pocket, por exemplo CORPORATE_EXPENSES."
         beneficiary:
-          $ref: '#/components/schemas/Beneficiary'
+          $ref: "#/components/schemas/Beneficiary"
         accountNumber:
           type: string
-          description: 'Número da conta do cliente.'
+          description: "Número da conta do cliente."
           nullable: true
           readOnly: true
       additionalProperties: false
@@ -633,7 +627,7 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/CreatePocketRequest'
+          $ref: "#/components/schemas/CreatePocketRequest"
         meta:
           type: object
           additionalProperties: {type: object, additionalProperties: false}
@@ -644,10 +638,10 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/PocketBasicResponseDto'
+          $ref: "#/components/schemas/PocketBasicResponseDto"
         links:
           type: array
-          items: {$ref: '#/components/schemas/Link'}
+          items: {$ref: "#/components/schemas/Link"}
           nullable: true
           readOnly: true
         meta:
@@ -685,7 +679,7 @@ components:
           type: string
           nullable: true
         type:
-          $ref: '#/components/schemas/DocumentNumberType'
+          $ref: "#/components/schemas/DocumentNumberType"
       additionalProperties: false
 
     Beneficiary:
@@ -699,7 +693,7 @@ components:
           minLength: 1
           type: string
         document:
-          $ref: '#/components/schemas/Document'
+          $ref: "#/components/schemas/Document"
         age:
           minLength: 1
           type: integer
@@ -710,14 +704,14 @@ components:
       type: object
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          $ref: "#/components/schemas/Amount"
       additionalProperties: false
 
     PocketTransactionRequestRequest:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/PocketTransactionRequest'
+          $ref: "#/components/schemas/PocketTransactionRequest"
         meta:
           type: object
           additionalProperties: {type: object, additionalProperties: false}
@@ -729,12 +723,12 @@ components:
       properties:
         data:
           type: array
-          items: {$ref: '#/components/schemas/PocketBasicResponseDto'}
+          items: {$ref: "#/components/schemas/PocketBasicResponseDto"}
           nullable: true
           readOnly: true
         links:
           type: array
-          items: {$ref: '#/components/schemas/Link'}
+          items: {$ref: "#/components/schemas/Link"}
           nullable: true
           readOnly: true
         meta:
@@ -747,7 +741,7 @@ components:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/BalanceMap'
+          $ref: "#/components/schemas/BalanceMap"
         links:
           type: array
           items: {$ref: "#/components/schemas/Link"}
@@ -767,7 +761,7 @@ components:
           format: double
           readOnly: true
         currency:
-          $ref: '#/components/schemas/ICurrency'
+          $ref: "#/components/schemas/ICurrency"
       additionalProperties: false
 
     ICurrency:
@@ -788,13 +782,13 @@ components:
       type: object
       properties:
         total:
-          $ref: '#/components/schemas/IAmount'
+          $ref: "#/components/schemas/IAmount"
         available:
-          $ref: '#/components/schemas/IAmount'
+          $ref: "#/components/schemas/IAmount"
         hold:
-          $ref: '#/components/schemas/IAmount'
+          $ref: "#/components/schemas/IAmount"
         blocked:
-          $ref: '#/components/schemas/IAmount'
+          $ref: "#/components/schemas/IAmount"
       additionalProperties: false
 
     AccountRequest:
