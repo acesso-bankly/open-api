@@ -399,7 +399,7 @@ paths:
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
   
-  /pockets/{pocketNumber}/balance:
+  /pockets/{pocketNumber}/balances:
     get:
       tags:
         - Conta pocket
@@ -429,7 +429,7 @@ paths:
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
 
-  /pockets/{pocketAccountNumber}/transactions/deposits:
+  /pockets/{pocketNumber}/transactions/savings:
     post:
       tags:
         - Conta pocket
@@ -451,10 +451,6 @@ paths:
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - name: pocketAccountNumber
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
       requestBody:
         content:
           application/json: 
@@ -477,7 +473,7 @@ paths:
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
   
-  /pockets/{pocketAccountNumber}/transactions/withdrawals:
+  /pockets/{pocketNumber}/transactions/redeems:
     post:
       tags:
         - Conta pocket
@@ -499,10 +495,6 @@ paths:
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - name: pocketAccountNumber
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
         - name: x-idempotency-key
           in: header
           description: Chave de Idempotência
