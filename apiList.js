@@ -15,5 +15,4 @@ module.exports = [
 	"paybill",
 	"pix",
 	"ted"
-	
 ]
