@@ -22,6 +22,19 @@ components:
       schema:
         type: string
         default: 1
+      
+    ApiVersion2.0:
+      name: api-version
+      in: header
+      description: |
+        Versão da API.
+        _Atualmente estamos na **2.0**._
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: 1
 
     Authorization: 
       name: authorization
