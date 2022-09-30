@@ -3,9 +3,9 @@ info:
   version: 1.0.0
   title: Criptomoedas
 servers:
-  - url: 'https://login.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
-  /cryptos/prices:
+  /crypto-price/{currency}/prices:
     get:
       tags:
         - Operações com criptomoedas 
@@ -84,7 +84,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: '#/components/parameters/Currency'
+        - $ref: '#/components/parameters/Coin'
         - $ref: '#/components/parameters/Period'
       
       responses:
@@ -146,7 +146,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.write</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -220,7 +220,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.write</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
         </div>
 
       parameters:
@@ -460,15 +460,20 @@ components:
       additionalProperties: false
     
     PriceResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/PriceResponseObject'
+      type: object
+      additionalProperties: 
+        type: object
+        properties:
+          currency: 
+            type: string
+          value: 
+            $ref: '#/components/schemas/PriceResponseObject'
 
     PriceResponseObject:
       type: object
       properties:
         finalPrice:
-          type: integer
+          type: number
           nullable: true
           description: Preço final da criptomoeda.
         currency:
@@ -479,13 +484,13 @@ components:
     
     Status:
       enum: 
-      - CREATED
-      - PENDING
-      - EXECUTED
-      - COMPLETED
-      - CANCELED
-      - ERROR
-      - WORKING
+        - CREATED
+        - PENDING
+        - EXECUTED
+        - COMPLETED
+        - CANCELED
+        - ERROR
+        - WORKING
     
   parameters:
     Currency:
