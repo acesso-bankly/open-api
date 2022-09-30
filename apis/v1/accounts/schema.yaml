@@ -333,7 +333,7 @@ paths:
       summary: Consulta dos dados de todas as contas pockets
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha uma lista com os dados de todas as contas pockets associadas á uma conta de pagamento. A busca permite filtrar pelo status e pelo tipo da conta pocket.</p> 
+          <p>Obtenha uma lista com os dados de todas as contas pockets associadas a uma conta de pagamento. A busca permite filtrar pelo status e pelo tipo da conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
