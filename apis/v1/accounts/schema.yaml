@@ -304,7 +304,7 @@ paths:
           required: true
           description: Chave de Idempotência
           schema: {type: string, description: 'Informe um GUID v4'}
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
@@ -338,31 +338,31 @@ paths:
         </div>
       operationId: GetPocketsByAccountNumberAsync
       parameters:
-      - name: accountNumber
-        in: path
-        required: true
-        schema: {type: string, description: "Número da conta de pagamento com dígito.", nullable: true}
-      - name: pocketType
-        in: query
-        schema: {type: string, description: "Tipo da Pocket, exemplo: Pocket_BRL.", nullable: true}
-      - name: status
-        in: query
-        schema:
-          $ref: "#/components/schemas/Status"
-      - name: size
-        in: query
-        schema: {type: integer, description: "Quantidade de itens a serem retornados por página.", format: int32}
-      - name: page
-        in: query
-        schema: {type: integer, description: "Pagina a ser retornada.", format: int32}
-      - name: branch
-        in: query
-        schema: {type: string, description: "Agência da conta de pagamento (o padrão é 0001).", nullable: true}
-      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-      - name: x-idempotency-key
-        in: header
-        description: Chave de Idempotência
-        schema: {type: string, description: 'Informe um GUID v4'}
+        - name: accountNumber
+          in: path
+          required: true
+          schema: {type: string, description: "Número da conta de pagamento com dígito.", nullable: true}
+        - name: pocketType
+          in: query
+          schema: {type: string, description: "Tipo da Pocket, exemplo: Pocket_BRL.", nullable: true}
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/Status"
+        - name: size
+          in: query
+          schema: {type: integer, description: "Quantidade de itens a serem retornados por página.", format: int32}
+        - name: page
+          in: query
+          schema: {type: integer, description: "Pagina a ser retornada.", format: int32}
+        - name: branch
+          in: query
+          schema: {type: string, description: "Agência da conta de pagamento (o padrão é 0001).", nullable: true}
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
+        - name: x-idempotency-key
+          in: header
+          description: Chave de Idempotência
+          schema: {type: string, description: 'Informe um GUID v4'}
       responses:
         '200':
             description: "Recurso encontrado"
