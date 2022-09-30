@@ -70,7 +70,7 @@ paths:
       security:
         - Bearer: []
   
-  /cryptos/graphs:
+  /crypto-price/{currency}/graphs/{period}:
     get:
       tags:
         - Operações com criptomoedas  
@@ -84,7 +84,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: '#/components/parameters/Coin'
+        - $ref: '#/components/parameters/Currency'
         - $ref: '#/components/parameters/Period'
       
       responses:
@@ -137,7 +137,7 @@ paths:
       security:
         - Bearer: []
 
-  /cryptos/orders:
+  /crypto-order/orders:
     post:
       tags:
         - Operações com criptomoedas  
@@ -151,10 +151,10 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: '#/components/parameters/Currency'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
-
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
+            
       requestBody:
         content:
           application/json:
@@ -211,7 +211,7 @@ paths:
       security:
         - Bearer: []
 
-  /cryptos/orders/{orderId}/executions:
+  /crypto-order/orders/{orderId}/executions:
     post:
       tags:
         - Operações com criptomoedas  
@@ -228,6 +228,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - name: orderId
           in: path
           required: true
@@ -306,9 +307,17 @@ components:
           enum:
             - BUY
             - SELL
+        companyKey:
+          type: string
+          description: Chave que identifica o parceiro dentro do Bankly.
+        currency:
+          type: string
+          description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
       required:
         - "account"
         - "typeOrder"
+        - "companyKey"
+        - "currency"
       
     CreateOrderExecutions:
       type: object
@@ -352,15 +361,15 @@ components:
         createdAt:
           type: string
           nullable: true
-          description: Data de criação da execução da ordem de compra ou venda.
+          description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         executedAt:
           type: string
           nullable: true
-          description: Data em que a ordem foi executada.
+          description: "Data em que a ordem foi executada (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         expiratedAt:
           type: string
           nullable: true
-          description: Data de expiração da execução da ordem.
+          description: "Data de expiração da execução da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         companyKey:
           type: string
           nullable: true
@@ -379,6 +388,7 @@ components:
           type: number
           description: Valor de compra ou venda das criptomoedas sem a taxa.
         status:
+          type: string
           description: Situação da ordem de execução de compra ou venda.
           $ref: "#/components/schemas/Status"        
         percentageTax:
@@ -386,29 +396,22 @@ components:
           description: Percentual de taxa aplicada. 
 
     GraphResponse:
-      type: array
-      items:
+      type: object
+      additionalProperties: 
         $ref: '#/components/schemas/GraphResponseObject'
         
     GraphResponseObject:
       type: object
       properties:
-        currency:
+        creatdAt:
           type: string
           nullable: true
-          description: Código da criptomoeda.
-        period:
-          type: string
-          nullable: true
-          description: Período consultado.
+          description: "Data de criação da consulta (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         price:
-          type: integer
+          type: number
           nullable: true
           description: Preço da criptomoeda.
-        createdAt:
-          type: string
-          nullable: true
-          description: Data relativa ao período informado pelo cliente.
+
 
     OrderResponse:
       type: object
@@ -426,48 +429,52 @@ components:
           nullable: true
           description: Número da conta regular do cliente.
         price:
-          type: integer
+          type: number
           nullable: true
           description: Preço atual da criptomoeda.
         createdAt:
           type: string
           nullable: true
-          description: Data e horário de criação da ordem (formato DateTime).
+          description: "Data e horário de criação da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         expiratedAt:
           type: string
           nullable: true
-          description: Data e horário de expiração da ordem (formato DateTime).
-        balanceFiat: 
-          type: integer
-          nullable: true
-          description: Saldo em Real que o cliente possui na conta principal.
+          description: "Data e horário de expiração da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         balanceCrypto:
-          type: integer
+          type: number 
           nullable: true
           description: Saldo que o cliente possui em criptomoedas. 
         referenceTax:
-          type: string
-          nullable: true
           description: Taxa de referência aplicada sobre o valor da operação. 
+          $ref: "#/components/schemas/ReferenceTax" 
         orderLimit:
-          type: string
-          nullable: true
-          description: Valor mínimo de compra e venda de criptomoedas.  
+          type: object
+          description: Valor mínimo de compra e venda de criptomoedas. 
+          properties:
+            buy: 
+              $ref: "#/components/schemas/OrderLimitBuySell" 
+            sell:
+              $ref: "#/components/schemas/OrderLimitBuySell"
         totalAlowed:
-          type: integer
+          type: number 
           nullable: true
           description: Valor da criptomoeda multiplicada pelo valor do <code>balanceCrypto</code>.
       additionalProperties: false
     
+    OrderLimitBuySell:
+      type: object
+      properties:
+        min: 
+          type: number
+          description: Valor mínimo para a transação.
+        max: 
+          type: number
+          description: Valor máximo para a transação.
+
     PriceResponse:
       type: object
       additionalProperties: 
-        type: object
-        properties:
-          currency: 
-            type: string
-          value: 
-            $ref: '#/components/schemas/PriceResponseObject'
+        $ref: '#/components/schemas/PriceResponseObject'
 
     PriceResponseObject:
       type: object
@@ -482,6 +489,22 @@ components:
           description: Código da criptomoeda.
       additionalProperties: false
     
+    ReferenceTax:
+      type: array
+      items:
+        type: object
+        properties:
+            minValue:
+              type: number
+              description: xxx
+            maxValue: 
+              type: number 
+              description: xxx
+            tax: 
+              type: number 
+              description: Taxa de referência.
+
+
     Status:
       enum: 
         - CREATED
@@ -495,7 +518,7 @@ components:
   parameters:
     Currency:
       name: currency
-      in: query
+      in: path
       description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
       required: true
       schema:
@@ -504,7 +527,7 @@ components:
 
     Period:
       name: period
-      in: query
+      in: path
       description: "Informe o período que deseja exibir."
       required: true
       schema: 

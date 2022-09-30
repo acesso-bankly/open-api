@@ -119,6 +119,14 @@ components:
       schema:
         $ref: '#/components/schemas/AccountNumber'
     
+    X-Company-Key:
+      name: x-company-key
+      in: header
+      description: Chave que identifica o parceiro dentro do Bankly.
+      required: true
+      schema: 
+        type: string
+
     X-Correlation-Id:  
       name: x-correlation-id
       in: header 
@@ -319,7 +327,7 @@ components:
     X-Correlation-Id:
       type: string
       description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
-
+    
   headers:
     CorrelationId:
       description: Id correlação da operação requisitada.
