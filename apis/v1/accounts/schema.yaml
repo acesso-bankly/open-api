@@ -274,7 +274,6 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
    
-
   /accounts/{accountNumber}/pockets:
     post:
       tags:
@@ -392,7 +391,7 @@ paths:
       operationId: GetPocketAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
@@ -422,7 +421,7 @@ paths:
       operationId: GetPocketBalanceAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
@@ -459,7 +458,7 @@ paths:
       operationId: CreateDepositTransactionAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: x-idempotency-key
           in: header
@@ -509,7 +508,7 @@ paths:
       operationId: CreateWithdrawalTransactionAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: x-idempotency-key
           in: header
@@ -549,7 +548,7 @@ paths:
       operationId: ClosePocketAccountAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
@@ -570,8 +569,6 @@ paths:
           description: Ocorreu algum erro inesperado no nosso servidor.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
           content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
-
-
 
 
 security:
