@@ -148,6 +148,16 @@ components:
       schema:
         $ref: '#/components/schemas/X-Correlation-Id'
 
+    X-Idempotency-Key:
+      name: x-idempotency-key
+      in: header
+      description: Chave de idempotêcia para a requisição (UUID v4).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  
   schemas:
 
     Error:

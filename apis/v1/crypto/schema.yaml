@@ -26,7 +26,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PriceResponse'             
+                $ref: '#/components/schemas/PriceResponseObject'             
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
@@ -84,6 +84,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - $ref: '#/components/parameters/Currency'
         - $ref: '#/components/parameters/Period'
       
@@ -93,7 +94,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GraphResponse'
+                $ref: '#/components/schemas/GraphResponseObject'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
@@ -152,7 +153,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
             
       requestBody:
@@ -227,7 +228,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - name: orderId
           in: path
@@ -347,7 +348,7 @@ components:
           type: string
           nullable: true
           description: Identificador da transação informado no campo <code>orderId</code>.
-        coin:
+        currency:
           type: string
           nullable: true
           description: Código da criptomoeda.
@@ -394,16 +395,11 @@ components:
         percentageTax:
           type: number
           description: Percentual de taxa aplicada. 
-
-    GraphResponse:
-      type: object
-      additionalProperties: 
-        $ref: '#/components/schemas/GraphResponseObject'
-        
+       
     GraphResponseObject:
       type: object
       properties:
-        creatdAt:
+        createdAt:
           type: string
           nullable: true
           description: "Data de criação da consulta (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
@@ -411,7 +407,6 @@ components:
           type: number
           nullable: true
           description: Preço da criptomoeda.
-
 
     OrderResponse:
       type: object
@@ -471,11 +466,6 @@ components:
           type: number
           description: Valor máximo para a transação.
 
-    PriceResponse:
-      type: object
-      additionalProperties: 
-        $ref: '#/components/schemas/PriceResponseObject'
-
     PriceResponseObject:
       type: object
       properties:
@@ -496,14 +486,13 @@ components:
         properties:
             minValue:
               type: number
-              description: xxx
+              description: Valor mínimo de taxa a ser aplicada.
             maxValue: 
               type: number 
-              description: xxx
+              description: Valor máximo de taxa a ser aplicada.
             tax: 
               type: number 
               description: Taxa de referência.
-
 
     Status:
       enum: 
