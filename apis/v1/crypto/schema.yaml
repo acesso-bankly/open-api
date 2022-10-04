@@ -486,10 +486,10 @@ components:
         properties:
             minValue:
               type: number
-              description: Valor mínimo de taxa a ser aplicada.
+              description: Valor mínimo para que a taxa de referência seja aplicada.
             maxValue: 
               type: number 
-              description: Valor máximo de taxa a ser aplicada.
+              description: Valor máximo para que a taxa de referência seja aplicada.
             tax: 
               type: number 
               description: Taxa de referência.
