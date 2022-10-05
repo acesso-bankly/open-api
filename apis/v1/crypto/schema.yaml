@@ -301,7 +301,7 @@ components:
       properties:
         account:
           type: string
-          description: Número da conta regular do cliente.
+          description: Número da conta de pagamento do cliente.
         typeOrder:
           type: string
           description: "Tipo de ordem (compra ou venda)."
@@ -358,7 +358,7 @@ components:
           description: Tipo de ordem (compra ou venda).
         account:
           type: string
-          description: Número da conta regular do cliente.
+          description: Número da conta de pagamento do cliente.
         createdAt:
           type: string
           nullable: true
@@ -422,7 +422,7 @@ components:
         account:
           type: string
           nullable: true
-          description: Número da conta regular do cliente.
+          description: Número da conta de pagamento do cliente.
         price:
           type: number
           nullable: true
@@ -492,7 +492,7 @@ components:
               description: Valor máximo para que a taxa de referência seja aplicada.
             tax: 
               type: number 
-              description: Taxa de referência.
+              description: Taxa aplicada sobre o valor da operação.
 
     Status:
       enum: 
@@ -512,7 +512,6 @@ components:
       required: true
       schema:
         type: string 
-        default: false
 
     Period:
       name: period
