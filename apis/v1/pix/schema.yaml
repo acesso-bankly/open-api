@@ -82,7 +82,7 @@ paths:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
-          description: Success
+          description: Solicitação aceita com sucesso.
           content:
             application/json:
               schema:
@@ -113,7 +113,7 @@ paths:
       - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
-          description: Success
+          description: Solicitação aceita com sucesso.
           content:
             application/json:
               schema:
@@ -203,7 +203,7 @@ paths:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
-          description: Success
+          description: Solicitação aceita com sucesso.
           content:
             application/json:
               schema:
@@ -234,7 +234,7 @@ paths:
       - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
-          description: Success
+          description: Solicitação aceita com sucesso.
           content:
             application/json:
               schema:
@@ -1118,6 +1118,7 @@ components:
       properties:
         bookmarkId:
             type: string
+            description: Identificador único do favorecido.
             nullable: true
         contact:
             $ref: "#/components/schemas/BookmarkContact"
@@ -1129,6 +1130,7 @@ components:
       - Savings
       - Payment
       type: string
+      description: Tipo de conta.
     BookmarkBank:
       type: object
       properties:
