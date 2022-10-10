@@ -176,6 +176,7 @@ paths:
 
 security:
   - Bearer: []
+
 components:
   parameters:  
     ResultLevel:
@@ -205,6 +206,41 @@ components:
           type: string
   
   schemas:
+    AgeRange:
+      type: object
+      description: Faixa de idade identificada.
+      properties:
+        low:
+          description: |
+            Idade minina detectada.
+          type: integer
+          format: int32
+          nullable: true
+        high:
+          description: |
+            Idade máxina detectada.
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    
+    AnalysisStatus:
+      type: string
+      description: |
+        Status da análise da imagem.
+        _(ANALYZING, PARTIALLY_ANALYZED, ANALYSIS_COMPLETED, UNEXPECTED_ERROR)_
+      enum:
+        - ANALYZING
+        - PARTIALLY_ANALYZED
+        - ANALYSIS_COMPLETED
+        - UNEXPECTED_ERROR
+    
+    Confidence:
+      description: |
+        Nível de confiança da análise.
+      type: number
+      format: double
+      nullable: false
 
     CorporateDocumenteRequest:
       type: object
@@ -224,42 +260,6 @@ components:
           type: string
           format: binary
           description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
-
-    Error:
-      $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
-
-    ErrorResponse:
-      $ref: http://localhost:3320/commons/components#/components/schemas/Error
-
-    DeepfaceDocumentType:
-      type: string
-      description: |
-        Tipo do documento (RG, CNH, CRM e SELFIE).
-      enum:
-        - RG
-        - CNH
-        - CRM
-        - SELFIE
-    
-    DocumentType:
-      type: string
-      description: |
-        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
-      enum:
-        - RG
-        - CNH
-        - RNE
-        - CRNM
-        - DNI
-        - SELFIE
-
-    DocumentSide:
-      type: string
-      description: |
-        Lado do documento (FRONT ou BACK). Quando o tipo do documento for SELFIE, este parâmetro será desprezado.
-      enum:
-        - FRONT
-        - BACK
 
     DeepfaceDocumentAnalysis:
       type: object
@@ -283,138 +283,63 @@ components:
         - image
 
       additionalProperties: false
-        
-    ResultLevel:
+    
+    DeepfaceDocumentType:
       type: string
       description: |
-        Tipo de retorno da API.
-        _(ONLY_STATUS, DETAILED)_
-      default: ONLY_STATUS
+        Tipo do documento (RG, CNH, CRM e SELFIE).
       enum:
-        - ONLY_STATUS
-        - DETAILED
+        - RG
+        - CNH
+        - CRM
+        - SELFIE
     
-    AnalysisStatus:
-      type: string
-      description: |
-        Status da análise da imagem.
-        _(ANALYZING, PARTIALLY_ANALYZED, ANALYSIS_COMPLETED, UNEXPECTED_ERROR)_
-      enum:
-        - ANALYZING
-        - PARTIALLY_ANALYZED
-        - ANALYSIS_COMPLETED
-        - UNEXPECTED_ERROR
-    
-    Confidence:
-      description: |
-        Nível de confiança da análise.
-      type: number
-      format: double
-      nullable: false
-    
-    FaceMatchStatus: 
-      description: |
-        Resultado da análise face match.
-        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTEDR)_
-      type: string
-      enum:
-        - HAS_FACE_MATCH
-        - UNMATCHED_DOCUMENT
-        - MANY_FACES_DETECTED
-    
-    FaceMatch:
-      description: |
-        Informações da Análise Face Match.
+    DocumentAnalysisForm:
+      required:
+        - documentType
+        - documentSide
+        - image
       type: object
       properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        image:
+          type: string
+          description: |
+            Arquivo da imagem. Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
+          format: binary
+          nullable: true
+      
+    DocumentAnalysisResponse:
+      type: object
+      properties:
+        token:
+          description: Token da análise.
+          type: string
+          nullable: true
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
         status:
-          $ref: '#/components/schemas/FaceMatchStatus'
-        similarity:
-          description: |
-            Nível de similaridade entre as faces comparadas.
-          type: number
-          format: double
-          nullable: true
-        confidence:
-          $ref: '#/components/schemas/Confidence'
-      additionalProperties: false
-    
-    FaceDetailsStatus:
-      description: |
-        Resultado da análise facial.
-        _(DETECTED_FACE, MANY_FACES_DETECTED, COULD_NOT_DETECT_FACE)_
-      type: string
-      enum:
-        - DETECTED_FACE
-        - MANY_FACES_DETECTED
-        - COULD_NOT_DETECT_FACE
-    
-    AgeRange:
-      type: object
-      description: Faixa de idade identificada.
-      properties:
-        low:
-          description: |
-            Idade minina detectada.
-          type: integer
-          format: int32
-          nullable: true
-        high:
-          description: |
-            Idade máxina detectada.
-          type: integer
-          format: int32
+          $ref: '#/components/schemas/AnalysisStatus'
+        faceMatch:
+          $ref: '#/components/schemas/FaceMatch'
+        faceDetails:
+          $ref: '#/components/schemas/FaceDetails'
+        documentDetails:
+          $ref: '#/components/schemas/DocumentDetails'
+        liveness:
+          $ref: '#/components/schemas/Liveness'
+        analyzedAt:
+          description: Data da análise do documento.
+          type: string
+          format: date-time
           nullable: true
       additionalProperties: false
-    
-    FacialDetail:
-      type: object
-      properties:
-        value:
-          type: object
-          additionalProperties: false
-          description: Tipo do detalhe facial identificado.
-          nullable: true
-        confidence:
-          $ref: '#/components/schemas/Confidence'
-      additionalProperties: false
-    
-    FaceDetails:
-      description: |
-        Informações da análise facial.
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/FaceDetailsStatus'
-        confidence:
-          $ref: '#/components/schemas/Confidence'
-        ageRange:
-          $ref: '#/components/schemas/AgeRange'
-        gender:
-          $ref: '#/components/schemas/FacialDetail'
-        sunglasses:
-          $ref: '#/components/schemas/FacialDetail'
-        eyesOpen:
-          $ref: '#/components/schemas/FacialDetail'
-        emotions:
-          description: |
-            Lista de expressões detectadas.
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/FacialDetail'
-      additionalProperties: false
-    
-    OcrStatus:
-      description: |
-        Resultado da análise OCR.
-        _(DETECTED_DOCUMENT, NO_DOCUMENT_FOUND, NO_INFO_FOUND)_
-      type: string
-      enum:
-        - DETECTED_DOCUMENT
-        - NO_DOCUMENT_FOUND
-        - NO_INFO_FOUND
-    
+   
     DocumentDetails:
       description: |
         Informações extraídas documento analisado.
@@ -484,16 +409,116 @@ components:
           nullable: true
       additionalProperties: false
     
-    LivenessStatus:
+    DocumentType:
+      type: string
       description: |
-        Resultado da análise de prova de vida.
-        _(LIVENESS_FOUND, NO_LIVENESS, COULD_NOT_DETECT_FACE)_
+        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
+      enum:
+        - RG
+        - CNH
+        - RNE
+        - CRNM
+        - DNI
+        - SELFIE
+
+    DocumentSide:
+      type: string
+      description: |
+        Lado do documento (FRONT ou BACK). Quando o tipo do documento for SELFIE, este parâmetro será desprezado.
+      enum:
+        - FRONT
+        - BACK
+
+    Error:
+      $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
+
+    ErrorResponse:
+      $ref: http://localhost:3320/commons/components#/components/schemas/Error
+    
+    FaceDetails:
+      description: |
+        Informações da análise facial.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceDetailsStatus'
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+        ageRange:
+          $ref: '#/components/schemas/AgeRange'
+        gender:
+          $ref: '#/components/schemas/FacialDetail'
+        sunglasses:
+          $ref: '#/components/schemas/FacialDetail'
+        eyesOpen:
+          $ref: '#/components/schemas/FacialDetail'
+        emotions:
+          description: |
+            Lista de expressões detectadas.
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/FacialDetail'
+      additionalProperties: false
+    
+    FaceDetailsStatus:
+      description: |
+        Resultado da análise facial.
+        _(DETECTED_FACE, MANY_FACES_DETECTED, COULD_NOT_DETECT_FACE)_
       type: string
       enum:
-        - LIVENESS_FOUND
-        - NO_LIVENESS
+        - DETECTED_FACE
+        - MANY_FACES_DETECTED
         - COULD_NOT_DETECT_FACE
+
+    FaceMatch:
+      description: |
+        Informações da Análise Face Match.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceMatchStatus'
+        similarity:
+          description: |
+            Nível de similaridade entre as faces comparadas.
+          type: number
+          format: double
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+
+    FaceMatchStatus: 
+      description: |
+        Resultado da análise face match.
+        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTEDR)_
+      type: string
+      enum:
+        - HAS_FACE_MATCH
+        - UNMATCHED_DOCUMENT
+        - MANY_FACES_DETECTED
+
+    FacialDetail:
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties: false
+          description: Tipo do detalhe facial identificado.
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
     
+    FileTokenResponse:
+      required:
+        - token
+      type: object
+      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
+      properties:
+        token:
+          type: string
+
     Liveness:
       description: |
         Informações da análise de prova de vida.
@@ -504,7 +529,37 @@ components:
         confidence:
           $ref: '#/components/schemas/Confidence'
       additionalProperties: false
-   
+
+    LivenessStatus:
+      description: |
+        Resultado da análise de prova de vida.
+        _(LIVENESS_FOUND, NO_LIVENESS, COULD_NOT_DETECT_FACE)_
+      type: string
+      enum:
+        - LIVENESS_FOUND
+        - NO_LIVENESS
+        - COULD_NOT_DETECT_FACE
+     
+    OcrStatus:
+      description: |
+        Resultado da análise OCR.
+        _(DETECTED_DOCUMENT, NO_DOCUMENT_FOUND, NO_INFO_FOUND)_
+      type: string
+      enum:
+        - DETECTED_DOCUMENT
+        - NO_DOCUMENT_FOUND
+        - NO_INFO_FOUND
+    
+    ResultLevel:
+      type: string
+      description: |
+        Tipo de retorno da API.
+        _(ONLY_STATUS, DETAILED)_
+      default: ONLY_STATUS
+      enum:
+        - ONLY_STATUS
+        - DETAILED
+
     UploadDocumentResponse:
       type: object
       properties:
@@ -513,61 +568,6 @@ components:
           type: string
           nullable: true
       additionalProperties: false
-   
-    DocumentAnalysisResponse:
-      type: object
-      properties:
-        token:
-          description: Token da análise.
-          type: string
-          nullable: true
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        documentSide:
-          $ref: '#/components/schemas/DocumentSide'
-        status:
-          $ref: '#/components/schemas/AnalysisStatus'
-        faceMatch:
-          $ref: '#/components/schemas/FaceMatch'
-        faceDetails:
-          $ref: '#/components/schemas/FaceDetails'
-        documentDetails:
-          $ref: '#/components/schemas/DocumentDetails'
-        liveness:
-          $ref: '#/components/schemas/Liveness'
-        analyzedAt:
-          description: Data da análise do documento.
-          type: string
-          format: date-time
-          nullable: true
-      additionalProperties: false
-   
-    DocumentAnalysisForm:
-      required:
-        - documentType
-        - documentSide
-        - image
-      type: object
-      properties:
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        documentSide:
-          $ref: '#/components/schemas/DocumentSide'
-        image:
-          type: string
-          description: |
-            Arquivo da imagem. Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
-          format: binary
-          nullable: true
-    
-    FileTokenResponse:
-      required:
-        - token
-      type: object
-      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
-      properties:
-        token:
-          type: string
 
   responses:
     '202':
