@@ -36,8 +36,6 @@ paths:
         schema:
           type: string
           enum:
-          - Undefined
-          - CashIn
           - CashOut
       - name: featureName
         required: true
@@ -299,17 +297,13 @@ components:
     CycleType:
       type: string
       enum:
-      - Undefined
       - Transaction
       - Daily
       - Monthly
     LevelType:
       type: string
       enum:
-      - Undefined
-      - Card
       - Account
-      - Document
     MaximumLimitRequest:
       type: object
       properties:
