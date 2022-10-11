@@ -2206,7 +2206,13 @@ paths:
       tags:
         - Wallets
       summary: Geração de token
-      description: Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.
+      description: |
+        <div class="bkly-ref-description">
+            <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
+            <span class="bkly-ref-small-beta-tag">beta</span> 
+            <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
+          </div>
+      
       operationId: GenerateTokenizationForWallet
       parameters:
         - name: proxy

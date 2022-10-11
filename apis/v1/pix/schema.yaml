@@ -885,7 +885,7 @@ paths:
       security:
         - Bearer: []
         
-  /pix/qrcodes:
+  /pix/qrcodes/static/transfer:
     post:
       tags:
         - QR Codes
