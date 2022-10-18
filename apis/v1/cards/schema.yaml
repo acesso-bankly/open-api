@@ -2394,6 +2394,55 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
 
+
+  /Invoices/document/{documentNumber}/proxy/{proxy}/open:
+    get:
+      tags:
+        - Faturas de cartão
+      summary: XXXXXXXX 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte um contrato de crédito já existente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+        </div>
+      parameters:
+        - name: documentNumber
+          in: path
+          required: true
+          schema: {type: string, nullable: true}
+        - name: proxy
+          in: path
+          required: true
+          schema: {type: string, nullable: true}
+        - name: api-version
+          in: header
+          schema: {type: string}
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/InvoiceDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvoiceDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/InvoiceDto"
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/Error"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 security:
   - bearerAuth: []
 
