@@ -2406,20 +2406,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
-        - name: documentNumber
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
-        - name: proxy
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
-        - name: api-version
-          in: header
-          schema: {type: string}
+        - $ref: "#/components/parameters/DocumentNumber"
+        - $ref: "#/components/parameters/Proxy"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Success
+          description: Solicitação aceita com sucesso.
           content:
             text/plain:
               schema:
@@ -2431,7 +2424,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/InvoiceDto"
         '400':
-          description: Bad Request
+          description: Existem erros no preenchimento da requisição.
           content:
             text/plain:
               schema:
@@ -2443,17 +2436,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
         '404':
-          description: 'Not Found'
+          description: Recurso não encontrado.
           content: 
             text/plain:
               schema:
-                $ref: '#/components/schemas/ProblemDetails'
+                $ref: "#/components/schemas/ProblemDetails"
             application/json:
               schema: 
-                $ref: '#/components/schemas/ProblemDetails'
+                $ref: "#/components/schemas/ProblemDetails"
             text/json:
               schema:
-                $ref: '#/components/schemas/ProblemDetails'
+                $ref: "#/components/schemas/ProblemDetails"
 
   /api/Invoices/{StatementId}:
     get:
@@ -2466,23 +2459,19 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
-      - name: StatementId
-        in: path
-        required: true
-        schema: {type: integer, format: int32}
-      - name: api-version
-        in: header
-        schema: {type: string}
+      - $ref: "#/components/parameters/StatementId"
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Success
-          content: {text/plain: {schema: {$ref: '#/components/schemas/InvoiceDto'}}, application/json: {schema: {$ref: '#/components/schemas/InvoiceDto'}}, text/json: {schema: {$ref: '#/components/schemas/InvoiceDto'}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, application/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, text/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}}
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
         '404':
-          description: 'Not Found'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, application/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, text/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}}
+          description: Recurso não encontrado.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
   /api/Invoices/document/{documentNumber}/proxy/{proxy}:
     get:
@@ -2495,14 +2484,8 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
-      - name: documentNumber
-        in: path
-        required: true
-        schema: {type: string, nullable: true}
-      - name: proxy
-        in: path
-        required: true
-        schema: {type: string, nullable: true}
+      - $ref: "#/components/parameters/DocumentNumber"
+      - $ref: "#/components/parameters/Proxy"
       - name: initialDate
         in: query
         required: true
@@ -2511,126 +2494,106 @@ paths:
         in: query
         required: true
         schema: {type: string, format: date-time}
-      - name: api-version
-        in: header
-        schema: {type: string}
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Success
-          content: {text/plain: {schema: {$ref: '#/components/schemas/PreviousResumeInvoicesDto'}}, application/json: {schema: {$ref: '#/components/schemas/PreviousResumeInvoicesDto'}}, text/json: {schema: {$ref: '#/components/schemas/PreviousResumeInvoicesDto'}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, application/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, text/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}}
         '204':
-          description: Success
+          description: Solicitação aceita com sucesso.
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
 
   /api/Invoices/document/{documentNumber}/proxy/{proxy}/limits:
     get:
       tags:
       - Faturas de cartão
       parameters:
-      - name: documentNumber
-        in: path
-        required: true
-        schema: {type: string, nullable: true}
-      - name: proxy
-        in: path
-        required: true
-        schema: {type: string, nullable: true}
-      - name: api-version
-        in: header
-        schema: {type: string}
+      - $ref: "#/components/parameters/DocumentNumber"
+      - $ref: "#/components/parameters/Proxy"
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Success
-          content: {text/plain: {schema: {$ref: '#/components/schemas/CreditLimitDto'}}, application/json: {schema: {$ref: '#/components/schemas/CreditLimitDto'}}, text/json: {schema: {$ref: '#/components/schemas/CreditLimitDto'}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, application/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, text/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}}
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
         '404':
-          description: 'Not Found'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, application/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, text/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}}
+          description: Recurso não encontrado.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
       
   /Invoices/{statementId}/payment:
     post:
       tags:
         - Faturas de cartão
       parameters:
-        - name: statementId
-          in: path
-          required: true
-          schema: {type: string, nullable: true}
-        - name: api-version
-          in: header
-          schema: {type: string}
+        - $ref: "#/components/parameters/StatementId"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       requestBody:
         content:
-          application/json-patch+json: {schema: {$ref: '#/components/schemas/CreatePaymentCommand'}}
-          application/json: {schema: {$ref: '#/components/schemas/CreatePaymentCommand'}}
-          text/json: {schema: {$ref: '#/components/schemas/CreatePaymentCommand'}}
-          application/+json: {schema: {$ref: '#/components/schemas/CreatePaymentCommand'}}
+          application/json-patch+json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
+          application/json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
+          text/json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
+          application/+json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
       responses:
         '202':
-          description: Success
-          content: {text/plain: {schema: {$ref: '#/components/schemas/PaymentStatusDto'}}, application/json: {schema: {$ref: '#/components/schemas/PaymentStatusDto'}}, text/json: {schema: {$ref: '#/components/schemas/PaymentStatusDto'}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, application/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, text/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}}
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
         '406':
           description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, application/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, text/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}}
+          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
   /api/Invoices/{statementId}/paymentOptions:
     get:
       tags:
       - Faturas de cartão
       parameters:
-      - name: statementId
-        in: path
-        required: true
-        schema: {type: integer, format: int32}
-      - name: api-version
-        in: header
-        schema: {type: string}
+      - $ref: "#/components/parameters/StatementId"
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
       responses:
         '202':
-          description: Success
-          content: {text/plain: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsDto'}}}, application/json: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsDto'}}}, text/json: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsDto'}}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}}
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
         '406':
           description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, application/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, text/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}}
+          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
   /api/Invoices/{statementId}/installments:
     post:
       tags:
       - Faturas de cartão
       parameters:
-      - name: statementId
-        in: path
-        required: true
-        schema: {type: integer, format: int32}
-      - name: api-version
-        in: header
-        schema: {type: string}
+      - $ref: "#/components/parameters/StatementId"
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
       requestBody:
         content:
-          application/json-patch+json: {schema: {$ref: '#/components/schemas/CreateSimulationOfInstallmentsCommand'}}
-          application/json: {schema: {$ref: '#/components/schemas/CreateSimulationOfInstallmentsCommand'}}
-          text/json: {schema: {$ref: '#/components/schemas/CreateSimulationOfInstallmentsCommand'}}
-          'application/+json': {schema: {$ref: '#/components/schemas/CreateSimulationOfInstallmentsCommand'}}
+          application/json-patch+json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
+          application/json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
+          text/json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
+          application/+json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
       responses:
         '202':
-          description: Success
-          content: {text/plain: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsInstallmentsDto'}}}, application/json: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsInstallmentsDto'}}}, text/json: {schema: {type: array, items: {$ref: '#/components/schemas/PaymentOptionsInstallmentsDto'}}}}
+          description: Solicitação aceita com sucesso.
+          content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}}
         '400':
-          description: 'Bad Request'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/Error'}}, application/json: {schema: {$ref: '#/components/schemas/Error'}}, text/json: {schema: {$ref: '#/components/schemas/Error'}}}
+          description: Existem erros no preenchimento da requisição.
+          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
         '406':
           description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, application/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}, text/json: {schema: {$ref: '#/components/schemas/ProblemDetails'}}}
+          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
 
 security:
@@ -2655,7 +2618,32 @@ components:
       in: header
       required: true
       schema:
-        type: string        
+        type: string 
+
+    DocumentNumber:
+      name: documentNumber
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
+    StatementId:
+      name: statementId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+
+    Proxy:
+      name: proxy
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
   schemas:
     createCardsInLotRequest:
       type: object
@@ -3838,7 +3826,7 @@ components:
       enum:
         - GooglePay
     
-    
+
     CycleType:
       enum:
         - 1
@@ -3992,6 +3980,7 @@ components:
         - 2
       type: integer
       format: int32
+      description: Forma de pagamento (Billet- COMO ASSIM????).
     PaymentStatus:
       enum:
         - 1
@@ -3999,33 +3988,42 @@ components:
         - 3
       type: integer
       format: int32
+      description: Situação do pagamento, o qual pode ser Pending () ou Paid ().
     InvoicePaymentDto:
       type: object
       properties:
         paymentId:
           type: integer
           format: int32
+          description: Identificador único do pagamento.
         paymentOptionId:
           type: integer
           format: int32
+          description: Identificador único da opção de pagamento.
         externalId:
           type: string
           nullable: true
+          description: Número identificador do boleto.
         bankAccount:
           type: string
           nullable: true
+          description: Número da conta do recebedor.
         paymentBilletId:
           type: string
           nullable: true
+          description: Código de registro do boleto.
         bankAgency:
           type: string
           nullable: true
+          description: Agência da conta do recebedor.
         amount:
           type: number
           format: double
+          description: Valor do pagamento.
         dueDate:
           type: string
           format: date-time
+          description: Data de vencimento do pagamento.
         paymentOptionType:
           $ref: '#/components/schemas/PaymentOptionType'
         status:
@@ -4033,20 +4031,25 @@ components:
         digitableLine:
           type: string
           nullable: true
+          description: Linha digitavél do boleto de pagamento.
         paymentDate:
           type: string
           format: date-time
           nullable: true
+          description: Data de pagamento.
         liquidatedPaymentDate:
           type: string
           format: date-time
           nullable: true
+          description: Data de liquidação do pagamento.
         processorPaymentTrackingId:
           type: string
           nullable: true
+          description: Identificador da liquidação na processadora.
         processorPaymentAuthorizationId:
           type: string
           nullable: true
+          description: Identificador da transação de pagamento na processadora.
       additionalProperties: false
     CreditLetterType:
       enum:
@@ -4092,92 +4095,122 @@ components:
         creditOfferId:
           type: integer
           format: int32
+          description: Identificador único da proposta.
         externalOperationId:
           type: string
           nullable: true
+          description: Identificador externo para a proposta.
         externalOfferId:
           type: string
           nullable: true
+          description: Identificador externo da proposta.
         externalOfferType:
           type: string
           nullable: true
+          description: Tipo externo da proposta retornada, o qual pode ser variable ou fixed.
         amountCurrency:
           type: string
           nullable: true
+          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
         amountDue:
           type: number
           format: double
+          description: Valor contratado da proposta mais o valor total de juros (Pode ou não conter TAC).
         annualCet:
           type: number
           format: double
+          description: CET (custo efetivo total) da contratação calculado ao ano.
         annualInterestRate:
           type: number
           format: double
+          description: Taxa de juros anual da contratação.
         cet:
           type: number
           format: double
+          description: CET (custo efetivo total) da contratação calculado na periodicidade definida das parcelas.
         disbursementDate:
           type: string
           format: date-time
+          description: Data prevista para o desembolso da proposta.
         externalCreatedAt:
           type: string
           format: date-time
+          description: Data do cálculo da proposta no formato ISO 8601.
         externalExpiresAt:
           type: string
           format: date-time
+          description: Data de expiração da proposta no formato ISO 8601.
         firstPaymentDate:
           type: string
           format: date-time
+          description: Data do 1º pagamento da proposta no formato ISO 8601.
         graceDays:
           type: integer
           format: int32
+          description: Quantidade de dias para a carência do 1º pagamento.
         lastPaymentDate:
           type: string
           format: date-time
+          description: Data do último pagamento da proposta.
         paymentAmount:
           type: number
           format: double
+          description: xxxxx
         loanAmount:
           type: number
           format: double
+          description: Valor do crédito solicitado para contratação.
         monthlyInterestRate:
           type: number
           format: double
+          description: Taxa de juros mensal da contratação.
         openingAccountFee:
           type: number
           format: double
+          description: xxxxx
         operationCostAmount:
           type: number
           format: double
+          description: Custo de processamento da operação.
         periodicity:
           type: string
           nullable: true
+          description: xxxx
         retentionRate:
           type: number
           format: double
+          description: Indica o percentual de retenção da proposta.
         term:
           type: integer
           format: int32
+          description: Quantidade de parcelas da proposta.
         totalInterestAmount:
           type: number
           format: double
+          description: Valor total de juros a ser pago na contratação.
         totalPaymentAmount:
           type: number
           format: double
+          description: Valor total a ser pago no final do contrato (se aplicável ao produto).
         iofTotalAmount:
           type: number
           format: double
+          description: Valor final do cálculo do IOF.
         iofTotalPercentage:
           type: number
           format: double
+          description: xxxx
         confirmedOffer:
           type: boolean
+          description: xxxx
         entryAmount:
           type: number
           format: double
+          description: xxxx
         downPayment:
           type: number
           format: double
+          description: xxxxx
         creditLetterType:
           $ref: '#/components/schemas/CreditLetterType'
         installments:
