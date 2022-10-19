@@ -2395,14 +2395,14 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
 
 
-  /Invoices/document/{documentNumber}/proxy/{proxy}/open:
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}/open:
     get:
       tags:
-        - Faturas de cartão
-      summary: XXXXXXXX 
+        - Gestão de faturas
+      summary: Consulta de fatura aberta NÃO PODE VIR MAIS DE UMA FATURA N?
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte um contrato de crédito já existente.</p> 
+          <p>Consulte uma fatura aberta.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
@@ -2448,14 +2448,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProblemDetails"
 
-  /api/Invoices/{StatementId}:
+  /cards/invoices/{statementId}:
     get:
       tags:
-      - Faturas de cartão
-      summary: XXXXXXXX 
+      - Gestão de faturas
+      summary: Consulta por ID da fatura
       description: |
         <div class="bkly-ref-description">
-          <p></p> 
+          <p>Consulte uma fatura específica por meio do seu ID. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
@@ -2473,15 +2473,15 @@ paths:
           description: Recurso não encontrado.
           content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
-  /api/Invoices/document/{documentNumber}/proxy/{proxy}:
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}:
     get:
       tags:
-      - Faturas de cartão
-      summary: XXXXXXXX 
+      - Gestão de faturas
+      summary: Consulta de faturas 
       description: |
         <div class="bkly-ref-description">
-          <p></p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <p>Consulte as faturas de um cartão.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
         </div>
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
@@ -2489,11 +2489,11 @@ paths:
       - name: initialDate
         in: query
         required: true
-        schema: {type: string, format: date-time}
+        schema: {type: string, description: Data inicial para a consulta, format: date-time}
       - name: finalDate
         in: query
         required: true
-        schema: {type: string, format: date-time}
+        schema: {type: string, description: Data final para a consulta, format: date-time}
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
       responses:
@@ -2501,15 +2501,21 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, application/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, text/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}}
         '204':
-          description: Solicitação aceita com sucesso.
+          description: Nenhuma fatura encontrada.
         '400':
           description: Existem erros no preenchimento da requisição.
           content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
 
-  /api/Invoices/document/{documentNumber}/proxy/{proxy}/limits:
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}/limits:
     get:
       tags:
-      - Faturas de cartão
+      - Gestão de faturas
+      summary: Consulta do limite de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte o limite de crédito do cartão (OQUE ISSO TEM A A VER COM FATURA?).</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+        </div>
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
       - $ref: "#/components/parameters/Proxy"
@@ -2526,10 +2532,16 @@ paths:
           description: Recurso não encontrado.
           content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
       
-  /Invoices/{statementId}/payment:
+  /cards/invoices/{statementId}/payment:
     post:
       tags:
-        - Faturas de cartão
+        - Gestão de faturas
+      summary: Geração de um pagamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Gere o pagamento de uma fatura.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+        </div>
       parameters:
         - $ref: "#/components/parameters/StatementId"
         - $ref: "#/components/parameters/apiVersion"
@@ -2551,10 +2563,16 @@ paths:
           description: 'Not Acceptable'
           content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
-  /api/Invoices/{statementId}/paymentOptions:
+  /cards/invoices/{statementId}/payment-options:
     get:
       tags:
       - Faturas de cartão
+      summary: Consulta das opções de pagamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as opções de pagamento.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+        </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
       - $ref: "#/components/parameters/apiVersion"
@@ -2570,7 +2588,10 @@ paths:
           description: 'Not Acceptable'
           content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
-  /api/Invoices/{statementId}/installments:
+
+description: VERIFICAR SE ESSE ENDPOINT VAI FICAR
+
+  /cards/invoices/{statementId}/installments:
     post:
       tags:
       - Faturas de cartão
@@ -3834,6 +3855,7 @@ components:
         - 3
         - 4
       type: integer
+      description: Situação da fatura Open/Future/Closed/Duedate (Atrasado).
       format: int32
     StatementPaymentStatus:
       enum:
@@ -3841,6 +3863,7 @@ components:
         - 2
         - 3
       type: integer
+      description: Situação do pagamento da fatura Pending/Paid/PartialPaid.
       format: int32
     CardDto:
       type: object
@@ -3848,15 +3871,19 @@ components:
         proxy:
           type: string
           nullable: true
+          description: Identificador do cartão utilizado na transação.
         lastFourDigits:
           type: string
           nullable: true
+          description: Quatro últimos dígitos do cartão.
         alias:
           type: string
           nullable: true
+          description: Apelido dado ao cartão.
         cardType:
           type: string
           nullable: true
+          description: Tipo do cartão, o qual pode ser Physical ou Virtual.
       additionalProperties: false
     TransactionInvoiceDto:
       type: object
@@ -3867,15 +3894,19 @@ components:
         merchant:
           type: string
           nullable: true
+          description: Informações referentes ao estabelecimento/comerciante que aceitou a transação. Seus campos são baseados na ISO 8583.
         mcc:
           type: string
           nullable: true
+          description: Código mcc da transação.
         entrymode:
           type: string
           nullable: true
+          description: Código que identifica o tipo da transação.
         mcg:
           type: string
           nullable: true
+          description: Descrição do tipo do mcc.
         card:
           $ref: '#/components/schemas/CardDto'
       additionalProperties: false
@@ -3887,6 +3918,7 @@ components:
         - 3
       type: integer
       format: int32
+      description: Indicador do item de fatura, o qual pode ser XXXXXX.
     AmountInvoiceDto:
       type: object
       properties:
@@ -3895,9 +3927,11 @@ components:
         value:
           type: number
           format: double
+          description: Valor do item da fatura.
         currency:
           type: string
           nullable: true
+          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
       additionalProperties: false
     FeeType:
       enum:
@@ -3908,6 +3942,7 @@ components:
         - 4
       type: integer
       format: int32
+      description: Tipo da taxa NotMapper/Iof/Markup/DailyIof/Interest.
     FeeInvoiceDto:
       type: object
       properties:
@@ -3916,6 +3951,7 @@ components:
         value:
           type: number
           format: double
+          description: Valor da taxa.
       additionalProperties: false
     ItemInvoiceDto:
       type: object
@@ -3923,31 +3959,39 @@ components:
         statementNumber:
           type: integer
           format: int32
+          description: Número da parcela.
         statementTotal:
           type: integer
           format: int32
+          description: Total de parcelas.
         isCredit:
           type: boolean
+          description: Indica se é uma operação de crédito (true) ou débito (false).
         transactionDate:
           type: string
           format: date-time
+          description: Data que ocorreu a transação.
         transactionType:
           type: string
           nullable: true
+          description: Tipo da transação (COMO COLOCAR TODAS AS OPÇÕES??!).
         proxy:
           type: string
           nullable: true
           readOnly: true
+          description: XXXXXXX.
           deprecated: true
         cardLastFourDigits:
           type: string
           nullable: true
           readOnly: true
+          description: XXXXXXXX.
           deprecated: true
         cardAlias:
           type: string
           nullable: true
           readOnly: true
+          description: XXXXXX.
           deprecated: true
         transaction:
           $ref: '#/components/schemas/TransactionInvoiceDto'
@@ -3962,9 +4006,11 @@ components:
         statementItemId:
           type: integer
           format: int32
+          description: Indicador do item de fatura.
         transactionDescription:
           type: string
           nullable: true
+          description: Descritivo do item da fatura.
       additionalProperties: false
     PaymentType:
       enum:
@@ -3974,6 +4020,7 @@ components:
         - 4
       type: integer
       format: int32
+      description: Opção de pagamento, o qual pode ser Cash/Partial/InstallmentWithEntry/InstallmentWithoutEntry.
     PaymentOptionType:
       enum:
         - 1
@@ -4057,37 +4104,47 @@ components:
         - 1
       type: integer
       format: int32
+      description: XXXXXXX.
     InstallmentDto:
       type: object
       properties:
         creditOfferId:
           type: integer
           format: int32
+          description: Identificador único da proposta.
         amortizationAmount:
           type: number
           format: double
+          description: Valor da amortização no contrato.
         currentBalance:
           type: number
           format: double
+          description: XXXXX.
           nullable: true
         dueBalance:
           type: number
           format: double
+          description: XXXXXX.
         dueDate:
           type: string
           format: date-time
+          description: Data de vencimento da parcela.
         interestAmount:
           type: number
           format: double
+          description: Valor do juros da parcela.
         iofAmount:
           type: number
           format: double
+          description: Valor do IOF da parcela.
         paymentAmount:
           type: number
           format: double
+          description: Valor da parcela.
         installmentNumber:
           type: integer
           format: int32
+          description: Número da parcela.
       additionalProperties: false
     CreditOfferDto:
       type: object
@@ -4199,10 +4256,10 @@ components:
         iofTotalPercentage:
           type: number
           format: double
-          description: xxxx
+          description: Valor percentual do IOF, se aplicável.
         confirmedOffer:
           type: boolean
-          description: xxxx
+          description: Retorna se a oferta está confirmada.
         entryAmount:
           type: number
           format: double
@@ -4224,14 +4281,17 @@ components:
         paymentOptionId:
           type: integer
           format: int32
+          description: Identificador único da opção de pagamento.
         statementId:
           type: integer
           format: int32
+          description: Identificador único da fatura.
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
           type: number
           format: double
+          description: Valor a ser pago (no caso de parcelamente será a entrada).
         payment:
           type: array
           items: {$ref: '#/components/schemas/InvoicePaymentDto'}
@@ -4245,42 +4305,53 @@ components:
         statementId:
           type: integer
           format: int32
+          description: Identificador único da fatura.
         month:
           type: integer
           format: int32
+          description: Representa o mês de vencimento da fatura.
         year:
           type: integer
           format: int32
+          description: Representa o ano de vencimento da fatura.
         cycle:
           type: integer
           format: int32
+          description: Indicador do ciclo da fatura (por contrato de crédito).
         cycleCloseDate:
           type: string
           format: date-time
+          description: Data de fechamento da fatura.
           nullable: true
         dueDateStart:
           type: string
           format: date-time
+          description: Data inicial do período da fatura.
         dueDateEnd:
           type: string
           format: date-time
+          description: Data final do período da fatura.
           nullable: true
         dueDate:
           type: string
           format: date-time
+          description: Data de vencimento da fatura.
         amountMinimal:
           type: number
           format: double
+          description: Valor mínimo a ser pago da fatura. Apenas é calculado após o fechamento da fatura..
           nullable: true
         balance:
           type: number
           format: double
+          description: Valor total da fatura.
           nullable: true
         cycleType:
           $ref: '#/components/schemas/CycleType'
         documentNumber:
           type: string
           nullable: true
+          description: XXXXX.
         paymentStatus:
           $ref: '#/components/schemas/StatementPaymentStatus'
         statementItens:
@@ -4345,24 +4416,31 @@ components:
         statementId:
           type: integer
           format: int32
+          description: Identificador único da fatura.
         month:
           type: integer
           format: int32
+          description: Representa o mês de vencimento da fatura.
         year:
           type: integer
           format: int32
+          description: Representa o ano de vencimento da fatura.
         cycle:
           type: integer
           format: int32
+          description: Indicador do ciclo da fatura (por contrato de crédito).
         dueDate:
           type: string
           format: date-time
+          description: Data de vencimento da fatura.
         amountMinimal:
           type: number
           format: double
+          description: Valor mínimo a ser pago da fatura, só é calculado após o fechamento da fatura.
         balance:
           type: number
           format: double
+          description: Valor total da fatura.
         cycleType:
           $ref: '#/components/schemas/CycleType'
         paymentStatus:
@@ -4370,6 +4448,7 @@ components:
         paymentTotalAmount:
           type: number
           format: double
+          description: Valor pago.
           nullable: true
       additionalProperties: false
     PreviousResumeInvoicesDto:
@@ -4386,9 +4465,11 @@ components:
         totalCreditLimit:
           type: number
           format: double
+          description: Total do limite de crédito aprovado.
         availableLimit:
           type: number
           format: double
+          description: Limite crédito disponível.
       additionalProperties: false
     CreatePaymentCommand:
       type: object
@@ -4398,9 +4479,11 @@ components:
         value:
           type: number
           format: double
+          description: Valor a ser pago, caso o tipo de pagamento escolhido tenha sido Partial.
         paymentOptionId:
           type: integer
           format: int32
+          description: XZXXXXXXX. Condição do parcelamento (Necessário somente nos tipos InstallmentWithEntry/InstallmentWithoutEntry).
           nullable: true
       additionalProperties: false
     PaymentStatusDto:
@@ -4409,12 +4492,15 @@ components:
         status:
           type: string
           nullable: true
+          description: Situação do pagamento, o qual pode ser Pending ou Paid (ENUM).
         digitableLine:
           type: string
           nullable: true
+          description: Linha digitável do boleto de pagamento.
         authenticationCode:
           type: string
           nullable: true
+          description: Identificador da forma de pagamento.
       additionalProperties: false
     CreateSimulationOfInstallmentsCommand:
       type: object
@@ -4432,14 +4518,17 @@ components:
         paymentOptionId:
           type: integer
           format: int32
+          description: Identificador único da opção de pagamento.
         statementId:
           type: integer
           format: int32
+          description: Identificador único da fatura.
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
           type: number
           format: double
+          description: XXXXX.
         creditOffer:
           $ref: '#/components/schemas/CreditOfferDto'
       additionalProperties: false
