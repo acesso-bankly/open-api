@@ -12,10 +12,10 @@ paths:
     put:
       tags:
         - Análise de documentos
-      summary: Envio de documentos (SELFIE, RG, CNH, RNE, DNI e CRNM) para análise
+      summary: Envio de documentos pessoais
       description: |
         <div class="bkly-ref-description">
-          <p>Essa análise é um pré-requisito para fluxo de Onboarding completo e atualização cadastral para clientes pessoa física ou pessoa jurídica.</p>
+          <p>Realize o envio de imagens de documentos de pessoa física (SELFIE, RG, CNH, RNE, DNI e CRNM). Essa análise é um pré-requisito para o fluxo de Onboarding e atualização cadastral para clientes pessoa física e pessoa jurídica.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>  
@@ -117,11 +117,11 @@ paths:
     put:
       tags:
         - Análise de documentos
-      summary: Envio de documentos para Onboarding de Pessoa Jurídica (LTDA, S.A. e TS)
+      summary: Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)
       operationId: UploadDocumentOnboardingPJLTDASATS
       description: |
         <div class="bkly-ref-description">
-          <p>Essa análise é um pré-requisito para fluxo de Onboarding para clientes pessoa jurídica (LTDA, S.A. e TS).</p>
+          <p>Realize o envio de imagens de documentos de pessoa jurídica (LTDA, S.A. e TS), para que seja possível realizar o fluxo de Onboarding.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
@@ -153,10 +153,10 @@ paths:
     post:
       tags:
         - Deepface
-      summary: Envio de documentos para análise Deepface
+      summary: Envio de documentos pessoais para análise com Deepface
       description: |
         <div class="bkly-ref-description">
-          <p>Realize o envio de imagens (SELFIE, RG, CNH e CRM) para o fluxo de análise Deepface.</p>
+          <p>Realize o envio de imagens de documentos (SELFIE, RG, CNH, RNE, DNI ou CRNM) para o fluxo de análise com Deepface.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
@@ -265,34 +265,24 @@ components:
       type: object
       properties:
         documentType:
-          $ref: '#/components/schemas/DeepfaceDocumentType' 
+          $ref: '#/components/schemas/DocumentType' 
         documentSide:
           $ref: '#/components/schemas/DocumentSide'
+        provider: 
+           $ref: '#/components/schemas/Provider'
         providerMetadata:
-          type: object
-          additionalProperties: {type: object, additionalProperties: false}
-          nullable: true
+           $ref: '#/components/schemas/ProviderMetadata'         
         image:
           type: string
-          description: |
-            Arquivo da imagem. Não deve ser superior à **800KB**.
+          description: Arquivo da imagem.  A selfie deve ser enviada em formato JWT e as imagens dos documentos devem apresentar o formato .jpeg, .jpg ou .png. Seu tamanho não deve ultrapassar 800KB.
           format: binary
       required:
         - documentType
         - documentSide
         - image
-
+        - provider
+        - providerMetadata
       additionalProperties: false
-    
-    DeepfaceDocumentType:
-      type: string
-      description: |
-        Tipo do documento (RG, CNH, CRM e SELFIE).
-      enum:
-        - RG
-        - CNH
-        - CRM
-        - SELFIE
     
     DocumentAnalysisForm:
       required:
@@ -307,8 +297,7 @@ components:
           $ref: '#/components/schemas/DocumentSide'
         image:
           type: string
-          description: |
-            Arquivo da imagem. Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
+          description: Arquivo da imagem (.jpeg, .jpg ou .png). Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
           format: binary
           nullable: true
       
@@ -550,6 +539,26 @@ components:
         - NO_DOCUMENT_FOUND
         - NO_INFO_FOUND
     
+    Provider:
+      type: string
+      description: Para envio de selfie, informe "UNICO_CHECK", para envio de documentos, o campo deve apresentar o valor “BANKLY”.
+      enum:
+        - UNICO_CHECK
+        - BANKLY
+
+    ProviderMetadata:
+      type: object
+      properties:
+        isLastDocument:
+          type: boolean
+          description: XXX
+        encrypted:
+          type: string
+          description: XXX
+      required:
+        - "isLastDocument" 
+        - "encrypted"
+
     ResultLevel:
       type: string
       description: |
