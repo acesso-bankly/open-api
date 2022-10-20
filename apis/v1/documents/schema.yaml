@@ -281,7 +281,6 @@ components:
         - documentSide
         - image
         - provider
-        - providerMetadata
       additionalProperties: false
     
     DocumentAnalysisForm:
@@ -547,11 +546,12 @@ components:
         - BANKLY
 
     ProviderMetadata:
+      description: Campo obrigatório <b>apenas</b. se o <code>provider</code> apresentar o valor "UNICO_CHECK".
       type: object
       properties:
         isLastDocument:
           type: boolean
-          description: XXX
+          description: Esse campo deve apresentar o valor TRUE.
         encrypted:
           type: string
           description: XXX
