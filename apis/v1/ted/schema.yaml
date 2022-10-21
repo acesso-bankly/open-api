@@ -36,7 +36,8 @@ paths:
                   type: string         
               required:
               - amount
-              - sender              
+              - sender
+              - recipient              
       responses:
         '202':
           description: Ted aceito com sucesso.
@@ -276,6 +277,11 @@ components:
         account:
           $ref: 'http://localhost:3320/commons/components#/components/schemas/AccountNumber'
       additionalProperties: false
+      required:
+        - document
+        - name
+        - branch
+        - account
   securitySchemes:
     Bearer:
       type: http
