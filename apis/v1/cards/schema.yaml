@@ -2399,7 +2399,7 @@ paths:
     get:
       tags:
         - Gestão de faturas
-      summary: Consulta de fatura aberta NÃO PODE VIR MAIS DE UMA FATURA N?
+      summary: Consulta de fatura aberta
       description: |
         <div class="bkly-ref-description">
           <p>Consulte uma fatura aberta.</p> 
@@ -2513,7 +2513,7 @@ paths:
       summary: Consulta do limite de crédito
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte o limite de crédito do cartão (OQUE ISSO TEM A A VER COM FATURA?).</p> 
+          <p>Consulte o limite de crédito do cartão.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
@@ -2588,13 +2588,16 @@ paths:
           description: 'Not Acceptable'
           content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
 
-
-description: VERIFICAR SE ESSE ENDPOINT VAI FICAR
-
   /cards/invoices/{statementId}/installments:
     post:
       tags:
       - Faturas de cartão
+      summary: XXXXXX
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as opções de pagamento.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+        </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
       - $ref: "#/components/parameters/apiVersion"
@@ -3953,6 +3956,86 @@ components:
           format: double
           description: Valor da taxa.
       additionalProperties: false
+    
+    TransactionType:
+      enum:
+      - REFINANCE_CHARGES
+      - INTEREST_ON_ARREST
+      - TRAFFIC_TICKET
+      - PURCHASE_BY_SIGHT
+      - INSTALLMENT_WITHOUT_INTEREST
+      - DEBIT_ADJUSTMENT
+      - INSTALLMENTS_WITHOUT_INTEREST
+      - INSTALLED_WITH_INTEREST
+      - PAYMENT
+      - CREDIT_ADJUSTMENT
+      - PARTIAL_CANCELLATION_OF_PURCHASE
+      - WITHDRAW
+      - INTERNATIONAL_PURCHASE
+      - INTERNATIONAL_IOF
+      - IOF
+      - IOF_WITHDRAWAL
+      - WITHDRAWAL_CHARGES
+      - ANNUITY
+      - WITHDRAWAL_RATE
+      - RATE_CARD_ISSUANCE
+      - REFINANCE_INSTALLMENT
+      - CANC_CREDIT_INSTALLMENTS
+      - PREPAID_CHARGE
+      - MEMBERSHIP_PAYMENT
+      - PURCHASE_CANCELLATION
+      - CANC_INSTALLMENT_WITHOUT_INTEREST
+      - ANNUAL_REVERSAL
+      - CREDIT_BY_INSTALLMENT
+      - REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF
+      - EXCHANGE_DIF_DEBIT
+      - DIF_EXCHANGE_CREDIT
+      - REVERSAL_REFINING_CHARGES
+      - REVERSAL_INTEREST
+      - FINE_REVERSAL
+      - REVERSAL_IOF
+      - CANCELLATION_AGREEMENT_REFINANC
+      - CREDIT_BY_AGREEMENT
+      - INSTALLMENT_OF_AGREEMENT
+      - AGREEMENT_CONTRACT
+      - CANCELLATION_OF_INSTALLMENT_AGREEMENT
+      - CANC_CREDIT_AGREEMENT
+      - CANCELLATION_CONTRACT_AGREEMENT
+      - CREDIT_BY_INSTALLMENT_CP
+      - CP_REFINANCING_INSTALLMENT
+      - CP_REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF_CP
+      - CANC_CREDIT_INSTALLMENT_CP
+      - CANCELLATION_CONTRACT_REF_CP
+      - DEBIT_PAYMENT
+      - CREDIT_VOUCHER
+      - CANC_INSTALLMENTS_WITHOUT_INTEREST
+      - CANC_IN_INSTALLMENTS_WITH_INTEREST
+      - CANC_INSTALLMENT_WITH_INTEREST
+      - CANC_INTERNATIONAL_PURCHASE
+      - CANC_IOF_INTERNATIONAL
+      - REVERSAL_INTERNATIONAL_WITHDRAWAL
+      - REVERSAL_DEBIT_PAYMENT
+      - REVERSED_WITHDRAWAL
+      - REVERSAL_RATE_WITHOUT_WITHDRAWAL
+      - INTERNATIONAL_WITHDRAWAL
+      - FLAG_PAYMENT
+      - TED_CASH_OUT
+      - TEF_CASH_OUT
+      - TED_CASH_IN
+      - DEBIT_REVERSAL
+      - REVERSAL_PAYMENT
+      - REVERSED_WITHDRAWAL_CHARGES
+      - PRE_PAID_RECHARGE_RATE
+      - PREPAID_RECHARGE_PERCENTAGE
+      - MDR
+      - REVERSAL_RATE_WITHDRAWAL
+      - REVERSAL_IOF_WITHDRAWAL
+      type: string
+      nullable: true
+      description: Tipo da transação.
+
     ItemInvoiceDto:
       type: object
       properties:
@@ -3970,11 +4053,9 @@ components:
         transactionDate:
           type: string
           format: date-time
-          description: Data que ocorreu a transação.
+          description: Data em que ocorreu a transação.
         transactionType:
-          type: string
-          nullable: true
-          description: Tipo da transação (COMO COLOCAR TODAS AS OPÇÕES??!).
+          $ref: "#/components/schemas/TransactionType"
         proxy:
           type: string
           nullable: true
@@ -4027,7 +4108,7 @@ components:
         - 2
       type: integer
       format: int32
-      description: Forma de pagamento (Billet- COMO ASSIM????).
+      description: Forma de pagamento (Boleto e XXXXXX).
     PaymentStatus:
       enum:
         - 1
@@ -4078,7 +4159,7 @@ components:
         digitableLine:
           type: string
           nullable: true
-          description: Linha digitavél do boleto de pagamento.
+          description: Linha digitável do boleto de pagamento.
         paymentDate:
           type: string
           format: date-time
@@ -4291,7 +4372,7 @@ components:
         value:
           type: number
           format: double
-          description: Valor a ser pago (no caso de parcelamente será a entrada).
+          description: Valor a ser pago (no caso de parcelamento, será a entrada).
         payment:
           type: array
           items: {$ref: '#/components/schemas/InvoicePaymentDto'}
@@ -4492,7 +4573,7 @@ components:
         status:
           type: string
           nullable: true
-          description: Situação do pagamento, o qual pode ser Pending ou Paid (ENUM).
+          description: Situação do pagamento, a qual pode ser Pending ou Paid.
         digitableLine:
           type: string
           nullable: true
