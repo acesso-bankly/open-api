@@ -35,7 +35,8 @@ paths:
                 description:
                   type: string         
               required:
-              - amount              
+              - amount
+              - sender              
       responses:
         '202':
           description: Ted aceito com sucesso.
