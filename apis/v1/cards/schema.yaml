@@ -956,7 +956,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
+          description: Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
@@ -2373,7 +2373,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento do cliente (CPF ou CNPJ).
+          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
         - name: contract
@@ -2809,7 +2809,7 @@ components:
           description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
+          description: Número do documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
       required:
         - documentNumber
         - password
@@ -2986,7 +2986,7 @@ components:
           description: Identificador da companhia.
         documentNumber:
           type: string
-          description: Documento do cliente (CPF/CNPJ).
+          description: Número do documento do cliente (CPF/CNPJ).
         activateCode:
           type: string
           description: Código de ativação do cartão.
@@ -3277,7 +3277,7 @@ components:
           description: Identificador do programa que será vinculado ao cartão.
         documentNumber:
           type: string
-          description: Número de documento (CPF ou CNPJ). Informe somente números. 
+          description: Número do documento (CPF ou CNPJ). Informe somente números. 
         profession:
           type: string
           description: Profissão do cliente.
@@ -3773,7 +3773,7 @@ components:
                 description: Grau de parentesco com o titular do cartão.
               documentNumber:
                 type: string
-                description: Documento do recebedor do cartão.
+                description: Número do documento do recebedor do cartão.
               attempts:
                 type: number
                 description: Quantidade de tentativas de entrega.
@@ -3891,9 +3891,6 @@ components:
     TransactionInvoiceDto:
       type: object
       properties:
-        nsu:
-          type: string
-          nullable: true
         merchant:
           type: string
           nullable: true
@@ -3921,7 +3918,7 @@ components:
         - 3
       type: integer
       format: int32
-      description: Indicador do item de fatura, o qual pode ser XXXXXX.
+      description: Indicador do item de fatura, o qual pode ser NotMapper/Local/Exchange/Billet.
     AmountInvoiceDto:
       type: object
       properties:
@@ -4056,24 +4053,6 @@ components:
           description: Data em que ocorreu a transação.
         transactionType:
           $ref: "#/components/schemas/TransactionType"
-        proxy:
-          type: string
-          nullable: true
-          readOnly: true
-          description: XXXXXXX.
-          deprecated: true
-        cardLastFourDigits:
-          type: string
-          nullable: true
-          readOnly: true
-          description: XXXXXXXX.
-          deprecated: true
-        cardAlias:
-          type: string
-          nullable: true
-          readOnly: true
-          description: XXXXXX.
-          deprecated: true
         transaction:
           $ref: '#/components/schemas/TransactionInvoiceDto'
         amounts:
@@ -4179,13 +4158,6 @@ components:
           nullable: true
           description: Identificador da transação de pagamento na processadora.
       additionalProperties: false
-    CreditLetterType:
-      enum:
-        - 0
-        - 1
-      type: integer
-      format: int32
-      description: XXXXXXX.
     InstallmentDto:
       type: object
       properties:
@@ -4197,15 +4169,7 @@ components:
           type: number
           format: double
           description: Valor da amortização no contrato.
-        currentBalance:
-          type: number
-          format: double
-          description: XXXXX.
           nullable: true
-        dueBalance:
-          type: number
-          format: double
-          description: XXXXXX.
         dueDate:
           type: string
           format: date-time
@@ -4290,10 +4254,6 @@ components:
           type: string
           format: date-time
           description: Data do último pagamento da proposta.
-        paymentAmount:
-          type: number
-          format: double
-          description: xxxxx
         loanAmount:
           type: number
           format: double
@@ -4302,18 +4262,10 @@ components:
           type: number
           format: double
           description: Taxa de juros mensal da contratação.
-        openingAccountFee:
-          type: number
-          format: double
-          description: xxxxx
         operationCostAmount:
           type: number
           format: double
           description: Custo de processamento da operação.
-        periodicity:
-          type: string
-          nullable: true
-          description: xxxx
         retentionRate:
           type: number
           format: double
@@ -4341,16 +4293,6 @@ components:
         confirmedOffer:
           type: boolean
           description: Retorna se a oferta está confirmada.
-        entryAmount:
-          type: number
-          format: double
-          description: xxxx
-        downPayment:
-          type: number
-          format: double
-          description: xxxxx
-        creditLetterType:
-          $ref: '#/components/schemas/CreditLetterType'
         installments:
           type: array
           items: {$ref: '#/components/schemas/InstallmentDto'}
@@ -4432,7 +4374,7 @@ components:
         documentNumber:
           type: string
           nullable: true
-          description: XXXXX.
+          description: Número do documento de CPF ou CNPJ do titular do cartão.
         paymentStatus:
           $ref: '#/components/schemas/StatementPaymentStatus'
         statementItens:
@@ -4564,7 +4506,7 @@ components:
         paymentOptionId:
           type: integer
           format: int32
-          description: XZXXXXXXX. Condição do parcelamento (Necessário somente nos tipos InstallmentWithEntry/InstallmentWithoutEntry).
+          description: Identificador da opção de pagamento.
           nullable: true
       additionalProperties: false
     PaymentStatusDto:
@@ -4609,7 +4551,7 @@ components:
         value:
           type: number
           format: double
-          description: XXXXX.
+          description: Valor a ser pago na entrada do parcelamento.
         creditOffer:
           $ref: '#/components/schemas/CreditOfferDto'
       additionalProperties: false
