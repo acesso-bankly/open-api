@@ -3847,21 +3847,19 @@ components:
 
     CycleType:
       enum:
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      description: Situação da fatura Open/Future/Closed/Duedate (Atrasado).
-      format: int32
+        - Open
+        - Future
+        - Closed
+        - DueDate (atrasado)
+      type: string
+      description: Situação da fatura.
     StatementPaymentStatus:
       enum:
-        - 1
-        - 2
-        - 3
-      type: integer
-      description: Situação do pagamento da fatura Pending/Paid/PartialPaid.
-      format: int32
+        - Pending
+        - Paid
+        - PartialPaid
+      type: string
+      description: Situação do pagamento da fatura.
     CardDto:
       type: object
       properties:
@@ -3906,13 +3904,12 @@ components:
       additionalProperties: false
     AmountType:
       enum:
-        - 0
-        - 1
-        - 2
-        - 3
-      type: integer
-      format: int32
-      description: Indicador do item de fatura, o qual pode ser NotMapper/Local/Exchange/Billet.
+        - NotMapper
+        - Local
+        - Exchange
+        - Billet
+      type: string
+      description: Indicador do item de fatura.
     AmountInvoiceDto:
       type: object
       properties:
@@ -3929,14 +3926,13 @@ components:
       additionalProperties: false
     FeeType:
       enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      format: int32
-      description: Tipo da taxa NotMapper/Iof/Markup/DailyIof/Interest.
+        - NotMapper
+        - Iof
+        - Markup
+        - DailyIof
+        - Interest
+      type: string
+      description: Tipo da taxa.
     FeeInvoiceDto:
       type: object
       properties:
@@ -4068,28 +4064,23 @@ components:
       additionalProperties: false
     PaymentType:
       enum:
-        - 1
-        - 2
-        - 3
-        - 4
-      type: integer
-      format: int32
-      description: Opção de pagamento, o qual pode ser Cash/Partial/InstallmentWithEntry/InstallmentWithoutEntry.
+        - Cash
+        - Partial
+        - InstallmentWithEntry
+        - InstallmentWithoutEntry
+      type: string
+      description: Opção de pagamento.
     PaymentOptionType:
       enum:
-        - 1
-        - 2
-      type: integer
-      format: int32
-      description: Forma de pagamento (Boleto e XXXXXX).
+        - Boleto
+      type: string
+      description: Forma de pagamento.
     PaymentStatus:
       enum:
-        - 1
-        - 2
-        - 3
-      type: integer
-      format: int32
-      description: Situação do pagamento, o qual pode ser Pending () ou Paid ().
+        - Pending
+        - Paid
+      type: string
+      description: Situação do pagamento.
     InvoicePaymentDto:
       type: object
       properties:
