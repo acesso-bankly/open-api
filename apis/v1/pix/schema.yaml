@@ -885,7 +885,7 @@ paths:
       security:
         - Bearer: []
         
-  /pix/qrcodes:
+  /pix/qrcodes/static/transfer:
     post:
       tags:
         - QR Codes
@@ -1294,6 +1294,7 @@ components:
         city:
           type: string
           nullable: true
+          description: O valor máximo é de <b>15 caracteres</b> para esse campo.
         zipCode:
           type: string
           nullable: true
@@ -1619,7 +1620,7 @@ components:
         recipientName:
           type: string
           nullable: true
-          description: "Nome do recebedor da transação."
+          description: Nome do recebedor da transação. O valor máximo é de <b>25 caracteres</b> para esse campo.
         conciliationId:
           type: string
           nullable: true
