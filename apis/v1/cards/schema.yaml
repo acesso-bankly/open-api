@@ -2402,7 +2402,7 @@ paths:
       summary: Consulta de fatura aberta
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte uma fatura aberta.</p> 
+          <p>Consulte uma fatura aberta por meio do proxy do cartão.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
@@ -2452,10 +2452,10 @@ paths:
     get:
       tags:
       - Gestão de faturas
-      summary: Consulta por ID da fatura
+      summary: Consulta de fatura pelo ID
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte uma fatura específica por meio do seu ID. </p> 
+          <p>Consulte uma fatura específica por meio do seu ID, independentemente do seu status. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
@@ -2480,7 +2480,7 @@ paths:
       summary: Consulta de faturas 
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte as faturas de um cartão.</p> 
+          <p>Consulte as faturas do cartão de um determinado período de tempo.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
         </div>
       parameters:
@@ -2536,11 +2536,11 @@ paths:
     post:
       tags:
         - Gestão de faturas
-      summary: Geração de um pagamento
+      summary: Geração de um boleto de pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Gere o pagamento de uma fatura.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <p>Gere um boleto de pagamento de uma fatura específia, por meio do seu ID.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
         </div>
       parameters:
         - $ref: "#/components/parameters/StatementId"
@@ -2566,12 +2566,12 @@ paths:
   /cards/invoices/{statementId}/payment-options:
     get:
       tags:
-      - Faturas de cartão
-      summary: Consulta das opções de pagamento
+      - Gestão de faturas
+      summary: Consulta de opções de pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte as opções de pagamento.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <p>Consulte as opções de pagamento de uma fatura.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
         </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
@@ -2591,23 +2591,17 @@ paths:
   /cards/invoices/{statementId}/installments:
     post:
       tags:
-      - Faturas de cartão
-      summary: XXXXXX
+      - Gestão de faturas
+      summary: Simulação de parcelamentos de uma fatura
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte as opções de pagamento.</p> 
+          <p>Simule os possíveis parcelamentos de uma fatura e seus valores.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
-      requestBody:
-        content:
-          application/json-patch+json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
-          application/json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
-          text/json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
-          application/+json: {schema: {$ref: "#/components/schemas/CreateSimulationOfInstallmentsCommand"}}
       responses:
         '202':
           description: Solicitação aceita com sucesso.
@@ -4201,7 +4195,7 @@ components:
         externalOperationId:
           type: string
           nullable: true
-          description: Identificador externo para a proposta.
+          description: Identificador externo da operação.
         externalOfferId:
           type: string
           nullable: true
@@ -4209,7 +4203,7 @@ components:
         externalOfferType:
           type: string
           nullable: true
-          description: Tipo externo da proposta retornada, o qual pode ser variable ou fixed.
+          description: Tipo da proposta externa retornada, o qual pode ser variable ou fixed.
         amountCurrency:
           type: string
           nullable: true
@@ -4524,16 +4518,6 @@ components:
           type: string
           nullable: true
           description: Identificador da forma de pagamento.
-      additionalProperties: false
-    CreateSimulationOfInstallmentsCommand:
-      type: object
-      properties:
-        minTerm:
-          type: integer
-          format: int32
-        maxTerm:
-          type: integer
-          format: int32
       additionalProperties: false
     PaymentOptionsInstallmentsDto:
       type: object
