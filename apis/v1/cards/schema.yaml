@@ -2480,7 +2480,7 @@ paths:
       summary: Consulta de faturas 
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte as faturas do cartão de um determinado período de tempo.</p> 
+          <p>Consulte as faturas do cartão de um determinado período.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
         </div>
       parameters:
@@ -2803,7 +2803,7 @@ components:
           description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
         documentNumber:
           type: string
-          description: Número do documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
+          description:  Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.   
       required:
         - documentNumber
         - password
@@ -4194,7 +4194,7 @@ components:
         externalOfferType:
           type: string
           nullable: true
-          description: Tipo da proposta externa retornada, o qual pode ser variable ou fixed.
+          description: Tipo da proposta externa retornada, o qual pode ser <code>variable</code> ou <code>fixed</code>.
         amountCurrency:
           type: string
           nullable: true
@@ -4202,7 +4202,7 @@ components:
         amountDue:
           type: number
           format: double
-          description: Valor contratado da proposta mais o valor total de juros (Pode ou não conter TAC).
+          description: Valor contratado da proposta mais o valor total de juros (pode ou não conter TAC).
         annualCet:
           type: number
           format: double
@@ -4277,7 +4277,7 @@ components:
           description: Valor percentual do IOF, se aplicável.
         confirmedOffer:
           type: boolean
-          description: Retorna se a oferta está confirmada.
+          description: Informa se a oferta está confirmada.
         installments:
           type: array
           items: {$ref: '#/components/schemas/InstallmentDto'}
@@ -4347,7 +4347,7 @@ components:
         amountMinimal:
           type: number
           format: double
-          description: Valor mínimo a ser pago da fatura. Apenas é calculado após o fechamento da fatura..
+          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
           nullable: true
         balance:
           type: number
@@ -4444,7 +4444,7 @@ components:
         amountMinimal:
           type: number
           format: double
-          description: Valor mínimo a ser pago da fatura, só é calculado após o fechamento da fatura.
+          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
         balance:
           type: number
           format: double
@@ -4487,7 +4487,7 @@ components:
         value:
           type: number
           format: double
-          description: Valor a ser pago, caso o tipo de pagamento escolhido tenha sido Partial.
+          description: Valor a ser pago, caso o tipo de pagamento escolhido tenha sido <code>Partial</code>.
         paymentOptionId:
           type: integer
           format: int32
@@ -4498,9 +4498,7 @@ components:
       type: object
       properties:
         status:
-          type: string
-          nullable: true
-          description: Situação do pagamento, a qual pode ser Pending ou Paid.
+          $ref: "#/components/schemas/PaymentStatus"
         digitableLine:
           type: string
           nullable: true
