@@ -92,6 +92,59 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
+  /accounts/{accountNumber}/income-report:
+    get:
+      tags:
+        - Informe de Rendimentos
+      summary: Obtenha os dados do Informe de Rendimento de uma conta de pagamento.
+      description: Opcionalmente você pode obter informando o ano calendário desejado, o padrão é sempre o ano vigente.
+      operationId: GetIncomeReportByAccountNumberAsync
+      parameters:
+        - name: accountNumber
+          in: path
+          description: Número da conta.
+          required: true
+          schema:
+            type: string
+            description: Número da conta.
+            nullable: true
+        - name: calendar
+          in: query
+          description: Ano Calendário, por padrão é o ano vigente da declaração do IR.
+          schema:
+            type: integer
+            description: Ano Calendário, por padrão é o ano vigente da declaração do
+              IR.
+            format: int32
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetIncomeReportResponse"
+        '204':
+          description: Recurso encontrado, mas não existe conteúdo na sua requisição.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+        - Bearer: []
+
   /customers/{documentNumber}/accounts:
     get:
       tags:
@@ -623,7 +676,132 @@ components:
         nullable: true
   
   schemas:
-    
+    PaymentAccountHolder:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          "$ref": "#/components/schemas/Document"
+      additionalProperties: false
+      
+    Payer:
+      type: object
+      properties:
+        source:
+          "$ref": "#/components/schemas/Holder"
+        group:
+          type: string
+          nullable: true
+        currencies:
+          type: object
+          additionalProperties:
+            "$ref": "#/components/schemas/Currency"
+          nullable: true
+        netIncome:
+          type: object
+          additionalProperties:
+            "$ref": "#/components/schemas/NetIncome"
+          nullable: true
+      additionalProperties: false
+
+    NetIncome:
+      type: object
+      properties:
+        year:
+          type: integer
+          format: int32
+        cost:
+          "$ref": "#/components/schemas/Cost"
+        amount:
+          "$ref": "#/components/schemas/Amount"
+        fiat:
+          "$ref": "#/components/schemas/FiatBalance"
+      additionalProperties: false
+
+    FiatBalance:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          nullable: true
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Cost:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          nullable: true
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Currency:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        balances:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Balance"
+          nullable: true
+      additionalProperties: false
+
+    IncomeReportResponse:
+      type: object
+      properties:
+        holder:
+          "$ref": "#/components/schemas/PaymentAccountHolder"
+        account:
+          "$ref": "#/components/schemas/Account"
+        payers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Payer"
+          nullable: true
+      additionalProperties: false
+
+    GetIncomeReportResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/IncomeReportResponse"
+        links:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false
+
+
     CreatePocketRequest:
       required:
       - currency
