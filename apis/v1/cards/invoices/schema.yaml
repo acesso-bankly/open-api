@@ -308,6 +308,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Número do documento do titular do cartão.
 
     StatementId:
       name: statementId
@@ -316,6 +317,7 @@ components:
       schema:
         type: integer
         format: int32
+        description: Identificador único da fatura.
 
     Proxy:
       name: proxy
@@ -324,6 +326,8 @@ components:
       schema:
         type: string
         nullable: true
+        description: Identificador do cartão utilizado na transação.
+  
   schemas:
     CycleType:
       enum:
