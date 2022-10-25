@@ -677,6 +677,7 @@ components:
   schemas:
     PaymentAccountHolder:
       type: object
+      description: Dados do títular da conta.
       properties:
         type:
           type: string
@@ -718,6 +719,7 @@ components:
 
     NetIncome:
       type: object
+      description: Detalhes sobre os rendimentos líquidos do cliente.
       properties:
         year:
           type: integer

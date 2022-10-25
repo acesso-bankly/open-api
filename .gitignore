@@ -2,3 +2,4 @@ node_modules
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
 .vs/open-api/v17/.suo
+apis/v1/accounts/json.json
