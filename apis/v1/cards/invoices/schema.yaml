@@ -162,7 +162,7 @@ paths:
       summary: Geração de uma forma de pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Gere um boleto de pagamento de uma fatura específia, por meio do seu ID.</p> 
+          <p>Gere uma forma de pagamento de uma fatura específia, por meio do seu ID.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
       parameters:
