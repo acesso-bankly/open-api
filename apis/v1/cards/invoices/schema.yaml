@@ -60,7 +60,16 @@ paths:
       responses:
         '200':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, application/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, text/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}}
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/InvoiceDto"
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/InvoiceDto"
+            text/json:
+              schema: 
+                $ref: "#/components/schemas/InvoiceDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '404':
@@ -82,17 +91,32 @@ paths:
       - name: initialDate
         in: query
         required: true
-        schema: {type: string, description: Data inicial, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano), format: date-time}
+        schema:
+          type: string
+          description: Data inicial, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano).
+          format: date-time
       - name: finalDate
         in: query
         required: true
-        schema: {type: string, description: Data final, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano), format: date-time}
+        schema:
+          type: string
+          description: Data final, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano).
+          format: date-time
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
       responses:
         '200':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, application/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}, text/json: {schema: {$ref: "#/components/schemas/PreviousResumeInvoicesDto"}}}
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
         '204':
           description: Nenhuma fatura encontrada.
         '400':
@@ -116,7 +140,16 @@ paths:
       responses:
         '200':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, application/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, text/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}}
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/CreditLimitDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditLimitDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/CreditLimitDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '404':
@@ -138,14 +171,31 @@ paths:
         - $ref: "#/components/parameters/authorization"
       requestBody:
         content:
-          application/json-patch+json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
-          application/json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
-          text/json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
-          application/+json: {schema: {$ref: "#/components/schemas/CreatePaymentCommand"}}
+          application/json-patch+json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentCommand"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentCommand"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentCommand"
+          application/+json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentCommand"
       responses:
         '202':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, application/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, text/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}}
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/PaymentStatusDto"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentStatusDto"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/PaymentStatusDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
@@ -168,7 +218,22 @@ paths:
       responses:
         '202':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}}
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
@@ -191,7 +256,22 @@ paths:
       responses:
         '202':
           description: Solicitação aceita com sucesso.
-          content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}}
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
