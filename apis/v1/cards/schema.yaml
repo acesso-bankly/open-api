@@ -2403,7 +2403,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte uma fatura aberta por meio do proxy do cartão.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
@@ -2424,29 +2424,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/InvoiceDto"
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/Error"
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-            text/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '404':
-          description: Recurso não encontrado.
-          content: 
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
-            application/json:
-              schema: 
-                $ref: "#/components/schemas/ProblemDetails"
-            text/json:
-              schema:
-                $ref: "#/components/schemas/ProblemDetails"
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
 
   /cards/invoices/{statementId}:
     get:
@@ -2456,7 +2436,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte uma fatura específica por meio do seu ID, independentemente do seu status. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
@@ -2467,11 +2447,9 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, application/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}, text/json: {schema: {$ref: "#/components/schemas/InvoiceDto"}}}
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '404':
-          description: Recurso não encontrado.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
 
   /cards/invoices/document/{documentNumber}/proxy/{proxy}:
     get:
@@ -2481,7 +2459,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte as faturas do cartão de um determinado período.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
@@ -2489,11 +2467,11 @@ paths:
       - name: initialDate
         in: query
         required: true
-        schema: {type: string, description: Data inicial para a consulta, format: date-time}
+        schema: {type: string, description: Data inicial, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano), format: date-time}
       - name: finalDate
         in: query
         required: true
-        schema: {type: string, description: Data final para a consulta, format: date-time}
+        schema: {type: string, description: Data final, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano), format: date-time}
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
       responses:
@@ -2503,8 +2481,7 @@ paths:
         '204':
           description: Nenhuma fatura encontrada.
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
 
   /cards/invoices/document/{documentNumber}/proxy/{proxy}/limits:
     get:
@@ -2514,7 +2491,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte o limite de crédito do cartão.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
@@ -2526,21 +2503,19 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, application/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}, text/json: {schema: {$ref: "#/components/schemas/CreditLimitDto"}}}
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '404':
-          description: Recurso não encontrado.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
       
   /cards/invoices/{statementId}/payment:
     post:
       tags:
         - Gestão de faturas
-      summary: Geração de um boleto de pagamento
+      summary: Geração de uma forma de pagamento
       description: |
         <div class="bkly-ref-description">
           <p>Gere um boleto de pagamento de uma fatura específia, por meio do seu ID.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
       parameters:
         - $ref: "#/components/parameters/StatementId"
@@ -2557,11 +2532,9 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, application/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}, text/json: {schema: {$ref: "#/components/schemas/PaymentStatusDto"}}}
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
-          description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
   /cards/invoices/{statementId}/payment-options:
     get:
@@ -2571,7 +2544,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte as opções de pagamento de uma fatura.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: </span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
@@ -2582,11 +2555,9 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsDto"}}}}
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
-          description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
   /cards/invoices/{statementId}/installments:
     post:
@@ -2596,7 +2567,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Simule os possíveis parcelamentos de uma fatura e seus valores.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
       - $ref: "#/components/parameters/StatementId"
@@ -2607,11 +2578,9 @@ paths:
           description: Solicitação aceita com sucesso.
           content: {text/plain: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, application/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}, text/json: {schema: {type: array, items: {$ref: "#/components/schemas/PaymentOptionsInstallmentsDto"}}}}
         '400':
-          description: Existem erros no preenchimento da requisição.
-          content: {text/plain: {schema: {$ref: "#/components/schemas/Error"}}, application/json: {schema: {$ref: "#/components/schemas/Error"}}, text/json: {schema: {$ref: "#/components/schemas/Error"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
-          description: 'Not Acceptable'
-          content: {text/plain: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, application/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}, text/json: {schema: {$ref: "#/components/schemas/ProblemDetails"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
 
 security:
@@ -4366,58 +4335,7 @@ components:
           type: array
           items: {$ref: '#/components/schemas/ItemInvoiceDto'}
           nullable: true
-        paymentOptions:
-          type: array
-          items: {$ref: '#/components/schemas/PaymentOptionsDto'}
-          nullable: true
       additionalProperties: false
-    LayerEnum:
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-      type: integer
-      format: int32
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
-        layer:
-          $ref: '#/components/schemas/LayerEnum'
-        applicationName:
-          type: string
-          nullable: true
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type: string
-          nullable: true
-        title:
-          type: string
-          nullable: true
-        status:
-          type: integer
-          format: int32
-          nullable: true
-        detail:
-          type: string
-          nullable: true
-        instance:
-          type: string
-          nullable: true
-      additionalProperties:
-        type: object
-        additionalProperties: false
     InvoiceResumeDto:
       type: object
       properties:
