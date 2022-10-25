@@ -13,7 +13,7 @@ paths:
   /cards/invoices/document/{documentNumber}/proxy/{proxy}/open:
     get:
       tags:
-        - Gestão de faturas
+        - Consulta de faturas
       summary: Consulta de fatura aberta
       description: |
         <div class="bkly-ref-description">
@@ -46,7 +46,7 @@ paths:
   /cards/invoices/{statementId}:
     get:
       tags:
-      - Gestão de faturas
+      - Consulta de faturas
       summary: Consulta de fatura pelo ID
       description: |
         <div class="bkly-ref-description">
@@ -69,7 +69,7 @@ paths:
   /cards/invoices/document/{documentNumber}/proxy/{proxy}:
     get:
       tags:
-      - Gestão de faturas
+      - Consulta de faturas
       summary: Consulta de faturas 
       description: |
         <div class="bkly-ref-description">
@@ -101,7 +101,7 @@ paths:
   /cards/invoices/document/{documentNumber}/proxy/{proxy}/limits:
     get:
       tags:
-      - Gestão de faturas
+      - Limite de crédito
       summary: Consulta do limite de crédito
       description: |
         <div class="bkly-ref-description">
@@ -125,7 +125,7 @@ paths:
   /cards/invoices/{statementId}/payment:
     post:
       tags:
-        - Gestão de faturas
+        - Pagamento de faturas
       summary: Geração de uma forma de pagamento
       description: |
         <div class="bkly-ref-description">
@@ -154,7 +154,7 @@ paths:
   /cards/invoices/{statementId}/payment-options:
     get:
       tags:
-      - Gestão de faturas
+      - Pagamento de faturas
       summary: Consulta de opções de pagamento
       description: |
         <div class="bkly-ref-description">
@@ -177,7 +177,7 @@ paths:
   /cards/invoices/{statementId}/installments:
     post:
       tags:
-      - Gestão de faturas
+      - Pagamento de faturas
       summary: Simulação de parcelamentos de uma fatura
       description: |
         <div class="bkly-ref-description">

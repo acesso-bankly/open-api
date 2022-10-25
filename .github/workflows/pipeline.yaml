@@ -157,6 +157,10 @@ jobs:
         with:
           rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Invoice to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/cards/invoice/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID_DEV }} --key=${{ secrets.INVOICE_API_README_OAS_ID_DEV }}
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -247,3 +251,8 @@ jobs:
         name: Crypto to Reference to readme.io
         with:
           rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Invoice to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/cards/invoice/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID }} --key=${{ secrets.INVOICE_API_README_OAS_ID }}
