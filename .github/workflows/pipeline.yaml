@@ -160,7 +160,7 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Invoice to Reference to readme.io
         with:
-          rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID_DEV }} --key=${{ secrets.INVOICE_API_README_OAS_ID_DEV }}
+          rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -255,4 +255,4 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Invoice to Reference to readme.io
         with:
-          rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID }} --key=${{ secrets.INVOICE_API_README_OAS_ID }}
+          rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
