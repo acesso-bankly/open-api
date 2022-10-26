@@ -360,9 +360,12 @@ components:
           nullable: true
           description: Apelido dado ao cartão.
         cardType:
+          enum:
+            - Physical
+            - Virtual
           type: string
           nullable: true
-          description: Tipo do cartão, o qual pode ser Physical ou Virtual.
+          description: Tipo do cartão.
       additionalProperties: false
     TransactionInvoiceDto:
       type: object
@@ -676,9 +679,12 @@ components:
           nullable: true
           description: Identificador externo da proposta.
         externalOfferType:
+          enum:
+            - Variable
+            - Fixed
           type: string
           nullable: true
-          description: Tipo da proposta externa retornada, o qual pode ser <code>variable</code> ou <code>fixed</code>.
+          description: Tipo da proposta externa retornada.
         amountCurrency:
           type: string
           nullable: true
