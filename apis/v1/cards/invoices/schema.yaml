@@ -23,8 +23,8 @@ paths:
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
         - $ref: "#/components/parameters/Proxy"
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       responses:
         '200':
           description: Solicitação aceita com sucesso.
@@ -281,15 +281,15 @@ components:
       scheme: bearer
       bearerFormat: JWT
   parameters:
-    ApiVersion:
+    apiVersion:
       name: api-version
       in: header
       required: true
       schema:
         type: string
         
-    Authorization:
-      name: authorization
+    authorization:
+      name: Authorization
       in: header
       required: true
       schema:
