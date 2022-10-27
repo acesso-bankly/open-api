@@ -55,13 +55,7 @@ paths:
         '200':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/InvoiceDto"
             application/json:
-              schema: 
-                $ref: "#/components/schemas/InvoiceDto"
-            text/json:
               schema: 
                 $ref: "#/components/schemas/InvoiceDto"
         '400':
@@ -102,14 +96,8 @@ paths:
         '200':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
             application/json:
               schema:
-                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
-            text/json: 
-              schema: 
                 $ref: "#/components/schemas/PreviousResumeInvoicesDto"
         '204':
           description: Nenhuma fatura encontrada.
@@ -135,13 +123,7 @@ paths:
         '200':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/CreditLimitDto"
             application/json:
-              schema:
-                $ref: "#/components/schemas/CreditLimitDto"
-            text/json:
               schema:
                 $ref: "#/components/schemas/CreditLimitDto"
         '400':
@@ -165,29 +147,14 @@ paths:
         - $ref: "#/components/parameters/authorization"
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: "#/components/schemas/CreatePaymentCommand"
           application/json:
-            schema:
-              $ref: "#/components/schemas/CreatePaymentCommand"
-          text/json:
-            schema:
-              $ref: "#/components/schemas/CreatePaymentCommand"
-          application/+json:
             schema:
               $ref: "#/components/schemas/CreatePaymentCommand"
       responses:
         '202':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/PaymentStatusDto"
             application/json:
-              schema:
-                $ref: "#/components/schemas/PaymentStatusDto"
-            text/json:
               schema:
                 $ref: "#/components/schemas/PaymentStatusDto"
         '400':
@@ -213,17 +180,7 @@ paths:
         '202':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PaymentOptionsDto"
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PaymentOptionsDto"
-            text/json:
               schema:
                 type: array
                 items:
@@ -251,17 +208,7 @@ paths:
         '202':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
-            text/json:
               schema:
                 type: array
                 items:
