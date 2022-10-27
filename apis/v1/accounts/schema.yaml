@@ -740,11 +740,11 @@ components:
           type: string
         document:
           $ref: "#/components/schemas/Document"
-        age:
+        birthDate:
           minLength: 1
-          type: integer
-          description: Idade do beneficiário.
-          format: int32
+          type: string
+          description: Data de nascimento do beneficiário.
+          format: date-time
       additionalProperties: false
     
     PocketTransactionRequest:
