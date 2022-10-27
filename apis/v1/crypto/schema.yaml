@@ -84,7 +84,6 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - $ref: '#/components/parameters/Currency'
         - $ref: '#/components/parameters/Period'
       
@@ -153,9 +152,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
-            
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'         
       requestBody:
         content:
           application/json:
@@ -229,7 +226,6 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - name: orderId
           in: path
           required: true
@@ -308,17 +304,9 @@ components:
           enum:
             - BUY
             - SELL
-        companyKey:
-          type: string
-          description: Chave que identifica o parceiro dentro do Bankly.
-        currency:
-          type: string
-          description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
       required:
         - "account"
         - "typeOrder"
-        - "companyKey"
-        - "currency"
       
     CreateOrderExecutions:
       type: object
