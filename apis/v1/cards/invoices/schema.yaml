@@ -23,19 +23,13 @@ paths:
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
         - $ref: "#/components/parameters/Proxy"
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/ApiVersion"
+        - $ref: "#/components/parameters/Authorization"
       responses:
         '200':
           description: Solicitação aceita com sucesso.
           content:
-            text/plain:
-              schema:
-                $ref: "#/components/schemas/InvoiceDto"
             application/json:
-              schema:
-                $ref: "#/components/schemas/InvoiceDto"
-            text/json:
               schema:
                 $ref: "#/components/schemas/InvoiceDto"
         '400':
@@ -287,15 +281,15 @@ components:
       scheme: bearer
       bearerFormat: JWT
   parameters:
-    apiVersion:
+    ApiVersion:
       name: api-version
       in: header
       required: true
       schema:
         type: string
         
-    authorization:
-      name: Authorization
+    Authorization:
+      name: authorization
       in: header
       required: true
       schema:
