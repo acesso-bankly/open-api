@@ -861,17 +861,19 @@ components:
       additionalProperties: false
     CreatePaymentCommand:
       type: object
+      required:
+        - paymentType
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
           type: number
           format: double
-          description: Valor a ser pago, caso o tipo de pagamento escolhido tenha sido <code>Partial</code>.
+          description: Valor a ser pago. Este campo é obrigatório, caso o tipo de pagamento escolhido tenha sido <code>Partial</code>.
         paymentOptionId:
           type: integer
           format: int32
-          description: Identificador da opção de pagamento.
+          description: Identificador da opção de pagamento. Este campo é obrigatório, caso o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
           nullable: true
       additionalProperties: false
     PaymentStatusDto:
