@@ -161,7 +161,8 @@ paths:
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
       requestBody:
@@ -274,7 +275,7 @@ components:
            $ref: '#/components/schemas/ProviderMetadata'         
         image:
           type: string
-          description: Arquivo da imagem.  A selfie deve ser enviada em formato JWT e as imagens dos documentos devem apresentar o formato .jpeg, .jpg ou .png. Seu tamanho não deve ultrapassar 800KB.
+          description: Arquivo da imagem no formato .jpeg, .jpg ou .png. Porém, quando o <code>provider</code> informar o valor UNICO_CHECK, a <b>selfie</b> deve ser enviada em formato encrypted ou JWT, obrigatoriamente.
           format: binary
       required:
         - documentType
@@ -336,7 +337,7 @@ components:
         status:
           $ref: '#/components/schemas/OcrStatus'
         identifiedDocumentType:
-          description: Tipo do documento detectado
+          description: Tipo do documento detectado.
           type: string
           nullable: true
         idNumber:
@@ -546,7 +547,7 @@ components:
         - BANKLY
 
     ProviderMetadata:
-      description: Campo obrigatório <b>apenas</b. se o <code>provider</code> apresentar o valor "UNICO_CHECK".
+      description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
       type: object
       properties:
         isLastDocument:
@@ -554,7 +555,7 @@ components:
           description: Esse campo deve apresentar o valor TRUE.
         encrypted:
           type: string
-          description: XXX
+          description: Esse campo deve ser preenchido com o valor do campo <code>encrypted</code>, retornado ao efetuar uma captura de imagem com sucesso utilizando o SDK da Unico. 
       required:
         - "isLastDocument" 
         - "encrypted"
