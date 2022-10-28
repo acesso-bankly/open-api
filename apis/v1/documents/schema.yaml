@@ -275,7 +275,7 @@ components:
            $ref: '#/components/schemas/ProviderMetadata'         
         image:
           type: string
-          description: Arquivo da imagem no formato .jpeg, .jpg ou .png. Porém, quando o <code>provider</code> informar o valor UNICO_CHECK, a <b>selfie</b> deve ser enviada em formato encrypted ou JWT, obrigatoriamente.
+          description: Arquivo da imagem no formato .jpeg, .jpg ou .png. 
           format: binary
       required:
         - documentType
