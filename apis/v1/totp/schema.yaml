@@ -1,60 +1,14 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: Autenticação
+  title: TOTP
 servers:
-  - url: 'https://login.sandbox.bankly.com.br'
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
-  /connect/token:
-    post:
-      tags:
-        - Token 
-      summary: Token de acesso
-      description: |
-        <div class="bkly-ref-description">
-          <p>Obtenha um token de acesso para a API desejada.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
-        </div>
-      operationId: PostAuth
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AuthForm'
-      responses:
-        '200':
-          description: Token de acesso gerado com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AuthResponse'
-              examples:
-                authResponse:
-                  value:
-                    access_token: '{{JWT}}'
-                    expires_in: 3600
-                    token_type: Bearer
-                    scope: '{{requested scope}}'
-                  summary: Exemplo de sucesso 
-        '400':
-          description: Há algum problema com a sua requisição.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-              examples:
-                authError:
-                  value: 
-                    error: "invalid_credentials"
-                  summary: Exemplo de erro
-  
   /totp:
     post:
       tags:
-        - TOTP 
+        - Validação TOTP 
       summary: Geração do hash e do código numérico
       description: |
         <div class="bkly-ref-description">
@@ -108,7 +62,7 @@ paths:
         - Bearer: []
     patch:
       tags:
-        - TOTP 
+        - Validação TOTP 
       summary: Validação do hash e do código numérico
       description: |
         <div class="bkly-ref-description">

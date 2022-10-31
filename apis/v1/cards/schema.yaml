@@ -10,6 +10,7 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
+  
   /cards/batches/:
     post:
       tags:
@@ -956,7 +957,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
+          description: Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
@@ -2373,7 +2374,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento do cliente (CPF ou CNPJ).
+          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
         - name: contract
@@ -2393,6 +2394,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
 
 security:
   - bearerAuth: []
@@ -2416,7 +2418,24 @@ components:
       in: header
       required: true
       schema:
-        type: string        
+        type: string 
+
+    DocumentNumber:
+      name: documentNumber
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
+    Proxy:
+      name: proxy
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
   schemas:
     createCardsInLotRequest:
       type: object
@@ -2558,7 +2577,7 @@ components:
           description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informar somente os números e o tamanho máximo é de 14 caracteres).   
+          description:  Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.   
       required:
         - documentNumber
         - password
@@ -2735,7 +2754,7 @@ components:
           description: Identificador da companhia.
         documentNumber:
           type: string
-          description: Documento do cliente (CPF/CNPJ).
+          description: Número do documento do cliente (CPF/CNPJ).
         activateCode:
           type: string
           description: Código de ativação do cartão.
@@ -3026,7 +3045,7 @@ components:
           description: Identificador do programa que será vinculado ao cartão.
         documentNumber:
           type: string
-          description: Número de documento (CPF ou CNPJ). Informe somente números. 
+          description: Número do documento (CPF ou CNPJ). Informe somente números. 
         profession:
           type: string
           description: Profissão do cliente.
@@ -3522,7 +3541,7 @@ components:
                 description: Grau de parentesco com o titular do cartão.
               documentNumber:
                 type: string
-                description: Documento do recebedor do cartão.
+                description: Número do documento do recebedor do cartão.
               attempts:
                 type: number
                 description: Quantidade de tentativas de entrega.
@@ -3598,7 +3617,7 @@ components:
       type: string
       enum:
         - GooglePay
-      
+
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

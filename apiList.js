@@ -11,7 +11,7 @@ module.exports = [
 	"helpers",
 	"holders",
 	"limits",
-	"oauth",
+	"totp",
 	"paybill",
 	"pix",
 	"ted"

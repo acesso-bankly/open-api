@@ -5,7 +5,7 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
-  /crypto-price/{currency}/prices:
+  /cryptos/prices:
     get:
       tags:
         - Operações com criptomoedas 
@@ -17,7 +17,7 @@ paths:
            <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: '#/components/parameters/Currency'
       responses:
@@ -43,12 +43,7 @@ paths:
               schema:
                 type: string
         '406': 
-          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -70,7 +65,7 @@ paths:
       security:
         - Bearer: []
   
-  /crypto-price/{currency}/graphs/{period}:
+  /cryptos/graphs:
     get:
       tags:
         - Operações com criptomoedas  
@@ -82,12 +77,10 @@ paths:
           <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - $ref: '#/components/parameters/Currency'
-        - $ref: '#/components/parameters/Period'
-      
+        - $ref: '#/components/parameters/Period'  
       responses:
         '200':
           description: Recurso encontrado.
@@ -111,12 +104,7 @@ paths:
               schema:
                 type: string
         '406': 
-          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -138,7 +126,7 @@ paths:
       security:
         - Bearer: []
 
-  /crypto-order/orders:
+  /cryptos/orders:
     post:
       tags:
         - Operações com criptomoedas  
@@ -150,18 +138,15 @@ paths:
           <span class="bkly-ref-scope-tag">scope: crypto.create</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
-            
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'         
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateOrder'
-
       responses:
         '200':
           description: Recurso criado.
@@ -185,12 +170,7 @@ paths:
               schema:
                 type: string
         '406': 
-          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -212,7 +192,7 @@ paths:
       security:
         - Bearer: []
 
-  /crypto-order/orders/{orderId}/executions:
+  /cryptos/orders/{orderId}/executions:
     post:
       tags:
         - Operações com criptomoedas  
@@ -223,26 +203,22 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: crypto.create</span>
         </div>
-
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - name: orderId
           in: path
           required: true
           description: Valor retornado no campo <code>entityId</code> do endpoint de Criação de ordem de compra e venda de criptomoedas.
           schema:
-            type: string
-      
+            type: string  
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateOrderExecutions'
-
       responses:
         '200':
           description: Recurso criado.
@@ -266,12 +242,7 @@ paths:
               schema:
                 type: string
         '406': 
-          description: A solicitação contém um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -289,8 +260,7 @@ paths:
               schema:
                 type: string 
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
-      
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'     
       security:
         - Bearer: []
 
@@ -308,17 +278,9 @@ components:
           enum:
             - BUY
             - SELL
-        companyKey:
-          type: string
-          description: Chave que identifica o parceiro dentro do Bankly.
-        currency:
-          type: string
-          description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
       required:
         - "account"
         - "typeOrder"
-        - "companyKey"
-        - "currency"
       
     CreateOrderExecutions:
       type: object
@@ -507,7 +469,7 @@ components:
   parameters:
     Currency:
       name: currency
-      in: path
+      in: query
       description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
       required: true
       schema:
@@ -515,7 +477,7 @@ components:
 
     Period:
       name: period
-      in: path
+      in: query
       description: "Informe o período que deseja exibir."
       required: true
       schema: 
