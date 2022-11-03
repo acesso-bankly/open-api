@@ -16,6 +16,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
            <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
@@ -76,6 +83,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: crypto.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
@@ -313,7 +327,7 @@ components:
         currency:
           type: string
           nullable: true
-          description: Código da criptomoeda.
+          description: Código da criptomoeda. 
         typeOrder:
           type: string
           nullable: true
@@ -438,7 +452,7 @@ components:
         currency:
           type: string
           nullable: true
-          description: Código da criptomoeda.
+          description: Código da criptomoeda. 
       additionalProperties: false
     
     ReferenceTax:
@@ -470,7 +484,7 @@ components:
     Currency:
       name: currency
       in: query
-      description: "Informe o código da criptomoeda a ser consultada. Exemplo: BTC para bitcoin."
+      description: "Informe o código da criptomoeda a ser consultada. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas. Exemplo: BTC para bitcoin."
       required: true
       schema:
         type: string 
@@ -478,7 +492,7 @@ components:
     Period:
       name: period
       in: query
-      description: "Informe o período que deseja exibir."
+      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas.
       required: true
       schema: 
         enum:
