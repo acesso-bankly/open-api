@@ -155,7 +155,8 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'         
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: '#/components/parameters/Currency'         
       requestBody:
         content:
           application/json:
@@ -221,7 +222,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: orderId
           in: path
           required: true
@@ -288,7 +289,7 @@ components:
           description: Número da conta de pagamento do cliente.
         typeOrder:
           type: string
-          description: "Tipo de ordem (compra ou venda)."
+          description: Tipo de ordem (compra ou venda). Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas.
           enum:
             - BUY
             - SELL
