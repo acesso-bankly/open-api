@@ -8,6 +8,248 @@ info:
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
+  /customers/{documentNumber}/bookmarks/{bookmarkId}/enable:
+    patch:
+      tags:
+        - Gestão de favorecidos
+      summary: Ativação de favorecido para pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
+        </div>
+      operationId: EnableBookmarksForCustomerAsync
+      parameters:
+        - $ref: "#/components/parameters/CustomerDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /customers/{documentNumber}/bookmarks/{bookmarkId}/disable:
+    patch:
+      tags:
+        - Gestão de favorecidos
+      summary: Desativação de favorecido para pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
+        </div>
+      operationId: DisableBookmarksForCustomerAsync
+      parameters:
+        - $ref: "#/components/parameters/CustomerDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "204":
+          description: A requisição foi aceita e está sendo processada.
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /customers/{documentNumber}/bookmarks/{bookmarkId}:
+    get:
+      tags:
+        - Gestão de favorecidos
+      summary: Consulta de um favorecido para pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte um favorecido e suas respectivas contas.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
+        </div>
+      operationId: GetBookmarksForCustomerAsync
+      parameters:
+        - $ref: "#/components/parameters/CustomerDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "200":
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookmarkDetailedResponse"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /customers/{documentNumber}/bookmarks:
+    get:
+      tags:
+        - Gestão de favorecidos
+      summary: Consulta de todos os favorecidos para pessoa física
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os favorecidos cadastrados, independente de seus respectivos status. </p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
+        </div>
+      operationId: ListBookmarksForCustomerAsync
+      parameters:
+      - $ref: "#/components/parameters/CustomerDocumentNumber"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "200":
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookmarkBasicResponse"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  
+  /business/{documentNumber}/bookmarks/{bookmarkId}/enable:
+    patch:
+      tags:
+        - Gestão de favorecidos
+      summary: Ativação de favorecido para pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Ative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
+        </div>
+      operationId: EnableBookmarksForBusinessAsync
+      parameters:
+        - $ref: "#/components/parameters/BusinessDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /business/{documentNumber}/bookmarks/{bookmarkId}/disable:
+    patch:
+      tags:
+        - Gestão de favorecidos
+      summary: Desativação de favorecido para pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Desative um documento (CPF ou CNPJ) para um relacionamento de confiança.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
+        </div>
+      operationId: DisableBookmarksForBusinessAsync
+      parameters:
+        - $ref: "#/components/parameters/BusinessDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "204":
+          description: A requisição foi aceita e está sendo processada.
+          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /business/{documentNumber}/bookmarks/{bookmarkId}:
+    get:
+      tags:
+        - Gestão de favorecidos
+      summary: Consulta de um favorecido para pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte um favorecido e suas respectivas contas.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
+        </div>
+      operationId: GetBookmarksForBusinessAsync
+      parameters:
+        - $ref: "#/components/parameters/BusinessDocumentNumber"
+        - $ref: "#/components/parameters/BookmarkId"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "200":
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookmarkDetailedResponse"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+  /business/{documentNumber}/bookmarks:
+    get:
+      tags:
+        - Gestão de favorecidos
+      summary: Consulta de todos os favorecidos para pessoa jurídica
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte todos os favorecidos cadastrados, independente de seus respectivos status.</p>
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
+        </div>
+      operationId: ListBookmarksForBusinessAsync
+      parameters:
+      - $ref: "#/components/parameters/BusinessDocumentNumber"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        "200":
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BookmarkBasicResponse"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+
   /accounts/{accountNumber}/addressing-keys:
     get:
       tags:
@@ -21,7 +263,7 @@ paths:
         </div>
       operationId: GetAccountEntriesAsync
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - name: accountNumber
           in: path
           required: true
@@ -39,22 +281,22 @@ paths:
           required: true
           schema:
             type: string
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
       responses:
-        '200':
+        "200":
           description: Chave encontrada.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AddressingKey'
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'   
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
-        '503':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/503' 
+                  $ref: "#/components/schemas/AddressingKey"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"   
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"   
+        "503":
+          $ref: "http://localhost:3320/commons/components#/components/responses/503" 
       security:
         - Bearer: []      
 
@@ -70,7 +312,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - name: authorization
           in: header
           required: true
@@ -161,7 +403,7 @@ paths:
       security:
         - Bearer: []
   
-  /pix/claims/{claimId}:complete:
+  /pix/claims/{claimId}/complete:
     patch:
       tags:
         - Reivindicação de chaves
@@ -213,7 +455,7 @@ paths:
       security:
         - Bearer: []
         
-  /pix/claims/{claimId}:cancel:
+  /pix/claims/{claimId}/cancel:
     patch:
       tags:
         - Reivindicação de chaves
@@ -271,7 +513,7 @@ paths:
       security:
         - Bearer: []
   
-  /pix/claims/{claimId}:confirm:
+  /pix/claims/{claimId}/confirm:
     patch:
       tags:
         - Reivindicação de chaves
@@ -503,6 +745,11 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          required: true
+          schema:
+            type: string
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -638,7 +885,7 @@ paths:
       security:
         - Bearer: []
         
-  /pix/qrcodes:
+  /pix/qrcodes/static/transfer:
     post:
       tags:
         - QR Codes
@@ -663,6 +910,11 @@ paths:
           required: true
           schema:
             type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          required: true
+          schema:
+            type: string
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -802,8 +1054,129 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []
+
 components:
+  parameters:
+    BookmarkId:
+      name: bookmarkId
+      description: Identificador único do favorecido.
+      in: path
+      required: true
+      schema:
+        minLength: 1
+        type: string
+    CustomerDocumentNumber:
+      name: documentNumber
+      description: número do CPF do cliente. Informe somente números.
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+    BusinessDocumentNumber:
+      name: documentNumber
+      description: número do CNPJ do cliente. Informe somente números.
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
   schemas:
+    DocumentNumberType:
+      enum:
+          - CPF
+          - CNPJ
+      type: string
+      description: Tipo do documento.
+    Document:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Número do documento do favorecido.
+          nullable: true
+        type:
+          $ref: "#/components/schemas/DocumentNumberType"
+      additionalProperties: false
+    BookmarkContact:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nome de registro ou social do favorecido.
+          nullable: true
+        document:
+          $ref: "#/components/schemas/Document"
+        status:
+          type: string
+          description: Situação da conta favorecida (Enabled - Disabled ou Active - Inactive).
+          nullable: true
+      additionalProperties: false
+    BookmarkBasicResponse:
+      type: object
+      properties:
+        bookmarkId:
+            type: string
+            description: Identificador único do favorecido.
+            nullable: true
+        contact:
+            $ref: "#/components/schemas/BookmarkContact"
+      additionalProperties: false
+    BookmarkAccountType:
+      enum:
+      - Checking
+      - Salary
+      - Savings
+      - Payment
+      type: string
+      description: Tipo de conta.
+    BookmarkBank:
+      type: object
+      properties:
+        ispb:
+          type: string
+          nullable: true
+        code:
+          description: Código do banco.
+          type: string
+          nullable: true
+        name:
+          description: Nome do banco.
+          type: string
+          nullable: true
+      additionalProperties: false
+    BookmarkAccount:
+      type: object
+      properties:
+        branch:
+          description: Nome da agência.
+          type: string
+          nullable: true
+        number:
+          description: Número da conta favorecida.
+          type: string
+          nullable: true
+        type:
+          $ref: "#/components/schemas/BookmarkAccountType"
+        bank:
+          $ref: "#/components/schemas/BookmarkBank"
+      additionalProperties: false
+    BookmarkDetailedResponse:
+      type: object
+      properties:
+        bookmarkId:
+          type: string
+          description: Identificador único do favorecido.
+        contact:
+            $ref: "#/components/schemas/BookmarkContact"
+        accounts:
+            type: array
+            items: {$ref: "#/components/schemas/BookmarkAccount"}
+            nullable: true
+      additionalProperties: false
+
+
     Account:
       required:
         - branch
@@ -921,6 +1294,7 @@ components:
         city:
           type: string
           nullable: true
+          description: O valor máximo é de <b>15 caracteres</b> para esse campo.
         zipCode:
           type: string
           nullable: true
@@ -1246,7 +1620,7 @@ components:
         recipientName:
           type: string
           nullable: true
-          description: "Nome do recebedor da transação."
+          description: Nome do recebedor da transação. O valor máximo é de <b>25 caracteres</b> para esse campo.
         conciliationId:
           type: string
           nullable: true

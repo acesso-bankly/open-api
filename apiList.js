@@ -4,14 +4,16 @@ module.exports = [
 	"cards",
 	"cards/transactions",
 	"cards/credits",
+	"crypto",
 	"documents",
 	"events",
 	"fee",
 	"helpers",
 	"holders",
 	"limits",
-	"oauth",
+	"totp",
 	"paybill",
 	"pix",
 	"ted"
+	
 ]

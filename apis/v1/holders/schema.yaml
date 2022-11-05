@@ -425,8 +425,16 @@ security:
 
 components:
   schemas:
+    BusinessTypeMEIEIEIRELIRequest:
+      description: Tipo da empresa (MEI, EI, EIRELI).
+      type: string
+      enum:
+        - MEI
+        - EI
+        - EIRELI
+
     BusinessType:
-      description: Tipo da empresa (MEI, EI, EIRELLI, LTDA, S.A. ou TS).
+      description: Tipo da empresa (MEI, EI, EIRELI, LTDA, S.A. ou TS).
       type: string
       enum:
         - MEI
@@ -435,6 +443,7 @@ components:
         - LTDA
         - SA
         - TS
+
     BusinessSize:
       description: Porte da empresa (MEI, ME, EPP).
       type: string
@@ -626,7 +635,7 @@ components:
           format: email
           nullable: false
         businessType:
-          $ref: '#/components/schemas/BusinessType'
+          $ref: '#/components/schemas/BusinessTypeMEIEIEIRELIRequest'
         businessSize:
           $ref: '#/components/schemas/BusinessSize'
         businessAddress:
@@ -1037,7 +1046,7 @@ components:
           $ref: '#/components/schemas/Status'
         businessType:
           description: |
-            Tipo da empresa (MEI, EI, EIRELLI, LTDA, S.A.).
+            Tipo da empresa (MEI, EI, EIRELI, LTDA, S.A.).
           $ref: '#/components/schemas/BusinessType'
         businessSize:
           description: |

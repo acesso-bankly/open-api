@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: Gestão de cartões
-  description: >-
+  description: |
     Solicite e gerencie cartões vinculados à conta do seu cliente em poucos
     minutos. Consulte também nossa
     [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre
@@ -10,10 +10,397 @@ info:
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
 paths:
+  
+  /cards/batches/:
+    post:
+      tags:
+        - Cartões No Name
+      summary: Criação de cartão em lote
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie um lote de cartões sem vínculo com uma conta (Cartão No Name).</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
+      operationId: cardCreateCardsInLot
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardsInLotRequest"
+      responses:
+        '202':
+          description: A solicitação foi aceita e o cartão em lote está sendo criado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createCardInLotResponse"
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Program Id must not be empty. ], reasons: [] },
+                              { code: required, message: [ Quantity Cards must not be empty. ], reasons: [] },
+                              { code: required, message: [ Address must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '406':
+          description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 115, message: [ Program does not belong to lot! ], reasons: [] }]
+        '409':
+          description: Requisição em conflito com as regras de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+        '500':
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+          uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+          passthroughBehavior: when_no_match
+          connectionType: VPC_LINK
+          connectionId: m116y5
+          httpMethod: POST
+          type: http
+          requestParameters:
+            integration.request.header.api-version: method.request.header.api-version
+            integration.request.header.Authorization: method.request.header.Authorization
+          responses:
+            '202':
+              statusCode: 202
+            '400':
+              statusCode: 400
+            '401':
+              statusCode: 401
+            '406':
+              statusCode: 406
+            '409':
+              statusCode: 409
+            '500':
+              statusCode: 500
+  
+  /cards/activateCode/{activateCode}/binding/:
+    patch:
+      tags:
+        - Cartões No Name
+      summary: Vinculação do cartão com uma conta bancária
+      description: |
+        <div class="bkly-ref-description">
+          <p>Vincule um cartão a uma conta, para que ele seja ativado e para que seja possível definir uma senha para ele.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
+      operationId: cardbindNoName
+      parameters:
+        - name: activateCode
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código de ativação do cartão (12 caracteres).
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/bindNoNameRequest"
+      responses:
+        '200':
+          description: Vínculo realizado.
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                            { code: required, message: [ Document must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: O cartão não existe.
+        '409':
+          description: Requisição em conflito com as regras de negócio contratadas.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+        '500':
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]   
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{activateCode}/bindNoName
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: PATCH
+        type: http
+        requestParameters:
+          integration.request.path.activateCode: method.request.path.activateCode
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+  /cards/batches/:{lotId}:
+    get:
+      tags:
+        - Cartões No Name
+      summary: Consulta de lote por ID
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha os dados de um lote específico de cartões.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: cardGetLotById
+      parameters:
+        - name: lotId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Id do lote a ser consultado.
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Solicitação recebida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardLotResponse"
+              examples:
+                response:
+                  value:
+                    lotId: "LT01"
+                    quantityOrder: 1000
+                    companyKey: "Acesso"
+                    dateOrder: "2021-06-07T08:30:40"
+                    programId: 1
+                    address:
+                      zipCode: "05402100"
+                      address: Avenida Rebouças
+                      number: "1368"
+                      neighborhood: Pinheiros
+                      complement: Em frente a Wizard
+                      city: São Paulo
+                      state: SP
+                      country: Brasil
+                    cards: [
+                        "2500011000021160417",
+                        "2500011000068618940" 
+                    ]
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                            { code: required, message: [ Document must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Lote não encontrado.
+        '500':
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/{id}
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.path.id: method.request.path.id
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '500':
+            statusCode: 500
+
+  /cards/batches:
+    get:
+      tags:
+        - Cartões No Name
+      summary: Consulta dos lotes
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha os dados de todos os lotes de cartões. </p>  
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.read</span>
+        </div>
+      operationId: cardGetLotsByCompanyKey
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Solicitação recebida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardLotsResponse"
+              examples:
+                response:
+                  value:
+                    lotId: "LT01"
+                    quantityOrder: 1000
+                    companyKey: "Acesso"
+                    dateOrder: "2021-06-07T08:30:40"
+                    programId: 1
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                            { code: required, message: [ Document must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
+                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
+        '401':
+          description: Sem autorização para realizar a solicitação.
+        '404':
+          description: Não foram encontrados lotes para essa company key.              
+        '500':
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/lots/
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: GET
+        type: http
+        requestParameters:
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '204':
+            statusCode: 204      
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '500':
+            statusCode: 500
+  
+
   /cards/virtual:
     post:
       tags:
-      - Criação de cartão
+        - Criação de cartão
       summary: Cartão virtual
       description:  |
         <div class="bkly-ref-description">
@@ -23,8 +410,8 @@ paths:
         </div>  
       operationId: cardCreateVirtualCard
       parameters:
-      - $ref: "#/components/parameters/apiVersion"
-      - $ref: "#/components/parameters/authorization"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       requestBody:
         required: true
         content:
@@ -44,51 +431,51 @@ paths:
                     proxy: "2370021007715002820"
                     activateCode: "A0DDDC0951D1"
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '406':
-            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+          description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: A requisição com os dados enviados já foi realizada e está em processamento.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: A requisição com os dados enviados já foi realizada e está em processamento.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -102,18 +489,18 @@ paths:
           integration.request.header.api-version: method.request.header.api-version
           integration.request.header.Authorization: method.request.header.Authorization
         responses:
-        '202':
-          statusCode: 202
-        '400':
-          statusCode: 400
-        '401':
-          statusCode: 401
-        '406':
-          statusCode: 406
-        '409':
-          statusCode: 409
-        '500':
-          statusCode: 500
+          '202':
+            statusCode: 202
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '406':
+            statusCode: 406
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
   
   /cards/physical:
     post:
@@ -149,51 +536,51 @@ paths:
                     proxy: "2370021007715002820"
                     activateCode: "A0DDDC0951D1"
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '406':
-            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+          description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: A requisição com os dados enviados já foi realizada e está em processamento.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: A requisição com os dados enviados já foi realizada e está em processamento.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -261,51 +648,51 @@ paths:
                     proxy: "2370021007715002820"
                     activateCode: "A0DDDC0951D1"
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '406':
-            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+          description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: A requisição com os dados enviados já foi realizada e está em processamento.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: A requisição com os dados enviados já foi realizada e está em processamento.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -376,51 +763,51 @@ paths:
                     proxy: "2370021007715002820"
                     activateCode: "A0DDDC0951D1"
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Card Name must not be empty ], reasons: [] }, { code: conflict, message: [ Alias is not in the correct format ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '406':
-            description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
+          description: Quando a requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 202, message: [ Account does not belong to the customer! ], reasons: [] }]
         '409':
-            description: A requisição com os dados enviados já foi realizada e está em processamento.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: A requisição com os dados enviados já foi realizada e está em processamento.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
   
   /cards/{proxy}:
     get:
@@ -498,42 +885,42 @@ paths:
                     isPre: true
                     isPos: false
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Cartão não existente.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -577,7 +964,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
+          description: Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
           schema:
             type: string
         - $ref: "#/components/parameters/apiVersion"
@@ -641,42 +1028,42 @@ paths:
                       isPre: true
                       isPos: false
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '404':
           description: Não há cartões criados para o documento fornecido.
         '401':
           description: Sem autorização para realizar a solicitação.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -784,42 +1171,42 @@ paths:
                       isPre: true
                       isPos: false
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '204':
           description: Não há cartões criados para o código de ativação fornecido.
         '401':
           description: Sem autorização para realizar a solicitação.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -938,42 +1325,42 @@ paths:
                       isPre: true
                       isPos: false
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Não há cartões criados para a conta fornecida.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1042,42 +1429,42 @@ paths:
                     cvv: "000"
                     expirationDate: 05/09
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Cartão não existente.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1092,18 +1479,18 @@ paths:
           integration.request.header.api-version: method.request.header.api-version
           integration.request.header.Authorization: method.request.header.Authorization
         responses:
-        '200':
-          statusCode: 200
-        '400':
-          statusCode: 400
-        '401':
-          statusCode: 401
-        '404':
-          statusCode: 404
-        '409':
-          statusCode: 409
-        '500':
-          statusCode: 500  
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500  
   
   /cards/{proxy}/password:
     patch:
@@ -1135,42 +1522,42 @@ paths:
         '200':
           description: Alteração de senha realizada.
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 6 characters. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 6 characters. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não exisitir.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 029, message: [ The card is in the process of being created ], reasons: [] }]
         '500':
-            description:  Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description:  Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1229,43 +1616,43 @@ paths:
         '200':
           description: Ativação foi realizada.
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
-                               { code: required, message: [ Activate Code must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
+                              { code: required, message: [ Activate Code must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não existir.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1323,42 +1710,42 @@ paths:
         '200':
           description: O status foi alterado com sucesso.
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: conflict, message: [ Error converting value Cancel to type Core.Card.Domain.Shared.Types.CardStatus. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: conflict, message: [ Error converting value Cancel to type Core.Card.Domain.Shared.Types.CardStatus. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não exisitir.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1389,7 +1776,7 @@ paths:
   /cards/{proxy}/contactless:
     patch:
       tags:
-      - Status do cartão
+        - Status do cartão
       summary: Configuração do contactless
       description: |
         <div class="bkly-ref-description">
@@ -1414,42 +1801,42 @@ paths:
         '200':
           description: Alteração realizada com sucesso.
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: conflict, message: [ The value ok is not valid. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: conflict, message: [ The value ok is not valid. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não existir.
         '409':
-            description: Requisição em conflito com as regras de negócio contratado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+          description: Requisição em conflito com as regras de negócio contratado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1504,29 +1891,29 @@ paths:
         '204':
           description: Não foram encontrados lotes.              
         '400':
-            description: "Existem erros no preenchimento da requisição."
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: "Existem erros no preenchimento da requisição."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1637,29 +2024,29 @@ paths:
         '204':
           description: Não há transações para o cartão fornecido.
         '400':
-            description: Existem erros no preenchimento da requisição.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ api-version must not be empty. ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1736,16 +2123,16 @@ paths:
         '404':
           description: Rastreio de cartão não existente.
         '500':
-            description: Ocorrência de erro inesperado.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/trackingErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          description: Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/trackingErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1801,16 +2188,16 @@ paths:
         '201':
           description: Endereço cadastrado com sucesso.
         '400':
-            description: Não é possível alterar o endereço, pois o seu cartão não está em custódia.
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/cardErrorResponse"
-                examples:
-                  response:
-                    value:
-                      reference: https://bankly.readme.io/reference
-                      errors: [{ code: required, message: [ Address must not be empty ], reasons: [] }, { code: conflict, message: [ Tracking Status not allowed to update address ], reasons: [] }]
+          description: Não é possível alterar o endereço, pois o seu cartão não está em custódia.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: required, message: [ Address must not be empty ], reasons: [] }, { code: conflict, message: [ Tracking Status not allowed to update address ], reasons: [] }]
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
@@ -1848,7 +2235,13 @@ paths:
       tags:
         - Wallets
       summary: Geração de token
-      description: Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.
+      description: |
+        <div class="bkly-ref-description">
+            <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
+            <span class="bkly-ref-small-beta-tag">beta</span> 
+            <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
+          </div>
+      
       operationId: GenerateTokenizationForWallet
       parameters:
         - name: proxy
@@ -1985,7 +2378,7 @@ paths:
             schema:
               $ref: "#/components/schemas/acceptanceContractRequest"
       responses:
-        "202":
+        '202':
           description: O contrato de crédito foi aceito.
         '401':
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
@@ -2008,7 +2401,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número de documento do cliente (CPF ou CNPJ).
+          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
         - name: contract
@@ -2018,7 +2411,7 @@ paths:
           schema:
             type: string
       responses:
-        "202":
+        '202':
           description: Retorno com informações do contrato de crédito especificado.
           content:
             application/json:
@@ -2028,6 +2421,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
 
 security:
   - bearerAuth: []
@@ -2051,8 +2445,173 @@ components:
       in: header
       required: true
       schema:
-        type: string        
+        type: string 
+
+    DocumentNumber:
+      name: documentNumber
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
+    Proxy:
+      name: proxy
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+
   schemas:
+    createCardsInLotRequest:
+      type: object
+      properties:
+        programId:
+          type: integer
+          description: Identificador do programa que será vinculado ao cartão.
+        quantityCards:
+          type: integer
+          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000).
+        paymentDay:
+          type: integer
+          description: Dia de pagamento do cartão.
+        address:
+          type: object
+          description: Informações sobre o endereço de entrega.
+          properties:
+            zipCode:
+              type: string
+              description: CEP (informar somente os números).
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (informar a UF).
+            country:
+              type: string
+              description: País.
+          required:
+            - zipCode
+            - address
+            - number
+            - neighborhood
+            - city
+            - state
+            - country
+      required:
+        - programId
+        - quantityCards
+        - address
+    
+    createCardInLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+
+    cardLotsResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+        quantityOrder:
+          type: integer
+          description: Quantidade de cartões solicitados.    
+        dateOrder:
+          type: string
+          description: Data da solicitação de criação do lote.
+        programId:
+          type: integer
+          description: Identificador do programa vinculado ao cartão.
+
+    cardLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Id do lote.
+        quantityOrder:
+          type: integer
+          description: Quantidade de cartões solicitados.    
+        dateOrder:
+          type: string
+          description: Data da solicitação de criação do lote.
+        programId:
+          type: integer
+          description: Identificador do programa vinculado ao cartão.
+        cards: 
+          type: array
+          description: Proxy dos cartões.
+        address:
+          type: object
+          description: Informações sobre o endereço de entrega.
+          properties:
+            zipCode:
+              type: string
+              description: CEP.
+            address:
+              type: string
+              description: Logradouro.
+            number:
+              type: string
+              description: Número.
+            neighborhood:
+              type: string
+              description: Bairro.
+            complement:
+              type: string
+              description: Complemento.
+            city:
+              type: string
+              description: Cidade.
+            state:
+              type: string
+              description: Estado (formato UF).
+            country:
+              type: string
+              description: País.
+    
+    bindNoNameRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Senha que será utilizada nas compras (4 dígitos).
+        bankAgency:
+          type: string
+          description: Número da agência (4 dígitos).
+        bankAccount:
+          type: string
+          description: Número da conta ao qual o cartão será vinculado.
+        alias:
+          type: string
+          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
+        documentNumber:
+          type: string
+          description:  Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.   
+      required:
+        - documentNumber
+        - password
+        - bankAccount
+        - bankAgency
+    
+    
     academicDegree:
       type: string
       description: Grau de instrução do cliente.
@@ -2222,7 +2781,7 @@ components:
           description: Identificador da companhia.
         documentNumber:
           type: string
-          description: Documento do cliente (CPF/CNPJ).
+          description: Número do documento do cliente (CPF/CNPJ).
         activateCode:
           type: string
           description: Código de ativação do cartão.
@@ -2528,7 +3087,7 @@ components:
           description: Identificador do programa que será vinculado ao cartão.
         documentNumber:
           type: string
-          description: Número de documento (CPF ou CNPJ). Informe somente números. 
+          description: Número do documento (CPF ou CNPJ). Informe somente números. 
         profession:
           type: string
           description: Profissão do cliente.
@@ -3024,7 +3583,7 @@ components:
                 description: Grau de parentesco com o titular do cartão.
               documentNumber:
                 type: string
-                description: Documento do recebedor do cartão.
+                description: Número do documento do recebedor do cartão.
               attempts:
                 type: number
                 description: Quantidade de tentativas de entrega.
@@ -3113,6 +3672,7 @@ components:
         - Undefined
         - GreenPatch
         - YellowPatch
+
 
 x-readme:
   explorer-enabled: true

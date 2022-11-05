@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
       "start": "pm2 kill && pm2 --name bankly_oas start --force index.js && start http://localhost:3320/reference/",
-      "edit:oauth": "npm start && start http://localhost:3320/reference/?urls.primaryName=oauth",
+      "edit:totp": "npm start && start http://localhost:3320/reference/?urls.primaryName=totp",
       "edit:documents": "npm start && start http://localhost:3320/reference/?urls.primaryName=documents",
       "edit:holders": "npm start && start http://localhost:3320/reference/?urls.primaryName=holders",
       "edit:accounts": "npm start && start http://localhost:3320/reference/?urls.primaryName=accounts",
@@ -17,7 +17,8 @@
       "edit:events": "npm start && start http://localhost:3320/reference/?urls.primaryName=events",
       "edit:helpers": "npm start && start http://localhost:3320/reference/?urls.primaryName=helpers",
       "edit:limits": "npm start && start http://localhost:3320/reference/?urls.primaryName=limits",
-      "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee"
+      "edit:fee": "npm start && start http://localhost:3320/reference/?urls.primaryName=fee",
+      "edit:crypto": "npm start && start http://localhost:3320/reference/?urls.primaryName=crypto"
     },
     "repository": {
       "type": "git",
