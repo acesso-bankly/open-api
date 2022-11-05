@@ -482,7 +482,12 @@ paths:
                     historyStatus:
                       [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
                     wallets:
-                      [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
+                      - status: Approved
+                        walletType: GooglePay
+                        walletFlowAdd: YellowPatch
+                      - status: Approved
+                        walletType: ApplePay 
+                        walletFlowAdd: GreenPatch
                     activatedAt: null
                     lastUpdatedAt: "2020-07-20T22:55:12"
                     isActivated: false
@@ -620,7 +625,12 @@ paths:
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
                       wallets:
-                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
+                        - status: Approved
+                          walletType: GooglePay
+                          walletFlowAdd: YellowPatch
+                        - status: Approved
+                          walletType: ApplePay 
+                          walletFlowAdd: GreenPatch
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -758,7 +768,12 @@ paths:
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
                       wallets:
-                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
+                        - status: Approved
+                          walletType: GooglePay
+                          walletFlowAdd: YellowPatch
+                        - status: Approved
+                          walletType: ApplePay 
+                          walletFlowAdd: GreenPatch
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -907,7 +922,12 @@ paths:
                       historyStatus:
                         [ { modified: "2020-07-20T22:53:12", value: Building }, { modified: "2020-07-20T22:55:12", value: InTransitLocked } ]
                       wallets:
-                        [ { status: Approved, walletType: GooglePay, walletFlowAdd: YellowPatch }, { status: "Approved", walletType: ApplePay, walletFlowAdd: GreenPatch } ]
+                        - status: Approved
+                          walletType: GooglePay
+                          walletFlowAdd: YellowPatch
+                        - status: Approved
+                          walletType: ApplePay 
+                          walletFlowAdd: GreenPatch
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -1840,7 +1860,6 @@ paths:
           in: path
           required: true
           schema:
-            type: string
             $ref: "#/components/schemas/walletTypes"
         - name: brand
           in: path
@@ -2304,15 +2323,12 @@ components:
             type: object
             properties:
               status:
-                type: string
                 $ref: "#/components/schemas/walletStatus"
                 description: Status do cartão na carteira.
               walletType:
-                type: string
                 $ref: "#/components/schemas/walletTypes"
                 description: Identificador da carteira que o cartão encontra-se vinculado.
               walletFlowAdd:
-                type: string
                 $ref: "#/components/schemas/walletFlows"
                 description: Classificação do fluxo que o cartão recebeu ao entrar na carteira.
         activatedAt:
