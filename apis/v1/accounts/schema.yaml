@@ -283,7 +283,7 @@ paths:
       summary: Informe de rendimentos
       description: |
         <div class="bkly-ref-description">
-        Obtenha os dados necessários para gerar o Informe de Rendimentos de contas de pagamento de pessoa física ou jurídica. <br />É possível refinar a busca informando o ano calendário desejado (o padrão é sempre o ano vigente).
+        Obtenha os dados necessários para gerar o Informe de Rendimentos de contas de pagamentos (pessoa física ou jurídica) e de outras fontes pagadoras. <br />É possível refinar a busca informando o ano calendário desejado (o padrão é sempre o ano vigente).
         <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: income.report.read</span>
         </div>
@@ -829,7 +829,7 @@ components:
           description: Ano do saldo.
         cost: 
           type: object
-          description: Objeto do custo de aquisição da moeda. Apenas utilizado para criptomoedas.
+          description: Objeto do custo de aquisição da moeda. Apenas utilizado para criptoativos.
           properties:
             value:
               type: number
@@ -849,11 +849,11 @@ components:
               description: Sigla da moeda do saldo.
         fiat: 
           type: object
-          description: Objeto que contém o valor do saldo em moeda fiduciária. Apenas utilizado para criptomoedas.
+          description: Objeto que contém o valor do saldo em moeda fiduciária. Apenas utilizado para criptoativos.
           properties:
             value:
               type: number
-              description: Valor do saldo da criptomoeda em moeda fiduciária.
+              description: Valor do saldo de criptoativos em moeda fiduciária.
             currency:
               type: string
               description: Sigla da moeda.
