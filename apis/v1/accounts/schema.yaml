@@ -283,10 +283,17 @@ paths:
       summary: Informe de rendimentos
       description: |
         <div class="bkly-ref-description">
-        Obtenha os dados necessários para gerar o Informe de Rendimentos de contas de pagamentos (pessoa física ou jurídica) e de outras fontes pagadoras. <br />É possível refinar a busca informando o ano calendário desejado (o padrão é sempre o ano vigente).
+        Obtenha os dados necessários para gerar o Informe de Rendimentos de contas de pagamentos (pessoa física ou jurídica) e de outras fontes pagadoras. <br />É possível refinar a busca informando o ano calendário desejado (o padrão é sempre o ano vigente). <br />
         <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: income.report.read</span>
+        <span class="bkly-ref-scope-tag">scope: income.report.read</span>
         </div>
+        [block:callout]
+          {
+            "type": "warning",
+            "title": "Importante",
+            "body": "Para mais detalhes sobre os campos retornados nessa requisição, consulte o [Manual do dev](https://docs.bankly.com.br/docs/informe-de-rendimentos-v2)."
+          }
+          [/block]
       operationId: GetIncomeReportByAccountNumberAsync
       parameters:
         - name: accountNumber
