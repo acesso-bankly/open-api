@@ -572,7 +572,7 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
+            Nome completo conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente. <b>Sem abreviações</b>.
         socialName:
           type: string
           description: >
@@ -594,7 +594,7 @@ components:
         motherName:
           type: string
           description: >
-            Nome da mãe do cliente conforme consta no documento de identificação.
+            Nome completo da mãe do cliente conforme consta no documento de identificação. <b>Sem abreviações</b>.
           nullable: true
         email:
           maxLength: 256
