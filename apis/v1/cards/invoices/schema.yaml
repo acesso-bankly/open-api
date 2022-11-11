@@ -99,8 +99,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PreviousResumeInvoicesDto"
-        '204':
-          description: Nenhuma fatura encontrada.
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
 
@@ -177,7 +177,7 @@ paths:
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
       responses:
-        '202':
+        '200':
           description: Solicitação aceita com sucesso.
           content:
             application/json:
@@ -205,7 +205,7 @@ paths:
       - $ref: "#/components/parameters/apiVersion"
       - $ref: "#/components/parameters/authorization"
       responses:
-        '202':
+        '200':
           description: Solicitação aceita com sucesso.
           content:
             application/json:
@@ -520,22 +520,10 @@ components:
           type: integer
           format: int32
           description: Identificador único da opção de pagamento.
-        externalId:
-          type: string
-          nullable: true
-          description: Número identificador do boleto.
-        bankAccount:
-          type: string
-          nullable: true
-          description: Número da conta do recebedor.
         paymentBilletId:
           type: string
           nullable: true
-          description: Código de registro do boleto.
-        bankAgency:
-          type: string
-          nullable: true
-          description: Agência da conta do recebedor.
+          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
         amount:
           type: number
           format: double
@@ -551,7 +539,7 @@ components:
         digitableLine:
           type: string
           nullable: true
-          description: Linha digitável do boleto de pagamento.
+          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
         paymentDate:
           type: string
           format: date-time
@@ -562,14 +550,6 @@ components:
           format: date-time
           nullable: true
           description: Data de liquidação do pagamento.
-        processorPaymentTrackingId:
-          type: string
-          nullable: true
-          description: Identificador da liquidação na processadora.
-        processorPaymentAuthorizationId:
-          type: string
-          nullable: true
-          description: Identificador da transação de pagamento na processadora.
       additionalProperties: false
     InstallmentDto:
       type: object
@@ -854,10 +834,14 @@ components:
           type: number
           format: double
           description: Total do limite de crédito aprovado.
+        limitActive:
+          type: number
+          format: double
+          description: Limite habilitado pelo cliente.
         availableLimit:
           type: number
           format: double
-          description: Limite crédito disponível.
+          description: Limite de crédito disponível.
       additionalProperties: false
     CreatePaymentCommand:
       type: object
