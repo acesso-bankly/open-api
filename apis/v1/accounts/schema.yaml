@@ -549,6 +549,7 @@ paths:
         '202':
           description: A requisição foi aceita e está sendo processada.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/PocketTransactionResponse"}}}
         '400':
           description: Há algum problema com a sua requisição.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
@@ -600,8 +601,9 @@ paths:
           application/json: {schema: {$ref: "#/components/schemas/PocketTransactionRequestRequest"}}
       responses:
         '202':
-            description: A requisição foi aceita e está sendo processada.
-            headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
+          description: A requisição foi aceita e está sendo processada.
+          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/PocketTransactionResponse"}}}
         '400':
           description: Há algum problema com a sua requisição.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
@@ -609,7 +611,6 @@ paths:
         '404':
           description: Recurso não encontrado.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
         '422':
           description: "A requisição não pode ser processada, devido a uma regra de negócio."
           headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
@@ -1027,6 +1028,8 @@ components:
       properties:
         amount:
           $ref: "#/components/schemas/Amount"
+        description:
+          $ref: "#/components/schemas/Description"
       additionalProperties: false
 
     PocketTransactionRequestRequest:
@@ -1160,6 +1163,12 @@ components:
           format: date-time
       additionalProperties: false
 
+    Description:
+      type: string
+      nullable: true
+      description: Texto que descreva o proposito da transacao.
+      additionalProperties: false
+
     Link:
       type: object
       properties:
@@ -1198,6 +1207,69 @@ components:
           additionalProperties: {type: object, additionalProperties: false}
           nullable: true
       additionalProperties: false
+
+    PocketTransactionResponse:
+      type: object
+      properties:
+        data:     
+          type: object     
+          properties:
+            authenticationCode:
+              type: string
+              nullable: false
+              description: Testes Pockets
+            amount:
+              $ref: "#/components/schemas/IAmount"
+            description:
+              $ref: "#/components/schemas/Description"
+            pocket:
+              type: object
+              properties:
+                number:
+                  type: string
+                  nullable: false
+                  description: Numero da conta pocket
+                status:
+                  $ref: "#/components/schemas/Status"
+                account:
+                  type: object
+                  properties:
+                    branch: 
+                      type: string
+                      nullable: false
+                      description: Número da agência bancária. 
+                    number:
+                      type: string
+                      nullable: false
+                      description: Numero da conta de pagamento
+                    status:
+                      $ref: "#/components/schemas/Status"
+            type: 
+              $ref: "#/components/schemas/PocketTransactionType"
+            status:
+              $ref: "#/components/schemas/PocketTransactionStatus"
+            createdAt:
+              type: string
+              description: Data de criação da transacao.
+              format: date-time
+          additionalProperties: false  
+
+    PocketTransactionType:
+      enum:
+      - SAVING
+      - REDEEM
+      type: string
+      description: "Tipo da transacao da pocket"
+
+    PocketTransactionStatus:
+      enum:
+      - CREATED
+      - IN_PROCESS
+      - DONE
+      - UNDONE
+      - ERROR
+      type: string
+      description: "Status da transacao da pocket"
 
     Error:
       $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
