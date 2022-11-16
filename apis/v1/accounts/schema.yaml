@@ -1166,7 +1166,7 @@ components:
     Description:
       type: string
       nullable: true
-      description: Texto que descreva o proposito da transacao.
+      description: Texto que descreve o propósito da transação.
       additionalProperties: false
 
     Link:
@@ -1188,7 +1188,7 @@ components:
       - HOLDER_REQUEST
       - COMMERCIAL_DISAGREEMENT
       type: string
-      description: "Motivo da solicitação de cancelamento. Neste momento só é permitido HOLDER_REQUEST e COMMERCIAL_DISAGREEMENT"
+      description: Motivo da solicitação de cancelamento. Neste momento só é permitido HOLDER_REQUEST e COMMERCIAL_DISAGREEMENT.
 
     PocketAccountClosureRequest:
       type: object
@@ -1217,7 +1217,7 @@ components:
             authenticationCode:
               type: string
               nullable: false
-              description: Testes Pockets
+              description: Código identificador da transação em formato GUID.
             amount:
               $ref: "#/components/schemas/IAmount"
             description:
@@ -1228,7 +1228,7 @@ components:
                 number:
                   type: string
                   nullable: false
-                  description: Numero da conta pocket
+                  description: Número da conta pocket.
                 status:
                   $ref: "#/components/schemas/Status"
                 account:
@@ -1241,7 +1241,7 @@ components:
                     number:
                       type: string
                       nullable: false
-                      description: Numero da conta de pagamento
+                      description: Número da conta de pagamento.
                     status:
                       $ref: "#/components/schemas/Status"
             type: 
@@ -1250,7 +1250,7 @@ components:
               $ref: "#/components/schemas/PocketTransactionStatus"
             createdAt:
               type: string
-              description: Data de criação da transacao.
+              description: Data de criação da transação.
               format: date-time
           additionalProperties: false  
 
@@ -1259,7 +1259,7 @@ components:
       - SAVING
       - REDEEM
       type: string
-      description: "Tipo da transacao da pocket"
+      description: Tipo de transação da pocket.
 
     PocketTransactionStatus:
       enum:
@@ -1269,7 +1269,7 @@ components:
       - UNDONE
       - ERROR
       type: string
-      description: "Status da transacao da pocket"
+      description: Situação da transação.
 
     Error:
       $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
