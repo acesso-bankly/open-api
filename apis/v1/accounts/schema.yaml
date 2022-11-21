@@ -639,8 +639,8 @@ paths:
         content:
           application/json: {schema: {$ref: "#/components/schemas/PocketAccountClosureRequestRequest"}}
       responses:
-        '202':
-          description: 'Recurso encontrado'
+        '204':
+          description: 'Recurso encerrado'
           headers: {x-bkly-correlation-id: {description: 'Id correlação da operação requisitada.', schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
         '404':
           description: Recurso não encontrado.
@@ -957,15 +957,13 @@ components:
 
     Status: 
       type: string
-      description: Situação da conta Pocket. Em caso de criação, o status será sempre APPROVED.
+      description: Situação da conta Pocket.
       nullable: true
       enum:
-      - APPROVED
       - ACTIVE
       - DORMANT
       - LOCKED
       - CLOSED
-      - WRITTEN_OFF
 
     GetPocketNumberResponse:
       type: object
@@ -1338,6 +1336,8 @@ components:
                       description: Número da conta de pagamento.
                     status:
                       $ref: "#/components/schemas/Status"
+                    bank:
+                      $ref: "#/components/schemas/Bank"
             type: 
               $ref: "#/components/schemas/PocketTransactionType"
             status:
