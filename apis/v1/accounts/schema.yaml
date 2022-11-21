@@ -379,10 +379,10 @@ paths:
             schema:
               $ref: "#/components/schemas/CreatePocketRequestRequest"
       responses:
-        '202':
+        '201':
           description: Recurso criado com sucesso.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: "Localização do recurso recém-criado ou em análise.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/CreatePocketResponse"}}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/CreatePocketCompleteResponseDto"}}}
         '400':
           description: Há algum problema com a sua requisição.
           headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
@@ -418,15 +418,12 @@ paths:
           in: query
           schema:
             $ref: "#/components/schemas/Status"
-        - name: size
+        - name: pageSize
           in: query
           schema: {type: integer, description: "Quantidade de itens a serem retornados por página.", format: int32}
         - name: page
           in: query
           schema: {type: integer, description: "Pagina a ser retornada.", format: int32}
-        - name: branch
-          in: query
-          schema: {type: string, description: "Agência da conta de pagamento (o padrão é 0001).", nullable: true}
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - name: idempotency-key
           in: header
@@ -1005,7 +1002,7 @@ components:
 
     Beneficiary:
       required:
-      - age
+      - birthDate
       - document
       - name
       type: object
@@ -1131,6 +1128,103 @@ components:
           type: number
           format: double
       additionalProperties: false
+
+    Bank:
+      type: object
+      properties:
+        ispb:
+          type: string
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
+        code:
+          type: string
+          description: Código do banco.
+        name: 
+          type: string
+          description: Nome do banco.
+
+    HolderCompleteResponse:
+      type: object
+      properties:
+        document:
+          $ref: "#/components/schemas/Document"
+        type: 
+          type: string
+          description: Tipo do cadastro do titular da conta de pagamento (“CUSTOMER” ou “BUSINESS”).
+        name: 
+          type: string
+          description: Nome do titular da conta de pagamento.
+        status:
+          type: string
+          description: Situação do cadastro do titular.
+        createdAt:
+          type: string
+          description: Data de criação do cadastro do titular no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+      additionalProperties: false
+
+    AccountCompleteResponse:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Número da agência da conta de pagamento à qual a conta pocket está atrelada.
+        number:
+          type: string
+          description: Número da conta de pagamento.
+        status:
+          type: string
+          description: Situação da conta de pagamento que, nesse caso, será “ACTIVE”.
+        reason:
+          type: string
+          description: Motivo da situação da conta de pagamento.
+        createdAt:
+          type: string
+          description: Data de criação da conta de pagamento, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        bank:
+          $ref: "#/components/schemas/Bank"
+        holder:
+          $ref: "#components/schemas/HolderCompleteResponse"
+      additionalProperties: false
+
+
+    CreatePocketCompleteResponseDto:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número da conta pocket.
+        label:
+          type: string
+          description: Nome descritivo da conta pocket.
+        suffix:
+          type: string
+          description: "Sufixo atribuído ao número da pocket. Exemplo: BRL."
+        currency:
+          type: string
+          description: Sigla da moeda corrente da pocket.
+        type:
+          type: string
+          description: "Tipo da conta com a sigla da moeda. Exemplo: POCKET_BRL."
+        status:
+          type: string
+          description: Situação da conta pocket.
+        reason:
+          type: string
+          description: Motivo da situação da conta pocket. Nesse caso, sempre será HOLDER_REQUEST.
+        category:
+          type: string
+          description: Categoria da conta.
+        useCase:
+          type: string
+          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+        createdAt:
+          type: string
+          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        beneficiary:
+          $ref: "#/components/schemas/Beneficiary"
+        account:
+          $ref: "#/components/schemas/AccountCompleteResponse"
+      additionalProperties: false
+          
 
     PocketBasicResponseDto:
       type: object
