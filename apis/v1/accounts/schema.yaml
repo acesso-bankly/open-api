@@ -365,12 +365,16 @@ paths:
           in: path
           required: true
           description: Número da conta de pagamento com dígito, a partir da qual a pocket será criada.
-          schema: {type: string, nullable: true}
+          schema: 
+            type: string
+            nullable: true
         - name: idempotency-key
           in: header
           required: true
           description: Chave de Idempotência
-          schema: {type: string, description: 'Informe um GUID v4'}
+          schema: 
+            type: string
+            description: Informe um GUID v4.
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
@@ -381,18 +385,21 @@ paths:
       responses:
         '201':
           description: Recurso criado com sucesso.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: "Localização do recurso recém-criado ou em análise.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/CreatePocketCompleteResponseDto"}}}
+          headers: 
+            x-bkly-correlation-id: 
+              description: "id de correlação da operação requisitada." 
+              schema: 
+                type: string 
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/CreatePocketResponseComp"
         '400':
-          description: Há algum problema com a sua requisição.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '422':
           $ref: "http://localhost:3320/commons/components#/components/responses/422"
         '500':
-          description: Ocorreu algum erro inesperado no nosso servidor.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"       
     get:
@@ -410,38 +417,50 @@ paths:
         - name: accountNumber
           in: path
           required: true
-          schema: {type: string, description: "Número da conta de pagamento com dígito.", nullable: true}
+          schema: 
+            type: string
+            description: Número da conta de pagamento com dígito.
+            nullable: true
         - name: pocketType
           in: query
-          schema: {type: string, description: "Tipo da Pocket, exemplo: Pocket_BRL.", nullable: true}
+          schema: 
+            type: string
+            description: "Tipo da Pocket. Exemplo: Pocket_BRL."
+            nullable: true
         - name: status
           in: query
           schema:
             $ref: "#/components/schemas/Status"
         - name: pageSize
           in: query
-          schema: {type: integer, description: "Quantidade de itens a serem retornados por página.", format: int32}
+          schema: 
+            type: integer
+            description: Quantidade de itens a serem retornados por página.
+            format: int32
         - name: page
           in: query
-          schema: {type: integer, description: "Pagina a ser retornada.", format: int32}
+          schema: 
+            type: integer
+            description: Pagina a ser retornada.
+            format: int32
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
-        - name: idempotency-key
-          in: header
-          description: Chave de Idempotência
-          schema: {type: string, description: 'Informe um GUID v4'}
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
           description: "Recurso encontrado"
-          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/GetPocketByAccountNumberResponse"}}}
+          headers: 
+            x-bkly-correlation-id: 
+              description: "Id correlação da operação requisitada."
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/GetPocketByAccountNumberResponse"
         '404':
-          description: "Recurso não encontrado."
-          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: "Ocorreu algum erro inesperado no nosso servidor."
-          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
 
@@ -460,20 +479,23 @@ paths:
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"      
       responses:
         '200':
           description: Recurso encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/GetPocketNumberResponse"}}}
+          headers: 
+            x-bkly-correlation-id: 
+              description: Id de correlação da operação requisitada.
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/GetPocketNumberResponse"
         '404':
-          description: Recurso não encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: Ocorreu algum erro inesperado no nosso servidor.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
   
@@ -496,16 +518,19 @@ paths:
       responses:
         '200':
           description: Recurso encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/GetPocketBalanceResponse"}}}
+          headers: 
+            x-bkly-correlation-id: 
+              description: Id de correlação da operação requisitada. 
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/GetPocketBalanceResponse"
         '404':
-          description: Recurso não encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
-          description: Ocorreu algum erro inesperado no nosso servidor.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
 
@@ -708,6 +733,7 @@ components:
           description: Data da criação da entidade titular da conta.
           format: date-time
           nullable: true
+    
     Payer:
       type: array
       properties:
@@ -902,8 +928,11 @@ components:
       - currency
       - label
       - useCase
+      - beneficiary
       type: object
       properties:
+        beneficiary:
+          $ref: "#/components/schemas/Beneficiary"
         currency:
           minLength: 1
           type: string
@@ -915,8 +944,6 @@ components:
         useCase:
           description: "Especificação da finalidade da pocket."
           $ref: "#/components/schemas/UseCase"
-        beneficiary:
-          $ref: "#/components/schemas/Beneficiary"
       additionalProperties: false
     
     UseCase:
@@ -946,12 +973,34 @@ components:
           $ref: "#/components/schemas/PocketBasicResponseDto"
         links:
           type: array
-          items: {$ref: "#/components/schemas/Link"}
+          items: 
+            $ref: "#/components/schemas/Link"
           nullable: true
           readOnly: true
         metadata:
           type: object
-          additionalProperties: {type: object, additionalProperties: false}
+          additionalProperties: 
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false
+    
+    CreatePocketResponseComp:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/CreatePocketCompleteResponseDto"
+        links:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        metadata:
+          type: object
+          additionalProperties: 
+            type: object
+            additionalProperties: false
           nullable: true
       additionalProperties: false
 
@@ -1043,17 +1092,21 @@ components:
       properties:
         data:
           type: array
-          items: {$ref: "#/components/schemas/PocketBasicResponseDto"}
+          items: 
+            $ref: "#/components/schemas/PocketBasicResponseDto"
           nullable: true
           readOnly: true
         links:
           type: array
-          items: {$ref: "#/components/schemas/Link"}
+          items: 
+            $ref: "#/components/schemas/Link"
           nullable: true
           readOnly: true
         metadata:
           type: object
-          additionalProperties: {type: object, additionalProperties: false}
+          additionalProperties: 
+            type: object
+            additionalProperties: false
           nullable: true
       additionalProperties: false
 
@@ -1094,8 +1147,6 @@ components:
         available:
           $ref: "#/components/schemas/IAmount"
         hold:
-          $ref: "#/components/schemas/IAmount"
-        remaining:
           $ref: "#/components/schemas/IAmount"
       additionalProperties: false
 
@@ -1182,7 +1233,6 @@ components:
         holder:
           $ref: "#components/schemas/HolderCompleteResponse"
       additionalProperties: false
-
 
     CreatePocketCompleteResponseDto:
       type: object
