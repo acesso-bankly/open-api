@@ -2525,20 +2525,22 @@ components:
           description: Id do lote.
 
     cardLotsResponse:
-      type: object
-      properties:
-        lotId:
-          type: string
-          description: Id do lote.
-        quantityOrder:
-          type: integer
-          description: Quantidade de cartões solicitados.    
-        dateOrder:
-          type: string
-          description: Data da solicitação de criação do lote.
-        programId:
-          type: integer
-          description: Identificador do programa vinculado ao cartão.
+      type: array
+      items:
+        type: object
+        properties:
+          lotId:
+            type: string
+            description: Id do lote.
+          quantityOrder:
+            type: integer
+            description: Quantidade de cartões solicitados.    
+          dateOrder:
+            type: string
+            description: Data da solicitação de criação do lote.
+          programId:
+            type: integer
+            description: Identificador do programa vinculado ao cartão.
 
     cardLotResponse:
       type: object
