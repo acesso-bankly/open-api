@@ -243,7 +243,6 @@ paths:
                   value:
                     lotId: "LT01"
                     quantityOrder: 1000
-                    companyKey: "Acesso"
                     dateOrder: "2021-06-07T08:30:40"
                     programId: 1
                     address:
@@ -2555,7 +2554,7 @@ components:
           description: Id do lote.
         quantityOrder:
           type: integer
-          description: Quantidade de cartões solicitados.    
+          description: Quantidade de cartões solicitados.
         dateOrder:
           type: string
           description: Data da solicitação de criação do lote.
