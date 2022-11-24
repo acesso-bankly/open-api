@@ -338,11 +338,16 @@ paths:
               examples:
                 response:
                   value:
-                    lotId: "LT01"
-                    quantityOrder: 1000
-                    companyKey: "Acesso"
-                    dateOrder: "2021-06-07T08:30:40"
-                    programId: 1
+                    [
+                      {
+                        lotId: "LT01",
+                        quantityOrder: 1000,
+                        companyKey: "Acesso",
+                        dateOrder: "2021-06-07T08:30:40",
+                        programId: 1
+                      }
+                    ]
+                    
         '400':
           description: Existem erros no preenchimento da requisição.
           content:
