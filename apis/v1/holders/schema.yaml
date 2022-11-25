@@ -296,7 +296,7 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registro de pessoa jurídica (MEI, ME, EI ou EIRELI)
+      summary: Registro de pessoa jurídica (MEI, ME, EI ou SLU)
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p> 
@@ -425,21 +425,22 @@ security:
 
 components:
   schemas:
-    BusinessTypeMEIEIEIRELIRequest:
-      description: Tipo da empresa (MEI, EI, EIRELI).
+    BusinessTypeMEIEISLURequest:
+      description: Tipo da empresa (MEI, EI, SLU).
       type: string
       enum:
         - MEI
         - EI
-        - EIRELI
+        - SLU
 
     BusinessType:
-      description: Tipo da empresa (MEI, EI, EIRELI, LTDA, S.A. ou TS).
+      description: Tipo da empresa (MEI, EI, SLU, LTDA, S.A. ou TS).
       type: string
       enum:
         - MEI
         - EI
         - EIRELI
+        - SLU
         - LTDA
         - SA
         - TS
@@ -635,7 +636,7 @@ components:
           format: email
           nullable: false
         businessType:
-          $ref: '#/components/schemas/BusinessTypeMEIEIEIRELIRequest'
+          $ref: '#/components/schemas/BusinessTypeMEIEISLURequest'
         businessSize:
           $ref: '#/components/schemas/BusinessSize'
         businessAddress:
@@ -1045,8 +1046,7 @@ components:
           description: Status da análise KYC realizada no registro da empresa.
           $ref: '#/components/schemas/Status'
         businessType:
-          description: |
-            Tipo da empresa (MEI, EI, EIRELI, LTDA, S.A.).
+          description: Tipo da empresa (MEI, EI, SLU, LTDA, S.A.).
           $ref: '#/components/schemas/BusinessType'
         businessSize:
           description: |
