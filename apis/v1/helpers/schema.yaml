@@ -132,7 +132,7 @@ paths:
           in: query
           schema:
             type: string
-            description: Página que deseja consultar. Caso este campo seja preenchido, o campo <code>pageSize</code> terá como valor padrão 20.
+            description: Página que deseja consultar.
             nullable: true
         - name: pageSize
           in: query
