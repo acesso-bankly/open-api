@@ -387,7 +387,7 @@ paths:
             O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.
           </p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: business.write</span>
+          <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
         </div>  
       
       operationId: RegisterCorporationBusinessAsync
