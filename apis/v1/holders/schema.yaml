@@ -296,7 +296,7 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registro de pessoa jurídica (MEI, ME, EI ou SLU)
+      summary: Registro de pessoa jurídica (MEI, ME, EI, EIRELI ou SLU)
       description: |
         <div class="bkly-ref-description">
           <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p> 
@@ -426,11 +426,12 @@ security:
 components:
   schemas:
     BusinessTypeMEIEISLURequest:
-      description: Tipo da empresa (MEI, EI, SLU).
+      description: Tipo da empresa (MEI, EI, EIRELI e SLU).
       type: string
       enum:
         - MEI
         - EI
+        - EIRELI
         - SLU
 
     BusinessType:
