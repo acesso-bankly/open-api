@@ -94,10 +94,10 @@ paths:
     get:
       tags:
         - Instituições Financeiras
-      summary: Listagem de instituições financeiras por produto
+      summary: Listagem de instituições financeiras
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha a lista de instituições financeiras por produto.</p>
+          <p>Obtenha uma lista de instituições financeiras e suas informações, como o ISPB, os produtos ofertados, o tipo de banco (se é folha, destino ou ambos), dentre outros.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: banklist.read</span>
          [block:callout]
@@ -112,36 +112,33 @@ paths:
       parameters:
         - name: name
           in: query
-          description: Use para filtrar a lista de bancos por nome
           schema:
             type: string
-            description: Use para filtrar a lista de bancos por nome
+            description: Nome do banco que deseja consultar.
             nullable: true
         - name: product
           in: query
-          description: Use para buscar bancos de um produto específico
           schema:
             $ref: '#/components/schemas/Product'
         - name: id
           in: query
-          description: Use para buscar um ou mais bancos por ID
           schema:
             type: array
             items:
               type: string
-            description: Use para buscar um ou mais bancos por ID
+            description: "Código do banco. Este campo aceita mais de um valor, o qual resulta em múltiplas consultas. Ex.: id=332&id=223."
             nullable: true
         - name: page
           in: query
           schema:
-            type: integer
-            format: int32
+            type: string
+            description: Página que deseja consultar.
             nullable: true
         - name: pageSize
           in: query
           schema:
-            type: integer
-            format: int32
+            type: string
+            description: Quantidade de bancos a serem exibidos por página.
             default: 20
         - name: api-version
           in: header
@@ -149,6 +146,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: "#/components/parameters/authorization"
       responses:
         '200':
           description: Recurso encontrado
@@ -172,6 +170,10 @@ paths:
                   products:
                     - TED
                     - PIX
+                    - accountPortability
+                  accountPortabilityTypes:
+                    - Payroll
+                    - Destination
                 - name: Banco Do Brasil S.A.
                   ispb: '00000000'
                   code: '001'
@@ -180,12 +182,20 @@ paths:
                   products:
                     - TED
                     - PIX
+                    - accountPortability
+                  accountPortabilityTypes:
+                    - Payroll
+                    - Destination
                 - name: Agk Corretora De Cambio S.A.
                   ispb: '00250699'
                   code: '272'
                   shortName: Agk Cc S.A.
                   products:
                     - TED
+                    - PIX
+                    - accountPortability
+                  accountPortabilityTypes:
+                    - Destination
         '400':
           description: Há algum problema com a sua requisição.
           headers:
@@ -398,6 +408,13 @@ paths:
       security:
         - Bearer: []
 components:
+  parameters:
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
   schemas:
     Address:
       type: object
@@ -459,40 +476,47 @@ components:
 
     Product:
       enum:
-        - None
         - TED
         - PIX
+        - accountPortability
       type: string
-      
+      description: Nome do produto.
+
+
     Bank:
       type: object
       properties:
         name:
           type: string
-          description: Nome do Instituição Participante
+          description: Nome do banco.
           nullable: true
         ispb:
           type: string
-          description: Código do ISPB (Identificador de Sistema de Pagamentos Brasileiro)
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
           nullable: true
         code:
           type: string
-          description: Código da Instituição Participante. Normalmente identificado nas transferências STR (TED)
+          description: Código do banco. Normalmente identificado nas transferências STR (TED). Este campo somente é retornado caso a instituição seja participante do PIX.
           nullable: true
         shortName:
           type: string
-          description: Nome reduzido da Instituição Participante
+          description: Nome reduzido do banco.
           nullable: true
         isSPIDirect:
           type: boolean
-          description: Indica se a Instituição Participante é uma participante direto do SPI (Pix)
+          description: Indica se o banco é um participante direto do SPI (Pix).
           nullable: true
         products:
           type: array
           items:
             type: string
-          description: "Retorna quais são os produtos suportados pelo registro da instituição financeira\r\nExemplo: Pix."
+          description: Lista que contém os produtos suportados pelo registro da instituição financeira (TED, PIX e/ou accountPortability).
           nullable: true
+        accountPortabilityTypes:
+          type: array
+          items:
+            type: string
+          description: Lista que contém as funções do banco, referente à portabilidade de salário ("Payroll" e/ou "Destination"). Este campo somente é retornado caso o banco possua portabilidade de salário (accountPortability) como produto.
       additionalProperties: false  
 ## TODO: colocar ponto final
   securitySchemes:

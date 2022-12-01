@@ -36,6 +36,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /customers/{documentNumber}/bookmarks/{bookmarkId}/disable:
     patch:
       tags:
@@ -63,6 +64,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /customers/{documentNumber}/bookmarks/{bookmarkId}:
     get:
       tags:
@@ -95,6 +97,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /customers/{documentNumber}/bookmarks:
     get:
       tags:
@@ -157,6 +160,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /business/{documentNumber}/bookmarks/{bookmarkId}/disable:
     patch:
       tags:
@@ -184,6 +188,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /business/{documentNumber}/bookmarks/{bookmarkId}:
     get:
       tags:
@@ -216,6 +221,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
         - Bearer: []
+  
   /business/{documentNumber}/bookmarks:
     get:
       tags:
@@ -343,6 +349,8 @@ paths:
                 $ref: "#/components/schemas/ClaimResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
         '503':
@@ -382,8 +390,7 @@ paths:
         - name: status
           in: query
           schema:
-            $ref: "#/components/schemas/ClaimStatus"
-      
+            $ref: "#/components/schemas/ClaimStatus"      
       responses:
         '200':
           description: Recurso encontrado
@@ -400,116 +407,6 @@ paths:
                   $ref: "#/components/schemas/ClaimResponse"
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-      security:
-        - Bearer: []
-  
-  /pix/claims/{claimId}/complete:
-    patch:
-      tags:
-        - Reivindicação de chaves
-      summary: Completando um pedido de reivindicação
-      description: |
-        <div class="bkly-ref-description">
-          <p>Complete o pedido de reivindicação de <b>posse</b> de chave assim que seu status estiver como CONFIRMED.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
-        </div>
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: claimId
-          in: path
-          required: true
-          description: Identificador único do pedido. Esse valor é retornado na criação de pedido de reivindicação de chave. 
-          schema:
-            type: string
-            nullable: true
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
-          required: true
-          schema:
-            type: string
-        - name: x-bkly-transactional-hash
-          in: header
-          description: O envio desse campo no header da requisição é obrigatório <b>apenas</b> para reivindicação de chaves do tipo <b>e-mail</b> e <b>telefone</b>. Ele deve ser preenchido com o hash gerado na criação do código TOTP.
-          schema:
-            type: string
-      
-      responses:
-        '200':
-          description: Pedido de reivindicação completado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ClaimResponse"
-      security:
-        - Bearer: []
-        
-  /pix/claims/{claimId}/cancel:
-    patch:
-      tags:
-        - Reivindicação de chaves
-      summary: Cancelamento de um pedido de reivindicação
-      description: |
-        <div class="bkly-ref-description">
-          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Tanto o doador quanto o reivindicador podem realizar o cancelamento, desde que o status do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
-        </div>
-        [block:callout]
-        {
-          "type": "info",
-          "title": "Nota",
-          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de e-mail e telefone após validar a posse da chave através do código TOTP."
-        }
-        [/block]
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação.
-          required: true
-          schema:
-            type: string
-        - name: claimId
-          in: path
-          required: true
-          schema:
-            type: string
-            nullable: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ClaimCancelRequest"
-      responses:
-        '200':
-          description: Reivindicação cancelada.
-
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ClaimResponse"
       security:
         - Bearer: []
   
@@ -560,9 +457,127 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ClaimResponse"
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
-      
+
+  /pix/claims/{claimId}/complete:
+    patch:
+      tags:
+        - Reivindicação de chaves
+      summary: Completando um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Complete o pedido de reivindicação de <b>posse</b> de chave assim que seu status estiver como CONFIRMED.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: claimId
+          in: path
+          required: true
+          description: Identificador único do pedido. Esse valor é retornado na criação de pedido de reivindicação de chave. 
+          schema:
+            type: string
+            nullable: true
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
+          required: true
+          schema:
+            type: string
+        - name: x-bkly-transactional-hash
+          in: header
+          description: O envio desse campo no header da requisição é obrigatório <b>apenas</b> para reivindicação de chaves do tipo <b>e-mail</b> e <b>telefone</b>. Ele deve ser preenchido com o hash gerado na criação do código TOTP.
+          schema:
+            type: string   
+      responses:
+        '200':
+          description: Pedido de reivindicação completado.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+      security:
+        - Bearer: []
+
+  /pix/claims/{claimId}/cancel:
+    patch:
+      tags:
+        - Reivindicação de chaves
+      summary: Cancelamento de um pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Somento o <b>doador</b> pode realizar o cancelamento, desde que o status do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de e-mail e telefone após validar a posse da chave através do código TOTP."
+        }
+        [/block]
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação.
+          required: true
+          schema:
+            type: string
+        - name: claimId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClaimCancelRequest"
+      responses:
+        '200':
+          description: Reivindicação cancelada.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResponse"
+        '400':
+            $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+            $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+            $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+      security:
+        - Bearer: []
+
   /pix/entries:
     post:
       tags:

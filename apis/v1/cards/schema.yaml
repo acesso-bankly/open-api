@@ -243,7 +243,6 @@ paths:
                   value:
                     lotId: "LT01"
                     quantityOrder: 1000
-                    companyKey: "Acesso"
                     dateOrder: "2021-06-07T08:30:40"
                     programId: 1
                     address:
@@ -338,11 +337,16 @@ paths:
               examples:
                 response:
                   value:
-                    lotId: "LT01"
-                    quantityOrder: 1000
-                    companyKey: "Acesso"
-                    dateOrder: "2021-06-07T08:30:40"
-                    programId: 1
+                    [
+                      {
+                        lotId: "LT01",
+                        quantityOrder: 1000,
+                        companyKey: "Acesso",
+                        dateOrder: "2021-06-07T08:30:40",
+                        programId: 1
+                      }
+                    ]
+                    
         '400':
           description: Existem erros no preenchimento da requisição.
           content:
@@ -2525,20 +2529,22 @@ components:
           description: Id do lote.
 
     cardLotsResponse:
-      type: object
-      properties:
-        lotId:
-          type: string
-          description: Id do lote.
-        quantityOrder:
-          type: integer
-          description: Quantidade de cartões solicitados.    
-        dateOrder:
-          type: string
-          description: Data da solicitação de criação do lote.
-        programId:
-          type: integer
-          description: Identificador do programa vinculado ao cartão.
+      type: array
+      items:
+        type: object
+        properties:
+          lotId:
+            type: string
+            description: Id do lote.
+          quantityOrder:
+            type: integer
+            description: Quantidade de cartões solicitados.    
+          dateOrder:
+            type: string
+            description: Data da solicitação de criação do lote.
+          programId:
+            type: integer
+            description: Identificador do programa vinculado ao cartão.
 
     cardLotResponse:
       type: object
@@ -2548,7 +2554,7 @@ components:
           description: Id do lote.
         quantityOrder:
           type: integer
-          description: Quantidade de cartões solicitados.    
+          description: Quantidade de cartões solicitados.
         dateOrder:
           type: string
           description: Data da solicitação de criação do lote.
