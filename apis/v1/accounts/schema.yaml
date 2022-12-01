@@ -348,7 +348,7 @@ paths:
       summary: Criação de conta pocket
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma conta pocket, para que seja possível guardar dinheiro fora da conta de pagamento.</p> 
+          <p>Crie uma conta pocket para que seja possível guardar dinheiro fora da conta de pagamento.</p> 
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.create</span>
         </div>
@@ -1093,7 +1093,7 @@ components:
         data:
           type: array
           items: 
-            $ref: "#/components/schemas/PocketBasicResponseDto"
+            $ref: "#/components/schemas/GetPocketByAccountNumberResp"
           nullable: true
           readOnly: true
         links:
@@ -1108,6 +1108,43 @@ components:
             type: object
             additionalProperties: false
           nullable: true
+      additionalProperties: false
+
+    GetPocketByAccountNumberResp:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número da conta pocket.
+        label:
+          type: string
+          description: Nome descritivo da conta pocket.
+        suffix:
+          type: string
+          description: "Sufixo atribuído ao número da pocket. Exemplo: BRL."
+        currency:
+          type: string
+          description: Sigla da moeda corrente da pocket.
+        type:
+          type: string
+          description: "Tipo da conta com a sigla da moeda. Exemplo: POCKET_BRL."
+        status:
+          type: string
+          description: Situação da conta pocket.
+        reason:
+          type: string
+          description: Motivo da situação da conta pocket. Nesse caso, sempre será HOLDER_REQUEST.
+        category:
+          type: string
+          description: Categoria da conta.
+        useCase:
+          type: string
+          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+        createdAt:
+          type: string
+          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        beneficiary:
+          $ref: "#/components/schemas/Beneficiary"
       additionalProperties: false
 
     GetPocketBalanceResponse:
@@ -1273,7 +1310,6 @@ components:
           $ref: "#/components/schemas/AccountCompleteResponse"
       additionalProperties: false
           
-
     PocketBasicResponseDto:
       type: object
       properties:
