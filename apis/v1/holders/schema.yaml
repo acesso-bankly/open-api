@@ -832,7 +832,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Owner"
-          description: Sócios da empresa. Campo obrigatório para empresas no formato LTDA;
+          description: Sócios da empresa. Campo obrigatório somente para empresas no formato LTDA (pessoa física);
           nullable: true
         businessName:
           maxLength: 256
