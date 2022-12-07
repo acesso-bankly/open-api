@@ -471,13 +471,19 @@ paths:
       summary: Consulta dos dados de uma conta pocket
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte os dados e, opcionalmente, obtenha o saldo de uma conta pocket específica.</p> 
+          <p>Consulte os dados de uma conta pocket específica.</p> 
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
       operationId: GetPocketAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
+        - name: resultLevel
+          in: query
+          description: Nível de detalhamento da resposta (DETAILED ou BASIC). A consulta básica (BASIC) retornará apenas os dados da pocket. Já a consulta detalhada (DETAILED) trará também os dados da conta de pagamento à qual a pocket está atrelada.
+          schema: 
+            type: string
+            nullable: true
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"      
       responses:
@@ -549,7 +555,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível a transferência, é necessário ter uma conta de pagamento ativa."
+          "body": "Para que seja possível realizar a transferência, é necessário ter uma conta de pagamento ativa."
         }
         [/block]
       operationId: CreateDepositTransactionAsync
@@ -570,24 +576,27 @@ paths:
       responses:
         '202':
           description: A requisição foi aceita e está sendo processada.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/PocketTransactionResponse"}}}
+          headers:
+            x-bkly-correlation-id: 
+              description: "id de correlação da operação requisitada."
+              schema: 
+                type: string
+            Location: 
+              description: 'Localização do recurso recém-criado ou em análise.'
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/PocketTransactionResponse"
         '400':
-          description: Há algum problema com a sua requisição.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          description: "A requisição não pode ser processada, devido a uma regra de negócio."
-          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
         '500':
-          description: Ocorreu algum erro inesperado no nosso servidor.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
   
@@ -617,30 +626,81 @@ paths:
         - name: idempotency-key
           in: header
           description: Chave de Idempotência
-          schema: {type: string, description: "Informe um GUID v4"}
+          schema: 
+            type: string
+            description: "Informe um GUID v4"
       requestBody:
         content:
-          application/json: {schema: {$ref: "#/components/schemas/PocketTransactionRequestRequest"}}
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/PocketTransactionRequestRequest"
       responses:
         '202':
           description: A requisição foi aceita e está sendo processada.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}, Location: {description: 'Localização do recurso recém-criado ou em análise.', schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/PocketTransactionResponse"}}}
+          headers: 
+            x-bkly-correlation-id: 
+              description: "id de correlação da operação requisitada."
+              schema: 
+                type: string
+            Location: 
+              description: 'Localização do recurso recém-criado ou em análise.'
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/PocketTransactionResponse"
         '400':
-          description: Há algum problema com a sua requisição.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
-          description: Recurso não encontrado.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
-          description: "A requisição não pode ser processada, devido a uma regra de negócio."
-          headers: {x-bkly-correlation-id: {description: "Id correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
         '500':
-          description: Ocorreu algum erro inesperado no nosso servidor.
-          headers: {x-bkly-correlation-id: {description: "id de correlação da operação requisitada.", schema: {type: string}}}
-          content: {application/json: {schema: {$ref: "#/components/schemas/ErrorResponse"}}}
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        '503':
+          $ref: "http://localhost:3320/commons/components#/components/responses/503"
+  
+  /pockets/{pocketNumber}/transactions/{authenticationCode}: 
+    get:
+      tags:
+        - Conta pocket
+      summary: Consulta de uma transação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize consulta de uma transação específica, de depósito ou resgate, ocorrida entre a conta de pagamento e a pocket.</p> 
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">pocket.transaction.read</span>
+        </div>
+      parameters:
+        - $ref: "#/components/parameters/PocketNumber"
+        - name: authenticationCode
+          in: path
+          description:  Identificador da transação em formato GUID, retornado no endpoint de depósito ou resgate de valor.
+          required: true
+          schema: 
+            type: string
+            nullable: true
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        '200':
+          description: Recurso encontrado.
+          headers: 
+            x-bkly-correlation-id: 
+              description: Id de correlação da operação requisitada. 
+              schema: 
+                type: string
+          content: 
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/GetPocketTransactionResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
 
@@ -703,10 +763,10 @@ components:
     PocketNumber:
       name: pocketNumber
       in: path
+      description: Número da conta pocket.
       required: true
       schema: 
         type: string
-        description: Número da conta pocket.
         nullable: true
   
   schemas:
@@ -1014,11 +1074,30 @@ components:
       - LOCKED
       - CLOSED
 
+    GetPocketTransactionResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/QueryFromAPocketTransactionResponse"
+        links:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        metadata:
+          type: object
+          additionalProperties: 
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false
+
     GetPocketNumberResponse:
       type: object
       properties:
         data:
-          $ref: "#/components/schemas/PocketBasicResponseDto"
+          $ref: "#/components/schemas/QueryFromAPocketResponse"
         links:
           type: array
           items: {$ref: "#/components/schemas/Link"}
@@ -1030,6 +1109,116 @@ components:
           nullable: true
       additionalProperties: false
 
+    QueryFromAPocketResponse:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número da conta pocket.
+        label:
+          type: string
+          description: Nome descritivo da conta pocket.
+        suffix:
+          type: string
+          description: "Sufixo atribuído ao número da pocket. Exemplo: BRL."
+        currency:
+          type: string
+          description: Sigla da moeda corrente da pocket.
+        type:
+          type: string
+          description: "Tipo da conta com a sigla da moeda. Exemplo: POCKET_BRL."
+        status:
+          type: string
+          description: Situação da conta pocket.
+        reason:
+          type: string
+          description: Motivo da situação da conta pocket. Nesse caso, sempre será HOLDER_REQUEST.
+        category:
+          type: string
+          description: Categoria da conta.
+        useCase:
+          type: string
+          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+        createdAt:
+          type: string
+          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        updatedAt:
+          type: string
+          description: Data de atualização da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        beneficiary:
+          $ref: "#/components/schemas/Beneficiary"
+        account:
+          type: object
+          description: Esse objeto é retornado apenas em consultas detalhadas (<code>resultLevel</code> = DETAILED).
+          properties:
+            branch: 
+              type: string
+              nullable: false
+              description: Número da agência bancária. 
+            number:
+              type: string
+              nullable: false
+              description: Número da conta de pagamento.
+            status:
+              type: string
+              nullable: false
+              description: Situação da conta de pagamento (ACTIVE ou CLOSED).
+            bank:
+              $ref: "#/components/schemas/Bank"
+            holder:
+              $ref: "#/components/schemas/HolderCompleteResponse"
+
+    QueryFromAPocketTransactionResponse:
+      type: object
+      properties:
+        authenticationCode: 
+          type: string
+          description: Identificador da transação.
+        amount:
+          $ref: "#/components/schemas/IAmount"
+        pocket:
+          type: object
+          properties:
+            number: 
+              type: string
+              description: Número da conta pocket.
+            status:
+              $ref: "#/components/schemas/Status"
+            balances: 
+              $ref: "#/components/schemas/BalanceTotal"
+            account:
+              $ref: "#/components/schemas/PaymentAccount"
+        type:
+          type: string
+          description: Tipo de transação realizada (DEPOSIT ou REDEEM).
+        status: 
+          type: string
+          description: 'Situação da transação, que pode ser: “CREATED” (criada), “IN_PROCESS” (em processamento), “DONE” (concluída), “UNDONE” (desfeita) e “ERROR” (erro).'
+        createdAt: 
+          type: string
+          description: Data de criação da transação, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        updatedAt:
+          type: string
+          description: Data de atualização da transação, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+
+    PaymentAccount: 
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+        number: 
+          type: string
+          description: Número da conta.
+        status: 
+          $ref: "#/components/schemas/AccountStatus"
+        bank:
+          $ref: "#/components/schemas/Bank"
+        balances:
+          $ref: "#/components/schemas/BalanceTotal"
+        holder:
+          $ref: "#/components/schemas/HolderResponseDepRed"
+    
     DocumentNumberType:
       enum:
       - CPF
@@ -1083,7 +1272,9 @@ components:
           $ref: "#/components/schemas/PocketTransactionRequest"
         metadata:
           type: object
-          additionalProperties: {type: object, additionalProperties: false}
+          additionalProperties: 
+            type: object
+            additionalProperties: false
           nullable: true
       additionalProperties: false
 
@@ -1143,6 +1334,9 @@ components:
         createdAt:
           type: string
           description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+        updatedAt:
+          type: string
+          description: Data de atualização da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
         beneficiary:
           $ref: "#/components/schemas/Beneficiary"
       additionalProperties: false
@@ -1398,8 +1592,6 @@ components:
               description: Código identificador da transação em formato GUID.
             amount:
               $ref: "#/components/schemas/IAmount"
-            description:
-              $ref: "#/components/schemas/Description"
             pocket:
               type: object
               properties:
@@ -1424,22 +1616,24 @@ components:
                       $ref: "#/components/schemas/Status"
                     bank:
                       $ref: "#/components/schemas/Bank"
+                    holder:
+                     $ref: "#/components/schemas/HolderResponseDepRed"
             type: 
-              $ref: "#/components/schemas/PocketTransactionType"
+              type: string
+              description: Tipo de transação da pocket (SAVING para depósito e REDEEM para resgate).
             status:
               $ref: "#/components/schemas/PocketTransactionStatus"
             createdAt:
               type: string
               description: Data de criação da transação.
               format: date-time
+            updatedAt:
+              type: string
+              description: Data de atualização da transação.
+              format: date-time
+            description:
+              $ref: "#/components/schemas/Description"
           additionalProperties: false  
-
-    PocketTransactionType:
-      enum:
-      - SAVING
-      - REDEEM
-      type: string
-      description: Tipo de transação da pocket.
 
     PocketTransactionStatus:
       enum:
@@ -1471,6 +1665,21 @@ components:
             Moeda corrente. _Default: *BRL*_
           type: string
       additionalProperties: false
+    
+    BalanceTotal:
+      description: Saldo da conta.
+      type: object
+      properties:
+        total:
+          type: object
+          properties:
+            value:
+              description: Valor total do saldo.
+              type: number   
+            currency:
+              description: Sigla da moeda do saldo, de acordo com a ISO 4217.
+              type: string
+      additionalProperties: false
 
     SummarizedBalance:
       description: Saldo sumarizado da conta.
@@ -1489,12 +1698,7 @@ components:
 
     AccountStatus:
       type: string
-      description: |
-        Status da conta.
-        _(ACTIVE, CLOSED)_
-      enum:
-        - ACTIVE
-        - CLOSED
+      description: Status da conta, que pode ser ACTIVE ou CLOSED.
 
     AccountType:
       type: string
@@ -1559,6 +1763,19 @@ components:
         documentNumber:
           type: string
           nullable: true
+      additionalProperties: false
+    
+    HolderResponseDepRed:
+      type: object
+      properties:
+        document:
+          $ref: "#/components/schemas/Document"
+        type:
+          type: string
+          description: Tipo do cadastro do titular da conta de pagamento (“CUSTOMER” ou “BUSINESS”).
+        name:
+          type: string
+          description: Nome do titular da conta de pagamento.  
       additionalProperties: false
     
     AccountBasicResponse:
