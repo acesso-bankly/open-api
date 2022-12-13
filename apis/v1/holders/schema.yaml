@@ -36,58 +36,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerResponse'
-              examples:
-                CustomerApproved:
-                  value:
-                    registerName: Peter Benjamin Parker
-                    socialName: Peter Parker
-                    birthDate: '1990-10-14'
-                    phone:
-                      countryCode: '55'
-                      number: '11987654321'
-                    address:
-                      zipcode: '05402100'
-                      addressLine: Av. Rebouças
-                      buildingNumber: '1368'
-                      neighborhood: Pinheiros
-                      country: BR
-                      state: SP
-                      city: Sao Paulo
-                      complement: Sala roxa
-                    isPoliticallyExposedPerson: false
-                    motherName: Mary Parker
-                    email: peter.parker@avengers.com
-                    status: APPROVED
-                    createdAt: '2021-08-31T21:20:58.754Z'
-                    updatedAt: '2021-08-31T21:21:58.754Z'
-                  summary: Registro da cliente aprovado
-                CustomerReproved:
-                  value:
-                    registerName: Peter Parker
-                    socialName: Peter Parker
-                    birthDate: '1990-10-14'
-                    phone:
-                      countryCode: '55'
-                      number: '11987654321'
-                    address:
-                      zipcode: '05402100'
-                      addressLine: Av. Rebouças
-                      buildingNumber: '1368'
-                      neighborhood: Pinheiros
-                      country: BR
-                      state: SP
-                      city: Sao Paulo
-                      complement: Sala roxa
-                    isPoliticallyExposedPerson: false
-                    motherName: Mary Parker
-                    email: peter.parker@avengers.com
-                    status: REPROVED
-                    reasons:
-                      - SELFIE_RECUSED
-                      - NAME_RECUSED
-                    createdAt: '2021-08-31T21:20:58.754Z'
-                    updatedAt: '2021-08-31T21:21:58.754Z'
-                  summary: Registro do cliente reprovado
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '403':
@@ -558,15 +506,60 @@ components:
       enum:
         - COMPLETE
         - SIMPLE
-    
+
+    Pep:
+      type: object
+      properties:
+        level:
+          type: string
+          description: Nível de vínculo com a pessoa politicamente exposta, atendendo a Circular nº 3.978.
+          enum:
+            - NONE 
+            - SELF
+            - FAMILY
+            - REPRESENTATIVE
+            - PARTNERSHIP
+            - CLOSE_COLLABORATOR
+
+    DocumentToken:
+      type: string
+      description: Token retornado no enpoint de Envio e análise de documentos pessoais.
+
+    SendedDocumentation:
+      type: object
+      description: Objeto onde devem ser informadas as referências dos documentos enviados para análise.
+      properties:
+        selfie:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardFront:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardBack:
+          $ref: "#/components/schemas/DocumentToken"
+
+    DeclaredIncome:
+      type: string
+      description: Faixa de renda declarada pelo cliente.
+      enum:
+        - LESS_THAN_ONE_THOUSAND
+        - FROM_ONE_THOUSAND_TO_TWO_THOUSAND
+        - FROM_TWO_THOUSAND_TO_THREE_THOUSAND
+        - FROM_THREE_THOUSAND_TO_FIVE_THOUSAND
+        - FROM_FIVE_THOUSAND_TO_TEN_THOUSAND
+        - FROM_TEN_THOUSAND_TO_TWENTY_THOUSAND
+        - OVER_TWENTY_THOUSAND
+
     RegisterCustomerRequest:
       required:
         - registerName
         - birthDate
         - phone
         - address
+        - pep
         - email
         - motherName
+        - declaredIncome
+        - occupation
+        - documentation
       type: object
       properties:
         registerName:
@@ -580,35 +573,73 @@ components:
           description: >
             Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
           nullable: true
-        phone:
-          description: Telefone de contato do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
-        address:
-          description: Endereço do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
         birthDate:
           maxLength: 10
           minLength: 10
           type: string
-          description: |
-            Data de nascimento do cliente. O cliente deve possuir no mínimo **16 anos**.
+          description: Data de nascimento do cliente.
           format: date-time
+        phone:
+          description: Objeto onde devem ser informados os dados do telefone do cliente.
+          $ref: "#/components/schemas/Phone"
+        address:
+          description: Objeto onde devem ser informados os dados do endereço do cliente.
+          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+        declaredIncome:
+          $ref: "#/components/schemas/DeclaredIncome"
+        occupation:
+          type: string
+          description: Código da profissão do cliente, respeitando a Classificação Brasileira de Ocupações do IBGE.
+        pep:
+          description: Objeto onde deve ser informado o nível de exposição política do cliente.
+          $ref: "#/components/schemas/Pep"
         motherName:
           type: string
-          description: >
-            Nome completo da mãe do cliente conforme consta no documento de identificação. <b>Sem abreviações</b>.
+          description: Nome completo da mãe do cliente conforme consta no documento de identificação. <b>Sem abreviações</b>.
           nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
-          description: >
-            Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
-        isPoliticallyExposedPerson:
-          description: Identificação do cliente como pessoa politicamente exposta.
-          type: boolean
-          default: false
+        documentation:
+          $ref: "#/components/schemas/SendedDocumentation"
+        legalResponsible:
+          type: object
+          description: Objeto onde devem ser informados os dados do responsável legal. Caso o titular seja menor de idade (entre 16 e 18 anos), o preenchimento deste objeto é <b>obrigatório</b>.
+          properties:
+            documentNumber:
+              type: string
+              description: Número do documento do responsável legal.
+            registerName:
+              type: string
+              description: Nome do responsável legal como consta no documento. <b>Sem abreviações</b>.
+            birthDate:
+              type: string
+              description: "Data de nascimento do responsável legal. Informe a data no formato ISO 8601. Exemplo: 1990-10-14."
+            phone:
+              description: Objeto onde devem ser informados os dados do telefone do responsável legal.
+              $ref: "#/components/schemas/Phone"
+            motherName:
+              type: string
+              description: Nome da mãe do responsável legal como consta no documento de identidade.
+            email:
+              maxLength: 256
+              minLength: 1
+              type: string
+              format: email
+              description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+            declaredIncome:
+              $ref: "#/components/schemas/DeclaredIncome"
+            occupation:
+              type: string
+              description: Código da profissão do responsável legal, respeitando a Classificação Brasileira de Ocupações do IBGE.
+            pep:
+              description: Objeto onde deve ser informado o nível de exposição política do responsável legal.
+              $ref: "#/components/schemas/Pep"
+            documentation:
+              $ref: "#/components/schemas/SendedDocumentation"
       additionalProperties: false
     
     RegisterBusinessRequest:
@@ -971,24 +1002,22 @@ components:
         documentNumber:
           description: Número do documento CPF do cliente.
           type: string
-        registerName:
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
-          type: string
-        socialName:
-          description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais na documentação [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
-          type: string
-          nullable: true
+        document:
+          type: object
+          description: Objeto que contém informações sobre o documento do cliente.
+          properties:
+            value:
+              type: string
+              description: Número do documento.
+            type:
+              type: string
+              description: Tipo do documento, o qual pode ser "CPF" ou "CNPJ".
         phone:
-          description: Telefone de contato do cliente.
+          description: Objeto que contém informações sobre o telefone do cliente.
           $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
         address:
-          description: Endereço informado no registro do cliente.
+          description: Objeto que contém informações sobre o endereço informado no registro do cliente.
           $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
-        birthDate:
-          description: Data de nascimento do cliente.
-          type: string
-          format: date-time
         email:
           description: E-mail de contato do cliente.
           type: string
@@ -997,17 +1026,31 @@ components:
           description: Nome da mãe informado no registro do cliente.
           type: string
           nullable: true
-        isPoliticallyExposedPerson:
-          description: Identificação do cliente como pessoa politicamente exposta.
-          type: boolean
+        birthDate:
+          description: Data de nascimento do cliente.
+          type: string
+          format: date-time
+        declaredIncome:
+          $ref: "#/components/schemas/DeclaredIncome"
+        occupation:
+          type: string
+          description: Código da profissão do cliente, respeitando a Classificação Brasileira de Ocupações do IBGE.
+        pep:
+          description: Objeto que contém o nível de exposição política do cliente.
+          $ref: "#/components/schemas/Pep"
+        registerName:
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
+          type: string
+        socialName:
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais na documentação [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
+          type: string
+          nullable: true
         status:
           description: Status da análise KYC realizada no registro do cliente.
           $ref: '#/components/schemas/Status'
         profile:
-          description: |
-            Perfil do cliente, baseado no registro do cliente.
-            _(SIMPLES, COMPLETO)_
-          $ref: '#/components/schemas/Profile'
+          description: Perfil do cliente, baseado no registro do cliente, o qual pode ser "SIMPLE" ou "COMPLETE".
+          $ref: '#/components/schemas/Profile'   
         createdAt:
           description: Data do primeiro registro do cliente.
           type: string
@@ -1017,12 +1060,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        reasons:
-          description: Motivos de reprovação do registro do cliente.
-          type: array
-          nullable: true
-          items:
-            type: string
       additionalProperties: false
     
     BusinessResponse:
