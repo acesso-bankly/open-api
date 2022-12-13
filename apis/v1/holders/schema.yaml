@@ -605,41 +605,6 @@ components:
           format: email
         documentation:
           $ref: "#/components/schemas/SendedDocumentation"
-        legalResponsible:
-          type: object
-          description: Objeto onde devem ser informados os dados do responsável legal. Caso o titular seja menor de idade (entre 16 e 18 anos), o preenchimento deste objeto é <b>obrigatório</b>.
-          properties:
-            documentNumber:
-              type: string
-              description: Número do documento do responsável legal.
-            registerName:
-              type: string
-              description: Nome do responsável legal como consta no documento. <b>Sem abreviações</b>.
-            birthDate:
-              type: string
-              description: "Data de nascimento do responsável legal. Informe a data no formato ISO 8601. Exemplo: 1990-10-14."
-            phone:
-              description: Objeto onde devem ser informados os dados do telefone do responsável legal.
-              $ref: "#/components/schemas/Phone"
-            motherName:
-              type: string
-              description: Nome da mãe do responsável legal como consta no documento de identidade.
-            email:
-              maxLength: 256
-              minLength: 1
-              type: string
-              format: email
-              description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-            declaredIncome:
-              $ref: "#/components/schemas/DeclaredIncome"
-            occupation:
-              type: string
-              description: Código da profissão do responsável legal, respeitando a Classificação Brasileira de Ocupações do IBGE.
-            pep:
-              description: Objeto onde deve ser informado o nível de exposição política do responsável legal.
-              $ref: "#/components/schemas/Pep"
-            documentation:
-              $ref: "#/components/schemas/SendedDocumentation"
       additionalProperties: false
     
     RegisterBusinessRequest:
