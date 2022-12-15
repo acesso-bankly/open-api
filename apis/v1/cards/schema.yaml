@@ -1516,7 +1516,7 @@ paths:
     patch:
       tags:
         - Gestão de senha
-      summary: Alterar senha
+      summary: Alteração de senha
       description: |
         <div class="bkly-ref-description">
           <p>Altere a senha do cartão.</p> 
@@ -1555,7 +1555,7 @@ paths:
         '401':
           description: Sem autorização para realizar a solicitação.
         '404':
-          description: Se o cartão não exisitir.
+          description: Cartão não encontrado.
         '409':
           description: Requisição em conflito com as regras de negócio contratado.
           content:
@@ -1605,7 +1605,82 @@ paths:
             statusCode: 409
           '500':
             statusCode: 500
-            
+
+  /cards/limit:
+    post:
+      tags:
+        - Gestão de limite de crédito
+      summary: Alteração de limite ativo de cartão pós-pago
+      description: |
+        <div class="bkly-ref-description">
+          <p>Altere o limite de crédito ativo de um cartão pós-pago.</p> 
+          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/limitAlterationRequest"
+      responses:
+        '204':
+          description: Limite de crédito ativo alterado com sucesso.
+        '400':
+          description: Existem erros no preenchimento da requisição.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 6 characters. ], reasons: [] }]
+        '404':
+          description: Cartão não encontrado.
+        '500':
+          description:  Ocorrência de erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cardErrorResponse"
+              examples:
+                response:
+                  value:
+                    reference: https://bankly.readme.io/reference
+                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+      x-amazon-apigateway-auth:
+        type: NONE
+      x-amazon-apigateway-integration:
+        uri: http://lb-towner-a26f32e03d8f2933.elb.us-east-1.amazonaws.com:7011/api/cards/{proxy}/password
+        passthroughBehavior: when_no_match
+        connectionType: VPC_LINK
+        connectionId: m116y5
+        httpMethod: PATCH
+        type: http
+        requestParameters:
+          integration.request.path.proxy: method.request.path.proxy
+          integration.request.header.authorization-token: method.request.header.authorization-token
+          integration.request.header.api-version: method.request.header.api-version
+          integration.request.header.Authorization: method.request.header.Authorization
+        responses:
+          '200':
+            statusCode: 200
+          '400':
+            statusCode: 400
+          '401':
+            statusCode: 401
+          '404':
+            statusCode: 404
+          '409':
+            statusCode: 409
+          '500':
+            statusCode: 500
+
+
   /cards/{proxy}/activate:
     patch:
       tags:
@@ -3708,6 +3783,22 @@ components:
         - GreenPatch
         - YellowPatch
 
+    limitAlterationRequest:
+      type: object
+      required:
+        - documentNumber
+        - contractNumber
+        - limit
+      properties:
+        documentNumber:
+          type: string
+          description: Número de documento de CPF ou CNPJ. Informe somente os números.
+        contractNumber:
+          type: string
+          description: Número do contrato do cliente.
+        limit:
+          type: number
+          description: Novo limite de crédito ativo (definido pelo cliente).
 
 x-readme:
   explorer-enabled: true
