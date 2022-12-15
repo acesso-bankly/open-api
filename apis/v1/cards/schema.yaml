@@ -879,6 +879,10 @@ paths:
                       - status: Approved
                         walletType: ApplePay 
                         walletFlowAdd: GreenPatch
+                    creditPos:
+                      contractNumber: "54684325763"
+                      limit: 3000.00
+                      limitActive: 1000.00
                     activatedAt: null
                     lastUpdatedAt: "2020-07-20T22:55:12"
                     isActivated: false
@@ -1022,6 +1026,10 @@ paths:
                         - status: Approved
                           walletType: ApplePay 
                           walletFlowAdd: GreenPatch
+                      creditPos:
+                        contractNumber: "54684325763"
+                        limit: 3000.00
+                        limitActive: 1000.00
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -1165,6 +1173,10 @@ paths:
                         - status: Approved
                           walletType: ApplePay 
                           walletFlowAdd: GreenPatch
+                      creditPos:
+                        contractNumber: "54684325763"
+                        limit: 3000.00
+                        limitActive: 1000.00
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -1319,6 +1331,10 @@ paths:
                         - status: Approved
                           walletType: ApplePay 
                           walletFlowAdd: GreenPatch
+                      creditPos:
+                        contractNumber: "54684325763"
+                        limit: 3000.00
+                        limitActive: 1000.00
                       activatedAt: null
                       lastUpdatedAt: "2020-07-20T22:55:12"
                       isActivated: false
@@ -2896,6 +2912,19 @@ components:
               walletFlowAdd:
                 $ref: "#/components/schemas/walletFlows"
                 description: Classificação do fluxo que o cartão recebeu ao entrar na carteira.
+        creditPos:
+          type: object
+          description: Objeto que contém informações sobre o limite de crédito do cartão pós-pago.
+          properties:
+            contractNumber:
+              type: string
+              description: Número do contrato do cliente.
+            limit:
+              type: number
+              description: Limite de crédito do cliente.
+            limitActive:
+              type: number
+              description: Limite de crédito ativo do cliente.
         activatedAt:
           type: string
           description: Data da ativação do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
