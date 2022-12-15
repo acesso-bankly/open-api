@@ -5,9 +5,9 @@ info:
     Registre, atualize, consulte o cadasto de clientes pessoa física ou
     jurídica. Um cliente com cadastro pode se tornar titular de contas de
     pagamento e cartões de crédito (pré-pago).
-  version: '1.0'
+  version: "1.0"
 servers:
-  - url: 'https://api-mtls.sandbox.bankly.com.br'
+  - url: "https://api-mtls.sandbox.bankly.com.br"
 paths:
   /customers/{documentNumber}:
     get:
@@ -23,27 +23,27 @@ paths:
         </div>
       operationId: GetCustomerRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ResultLevel"
       responses:
-        '200':
+        "200":
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerResponse'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+                $ref: "#/components/schemas/CustomerResponse"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
     put:
       tags:
         - Pessoa física
@@ -63,27 +63,27 @@ paths:
         [/block]
       operationId: PutCustomerRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterCustomerRequest'
+              $ref: "#/components/schemas/RegisterCustomerRequest"
       responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-  
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
   /customers/{documentNumber}/cancel:
     patch:
       tags:
@@ -106,26 +106,26 @@ paths:
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/CustomerDocument
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CancelRequest'
+              $ref: "#/components/schemas/CancelRequest"
       responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-  
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
   /business/{documentNumber}:
     get:
       tags:
@@ -137,22 +137,22 @@ paths:
           <p>Obtenha um resultado resumido (BASIC) ou detalhado (DETAILED) dos dados de registro de uma empresa.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.read</span>
-        </div>      
+        </div>
       operationId: GetBusinessRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ResultLevel'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ResultLevel"
       responses:
-        '200':
+        "200":
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
-              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BusinessResponse'
+                $ref: "#/components/schemas/BusinessResponse"
               examples:
                 BusinessApproved:
                   value:
@@ -162,9 +162,9 @@ paths:
                     businessType: MEI
                     businessSize: MEI
                     businessAddress:
-                      zipCode: '05402100'
+                      zipCode: "05402100"
                       addressLine: Av. Rebouças
-                      buildingNumber: '1368'
+                      buildingNumber: "1368"
                       neighborhood: Pinheiros
                       city: Sao Paulo
                       state: SP
@@ -174,23 +174,23 @@ paths:
                       registerName: Peter Benjamin Parker
                       socialName: Peter Parker
                       phone:
-                        countryCode: '55'
-                        number: '11987654321'
+                        countryCode: "55"
+                        number: "11987654321"
                       address:
-                        zipCode: '05402100'
+                        zipCode: "05402100"
                         addressLine: Av. Rebouças
-                        buildingNumber: '1368'
+                        buildingNumber: "1368"
                         neighborhood: Pinheiros
                         city: Sao Paulo
                         state: SP
                         country: BR
                         complement: Sala roxa
-                      birthDate: '1990-10-14'
+                      birthDate: "1990-10-14"
                       motherName: Mary Parker
                       email: peter.parker@avengers.com
                     status: APPROVED
-                    createdAt: '2021-08-31T21:20:58.754Z'
-                    updatedAt: '2021-08-31T21:21:58.754Z'
+                    createdAt: "2021-08-31T21:20:58.754Z"
+                    updatedAt: "2021-08-31T21:21:58.754Z"
                   summary: Registro da empresa aprovado
                 BusinessRepproved:
                   value:
@@ -200,9 +200,9 @@ paths:
                     businessType: MEI
                     businessSize: MEI
                     businessAddress:
-                      zipCode: '05402100'
+                      zipCode: "05402100"
                       addressLine: Av. Rebouças
-                      buildingNumber: '1368'
+                      buildingNumber: "1368"
                       neighborhood: Pinheiros
                       city: Sao Paulo
                       state: SP
@@ -212,35 +212,35 @@ paths:
                       registerName: Peter Benjamin Parker
                       socialName: Peter Parker
                       phone:
-                        countryCode: '55'
-                        number: '11987654321'
+                        countryCode: "55"
+                        number: "11987654321"
                       address:
-                        zipCode: '05402100'
+                        zipCode: "05402100"
                         addressLine: Av. Rebouças
-                        buildingNumber: '1368'
+                        buildingNumber: "1368"
                         neighborhood: Pinheiros
                         city: Sao Paulo
                         state: SP
                         country: BR
                         complement: Sala roxa
-                      birthDate: '1990-10-14'
+                      birthDate: "1990-10-14"
                       motherName: Mary Parker
                       email: peter.parker@avengers.com
                     status: REPROVED
                     reasons:
                       - SELFIE_RECUSED
                       - STATUS_RECUSED
-                    createdAt: '2021-08-31T21:20:58.754Z'
-                    updatedAt: '2021-08-31T21:21:58.754Z'
+                    createdAt: "2021-08-31T21:20:58.754Z"
+                    updatedAt: "2021-08-31T21:21:58.754Z"
                   summary: Registro da empresa reprovado
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '404':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
     put:
       tags:
         - Pessoa jurídica
@@ -260,27 +260,27 @@ paths:
         [/block]
       operationId: PutBusinessRegistration
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterBusinessRequest'
+              $ref: "#/components/schemas/RegisterBusinessRequest"
       responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-  
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
   /business/{documentNumber}/cancel:
     patch:
       tags:
@@ -308,27 +308,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CancelRequest'
+              $ref: "#/components/schemas/CancelRequest"
       responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "202":
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "403":
+          $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "422":
+          $ref: "http://localhost:3320/commons/components#/components/responses/422"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
   /corporation-business/{documentNumber}:
     put:
       tags:
         - Pessoa jurídica
       summary: Registro de pessoa jurídica (LTDA, S.A. ou TS)
-      description: | 
+      description: |
         <div class="bkly-ref-description">
           <p>
             Registre (ou substitua) uma nova empresa (LTDA, S.A. ou TS).
@@ -336,19 +336,19 @@ paths:
           </p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
-        </div>  
-      
+        </div>
+
       operationId: RegisterCorporationBusinessAsync
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
       responses:
-        '202':
+        "202":
           description: Requisição foi aceita e está sendo processada.
           headers:
             x-bkly-correlation-id:
@@ -359,15 +359,15 @@ paths:
               description: Localização do recurso recém-criado ou em análise.
               schema:
                 type: string
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '409':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
       security:
-      - Bearer: []
-  
+        - Bearer: []
+
 security:
   - Bearer: []
 
@@ -401,7 +401,7 @@ components:
         - MEI
         - ME
         - EPP
-    
+
     LegalRepresentative:
       required:
         - documentNumber
@@ -427,20 +427,20 @@ components:
           format: date-time
         phone:
           description: Telefone de contato do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Phone"
         address:
           description: Endereço do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         motherName:
           type: string
           description: Nome da mãe do representante legal conforme consta no documento de identificação.
-          nullable: true 
+          nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email 
+          format: email
         incomeDeclared:
           type: number
           description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
@@ -487,7 +487,7 @@ components:
           description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
-    
+
     LegalRepresentativeRequest:
       required:
         - documentNumber
@@ -520,10 +520,10 @@ components:
           nullable: true
         phone:
           description: Telefone de contato do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Phone"
         address:
           description: Endereço do representante legal da empresa.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         birthDate:
           maxLength: 10
           minLength: 10
@@ -533,13 +533,13 @@ components:
         motherName:
           type: string
           description: Nome da mãe do representante legal conforme consta no documento de identificação.
-          nullable: true 
+          nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email 
+          format: email
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
         occupation:
@@ -560,14 +560,14 @@ components:
         - REVOKED
         - CANCELED
         - BLACKLISTED
-    
+
     Profile:
       type: string
       description: Perfil do cliente.
       enum:
         - COMPLETE
         - SIMPLE
-    
+
     Occupation:
       type: string
       description: Código da profissão do cliente, respeitando a Classificação Brasileira de Ocupações do IBGE.
@@ -680,10 +680,9 @@ components:
           type: string
           description: Nível de vínculo com a pessoa politicamente exposta, atendendo a Circular nº 3.978.
           enum:
-            - NONE 
+            - NONE
             - SELF
             - FAMILY
-            - REPRESENTATIVE
             - PARTNERSHIP
             - CLOSE_COLLABORATOR
 
@@ -750,7 +749,7 @@ components:
           $ref: "#/components/schemas/Phone"
         address:
           description: Objeto onde devem ser informados os dados do endereço do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
         occupation:
@@ -771,7 +770,7 @@ components:
         documentation:
           $ref: "#/components/schemas/SendedDocumentation"
       additionalProperties: false
-    
+
     RegisterBusinessRequest:
       required:
         - businessName
@@ -798,17 +797,17 @@ components:
           format: email
           nullable: false
         businessType:
-          $ref: '#/components/schemas/BusinessTypeMEIEISLURequest'
+          $ref: "#/components/schemas/BusinessTypeMEIEISLURequest"
         businessSize:
-          $ref: '#/components/schemas/BusinessSize' 
+          $ref: "#/components/schemas/BusinessSize"
         businessAddress:
           description: Endereço da empresa registrado no cartão CNPJ.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         annualBilling:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         legalRepresentative:
           description: Representante legal da empresa, que deve ser maior de 18 anos.
-          $ref: '#/components/schemas/LegalRepresentativeRequest'
+          $ref: "#/components/schemas/LegalRepresentativeRequest"
       additionalProperties: false
 
     DeclaredAnnualBiling:
@@ -839,14 +838,14 @@ components:
         - SA
         - TS
       type: string
-    
+
     CorporationBusinessSize:
       enum:
         - SMALL
         - MEDIUM
         - LARGE
       type: string
-    
+
     Owner:
       type: object
       required:
@@ -876,7 +875,7 @@ components:
           nullable: true
         socialName:
           type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física. 
+          description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física.
           nullable: true
         phone:
           $ref: "#/components/schemas/Phone"
@@ -920,7 +919,7 @@ components:
           description: Sócios da empresa. Apenas para sócio pessoa jurídica.
           nullable: true
       additionalProperties: false
-    
+
     Documentation:
       type: object
       required:
@@ -941,17 +940,17 @@ components:
           description: Id correspondente do documento de declaração de faturamento dos últimos 12 meses ou balanço social.
           type: string
           nullable: true
-        powerOfAttorney: 
-          description:  Id correspondente do documento de procuração pública legal.
+        powerOfAttorney:
+          description: Id correspondente do documento de procuração pública legal.
           type: string
           nullable: true
         legalRepresentative:
           $ref: "#/components/schemas/Image"
       additionalProperties: false
-      
+
     Image:
       type: object
-      description: Documentos de ao menos um dos representantes legais, é possível usar o RG, CNH, RNE, DNI e CRNM. 
+      description: Documentos de ao menos um dos representantes legais, é possível usar o RG, CNH, RNE, DNI e CRNM.
       required:
         - documentNumber
         - selfie
@@ -970,12 +969,12 @@ components:
           description: Imagem da frente do documento.
           type: string
           nullable: true
-        idCardBack: 
+        idCardBack:
           description: Imagem do verso do documento.
           type: string
           nullable: true
       additionalProperties: false
-    
+
     RegisterCorporationBusinessRequest:
       required:
         - businessAddress
@@ -1043,7 +1042,7 @@ components:
         documentation:
           $ref: "#/components/schemas/Documentation"
       additionalProperties: false
-    
+
     PowerOfAttorney:
       type: object
       properties:
@@ -1055,8 +1054,8 @@ components:
           type: string
           description: Data do fim da procuração.
           format: date-time
-      additionalProperties: false        
-    
+      additionalProperties: false
+
     Address:
       required:
         - addressLine
@@ -1085,7 +1084,7 @@ components:
         complement:
           maxLength: 256
           type: string
-          description: 'Complemento do endereço. Exemplo: Apto 123, Casa B etc.'
+          description: "Complemento do endereço. Exemplo: Apto 123, Casa B etc."
           nullable: true
         neighborhood:
           maxLength: 256
@@ -1104,9 +1103,9 @@ components:
         country:
           minLength: 1
           type: string
-          description: 'Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR.'
+          description: "Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR."
       additionalProperties: false
-    
+
     LegalRepresentativePerson:
       type: object
       required:
@@ -1176,10 +1175,10 @@ components:
               description: Tipo do documento, o qual pode ser "CPF" ou "CNPJ".
         phone:
           description: Objeto que contém informações sobre o telefone do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Phone'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Phone"
         address:
           description: Objeto que contém informações sobre o endereço informado no registro do cliente.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         email:
           description: E-mail de contato do cliente.
           type: string
@@ -1192,13 +1191,6 @@ components:
           description: Data de nascimento do cliente.
           type: string
           format: date-time
-        declaredIncome:
-          $ref: "#/components/schemas/DeclaredIncome"
-        occupation:
-          $ref: "#/components/schemas/Occupation"
-        pep:
-          description: Objeto que contém o nível de exposição política do cliente.
-          $ref: "#/components/schemas/Pep"
         registerName:
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente.
           type: string
@@ -1208,10 +1200,10 @@ components:
           nullable: true
         status:
           description: Status da análise KYC realizada no registro do cliente.
-          $ref: '#/components/schemas/Status'
+          $ref: "#/components/schemas/Status"
         profile:
           description: Perfil do cliente, baseado no registro do cliente, o qual pode ser "SIMPLE" ou "COMPLETE".
-          $ref: '#/components/schemas/Profile'   
+          $ref: "#/components/schemas/Profile"
         createdAt:
           description: Data do primeiro registro do cliente.
           type: string
@@ -1221,8 +1213,17 @@ components:
           type: string
           format: date-time
           nullable: true
+        declaredIncome:
+          $ref: "#/components/schemas/DeclaredIncome"
+        occupation:
+          $ref: "#/components/schemas/Occupation"
+        pep:
+          description: Objeto que contém o nível de exposição política do cliente.
+          $ref: "#/components/schemas/Pep"
+        documentation:
+          $ref: "#/components/schemas/SendedDocumentation"
       additionalProperties: false
-    
+
     BusinessResponse:
       type: object
       properties:
@@ -1240,27 +1241,27 @@ components:
           type: string
         businessAddress:
           description: Endereço da empresa informado no registro.
-          $ref: 'http://localhost:3320/commons/components#/components/schemas/Address'
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
         status:
           description: Status da análise KYC realizada no registro da empresa.
-          $ref: '#/components/schemas/Status'
+          $ref: "#/components/schemas/Status"
         businessType:
           description: Tipo da empresa (MEI, EI, SLU, LTDA, S.A.).
-          $ref: '#/components/schemas/BusinessType'
+          $ref: "#/components/schemas/BusinessType"
         businessSize:
           description: |
             Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
-          $ref: '#/components/schemas/BusinessSize'
+          $ref: "#/components/schemas/BusinessSize"
         owners:
           description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA).
           type: array
           items:
-            $ref: '#/components/schemas/LegalRepresentative'
+            $ref: "#/components/schemas/LegalRepresentative"
         legalRepresentatives:
           description: Lista de representantes legais da empresa.
           type: array
           items:
-            $ref: '#/components/schemas/LegalRepresentative'
+            $ref: "#/components/schemas/LegalRepresentative"
         createdAt:
           description: Data do primeiro registro da empresa.
           type: string
@@ -1296,7 +1297,7 @@ components:
           items:
             type: string
       additionalProperties: false
-    
+
     ReasonType:
       type: string
       description: |
@@ -1308,14 +1309,15 @@ components:
         - COMMERCIAL_DISAGREEMENT
     Phone:
       required:
-      - countryCode
-      - number
+        - countryCode
+        - number
       type: object
       properties:
         countryCode:
           minLength: 1
           type: string
-          description: Código DDI do país. Por enquanto é permitido apenas 55 ou +55
+          description:
+            Código DDI do país. Por enquanto é permitido apenas 55 ou +55
             (Brasil).
         number:
           minLength: 1
@@ -1326,9 +1328,9 @@ components:
       type: object
       properties:
         reason:
-          $ref: '#/components/schemas/ReasonType'
+          $ref: "#/components/schemas/ReasonType"
       additionalProperties: false
-  
+
   securitySchemes:
     Bearer:
       type: http
