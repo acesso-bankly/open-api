@@ -1274,7 +1274,7 @@ components:
           format: double
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         owners:
-          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA).
+          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
