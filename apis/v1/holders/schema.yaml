@@ -478,7 +478,7 @@ components:
           description: Objeto onde deve ser informado o nível de exposição política do cliente.
           $ref: "#/components/schemas/Pep"
         documentation:
-          $ref: "#/components/schemas/SendedDocumentation"
+          $ref: "#/components/schemas/SendedDocumentationResponse"
         legalRepresentatives:
           type: array
           items:
@@ -553,7 +553,7 @@ components:
           description: Objeto onde deve ser informado o nível de exposição política do cliente.
           $ref: "#/components/schemas/Pep"
         documentation:
-          $ref: "#/components/schemas/SendedDocumentation"
+          $ref: "#/components/schemas/SendedDocumentationRequest"
 
     Status:
       type: string
@@ -695,8 +695,12 @@ components:
       type: string
       description: Token retornado no enpoint de Envio e análise de documentos pessoais.
 
-    SendedDocumentation:
+    SendedDocumentationRequest:
       type: object
+      required:
+        - "selfie"
+        - "idCardFront"
+        - "idCardBack"
       description: Objeto onde devem ser informadas as referências dos documentos enviados para análise.
       properties:
         selfie:
@@ -706,6 +710,16 @@ components:
         idCardBack:
           $ref: "#/components/schemas/DocumentToken"
 
+    SendedDocumentationResponse:
+      type: object
+      description: Objeto onde devem ser informadas as referências dos documentos enviados para análise.
+      properties:
+        selfie:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardFront:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardBack:
+          $ref: "#/components/schemas/DocumentToken"
     DeclaredIncome:
       type: string
       description: Faixa de renda declarada pelo cliente.
@@ -773,7 +787,7 @@ components:
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         documentation:
-          $ref: "#/components/schemas/SendedDocumentation"
+          $ref: "#/components/schemas/SendedDocumentationRequest"
       additionalProperties: false
 
     RegisterBusinessRequest:
@@ -1226,7 +1240,7 @@ components:
           description: Objeto que contém o nível de exposição política do cliente.
           $ref: "#/components/schemas/Pep"
         documentation:
-          $ref: "#/components/schemas/SendedDocumentation"
+          $ref: "#/components/schemas/SendedDocumentationResponse"
       additionalProperties: false
 
     BusinessResponse:
