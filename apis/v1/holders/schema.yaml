@@ -364,11 +364,6 @@ components:
           type: string
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
-        incomeDeclared:
-          type: number
-          description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          format: double
-          nullable: true
         participationPercentage:
           type: string
           description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
@@ -450,11 +445,6 @@ components:
           type: string
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
-        incomeDeclared:
-          type: number
-          description: Renda declarada. Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          format: double
-          nullable: true
         participationPercentage:
           type: string
           description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
@@ -677,6 +667,11 @@ components:
         - OCP0098	- Turismólogo/Tourismologist
         - OCP0099	- Veterinário/Vet
         - OCP0100	- Zootecnólogo/Zootechnologist
+        - OCP0101 - Autônomo/Self-employed
+        - OCP0102 - Aposentado/Retired
+        - OCP0103 - Sem Ocupação/No Occupation
+        - OCP0104 - Estudante/Student
+        - OCP0105 - Outros/Others
 
     Pep:
       type: object
@@ -868,18 +863,12 @@ components:
     Owner:
       type: object
       required:
-        - incomeDeclared
         - participationPercentage
         - documentNumber
         - address
         - phone
         - email
       properties:
-        incomeDeclared:
-          type: number
-          description: Renda declarada.
-          format: double
-          nullable: true
         participationPercentage:
           type: string
           description: Percentual de participação (0 a 100).
