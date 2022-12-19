@@ -565,7 +565,7 @@ components:
 
     Occupation:
       type: string
-      description: Código da profissão do cliente, respeitando a Classificação Brasileira de Ocupações do IBGE. <b>Importante</b> Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
+      description: Código de ocupação do cliente. <b>Importante</b> Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
       enum:
         - OCP0001	- Administrador Iniciativa Privada/Private Enterprise Administrator
         - OCP0002	- Administrador Público/Public Manager
