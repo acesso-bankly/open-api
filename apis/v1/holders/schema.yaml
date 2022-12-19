@@ -682,9 +682,7 @@ components:
           enum:
             - NONE
             - SELF
-            - FAMILY
-            - PARTNERSHIP
-            - CLOSE_COLLABORATOR
+            - RELATED
 
     DocumentToken:
       type: string
@@ -1327,6 +1325,7 @@ components:
       enum:
         - HOLDER_REQUEST
         - COMMERCIAL_DISAGREEMENT
+    
     Phone:
       required:
         - countryCode
@@ -1344,6 +1343,7 @@ components:
           type: string
           description: Número de telefone incluindo DDD.
       additionalProperties: false
+    
     CancelRequest:
       type: object
       properties:
