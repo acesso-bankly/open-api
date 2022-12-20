@@ -406,81 +406,6 @@ components:
         documentNumber:
           description: Número do documento CPF do cliente.
           type: string
-        document:
-          type: object
-          description: Objeto que contém informações sobre o documento do cliente.
-          properties:
-            value:
-              type: string
-              description: Número do documento.
-            type:
-              type: string
-              description: Tipo do documento (CPF).
-        registerName:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
-          nullable: true
-        phone:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/Phone"
-        address:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
-        birthDate:
-          maxLength: 10
-          minLength: 10
-          type: string
-          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
-          format: date-time
-        motherName:
-          type: string
-          description: Nome da mãe do proprietário ou representante legal conforme consta no documento de identificação.
-          nullable: true
-        email:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email
-        participationPercentage:
-          type: string
-          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        tradingName:
-          type: string
-          description: Nome fantasia da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessName:
-          type: string
-          description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessType:
-          $ref: "#/components/schemas/BusinessType"
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        declaredIncome:
-          $ref: "#/components/schemas/DeclaredIncome"
-        occupation:
-          $ref: "#/components/schemas/Occupation"
-        pep:
-          description: Objeto onde deve ser informado o nível de exposição política do cliente.
-          $ref: "#/components/schemas/Pep"
-        documentation:
-          $ref: "#/components/schemas/SendedDocumentationResponse"
-        legalRepresentatives:
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentative"
-          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        owners:
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentative"
-          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
       additionalProperties: false
     
     LegalRepresentativeRequest:
@@ -1276,7 +1201,16 @@ components:
           type: number
           format: double
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        
+        owners:
+          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          type: array
+          items:
+            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
+        legalRepresentatives:
+          description: Lista de representantes legais da empresa.
+          type: array
+          items:
+            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
         createdAt:
           description: Data do primeiro registro da empresa.
           type: string
