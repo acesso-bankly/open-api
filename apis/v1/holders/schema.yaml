@@ -406,6 +406,39 @@ components:
         documentNumber:
           description: Número do documento CPF do cliente.
           type: string
+        document:
+          type: object
+          description: Objeto que contém informações sobre o documento do cliente.
+          properties:
+            value:
+              type: string
+              description: Número do documento.
+            type:
+              type: string
+              description: Tipo do documento (CPF).
+        registerName:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          nullable: true
+        phone:
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Phone"
+        address:
+          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
+        birthDate:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
+          format: date-time
+        motherName:
+          type: string
+          description: Nome da mãe do proprietário ou representante legal conforme consta no documento de identificação.
+          nullable: true
       additionalProperties: false
     
     LegalRepresentativeRequest:
