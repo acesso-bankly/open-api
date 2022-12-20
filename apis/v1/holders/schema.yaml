@@ -462,11 +462,14 @@ components:
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
+        confirmedIncome:
+          type: string
+          description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
         occupation:
           $ref: "#/components/schemas/Occupation"
         pep:
           description: Objeto onde deve ser informado o nível de exposição política do cliente.
-          $ref: "#/components/schemas/Pep"
+          $ref: "#/components/schemas/PepResponse"
         documentation:
           $ref: "#/components/schemas/SendedDocumentationResponse"
         legalRepresentatives:
@@ -565,113 +568,113 @@ components:
 
     Occupation:
       type: string
-      description: Código de ocupação do cliente. <b>Importante</b> Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo#ancora1). <br/><b>Importante</b> Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
       enum:
-        - OCP0001	- Administrador Iniciativa Privada/Private Enterprise Administrator
-        - OCP0002	- Administrador Público/Public Manager
-        - OCP0003	- Advogado/Attorney
-        - OCP0004	- Agricultor/Farmer
-        - OCP0005	- Agrônomo/Agronomist
-        - OCP0006	- Agropecuarista/Farmer
-        - OCP0007	- Analista e Desenvolvedor de Sistemas/Systems Analyst And Developer
-        - OCP0008	- Animador/Animator
-        - OCP0009	- Arqueólogo/Archaeologist
-        - OCP0010	- Arquiteto/Architect
-        - OCP0011	- Arquivologista/Archival
-        - OCP0012	- Artes e Design/ Arts And Design
-        - OCP0013	- Artista Plástico/Plastic Artist
-        - OCP0014	- Astrônomo/Astronomer
-        - OCP0015	- Ator/Actor
-        - OCP0016	- Biblioteconomista/Librarian
-        - OCP0017	- Biomédico/Biomedic
-        - OCP0018	- Bioquímico/Biochemical
-        - OCP0019 - Biotecnólogo/Biotechnologist
-        - OCP0020	- Chefe de Cozinha/Chef
-        - OCP0021	- Ciências Sociais e Humanas/Social And Human Sciences
-        - OCP0022	- Cientista da Computação/Computer Scientist
-        - OCP0023	- Construtor Civil/House-Builder
-        - OCP0024	- Construtor Naval/Shipbuilder
-        - OCP0025	- Contabilista/Accountant
-        - OCP0026	- Cooperativista/Cooperative
-        - OCP0027	- Dançarino/Dancer
-        - OCP0028	- Dentista/Dentist
-        - OCP0029	- Designer/Designer
-        - OCP0030	- Designer de Games/Game Designer
-        - OCP0031	- Designer de Interiores/Interior Designer
-        - OCP0032	- Designer de Moda/Fashion Designer
-        - OCP0033	- Ecologista/Environmentalist
-        - OCP0034	- Economista/Economist
-        - OCP0035	- Educador Físico/Physical Educator
-        - OCP0036	- Educomunicador/Educommunicator
-        - OCP0037	- Enfermeiro/Nurse
-        - OCP0038	- Engenheiro/Engineer
-        - OCP0039	- Especialista em Comércio Exterior/Foreign Trade Specialist
-        - OCP0040	- Estatístico/Statistical
-        - OCP0041	- Esteticista/Beautician
-        - OCP0042	- Farmacêutico/Pharmaceutical
-        - OCP0043	- Filósofo/Philosopher
-        - OCP0044	- Físico/Physicist
-        - OCP0045	- Fisioterapeuta/Physiotherapist
-        - OCP0046	- Fonoaudiólogo/Speech Therapist
-        - OCP0047	- Fotógrafo/Photographer
-        - OCP0048	- Geofísico/Geophysical
-        - OCP0049	- Geógrafo/Geographer
-        - OCP0050	- Geólogo/Geologist
-        - OCP0051	- Gerente Comercial/Commercial Manager
-        - OCP0052	- Gerontólogo/Gerontologist
-        - OCP0053	- Gestor Ambiental/Environmental Manager
-        - OCP0054	- Gestor da Qualidade/Quality Manager
-        - OCP0055	- Gestor da Tecnologia Da Informação/Information Technology Manager
-        - OCP0056	- Gestor de Recursos Humanos/Human Resources Manager
-        - OCP0057	- Gestor de Turismo/Tourism Manager
-        - OCP0058	- Gestor em Saúde/Health Manager
-        - OCP0059	- Gestor Hospitalar/Hospital Manager
-        - OCP0060	- Gestor Público/Public Manager
-        - OCP0061	- Historiador/Historian
-        - OCP0062	- Historiador da Arte/Art Historian
-        - OCP0063	- Hoteleiro/Hotelier
-        - OCP0064	- Jornalista/Journalist
-        - OCP0065	- Linguista/Linguist
-        - OCP0066	- Matemático/Mathematical
-        - OCP0067	- Médico/Doctor
-        - OCP0068	- Meteorologista/Weatherman
-        - OCP0069	- Minerador/Miner
-        - OCP0070	- Museologista/Museologist
-        - OCP0071 - Músico/Musician
-        - OCP0072	- Musicoterapeuta/Music Therapist
-        - OCP0073	- Nanotecnólogo/Nanotechnologist
-        - OCP0074	- Nutricionista/Nutritionist
-        - OCP0075	- Oceanógrafo/Oceanographer
-        - OCP0076	- Pedagogo/Pedagogue
-        - OCP0077	- Piloto de Avião/Airplane Pilot
-        - OCP0078	- Produtor Audiovisual/Audiovisual Producer
-        - OCP0079	- Produtor Cênico/Scenic Producer
-        - OCP0080	- ProdutorCultural/Cultural Producer
-        - OCP0081	- Produtor Fonográfico/Record Producer
-        - OCP0082	- Professor/Teacher
-        - OCP0083	- Psicólogo/Psychologist
-        - OCP0084	- Psicopedagogo/Psychopedagogue
-        - OCP0085	- Publicitário/Publicist
-        - OCP0086	- Químico/Chemical
-        - OCP0087	- Radialista/Broadcaster
-        - OCP0088	- Radiologista/Radiologist
-        - OCP0089	- Relações Internacionais/International Relations
-        - OCP0090	- Relações Públicas/Public Relations
-        - OCP0091	- Saúde e Bem-estar/Health And Wellness
-        - OCP0092	- Secretária/Secretary
-        - OCP0093	- Silvicultor/Forester
-        - OCP0094	- Sociólogo/Sociologist
-        - OCP0095	- Teólogo/Theologian
-        - OCP0096	- Terapeuta Ocupacional/Occupational Therapist
-        - OCP0097	- Tradutor e Intérprete/ Translator And Interpreter
-        - OCP0098	- Turismólogo/Tourismologist
-        - OCP0099	- Veterinário/Vet
-        - OCP0100	- Zootecnólogo/Zootechnologist
-        - OCP0101 - Autônomo/Self-employed
-        - OCP0102 - Aposentado/Retired
-        - OCP0103 - Sem Ocupação/No Occupation
-        - OCP0104 - Estudante/Student
-        - OCP0105 - Outros/Others
+        - OCP0001 
+        - OCP0002	
+        - OCP0003	
+        - OCP0004	
+        - OCP0005	
+        - OCP0006	
+        - OCP0007	
+        - OCP0008	
+        - OCP0009	
+        - OCP0010	
+        - OCP0011	
+        - OCP0012	
+        - OCP0013	
+        - OCP0014	
+        - OCP0015	
+        - OCP0016	
+        - OCP0017	
+        - OCP0018	
+        - OCP0019 
+        - OCP0020	
+        - OCP0021	
+        - OCP0022	
+        - OCP0023	
+        - OCP0024	
+        - OCP0025	
+        - OCP0026	
+        - OCP0027	
+        - OCP0028	
+        - OCP0029	
+        - OCP0030	
+        - OCP0031	
+        - OCP0032	
+        - OCP0033	
+        - OCP0034	
+        - OCP0035	
+        - OCP0036	
+        - OCP0037	
+        - OCP0038	
+        - OCP0039	
+        - OCP0040	
+        - OCP0041	
+        - OCP0042	
+        - OCP0043	
+        - OCP0044	
+        - OCP0045	
+        - OCP0046	
+        - OCP0047	
+        - OCP0048	
+        - OCP0049	
+        - OCP0050	
+        - OCP0051	
+        - OCP0052	
+        - OCP0053	
+        - OCP0054	
+        - OCP0055	
+        - OCP0056	
+        - OCP0057	
+        - OCP0058	
+        - OCP0059	
+        - OCP0060	
+        - OCP0061	
+        - OCP0062	
+        - OCP0063	
+        - OCP0064	
+        - OCP0065	
+        - OCP0066	
+        - OCP0067	
+        - OCP0068	
+        - OCP0069	
+        - OCP0070	
+        - OCP0071 
+        - OCP0072	
+        - OCP0073	
+        - OCP0074	
+        - OCP0075	
+        - OCP0076	
+        - OCP0077	
+        - OCP0078	
+        - OCP0079	
+        - OCP0080	
+        - OCP0081	
+        - OCP0082	
+        - OCP0083	
+        - OCP0084	
+        - OCP0085	
+        - OCP0086	
+        - OCP0087	
+        - OCP0088	
+        - OCP0089	
+        - OCP0090	
+        - OCP0091	
+        - OCP0092	
+        - OCP0093	
+        - OCP0094	
+        - OCP0095	
+        - OCP0096	
+        - OCP0097	
+        - OCP0098	
+        - OCP0099	
+        - OCP0100
+        - OCP0101 
+        - OCP0102 
+        - OCP0103 
+        - OCP0104 
+        - OCP0105 
 
     Pep:
       type: object
@@ -684,6 +687,20 @@ components:
             - SELF
             - RELATED
 
+    PepResponse:
+      type: object
+      properties:
+        level:
+          type: string
+          description: Nível de vínculo com a pessoa politicamente exposta, atendendo a Circular nº 3.978.
+          enum:
+            - NONE
+            - SELF
+            - RELATED
+        verified:
+          type: boolean
+          description: Indica se a situação de vínculo com pessoa politicamente exposta foi verificada no Bureau de informação. O valor default desse campo é false.
+    
     DocumentToken:
       type: string
       description: Token retornado no enpoint de Envio e análise de documentos pessoais.
@@ -713,6 +730,7 @@ components:
           $ref: "#/components/schemas/DocumentToken"
         idCardBack:
           $ref: "#/components/schemas/DocumentToken"
+    
     DeclaredIncome:
       type: string
       description: Faixa de renda declarada pelo cliente.
@@ -1221,11 +1239,14 @@ components:
           nullable: true
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
+        confirmedIncome:
+          type: string
+          description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
         occupation:
           $ref: "#/components/schemas/Occupation"
         pep:
           description: Objeto que contém o nível de exposição política do cliente.
-          $ref: "#/components/schemas/Pep"
+          $ref: "#/components/schemas/PepResponse"
         documentation:
           $ref: "#/components/schemas/SendedDocumentationResponse"
       additionalProperties: false
