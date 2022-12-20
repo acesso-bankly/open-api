@@ -507,6 +507,16 @@ components:
           type: string
           description: |
             Número do documento CPF. Informe somente números.
+        document:
+          type: object
+          description: Objeto que contém informações sobre o documento do cliente.
+          properties:
+            value:
+              type: string
+              description: Número do documento.
+            type:
+              type: string
+              description: Tipo do documento (CPF).
         registerName:
           maxLength: 256
           minLength: 1
@@ -833,7 +843,7 @@ components:
         businessAddress:
           description: Endereço da empresa registrado no cartão CNPJ.
           $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
-        annualBilling:
+        declaredAnnualBilling:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         legalRepresentative:
           description: Representante legal da empresa, que deve ser maior de 18 anos.
@@ -1291,10 +1301,11 @@ components:
         status:
           description: Status da análise KYC realizada no registro da empresa.
           $ref: "#/components/schemas/Status"
-        annualBilling:
-          type: number
-          format: double
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+        declaredAnnualBilling:
+          $ref: "#/components/schemas/DeclaredAnnualBiling"
+        confirmedAnnualBilling:
+          type: string
+          description: Indica se o valor informado da renda foi confirmado no Bureau de informação. 
         owners:
           description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
           type: array
