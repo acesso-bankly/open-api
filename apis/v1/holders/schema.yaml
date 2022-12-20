@@ -1266,7 +1266,21 @@ components:
           description: |
             Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
           $ref: "#/components/schemas/BusinessSize"
-
+        
+        owners:
+          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          type: array
+          items:
+            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
+        legalRepresentatives:
+          description: Lista de representantes legais da empresa.
+          type: array
+          items:
+            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
+        createdAt:
+          description: Data do primeiro registro da empresa.
+          type: string
+          format: date-time
         updatedAt:
           description: Data da atualização do registro da empresa.
           type: string
