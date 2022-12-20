@@ -1266,56 +1266,6 @@ components:
           description: |
             Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
           $ref: "#/components/schemas/BusinessSize"
-        businessAddress:
-          description: Endereço da empresa informado no registro.
-          $ref: "http://localhost:3320/commons/components#/components/schemas/Address"
-        status:
-          description: Status da análise KYC realizada no registro da empresa.
-          $ref: "#/components/schemas/Status"
-        annualBilling:
-          type: number
-          format: double
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        owners:
-          description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
-        legalRepresentatives:
-          description: Lista de representantes legais da empresa.
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentativeBusinessResponse"
-        createdAt:
-          description: Data do primeiro registro da empresa.
-          type: string
-          format: date-time
-        updatedAt:
-          description: Data da atualização do registro da empresa.
-          type: string
-          format: date-time
-          nullable: true
-        cnaeCode:
-          type: string
-          nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        legalNature:
-          type: string
-          nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        openingDate:
-          type: string
-          format: date-time
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        phone:
-          $ref: "#/components/schemas/Phone"
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        reasons:
-          description: Para casos de reprovação, esse campo retorna com os motivos de reprovação do registro da empresa.
-          type: array
-          nullable: true
-          items:
-            type: string
       additionalProperties: false
 
     ReasonType:
