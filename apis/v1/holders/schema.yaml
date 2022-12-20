@@ -474,15 +474,15 @@ components:
           $ref: "#/components/schemas/SendedDocumentationResponse"
         legalRepresentatives:
           type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentative"
-          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          items: 
+            type: object
+          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Esse campo traz uma lista de itens com as mesmas propriedades do objeto pai <code>legalRepresentative</code> e retorna somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         owners:
           type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentative"
-          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          items: 
+            type: object
+          description: Sócios da empresa (apenas para sócio pessoa jurídica). Esse campo traz uma lista de itens com as mesmas propriedades do objeto pai <code>legalRepresentative</code> e retorna somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
     
@@ -578,7 +578,7 @@ components:
 
     Occupation:
       type: string
-      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo#ancora1). <br/><b>Importante</b> Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo#ancora1). <br/><b>Importante</b> Deve-se enviar somente o código. Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
       enum:
         - OCP0001 
         - OCP0002	
@@ -1305,7 +1305,7 @@ components:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         confirmedAnnualBilling:
           type: string
-          description: Indica se o valor informado da renda foi confirmado no Bureau de informação. 
+          description: Indica se o valor de faturamento informado foi confirmado no Bureau de informação. 
         owners:
           description: Lista de sócios da empresa como consta no Quadro dos Sócios e Administradores (QSA). Somente retornado para clientes do tipo LTDA / S.A. / TS.
           type: array
