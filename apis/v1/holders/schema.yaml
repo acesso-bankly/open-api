@@ -1266,6 +1266,33 @@ components:
           description: |
             Porte da empresa (MEI, ME, EPP, SMALL, MEDIUM, LARGE).
           $ref: "#/components/schemas/BusinessSize"
+
+        updatedAt:
+          description: Data da atualização do registro da empresa.
+          type: string
+          format: date-time
+          nullable: true
+        cnaeCode:
+          type: string
+          nullable: true
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+        legalNature:
+          type: string
+          nullable: true
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+        openingDate:
+          type: string
+          format: date-time
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+        phone:
+          $ref: "#/components/schemas/Phone"
+          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+        reasons:
+          description: Para casos de reprovação, esse campo retorna com os motivos de reprovação do registro da empresa.
+          type: array
+          nullable: true
+          items:
+            type: string
       additionalProperties: false
 
     ReasonType:
