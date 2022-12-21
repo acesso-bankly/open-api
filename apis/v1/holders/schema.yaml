@@ -823,6 +823,7 @@ components:
         - businessEmail
         - businessSize
         - businessType
+        - declaredAnnualBilling
         - legalRepresentative
       type: object
       properties:
