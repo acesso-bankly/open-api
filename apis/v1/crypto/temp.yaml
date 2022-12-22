@@ -79,6 +79,7 @@ paths:
                 $ref: "#/components/schemas/OrderExecutionResponseDto"
       tags:
         - Orders
+  
   /crypto/prices:
     get:
       tags:
@@ -104,53 +105,42 @@ paths:
         - $ref: '#/components/parameters/Market'
       responses: 
         "200":
-          description: ""
+          description: "Recurso encontrado."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/PriceResponseDto"
   /crypto/graphs/prices:
     get:
-      operationId: GraphController_getGraph
+      tags:
+        - Operações com criptomoedas  
+      summary: Cotação de criptomoedas por período 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a cotação de criptomoedas de um período específico.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+        }
+        [/block]
       parameters:
-        - name: x-correlation-id
-          in: header
-          description: Correlation Id
-          required: false
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: API Version
-          required: true
-          schema:
-            type: string
-        - name: market
-          required: true
-          in: query
-          schema:
-            enum:
-              - BTC:BRL
-            type: string
-        - name: type
-          required: true
-          in: query
-          schema:
-            enum:
-              - Daily
-              - Weekly
-              - Monthly
-              - Annually
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: '#/components/parameters/Market'
+        - $ref: '#/components/parameters/Period'
       responses: 
         "200":
-          description: ""
+          description: "Recurso encontrado."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/GraphResponseDto"
-      tags:
-        - Graphs
 
 info:
   title: Entrypoint v2 Documentation
@@ -176,6 +166,19 @@ components:
       schema:
         enum:
           - BTC:BRL
+        type: string
+    
+    Period:
+      name: period
+      in: query
+      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas.
+      required: true
+      schema: 
+        enum:
+          - Daily
+          - Weekly
+          - Monthly
+          - Annually
         type: string
   
   schemas:
@@ -471,6 +474,7 @@ components:
         - metadata
         - links
 
+    # TODO: Completar este objeto
     PriceDto:
       type: object
       properties:
@@ -490,6 +494,7 @@ components:
         - bid
         - timestamp
 
+    # TODO: Completar este objeto
     PriceResponseDto:
       type: object
       properties:
@@ -503,14 +508,21 @@ components:
       properties:
         price:
           $ref: "#/components/schemas/PriceValueObject"
+          description: Preço da criptomoeda.
         timestamp:
           type: string
+          nullable: true
+          # TODO: Validar a descrição
+          description: "Data de criação da consulta (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
       required:
         - price
         - timestamp
+
+    # TODO: Criar este objeto
     GraphDto:
       type: object
       properties:
+        # TODO: Criar o mesmo objeto utilizado em parameters/Market
         market:
           type: string
           enum:
@@ -522,6 +534,8 @@ components:
       required:
         - market
         - points
+    
+    # TODO: Preencher esse objeto
     GraphResponseDto:
       type: object
       properties:
@@ -529,6 +543,7 @@ components:
           $ref: "#/components/schemas/GraphDto"
       required:
         - data
+
 externalDocs:
   description: View swagger schema
   url: /swagger-json
