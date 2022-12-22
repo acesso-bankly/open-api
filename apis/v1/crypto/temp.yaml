@@ -1,0 +1,534 @@
+openapi: 3.0.0
+paths:
+  /crypto/orders:
+    post:
+      operationId: OrderController_intention
+      parameters:
+        - name: x-correlation-id
+          in: header
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+        - name: api-version
+          in: header
+          description: API Version
+          required: true
+          schema:
+            type: string
+        - name: x-idempotency-key
+          in: header
+          description: Idempotency Key
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderIntentionBodyDto"
+      responses: 
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderIntentionResponseDto"
+      tags:
+        - Orders
+  /crypto/orders/{order_authentication_code}:
+    post:
+      operationId: OrderController_execution
+      parameters:
+        - name: x-correlation-id
+          in: header
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+        - name: api-version
+          in: header
+          description: API Version
+          required: true
+          schema:
+            type: string
+        - name: x-idempotency-key
+          in: header
+          description: Idempotency Key
+          required: true
+          schema:
+            type: string
+        - name: order_authentication_code
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderExecutionBodyDto"
+      responses: 
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderExecutionResponseDto"
+      tags:
+        - Orders
+  /crypto/prices:
+    get:
+      tags:
+        - Operações com criptomoedas 
+      summary: Cotação de criptomoedas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a cotação do valor para compra e venda de criptomoeda.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+           <span class="bkly-ref-scope-tag">scope: crypto.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+        }
+        [/block]
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: '#/components/parameters/Market'
+      responses: 
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceResponseDto"
+  /crypto/graphs/prices:
+    get:
+      operationId: GraphController_getGraph
+      parameters:
+        - name: x-correlation-id
+          in: header
+          description: Correlation Id
+          required: false
+          schema:
+            type: string
+        - name: api-version
+          in: header
+          description: API Version
+          required: true
+          schema:
+            type: string
+        - name: market
+          required: true
+          in: query
+          schema:
+            enum:
+              - BTC:BRL
+            type: string
+        - name: type
+          required: true
+          in: query
+          schema:
+            enum:
+              - Daily
+              - Weekly
+              - Monthly
+              - Annually
+            type: string
+      responses: 
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GraphResponseDto"
+      tags:
+        - Graphs
+
+info:
+  title: Entrypoint v2 Documentation
+  description: See all entrypoint v2 endpoints by this documentation
+  version: 2.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  
+  parameters:
+    Market:
+      name: market
+      required: true
+      in: query
+      # TODO: Validar esta descrição
+      description: "Informe o código da criptomoeda a ser consultada. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas. Exemplo: BTC para bitcoin."
+      schema:
+        enum:
+          - BTC:BRL
+        type: string
+  
+  schemas:
+    PocketValueObject:
+      type: object
+      properties:
+        number:
+          type: string
+          example: "22651349000001"
+      required:
+        - number
+    OrderIntentionBodyDataDto:
+      type: object
+      properties:
+        pocket:
+          $ref: "#/components/schemas/PocketValueObject"
+        market:
+          type: string
+          example: BTC:BRL
+        type:
+          type: string
+          enum:
+            - PURCHASE
+            - SELL
+      required:
+        - pocket
+        - market
+        - type
+    OrderIntentionBodyDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/OrderIntentionBodyDataDto"
+        metadata:
+          type: object
+      required:
+        - data
+        - metadata
+    AccountValueObject:
+      type: object
+      properties:
+        branch:
+          type: string
+          example: "0001"
+        number:
+          type: string
+          example: "226513"
+      required:
+        - branch
+        - number
+    PocketDto:
+      type: object
+      properties:
+        number:
+          type: string
+          example: "22651349000001"
+        account:
+          $ref: "#/components/schemas/AccountValueObject"
+      required:
+        - number
+        - account
+
+    PriceValueObject:
+      type: object
+      properties:
+        value:
+          type: number
+          nullable: true
+          description: Preço final da criptomoeda.
+        currency:
+          type: string
+          nullable: true
+          description: Código da criptomoeda.
+      required:
+        - value
+        - currency
+      additionalProperties: false
+
+    LimitValueObject:
+      type: object
+      properties:
+        min:
+          type: number
+          example: "1.0"
+        max:
+          type: number
+          example: "50000.00"
+      required:
+        - min
+        - max
+    LimitOrderDto:
+      type: object
+      properties:
+        purchase:
+          $ref: "#/components/schemas/LimitValueObject"
+        sell:
+          $ref: "#/components/schemas/LimitValueObject"
+      required:
+        - purchase
+        - sell
+    OrderIntentionDto:
+      type: object
+      properties:
+        authenticationCode:
+          type: string
+          example: 60c66bce-0127-4e07-a35d-d14d31e4126a
+        type:
+          type: string
+          enum:
+            - PURCHASE
+            - SELL
+        pocket:
+          $ref: "#/components/schemas/PocketDto"
+        price:
+          $ref: "#/components/schemas/PriceValueObject"
+        status:
+          type: string
+          enum:
+            - CREATED
+            - EXECUTED
+            - CANCELED
+            - EXPIRED
+            - IN_PROCESS
+            - ERROR
+        createdAt:
+          format: date-time
+          type: string
+        expiresIn:
+          format: date-time
+          type: string
+        limits:
+          $ref: "#/components/schemas/LimitOrderDto"
+      required:
+        - authenticationCode
+        - type
+        - pocket
+        - price
+        - status
+        - createdAt
+        - expiresIn
+        - limits
+    LinkValueObject:
+      type: object
+      properties:
+        url:
+          type: string
+          example: cryptos/orders/{{authentication_code}}
+        rel:
+          type: string
+          example: execute_order
+        method:
+          type: string
+          example: POST
+      required:
+        - url
+        - rel
+        - method
+    OrderIntentionResponseDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/OrderIntentionDto"
+        metadata:
+          type: object
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/LinkValueObject"
+      required:
+        - data
+        - metadata
+        - links
+    AmountValueObject:
+      type: object
+      properties:
+        value:
+          type: number
+        currency:
+          type: string
+      required:
+        - value
+        - currency
+    FeeValueObject:
+      type: object
+      properties:
+        value:
+          type: number
+        currency:
+          type: string
+        priority:
+          type: boolean
+      required:
+        - value
+        - currency
+        - priority
+    DataOrderExecutionDto:
+      type: object
+      properties:
+        amount:
+          $ref: "#/components/schemas/AmountValueObject"
+        fee:
+          $ref: "#/components/schemas/FeeValueObject"
+      required:
+        - amount
+        - fee
+    OrderExecutionBodyDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/DataOrderExecutionDto"
+        metadata:
+          type: object
+      required:
+        - data
+        - metadata
+    QuoteValueObject:
+      type: object
+      properties:
+        value:
+          type: number
+        currency:
+          type: string
+      required:
+        - value
+        - currency
+    OrderExecutionDto:
+      type: object
+      properties:
+        authenticationCode:
+          type: string
+          example: 60c66bce-0127-4e07-a35d-d14d31e4126a
+        type:
+          type: string
+          enum:
+            - PURCHASE
+            - SELL
+        market:
+          type: string
+          example: BTC:BRL
+        status:
+          type: string
+          enum:
+            - CREATED
+            - EXECUTED
+            - CANCELED
+            - EXPIRED
+            - IN_PROCESS
+            - ERROR
+        pocket:
+          $ref: "#/components/schemas/PocketDto"
+        price:
+          $ref: "#/components/schemas/PriceValueObject"
+        amount:
+          $ref: "#/components/schemas/AmountValueObject"
+        fee:
+          $ref: "#/components/schemas/FeeValueObject"
+        quote:
+          $ref: "#/components/schemas/QuoteValueObject"
+        createdAt:
+          format: date-time
+          type: string
+        expiresIn:
+          format: date-time
+          type: string
+        limits:
+          $ref: "#/components/schemas/LimitOrderDto"
+      required:
+        - authenticationCode
+        - type
+        - market
+        - status
+        - pocket
+        - price
+        - amount
+        - fee
+        - quote
+        - createdAt
+        - expiresIn
+        - limits
+    OrderExecutionResponseDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/OrderExecutionDto"
+        metadata:
+          type: object
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/LinkValueObject"
+      required:
+        - data
+        - metadata
+        - links
+
+    PriceDto:
+      type: object
+      properties:
+        market:
+          type: string
+          enum:
+            - BTC:BRL
+        ask:
+          $ref: "#/components/schemas/PriceValueObject"
+        bid:
+          $ref: "#/components/schemas/PriceValueObject"
+        timestamp:
+          type: string
+      required:
+        - market
+        - ask
+        - bid
+        - timestamp
+
+    PriceResponseDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/PriceDto"
+      required:
+        - data
+
+    GraphPointValueObject:
+      type: object
+      properties:
+        price:
+          $ref: "#/components/schemas/PriceValueObject"
+        timestamp:
+          type: string
+      required:
+        - price
+        - timestamp
+    GraphDto:
+      type: object
+      properties:
+        market:
+          type: string
+          enum:
+            - BTC:BRL
+        points:
+          type: array
+          items:
+            $ref: "#/components/schemas/GraphPointValueObject"
+      required:
+        - market
+        - points
+    GraphResponseDto:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/GraphDto"
+      required:
+        - data
+externalDocs:
+  description: View swagger schema
+  url: /swagger-json
