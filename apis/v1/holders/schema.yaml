@@ -16,7 +16,7 @@ paths:
       summary: Registro de pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro do cliente. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p>
+          <p>Registre um cliente pessoa física. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro do cliente](https://docs.bankly.com.br/reference/getcustomerregistration).</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.write</span>
         </div>      
@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED, BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
@@ -133,7 +133,7 @@ paths:
       summary: Registro de pessoa jurídica (MEI, ME, EI, EIRELI ou SLU)
       description: |
         <div class="bkly-ref-description">
-          <p>O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p> 
+          <p>Registre um cliente pessoa jurídica. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro da empresa](https://docs.bankly.com.br/reference/getbusinessregistration).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
@@ -860,8 +860,8 @@ components:
       description: Faixa de faturamento anual da empresa.
       enum:
         - UP_TO_FIFTY_THOUSAND
-        - MORE_THAN_FIFTY_THOUSAND_UP_UP_TO_ONE_HUNDRED_THOUSAND
-        - MORE_THAN_ONE_HUNDRED_THOUSAND_UP_UP_TO_TWO_HUNDRED_AND_FIFTY_THOUSAND
+        - MORE_THAN_FIFTY_THOUSAND_UP_TO_ONE_HUNDRED_THOUSAND
+        - MORE_THAN_ONE_HUNDRED_THOUSAND_UP_TO_TWO_HUNDRED_AND_FIFTY_THOUSAND
         - MORE_THAN_TWO_HUNDRED_AND_FIFTY_THOUSAND_UP_TO_FIVE_HUNDRED_THOUSAND
         - MORE_THAN_FIVE_HUNDRED_THOUSAND_UP_TO_ONE_MILLION
         - MORE_THAN_ONE_MILLION_UP_TO_TWO_MILLION_AND_FIVE_HUNDRED_THOUSAND
