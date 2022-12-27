@@ -2,26 +2,19 @@ openapi: 3.0.0
 paths:
   /crypto/orders:
     post:
-      operationId: OrderController_intention
+      tags:
+        - Operações com criptomoedas  
+      summary: Criação de ordem de compra e venda de criptomoedas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
+        </div>
       parameters:
-        - name: x-correlation-id
-          in: header
-          description: Correlation Id
-          required: false
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: API Version
-          required: true
-          schema:
-            type: string
-        - name: x-idempotency-key
-          in: header
-          description: Idempotency Key
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         required: true
         content:
@@ -35,30 +28,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrderIntentionResponseDto"
-      tags:
-        - Orders
+
   /crypto/orders/{order_authentication_code}:
     post:
-      operationId: OrderController_execution
+      tags:
+        - Operações com criptomoedas  
+      summary: Execução de ordem de compra e venda de criptomoedas 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
+        </div>
       parameters:
-        - name: x-correlation-id
-          in: header
-          description: Correlation Id
-          required: false
-          schema:
-            type: string
-        - name: api-version
-          in: header
-          description: API Version
-          required: true
-          schema:
-            type: string
-        - name: x-idempotency-key
-          in: header
-          description: Idempotency Key
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: order_authentication_code
           required: true
           in: path
@@ -77,9 +62,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrderExecutionResponseDto"
-      tags:
-        - Orders
-  
+     
   /crypto/prices:
     get:
       tags:
@@ -99,7 +82,7 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: '#/components/parameters/Market'
@@ -129,7 +112,7 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: '#/components/parameters/Market'
