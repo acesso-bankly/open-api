@@ -97,7 +97,7 @@ paths:
     get:
       tags:
         - Operações com criptomoedas  
-      summary: Cotação de criptomoedas por período 
+      summary: Gráfico da cotação de criptomoedas por período
       description: |
         <div class="bkly-ref-description">
           <p>Realize a cotação de criptomoedas de um período específico.</p> 
@@ -171,6 +171,8 @@ components:
         number:
           type: string
           example: "22651349000001"
+          # TODO: é isso mesmo?
+          description: Número da conta de pagamento do cliente.
       required:
         - number
     OrderIntentionBodyDataDto:
@@ -183,6 +185,7 @@ components:
           example: BTC:BRL
         type:
           type: string
+          description: Tipo de ordem (compra ou venda).
           enum:
             - PURCHASE
             - SELL
@@ -194,12 +197,14 @@ components:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre a criação de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderIntentionBodyDataDto"
         metadata:
           type: object
       required:
         - data
         - metadata
+
     AccountValueObject:
       type: object
       properties:
@@ -218,6 +223,7 @@ components:
         number:
           type: string
           example: "22651349000001"
+          description: Número da conta de pagamento do cliente.
         account:
           $ref: "#/components/schemas/AccountValueObject"
       required:
@@ -262,23 +268,28 @@ components:
       required:
         - purchase
         - sell
+
     OrderIntentionDto:
       type: object
       properties:
         authenticationCode:
           type: string
+          description: Identificador da transação informado no campo <code>orderId</code>.
           example: 60c66bce-0127-4e07-a35d-d14d31e4126a
         type:
           type: string
+          description: Tipo de ordem (compra ou venda).
           enum:
             - PURCHASE
             - SELL
         pocket:
           $ref: "#/components/schemas/PocketDto"
         price:
+          description: Objeto contendo informações sobre o preço da criptomoeda.
           $ref: "#/components/schemas/PriceValueObject"
         status:
           type: string
+          description: Situação da ordem de execução de compra ou venda.
           enum:
             - CREATED
             - EXECUTED
@@ -289,9 +300,11 @@ components:
         createdAt:
           format: date-time
           type: string
+          description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         expiresIn:
           format: date-time
           type: string
+          description: "Data de expiração da execução da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         limits:
           $ref: "#/components/schemas/LimitOrderDto"
       required:
@@ -303,6 +316,7 @@ components:
         - createdAt
         - expiresIn
         - limits
+
     LinkValueObject:
       type: object
       properties:
@@ -319,10 +333,13 @@ components:
         - url
         - rel
         - method
+    
+    # TODO: Descrever objeto
     OrderIntentionResponseDto:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre a criação de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderIntentionDto"
         metadata:
           type: object
@@ -334,16 +351,22 @@ components:
         - data
         - metadata
         - links
+
     AmountValueObject:
       type: object
       properties:
         value:
           type: number
+          description: Valor de compra ou venda das criptomoedas sem taxa.
         currency:
           type: string
+          # TODO: Qual moeda?
+          description: Moeda XXXX.
       required:
         - value
         - currency
+
+    # TODO: Preencher objeto?
     FeeValueObject:
       type: object
       properties:
@@ -357,16 +380,19 @@ components:
         - value
         - currency
         - priority
+
     DataOrderExecutionDto:
       type: object
       properties:
         amount:
+          description: Valor de compra ou venda das criptomoedas sem taxa.
           $ref: "#/components/schemas/AmountValueObject"
         fee:
           $ref: "#/components/schemas/FeeValueObject"
       required:
         - amount
         - fee
+
     OrderExecutionBodyDto:
       type: object
       properties:
@@ -377,6 +403,7 @@ components:
       required:
         - data
         - metadata
+
     QuoteValueObject:
       type: object
       properties:
@@ -387,6 +414,7 @@ components:
       required:
         - value
         - currency
+
     OrderExecutionDto:
       type: object
       properties:
@@ -445,6 +473,7 @@ components:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre a execução de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderExecutionDto"
         metadata:
           type: object
@@ -482,6 +511,7 @@ components:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre a cotação de criptomoedas.
           $ref: "#/components/schemas/PriceDto"
       required:
         - data
@@ -523,6 +553,7 @@ components:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre o gráfico da cotação de criptomoedas por período.
           $ref: "#/components/schemas/GraphDto"
       required:
         - data
