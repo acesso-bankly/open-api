@@ -50,6 +50,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: order_authentication_code
+          # TODO: codigo recebido no outro endpoint
           required: true
           in: path
           schema:
@@ -143,9 +144,8 @@ components:
       name: market
       required: true
       in: query
-      # TODO: Validar esta descrição
-      description: "Informe o código da criptomoeda a ser consultada. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas. Exemplo: BTC para bitcoin."
       schema:
+        description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
         enum:
           - BTC:BRL
         type: string
@@ -169,11 +169,12 @@ components:
       properties:
         number:
           type: string
-          example: "22651349000001"
-          # TODO: é isso mesmo?
-          description: Número da conta de pagamento do cliente.
+          example: "22651349000001BTC"
+          # TODO: é isso mesmo? obrigatorio uso de conta pocket, se não tiver a conta vai criar (vai gerar um numero)
+          description: Número da conta pocket de pagamento do cliente.
       required:
         - number
+
     OrderIntentionBodyDataDto:
       type: object
       properties:
@@ -181,7 +182,9 @@ components:
           $ref: "#/components/schemas/PocketValueObject"
         market:
           type: string
-          example: BTC:BRL
+          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          enum:
+            - BTC:BRL
         type:
           type: string
           description: Tipo de ordem (compra ou venda).
@@ -192,6 +195,7 @@ components:
         - pocket
         - market
         - type
+
     OrderIntentionBodyDto:
       type: object
       properties:
@@ -199,11 +203,13 @@ components:
           description: Objeto que contém informações sobre a criação de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderIntentionBodyDataDto"
         metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
           type: object
       required:
         - data
-        - metadata
 
+    # TODO:
     AccountValueObject:
       type: object
       properties:
@@ -223,6 +229,7 @@ components:
           type: string
           example: "22651349000001"
           description: Número da conta de pagamento do cliente.
+        # TODO:
         account:
           $ref: "#/components/schemas/AccountValueObject"
       required:
@@ -245,20 +252,17 @@ components:
         - currency
       additionalProperties: false
 
-    # TODO: Validar se é sobre a taxa de referência
     LimitValueObject:
       type: object
       properties:
         min:
           type: number
           example: "1.0"
-          # Valor mínimo para a transação.
-          description: Valor mínimo para que a taxa de referência seja aplicada.
+          description: Limite mínimo para esta operação.
         max:
           type: number
           example: "50000.00"
-          # Valor máximo para a transação.
-          description: Valor máximo para que a taxa de referência seja aplicada.
+          description: Limite máximo para esta operação.
       required:
         - min
         - max
@@ -267,8 +271,10 @@ components:
       type: object
       properties:
         purchase:
+          description: Limites sobre a operação do tipo compra.
           $ref: "#/components/schemas/LimitValueObject"
         sell:
+          description: Limites sobre a operação do tipo venda.
           $ref: "#/components/schemas/LimitValueObject"
       required:
         - purchase
@@ -279,7 +285,7 @@ components:
       properties:
         authenticationCode:
           type: string
-          description: Identificador da transação informado no campo <code>orderId</code>.
+          description: Identificador da transação que deve ser informado no campo <code>order_authentication_code</code> do endpoint de execução de ordem de compra e venda.
           example: 60c66bce-0127-4e07-a35d-d14d31e4126a
         type:
           type: string
@@ -288,6 +294,7 @@ components:
             - PURCHASE
             - SELL
         pocket:
+        # TODO:
           $ref: "#/components/schemas/PocketDto"
         price:
           description: Objeto contendo informações sobre o preço da criptomoeda.
@@ -347,15 +354,16 @@ components:
           description: Objeto que contém informações sobre a criação de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderIntentionDto"
         metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
           type: object
         links:
           type: array
+          description: Links de próximos estados válidos da entidade/recurso.
           items:
             $ref: "#/components/schemas/LinkValueObject"
       required:
         - data
-        - metadata
-        - links
 
     AmountValueObject:
       type: object
@@ -366,8 +374,8 @@ components:
           description: Valor de compra ou venda das criptomoedas sem taxa.
         currency:
           type: string
-          # TODO: Qual moeda?
-          description: Moeda XXXX.
+          # TODO: Em real
+          description: .
       required:
         - value
         - currency
@@ -377,10 +385,14 @@ components:
       type: object
       properties:
         value:
+          # TODO:
+          description: Valor da taxa.
           type: number
         currency:
+          # TODO: em real
           type: string
         priority:
+          # TODO: se vai cobrar do parceiro no ato ou se vai ser cobrada depois
           type: boolean
       required:
         - value
@@ -394,6 +406,7 @@ components:
           description: Valor de compra ou venda das criptomoedas sem taxa.
           $ref: "#/components/schemas/AmountValueObject"
         fee:
+          description: Valor da taxa da compra ou venda das criptomoedas.
           $ref: "#/components/schemas/FeeValueObject"
       required:
         - amount
@@ -405,21 +418,33 @@ components:
         data:
           $ref: "#/components/schemas/DataOrderExecutionDto"
         metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
           type: object
       required:
         - data
-        - metadata
 
     QuoteValueObject:
       type: object
       properties:
         value:
+          # TODO: valor em cripto da operação
           type: number
         currency:
+          # TODO: cota em cripto
           type: string
       required:
         - value
         - currency
+
+    # TODO: Colocar o request pra usar este
+    OrderExecutionDtoForRequest: 
+      type: object
+      properties:
+        amount:
+          $ref: "#/components/schemas/AmountValueObject"
+        fee:
+          $ref: "#/components/schemas/FeeValueObject"
 
     OrderExecutionDto:
       type: object
@@ -427,6 +452,7 @@ components:
         authenticationCode:
           type: string
           example: 60c66bce-0127-4e07-a35d-d14d31e4126a
+          description: Identificador da transação que deve ser informado no campo <code>order_authentication_code</code> do endpoint de execução de ordem de compra e venda.
         type:
           type: string
           description: Tipo de ordem (compra ou venda).
@@ -435,7 +461,9 @@ components:
             - SELL
         market:
           type: string
-          example: BTC:BRL
+          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          enum:
+            - BTC:BRL
         status:
           type: string
           description: Situação da ordem de execução de compra ou venda.
@@ -467,7 +495,6 @@ components:
         limits:
           $ref: "#/components/schemas/LimitOrderDto"
       required:
-        - authenticationCode
         - type
         - market
         - status
@@ -479,6 +506,7 @@ components:
         - createdAt
         - expiresIn
         - limits
+
     OrderExecutionResponseDto:
       type: object
       properties:
@@ -486,24 +514,26 @@ components:
           description: Objeto que contém informações sobre a execução de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderExecutionDto"
         metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
           type: object
         links:
           type: array
+          description: Links de próximos estados válidos da entidade/recurso.
           items:
             $ref: "#/components/schemas/LinkValueObject"
       required:
         - data
-        - metadata
-        - links
 
     # TODO: Completar este objeto
     PriceDto:
       type: object
       properties:
         market:
-          type: string
+          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
+          type: string
         ask:
           $ref: "#/components/schemas/PriceValueObject"
         bid:
@@ -541,13 +571,13 @@ components:
         - price
         - timestamp
 
-    # TODO: Criar este objeto
+    # TODO: Preencher este objeto
     GraphDto:
       type: object
       properties:
-        # TODO: Criar o mesmo objeto utilizado em parameters/Market
         market:
           type: string
+          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         points:
