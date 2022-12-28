@@ -346,7 +346,6 @@ components:
         - rel
         - method
     
-    # TODO: Descrever objeto
     OrderIntentionResponseDto:
       type: object
       properties:
@@ -370,17 +369,14 @@ components:
       properties:
         value:
           type: number
-          # TODO: Validar texto: "Preço final da criptomoeda."
           description: Valor de compra ou venda das criptomoedas sem taxa.
         currency:
           type: string
-          # TODO: Em real
-          description: .
+          description: Moeda da taxa.
       required:
         - value
         - currency
 
-    # TODO: Preencher objeto?
     FeeValueObject:
       type: object
       properties:
@@ -389,10 +385,10 @@ components:
           description: Valor da taxa.
           type: number
         currency:
-          # TODO: em real
+          description: Moeda da taxa.
           type: string
         priority:
-          # TODO: se vai cobrar do parceiro no ato ou se vai ser cobrada depois
+          description: Booleano que indica se a cobrança ao parceiro será realizada na liquidação ou após.
           type: boolean
       required:
         - value
