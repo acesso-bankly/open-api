@@ -310,8 +310,7 @@ components:
         number:
           type: string
           example: "22651349000001BTC"
-          # TODO: é isso mesmo? obrigatorio uso de conta pocket, se não tiver a conta vai criar (vai gerar um numero)
-          description: Número da conta pocket de pagamento do cliente.
+          description: Número da conta pocket de pagamento do cliente, sendo os três últimos dígitos o código da criptomoeda.
       required:
         - number
 
@@ -319,6 +318,7 @@ components:
       type: object
       properties:
         pocket:
+          description: Objeto que contém informações sobre a conta pocket utilizada para a operação.
           $ref: "#/components/schemas/PocketValueObject"
         market:
           type: string
@@ -349,28 +349,28 @@ components:
       required:
         - data
 
-    # TODO:
     AccountValueObject:
       type: object
       properties:
         branch:
           type: string
-          example: "0001"
+          description: Número da agência bancária.
         number:
           type: string
-          example: "226513"
+          description: Número da conta bancária.
       required:
         - branch
         - number
+
     PocketDto:
       type: object
       properties:
         number:
           type: string
-          example: "22651349000001"
-          description: Número da conta de pagamento do cliente.
-        # TODO:
+          example: "22651349000001BTC"
+          description: Número da conta pocket de pagamento do cliente, sendo os três últimos dígitos o código da criptomoeda.
         account:
+          description: Objeto que contém informações sobre a conta do usuário.
           $ref: "#/components/schemas/AccountValueObject"
       required:
         - number
@@ -434,7 +434,7 @@ components:
             - PURCHASE
             - SELL
         pocket:
-        # TODO:
+          description: Objeto que contém informações sobre a conta pocket do usuário utilizada para esta operação.
           $ref: "#/components/schemas/PocketDto"
         price:
           description: Objeto contendo informações sobre o preço da criptomoeda.
@@ -521,7 +521,6 @@ components:
       type: object
       properties:
         value:
-          # TODO:
           description: Valor da taxa.
           type: number
         currency:
@@ -552,6 +551,7 @@ components:
       type: object
       properties:
         data:
+          description: Objeto que contém informações sobre a execução de ordem de compra e venda de criptomoedas
           $ref: "#/components/schemas/DataOrderExecutionDto"
         metadata:
           description: Dicionário de metadados que trará dados adicionais da requisição.
@@ -564,23 +564,14 @@ components:
       type: object
       properties:
         value:
-          # TODO: valor em cripto da operação
+          description: Valor, em criptomoeda, da operação.
           type: number
         currency:
-          # TODO: cota em cripto
+          description: Código da criptomoeda.
           type: string
       required:
         - value
         - currency
-
-    # TODO: Colocar o request pra usar este
-    OrderExecutionDtoForRequest: 
-      type: object
-      properties:
-        amount:
-          $ref: "#/components/schemas/AmountValueObject"
-        fee:
-          $ref: "#/components/schemas/FeeValueObject"
 
     OrderExecutionDto:
       type: object
@@ -611,8 +602,10 @@ components:
             - IN_PROCESS
             - ERROR
         pocket:
+          description: Objeto que contém informações sobre a conta pocket do usuário utilizada para esta operação.
           $ref: "#/components/schemas/PocketDto"
         price:
+          description: Objeto contendo informações sobre o preço da criptomoeda.
           $ref: "#/components/schemas/PriceValueObject"
         amount:
           $ref: "#/components/schemas/AmountValueObject"
@@ -661,7 +654,6 @@ components:
       required:
         - data
 
-    # TODO: Completar este objeto
     PriceDto:
       type: object
       properties:
@@ -685,7 +677,6 @@ components:
         - bid
         - timestamp
 
-    # TODO: Completar este objeto
     PriceResponseDto:
       type: object
       properties:
@@ -709,7 +700,6 @@ components:
         - price
         - timestamp
 
-    # TODO: Preencher este objeto
     GraphDto:
       type: object
       properties:
@@ -726,7 +716,6 @@ components:
         - market
         - points
     
-    # TODO: Preencher esse objeto
     GraphResponseDto:
       type: object
       properties:
