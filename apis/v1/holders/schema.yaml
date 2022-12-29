@@ -851,7 +851,7 @@ components:
         declaredAnnualBilling:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         legalRepresentative:
-          description: Representante legal da empresa, que deve ser maior de 18 anos.
+          description: Representante legal da empresa.
           $ref: "#/components/schemas/LegalRepresentativeRequest"
       additionalProperties: false
 
