@@ -1316,14 +1316,14 @@ components:
           type: string
         document:
           type: object
-          description: Objeto que contém informações sobre o documento do cliente.
+          description: Objeto que contém informações sobre o documento da pessoa jurídica.
           properties:
             value:
               type: string
               description: Número do documento.
             type:
               type: string
-              description: Tipo do documento, o qual pode ser "CPF" ou "CNPJ".
+              description: Tipo do documento (nesse caso, "CNPJ").
         businessName:
           description: Razão social da empresa.
           type: string
