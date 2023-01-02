@@ -582,7 +582,7 @@ components:
 
     Occupation:
       type: string
-      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo#ancora1). <br/><b>Importante:</b> deve-se enviar somente o código. Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente). <br/><b>Importante:</b> deve-se enviar somente o código. Caso o cliente possua mais de uma ocupação, esse campo deve ser preenchido com a sua principal fonte de renda.
       enum:
         - OCP0001 
         - OCP0002	
