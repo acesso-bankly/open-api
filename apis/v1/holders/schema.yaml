@@ -717,7 +717,7 @@ components:
     
     DocumentToken:
       type: string
-      description: Token retornado no enpoint de Envio e análise de documentos pessoais.
+      description: Token retornado no endpoint de Envio e análise de documentos pessoais.
 
     SendedDocumentationRequest:
       type: object
