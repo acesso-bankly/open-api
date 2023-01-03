@@ -1607,7 +1607,7 @@ paths:
             statusCode: 500
 
   /cards/limit:
-    post:
+    patch:
       tags:
         - Gestão de limite de crédito
       summary: Alteração de limite ativo de cartão pós-pago
