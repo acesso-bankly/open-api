@@ -1143,7 +1143,7 @@ components:
           $ref: "#/components/schemas/CorporationBusinessSize"
         cnaeCode:
           type: string
-          description: Código Cnae.
+          description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa.
           nullable: true
         legalNature:
           type: string
@@ -1484,15 +1484,15 @@ components:
         cnaeCode:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         legalNature:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Natureza jurídica da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         openingDate:
           type: string
           format: date-time
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Data de abertura da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         phone:
           $ref: "#/components/schemas/PhoneResponse"
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
