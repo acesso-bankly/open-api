@@ -466,9 +466,9 @@ components:
           type: string
           description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
         occupation:
-          $ref: "#/components/schemas/Occupation"
+          $ref: "#/components/schemas/OccupationResponse"
         pep:
-          description: Objeto onde deve ser informado o nível de exposição política do cliente.
+          description: Objeto que contém o nível de exposição política do cliente.
           $ref: "#/components/schemas/PepResponse"
         documentation:
           $ref: "#/components/schemas/SendedDocumentationResponse"
@@ -690,6 +690,115 @@ components:
         - OCP0104 
         - OCP0105 
 
+    OccupationResponse:
+      type: string
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente). 
+        - OCP0001 
+        - OCP0002	
+        - OCP0003	
+        - OCP0004	
+        - OCP0005	
+        - OCP0006	
+        - OCP0007	
+        - OCP0008	
+        - OCP0009	
+        - OCP0010	
+        - OCP0011	
+        - OCP0012	
+        - OCP0013	
+        - OCP0014	
+        - OCP0015	
+        - OCP0016	
+        - OCP0017	
+        - OCP0018	
+        - OCP0019 
+        - OCP0020	
+        - OCP0021	
+        - OCP0022	
+        - OCP0023	
+        - OCP0024	
+        - OCP0025	
+        - OCP0026	
+        - OCP0027	
+        - OCP0028	
+        - OCP0029	
+        - OCP0030	
+        - OCP0031	
+        - OCP0032	
+        - OCP0033	
+        - OCP0034	
+        - OCP0035	
+        - OCP0036	
+        - OCP0037	
+        - OCP0038	
+        - OCP0039	
+        - OCP0040	
+        - OCP0041	
+        - OCP0042	
+        - OCP0043	
+        - OCP0044	
+        - OCP0045	
+        - OCP0046	
+        - OCP0047	
+        - OCP0048	
+        - OCP0049	
+        - OCP0050	
+        - OCP0051	
+        - OCP0052	
+        - OCP0053	
+        - OCP0054	
+        - OCP0055	
+        - OCP0056	
+        - OCP0057	
+        - OCP0058	
+        - OCP0059	
+        - OCP0060	
+        - OCP0061	
+        - OCP0062	
+        - OCP0063	
+        - OCP0064	
+        - OCP0065	
+        - OCP0066	
+        - OCP0067	
+        - OCP0068	
+        - OCP0069	
+        - OCP0070	
+        - OCP0071 
+        - OCP0072	
+        - OCP0073	
+        - OCP0074	
+        - OCP0075	
+        - OCP0076	
+        - OCP0077	
+        - OCP0078	
+        - OCP0079	
+        - OCP0080	
+        - OCP0081	
+        - OCP0082	
+        - OCP0083	
+        - OCP0084	
+        - OCP0085	
+        - OCP0086	
+        - OCP0087	
+        - OCP0088	
+        - OCP0089	
+        - OCP0090	
+        - OCP0091	
+        - OCP0092	
+        - OCP0093	
+        - OCP0094	
+        - OCP0095	
+        - OCP0096	
+        - OCP0097	
+        - OCP0098	
+        - OCP0099	
+        - OCP0100
+        - OCP0101 
+        - OCP0102 
+        - OCP0103 
+        - OCP0104 
+        - OCP0105 
+
     Pep:
       type: object
       properties:
@@ -717,7 +826,7 @@ components:
     
     DocumentToken:
       type: string
-      description: Token retornado no enpoint de Envio e análise de documentos pessoais.
+      description: Token retornado no endpoint de Envio e análise de documentos pessoais.
 
     SendedDocumentationRequest:
       type: object
@@ -1034,7 +1143,7 @@ components:
           $ref: "#/components/schemas/CorporationBusinessSize"
         cnaeCode:
           type: string
-          description: Código Cnae.
+          description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa.
           nullable: true
         legalNature:
           type: string
@@ -1300,7 +1409,7 @@ components:
           type: string
           description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
         occupation:
-          $ref: "#/components/schemas/Occupation"
+          $ref: "#/components/schemas/OccupationResponse"
         pep:
           description: Objeto que contém o nível de exposição política do cliente.
           $ref: "#/components/schemas/PepResponse"
@@ -1375,20 +1484,20 @@ components:
         cnaeCode:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         legalNature:
           type: string
           nullable: true
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Natureza jurídica da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         openingDate:
           type: string
           format: date-time
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
+          description: Data de abertura da empresa. Somente retornado para clientes do tipo LTDA / S.A. / TS.
         phone:
           $ref: "#/components/schemas/PhoneResponse"
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         reasons:
-          description: Para casos de reprovação, esse campo retorna com os motivos de reprovação do registro da empresa.
+          description: Motivos de reprovação do registro da empresa (quando é o caso).
           type: array
           nullable: true
           items:
