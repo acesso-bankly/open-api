@@ -1497,7 +1497,7 @@ components:
           $ref: "#/components/schemas/PhoneResponse"
           description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
         reasons:
-          description: Para casos de reprovação, esse campo retorna com os motivos de reprovação do registro da empresa.
+          description: Motivos de reprovação do registro da empresa (quando é o caso).
           type: array
           nullable: true
           items:
