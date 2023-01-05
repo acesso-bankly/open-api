@@ -213,13 +213,13 @@ components:
       properties:
         low:
           description: |
-            Idade minina detectada.
+            Idade mínima detectada.
           type: integer
           format: int32
           nullable: true
         high:
           description: |
-            Idade máxina detectada.
+            Idade máxima detectada.
           type: integer
           format: int32
           nullable: true
@@ -365,7 +365,7 @@ components:
           type: string
           nullable: true
         validDate:
-          description: Validade do documento CNH do motorista.
+          description: Validade do documento.
           type: string
           nullable: true
         driveLicenseCategory:
@@ -480,7 +480,7 @@ components:
     FaceMatchStatus: 
       description: |
         Resultado da análise face match.
-        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTEDR)_
+        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTED)_
       type: string
       enum:
         - HAS_FACE_MATCH
