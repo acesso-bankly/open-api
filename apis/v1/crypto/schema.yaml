@@ -52,6 +52,20 @@ paths:
                 type: string
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+        '408':
+          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '409':
+          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -94,7 +108,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: '#/components/parameters/Market'
-        - $ref: '#/components/parameters/Period'
+        - $ref: '#/components/parameters/Type'
       responses: 
         "200":
           description: "Recurso encontrado."
@@ -119,6 +133,20 @@ paths:
                 type: string
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+        '408':
+          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '409':
+          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -153,6 +181,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
       requestBody:
         required: true
         content:
@@ -161,7 +190,7 @@ paths:
               $ref: "#/components/schemas/OrderIntentionBodyDto"
       responses: 
         "200":
-          description: ""
+          description: Solicitação aceita com sucesso
           content:
             application/json:
               schema:
@@ -183,6 +212,20 @@ paths:
                 type: string
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+        '408':
+          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '409':
+          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -217,6 +260,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Idempotency-Key'
         - name: order_authentication_code
           # TODO: codigo recebido no outro endpoint
           required: true
@@ -231,7 +275,7 @@ paths:
               $ref: "#/components/schemas/OrderExecutionBodyDto"
       responses: 
         "200":
-          description: ""
+          description: "Solicitação aceita com sucesso"
           content:
             application/json:
               schema:
@@ -253,6 +297,20 @@ paths:
                 type: string
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+        '408':
+          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '409':
+          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
         '415':
           description: Formato de payload não suportado.
           headers:
@@ -285,15 +343,15 @@ components:
       required: true
       in: query
       schema:
-        description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+        description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
         enum:
           - BTC:BRL
         type: string
     
-    Period:
-      name: period
+    Type:
+      name: type
       in: query
-      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e o valor deve ser informado em letras maiúsculas.
+      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e a primeira letra do valor deve ser informado em letra maiúscula.
       required: true
       schema: 
         enum:
@@ -322,7 +380,7 @@ components:
           $ref: "#/components/schemas/PocketValueObject"
         market:
           type: string
-          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         type:
@@ -386,7 +444,7 @@ components:
         currency:
           type: string
           nullable: true
-          description: Código da criptomoeda.
+          description: Código da moeda com base na ISO-4217.
       required:
         - value
         - currency
@@ -459,15 +517,6 @@ components:
           description: "Data de expiração da execução da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
         limits:
           $ref: "#/components/schemas/LimitOrderDto"
-      required:
-        - authenticationCode
-        - type
-        - pocket
-        - price
-        - status
-        - createdAt
-        - expiresIn
-        - limits
 
     LinkValueObject:
       type: object
@@ -501,8 +550,6 @@ components:
           description: Links de próximos estados válidos da entidade/recurso.
           items:
             $ref: "#/components/schemas/LinkValueObject"
-      required:
-        - data
 
     AmountValueObject:
       type: object
@@ -512,7 +559,7 @@ components:
           description: Valor de compra ou venda das criptomoedas sem taxa.
         currency:
           type: string
-          description: Moeda da taxa.
+          description: Código da moeda com base na ISO-4217.
       required:
         - value
         - currency
@@ -524,7 +571,7 @@ components:
           description: Valor da taxa.
           type: number
         currency:
-          description: Moeda da taxa.
+          description: Código da moeda com base na ISO-4217.
           type: string
         priority:
           description: Booleano que indica se a cobrança ao parceiro será realizada na liquidação ou após.
@@ -564,7 +611,7 @@ components:
       type: object
       properties:
         value:
-          description: Valor, em criptomoeda, da operação.
+          description: Valor da operação, em criptomoeda.
           type: number
         currency:
           description: Código da criptomoeda.
@@ -588,7 +635,7 @@ components:
             - SELL
         market:
           type: string
-          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         status:
@@ -605,7 +652,7 @@ components:
           description: Objeto que contém informações sobre a conta pocket do usuário utilizada para esta operação.
           $ref: "#/components/schemas/PocketDto"
         price:
-          description: Objeto contendo informações sobre o preço da criptomoeda.
+          description: Objeto que contém informações sobre o preço da criptomoeda.
           $ref: "#/components/schemas/PriceValueObject"
         amount:
           $ref: "#/components/schemas/AmountValueObject"
@@ -623,18 +670,6 @@ components:
           type: string
         limits:
           $ref: "#/components/schemas/LimitOrderDto"
-      required:
-        - type
-        - market
-        - status
-        - pocket
-        - price
-        - amount
-        - fee
-        - quote
-        - createdAt
-        - expiresIn
-        - limits
 
     OrderExecutionResponseDto:
       type: object
@@ -651,14 +686,12 @@ components:
           description: Links de próximos estados válidos da entidade/recurso.
           items:
             $ref: "#/components/schemas/LinkValueObject"
-      required:
-        - data
 
     PriceDto:
       type: object
       properties:
         market:
-          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
           type: string
@@ -671,11 +704,6 @@ components:
         timestamp:
           description: "Momento da consulta (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
           type: string
-      required:
-        - market
-        - ask
-        - bid
-        - timestamp
 
     PriceResponseDto:
       type: object
@@ -683,8 +711,6 @@ components:
         data:
           description: Objeto que contém informações sobre a cotação de criptomoedas.
           $ref: "#/components/schemas/PriceDto"
-      required:
-        - data
 
     GraphPointValueObject:
       type: object
@@ -705,16 +731,13 @@ components:
       properties:
         market:
           type: string
-          description: O mercado é constituido da sigla da criptomoeda com a sigla do real. 
+          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         points:
           type: array
           items:
             $ref: "#/components/schemas/GraphPointValueObject"
-      required:
-        - market
-        - points
     
     GraphResponseDto:
       type: object
@@ -722,8 +745,6 @@ components:
         data:
           description: Objeto que contém informações sobre o gráfico da cotação de criptomoedas por período.
           $ref: "#/components/schemas/GraphDto"
-      required:
-        - data
 
 x-readme:
   explorer-enabled: true
