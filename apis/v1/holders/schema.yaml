@@ -130,10 +130,10 @@ paths:
     put:
       tags:
         - Pessoa jurídica
-      summary: Registro de pessoa jurídica (MEI, ME, EI, EIRELI ou SLU)
+      summary: Registro de pessoa jurídica (MEI, EI, EIRELI ou SLU)
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um cliente pessoa jurídica. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro da empresa](https://docs.bankly.com.br/reference/getbusinessregistration).</p> 
+          <p>Registre um cliente pessoa jurídica. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro da empresa](https://docs.bankly.com.br/reference/getbusinessregistration).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
@@ -404,7 +404,7 @@ components:
       type: object
       properties:
         documentNumber:
-          description: Número do documento CPF do cliente.
+          description: Número do documento CPF do cliente. (Obsoleto. Considere o campo <code>document.value</code>).
           type: string
         document:
           type: object
@@ -488,7 +488,6 @@ components:
     
     LegalRepresentativeRequest:
       required:
-        - documentNumber
         - document
         - registerName
         - phone
@@ -507,7 +506,7 @@ components:
           minLength: 11
           type: string
           description: |
-            Número do documento CPF. Informe somente números.
+            Número do documento CPF. Informe somente números. (Obsoleto. Utilize o campo <code>document.value</code>).
         document:
           type: object
           description: Objeto que contém informações sobre o documento do cliente.
@@ -1350,7 +1349,7 @@ components:
       type: object
       properties:
         documentNumber:
-          description: Número do documento CPF do cliente.
+          description: Número do documento CPF do cliente. (Obsoleto. Considere o campo <code>document.value</code>).
           type: string
         document:
           type: object
@@ -1420,7 +1419,7 @@ components:
       type: object
       properties:
         documentNumber:
-          description: Número do documento CNPJ da empresa.
+          description: Número do documento CNPJ da empresa. (Obsoleto. Considere o campo <code>document.value</code>).
           type: string
         document:
           type: object
