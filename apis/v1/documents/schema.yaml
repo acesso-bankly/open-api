@@ -152,16 +152,16 @@ paths:
   /document-analysis/{documentNumber}/deepface:
     post:
       tags:
-        - Deepface
-      summary: Envio de documentos pessoais para análise com Deepface
+        - ID One
+      summary: Envio de documentos pessoais para análise com ID One
       description: |
         <div class="bkly-ref-description">
-          <p>Realize o envio de imagens de documentos (SELFIE, RG, CNH, RNE, DNI ou CRNM) para o fluxo de análise com Deepface.</p>
+          <p>Realize o envio de imagens de documentos (SELFIE, RG, CNH, RNE, DNI ou CRNM) para o fluxo de análise com ID One.</p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
