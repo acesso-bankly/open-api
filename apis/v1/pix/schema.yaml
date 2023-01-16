@@ -952,6 +952,43 @@ paths:
       security:
         - Bearer: []      
   
+  /pix/qrcodes/dynamic/payment:
+    post:
+      tags:
+        - QR Codes
+      summary: Emissão de QR Codes dinâmicos
+      description: | 
+        <div class="bkly-ref-description">
+          <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: pix.qrcode-dynamic-payment.create</span>
+        </div>
+      operationId: CreateDynamicQRCodePaymentAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDynamicQRCodePaymentRequest"
+      responses:
+        '200':
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+      security:
+        - Bearer: []
+
   /pix/qrcodes/decode:
     post:
       tags:
@@ -1030,43 +1067,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-      security:
-        - Bearer: []
-
-  /pix/qrcodes/dynamic/payment:
-    post:
-      tags:
-        - QR Codes
-      summary: Emissão de QR Codes dinâmicos
-      description: | 
-        <div class="bkly-ref-description">
-          <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.qrcode-dynamic-payment.create</span>
-        </div>
-      operationId: CreateDynamicQRCodePaymentAsync
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateDynamicQRCodePaymentRequest"
-      responses:
-        '200':
-          description: Recurso criado com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
         - Bearer: []
 
