@@ -14,7 +14,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a cotação do valor para compra e venda de criptomoeda.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-           <span class="bkly-ref-scope-tag">scope: crypto.read</span>
+           <span class="bkly-ref-scope-tag">scope: crypto.price.read</span>
         </div>
         [block:callout]
         {
@@ -44,44 +44,19 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '405':
-          description: Recurso acessado com método não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/405'
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '408':
-          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '409':
-          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '415':
-          description: Formato de payload não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/415'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '429':
-          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string 
+           $ref: 'http://localhost:3320/commons/components#/components/responses/429'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
@@ -94,7 +69,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a cotação de criptomoedas de um período específico.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.read</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.graph.read</span>
         </div>
         [block:callout]
         {
@@ -125,46 +100,21 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '405':
-          description: Recurso acessado com método não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/405'
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '408':
-          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '409':
-          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '415':
-          description: Formato de payload não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/415'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '429':
-          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string 
+           $ref: 'http://localhost:3320/commons/components#/components/responses/429'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
   /crypto/orders:
     post:
@@ -175,7 +125,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
@@ -204,46 +154,21 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '405':
-          description: Recurso acessado com método não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/405'
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '408':
-          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '409':
-          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '415':
-          description: Formato de payload não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/415'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '429':
-          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string 
+           $ref: 'http://localhost:3320/commons/components#/components/responses/429'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       
   /crypto/orders/{order_authentication_code}:
     post:
@@ -254,7 +179,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.create</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
@@ -289,44 +214,19 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '405':
-          description: Recurso acessado com método não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/405'
         '406': 
           $ref: 'http://localhost:3320/commons/components#/components/responses/406'
         '408':
-          description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '409':
-          description: A solicitação não pôde ser concluída devido a um conflito com o estado atual do recurso de destino.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '415':
-          description: Formato de payload não suportado.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
+          $ref: 'http://localhost:3320/commons/components#/components/responses/415'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '429':
-          description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string 
+           $ref: 'http://localhost:3320/commons/components#/components/responses/429'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'     
 
@@ -530,10 +430,6 @@ components:
         method:
           type: string
           example: POST
-      required:
-        - url
-        - rel
-        - method
     
     OrderIntentionResponseDto:
       type: object
@@ -685,7 +581,7 @@ components:
           type: array
           description: Links de próximos estados válidos da entidade/recurso.
           items:
-            $ref: "#/components/schemas/LinkValueObject"
+            type: object
 
     PriceDto:
       type: object
@@ -711,6 +607,15 @@ components:
         data:
           description: Objeto que contém informações sobre a cotação de criptomoedas.
           $ref: "#/components/schemas/PriceDto"
+        metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
+          type: object
+        links:
+          type: array
+          description: Links de próximos estados válidos da entidade/recurso.
+          items:
+            type: object
 
     GraphPointValueObject:
       type: object
@@ -745,6 +650,15 @@ components:
         data:
           description: Objeto que contém informações sobre o gráfico da cotação de criptomoedas por período.
           $ref: "#/components/schemas/GraphDto"
+        metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
+          type: object
+        links:
+          type: array
+          description: Links de próximos estados válidos da entidade/recurso.
+          items:
+            type: object
 
 x-readme:
   explorer-enabled: true
