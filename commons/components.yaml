@@ -171,7 +171,7 @@ components:
           description: Parâmetro ou propriedade com problema. Somente será retornado quando o erro for de sintaxe (Bad Request). 
           type: string
           nullable: true
-        messages:
+        message:
           description: Lista de descrições do problema encontrado. 
           type: array
           nullable: true
@@ -190,8 +190,7 @@ components:
           items:
             $ref: '#/components/schemas/Error'
         reference:
-          type: integer
-          format: int32
+          type: string
       additionalProperties: false
 
     CustomerDocument:
