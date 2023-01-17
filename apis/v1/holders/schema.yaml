@@ -206,13 +206,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.cancel</span>
         </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> atreladas ao documento antes de solicitar o seu Offboarding."
-        }
-        [/block]
       operationId: CancelBusinessRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/BusinessDocument
