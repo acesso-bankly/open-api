@@ -16,7 +16,7 @@ paths:
       summary: Registro de pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um cliente pessoa física. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro do cliente](https://docs.bankly.com.br/reference/getcustomerregistration).</p>
+          <p>Registre um cliente pessoa física. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getcustomerregistration">Consulta do registro do cliente</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.write</span>
         </div>      
@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](https://docs.bankly.com.br/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
@@ -96,13 +96,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
         </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> atreladas ao documento antes de solicitar o seu Offboarding."
-        }
-        [/block]
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/CustomerDocument
@@ -133,7 +126,7 @@ paths:
       summary: Registro de pessoa jurídica (MEI, EI, EIRELI ou SLU)
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um cliente pessoa jurídica. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro da empresa](https://docs.bankly.com.br/reference/getbusinessregistration).</p> 
+          <p>Registre um cliente pessoa jurídica. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getbusinessregistration">Consulta do registro da empresa</a>.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
@@ -213,13 +206,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.cancel</span>
         </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> atreladas ao documento antes de solicitar o seu Offboarding."
-        }
-        [/block]
       operationId: CancelBusinessRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/BusinessDocument
