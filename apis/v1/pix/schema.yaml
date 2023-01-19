@@ -314,7 +314,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie um pedido de portabilidade de chaves ou reivindique a posse para outra instituição.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
       parameters:
@@ -418,7 +418,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a confirmação de um pedido de reivindicação proveniente de outra instituição financeira para efetuar a doação de uma chave.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
         </div>
       parameters:
@@ -470,7 +470,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Complete o pedido de reivindicação de <b>posse</b> de chave assim que seu status estiver como CONFIRMED.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
       parameters:
@@ -523,7 +523,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Somento o <b>doador</b> pode realizar o cancelamento, desde que o status do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
         [block:callout]
@@ -586,7 +586,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
         </div>
         [block:callout]
