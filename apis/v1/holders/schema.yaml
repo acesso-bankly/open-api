@@ -16,7 +16,7 @@ paths:
       summary: Registro de pessoa física
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um cliente pessoa física. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro do cliente](/reference/getcustomerregistration).</p>
+          <p>Registre um cliente pessoa física. Se os dados informados já existirem, eles serão sobrepostos. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getcustomerregistration">Consulta do registro do cliente</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.write</span>
         </div>      
@@ -126,7 +126,7 @@ paths:
       summary: Registro de pessoa jurídica (MEI, EI, EIRELI ou SLU)
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um cliente pessoa jurídica. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint [Consulta do registro da empresa](/reference/getbusinessregistration).</p> 
+          <p>Registre um cliente pessoa jurídica. <br/>Após o registro, as informações serão analisadas e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getbusinessregistration">Consulta do registro da empresa</a>.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.write</span>
         </div>        
