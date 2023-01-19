@@ -1397,7 +1397,7 @@ components:
           $ref: '#/components/schemas/AddressingKeyType'
         value:
           type: string
-          description: Valor da chave a ser criada.
+          description: Valor da chave.
           nullable: true
       additionalProperties: false
 
@@ -1532,10 +1532,10 @@ components:
       properties:
         branch:
           type: string
-          description: Nome da agência bancária.
+          description: Número da agência.
         number:
           type: string
-          description: Número da agência bancária.
+          description: Número da conta.
         bankISPB:
           type: string
           description: ISPB da instituição financeira.
