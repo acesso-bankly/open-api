@@ -61,13 +61,6 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.close</span>
         </div>
-        [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "É preciso realizar a exclusão de <b> todas as chaves Pix </b> de uma conta antes de solicitar o seu cancelamento."
-        }
-        [/block]
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
