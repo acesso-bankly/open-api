@@ -418,8 +418,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Simule o reconhecimento de um pedido de reivindicação de portabilidade ou de posse de chaves por parte de outra instituição. </p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-simulacao-tag">simulação</span>
+          <span class="bkly-ref-small-simulacao-tag">simulação</span>
         </div>
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
@@ -441,15 +440,7 @@ paths:
               $ref: "#/components/schemas/AcknowledgementSimulationRequest"
       responses:
         '201':
-          description: Simulação realizada com sucesso.
-        '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
-        '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500' 
-        '503':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/503'
+          description: Solicitação aceita com sucesso.
       security:
         - Bearer: []
 
@@ -1348,11 +1339,14 @@ components:
         claimType:
           $ref: '#/components/schemas/ClaimType'
         addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
+          description: Objeto que contém informações sobre a chave.
+          $ref: '#/components/schemas/AddressingKeyAcknowlegment'
         claimer:
-          $ref: '#/components/schemas/ClaimerAndDonorInfo'
+          description: Objeto que contém informações sobre o reivindicador da chave.
+          $ref: '#/components/schemas/ClaimerInfo'
         donor:
-          $ref: '#/components/schemas/ClaimerAndDonorInfo'
+          description: Objeto que contém informações sobre o doador da chave.
+          $ref: '#/components/schemas/DonorInfo'
         status:
           $ref: '#/components/schemas/ClaimStatus'
         createdAt:
@@ -1397,6 +1391,20 @@ components:
           nullable: true
       additionalProperties: false
 
+    AddressingKeyAcknowlegment:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/AddressingKeyType'
+        value:
+          type: string
+          description: Valor da chave.
+          nullable: true
+      additionalProperties: false
+
     AddressingKey:
       type: object
       properties:
@@ -1404,7 +1412,7 @@ components:
           $ref: '#/components/schemas/AddressingKeyType'
         value:
           type: string
-          description: Valor da chave.
+          description: Valor da chave a ser criada.
           nullable: true
       additionalProperties: false
 
@@ -1534,7 +1542,7 @@ components:
         - EXTERNAL
       type: string
     
-    ClaimerAndDonorInfo:
+    ClaimerInfo:
       type: object
       properties:
         branch:
@@ -1694,6 +1702,7 @@ components:
         - CANCELLED
         - COMPLETED
       type: string
+      description: Situação do pedido de reivindicação.
     
     CreateClaimRequest:
       type: object
@@ -1910,6 +1919,33 @@ components:
           type: string
       additionalProperties: false
     
+    DonorInfo:
+      type: object
+      required:
+        - branch
+        - number
+        - bankISPB
+        - holder
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+        bankISPB:
+          type: string
+          description: ISPB da instituição financeira.
+        holder:
+          type: object
+          required: 
+            - documentNumber
+          description: Objeto que contém informações sobre o titular da conta.
+          properties:
+            documentNumber:
+              type: string
+              description: Número do documento.
+
     EntryStatus:
       enum:
         - OWNED
