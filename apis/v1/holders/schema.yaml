@@ -1528,7 +1528,46 @@ components:
         documentation:
           $ref: "#/components/schemas/SendedDocumentationRequest"
       additionalProperties: false
-
+    
+    RegisterBusinessRequest:
+      required:
+        - businessName
+        - businessAddress
+        - businessEmail
+        - businessSize
+        - businessType
+        - declaredAnnualBilling
+        - legalRepresentative
+      type: object
+      properties:
+        businessName:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Razão social da empresa. <br/><b>Importante:</b> não é possível enviar caracteres especiais neste campo.
+        tradingName:
+          type: string
+          description: Nome fantasia da empresa. <br/><b>Importante:</b> não é possível enviar caracteres especiais neste campo.
+          nullable: true
+        businessEmail:
+          type: string
+          description: E-mail comercial da empresa.
+          format: email
+          nullable: false
+        businessType:
+          $ref: "#/components/schemas/BusinessTypeMEIEISLURequest"
+        businessSize:
+          $ref: "#/components/schemas/BusinessSize"
+        businessAddress:
+          description: Endereço da empresa registrado no cartão CNPJ.
+          $ref: "#/components/schemas/Address"
+        declaredAnnualBilling:
+          $ref: "#/components/schemas/DeclaredAnnualBiling"
+        legalRepresentative:
+          description: Representante legal da empresa.
+          $ref: "#/components/schemas/LegalRepresentativeRequest"
+      additionalProperties: false
+    
     SendedDocumentationRequest:
       type: object
       required:
