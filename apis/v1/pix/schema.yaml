@@ -419,7 +419,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Simule o reconhecimento de um pedido de reivindicação de portabilidade ou de posse de chaves por parte de outra instituição. </p>
           <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
+          <span class="bkly-ref-simulacao-tag">simulação</span>
         </div>
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
@@ -1334,6 +1334,13 @@ components:
       type: object
       required:
         - claimId
+        - claimType
+        - addressingKey
+        - donor
+        - status
+        - createdAt
+        - resolutionLimitDate
+        - conclusionLimitDate
       properties:
         claimId:
           type: string
