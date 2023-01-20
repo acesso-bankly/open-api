@@ -1317,7 +1317,7 @@ components:
         - OCP0104 
         - OCP0105 
 
-     Owner:
+    Owner:
       type: object
       required:
         - participationPercentage
