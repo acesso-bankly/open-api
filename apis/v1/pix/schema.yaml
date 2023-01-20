@@ -410,6 +410,40 @@ paths:
       security:
         - Bearer: []
   
+  /pix/stub/claim/acknowledge:
+    post:
+      tags:
+        - Reivindicação de chaves
+      summary: Simulação de reconhecimento de pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Simule o reconhecimento de um pedido de reivindicação de portabilidade ou de posse de chaves por parte de outra instituição. </p>
+          <span class="bkly-ref-small-simulacao-tag">simulação</span>
+        </div>
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcknowledgementSimulationRequest"
+      responses:
+        '201':
+          description: Solicitação aceita com sucesso.
+      security:
+        - Bearer: []
+
   /pix/claims/{claimId}/confirm:
     patch:
       tags:
@@ -1070,6 +1104,7 @@ paths:
       security:
         - Bearer: []
 
+
 components:
   parameters:
     BookmarkId:
@@ -1286,6 +1321,47 @@ components:
         - PAYMENT
       type: string
     
+    AcknowledgementSimulationRequest:
+      type: object
+      required:
+        - claimId
+        - claimType
+        - addressingKey
+        - donor
+        - status
+        - createdAt
+        - resolutionLimitDate
+        - conclusionLimitDate
+      properties:
+        claimId:
+          type: string
+          description:  Identificador único do pedido. Este valor é retornado na criação de pedido de reivindicação de chave.
+        claimType:
+          $ref: '#/components/schemas/ClaimType'
+        addressingKey:
+          description: Objeto que contém informações sobre a chave.
+          $ref: '#/components/schemas/AddressingKeyAcknowlegment'
+        claimer:
+          description: Objeto que contém informações sobre o reivindicador da chave.
+          $ref: '#/components/schemas/ClaimerInfo'
+        donor:
+          description: Objeto que contém informações sobre o doador da chave.
+          $ref: '#/components/schemas/DonorInfo'
+        status:
+          $ref: '#/components/schemas/ClaimStatus'
+        createdAt:
+          type: string
+          format: date-time
+          description: Data em que o pedido foi realizado.
+        resolutionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de portabilidade realizar ações, como concluir ou cancelar o pedido de reivindicação.
+        conclusionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido.
+
     AdditionalData:
       type: object
       properties:
@@ -1312,6 +1388,20 @@ components:
           description: O valor máximo é de <b>15 caracteres</b> para esse campo.
         zipCode:
           type: string
+          nullable: true
+      additionalProperties: false
+
+    AddressingKeyAcknowlegment:
+      type: object
+      required:
+        - type
+        - value
+      properties:
+        type:
+          $ref: '#/components/schemas/AddressingKeyType'
+        value:
+          type: string
+          description: Valor da chave.
           nullable: true
       additionalProperties: false
 
@@ -1438,7 +1528,7 @@ components:
         agentType:
           type: string
           description: Especifica o tipo de estabelecimento comercial que está fornecendo o troco.
-  
+    
     ChangeAmountType:
       enum:
         - NOT_ALLOWED
@@ -1452,6 +1542,26 @@ components:
         - EXTERNAL
       type: string
     
+    ClaimerInfo:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+        bankISPB:
+          type: string
+          description: ISPB da instituição financeira.
+        holder:
+          type: object
+          description: Objeto que contém informações sobre o titular da conta.
+          properties:
+            documentNumber:
+              type: string
+              description: Número do documento.
+
     ClaimAccount:
       type: object
       properties:
@@ -1592,6 +1702,7 @@ components:
         - CANCELLED
         - COMPLETED
       type: string
+      description: Situação do pedido de reivindicação.
     
     CreateClaimRequest:
       type: object
@@ -1808,6 +1919,33 @@ components:
           type: string
       additionalProperties: false
     
+    DonorInfo:
+      type: object
+      required:
+        - branch
+        - number
+        - bankISPB
+        - holder
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+        bankISPB:
+          type: string
+          description: ISPB da instituição financeira.
+        holder:
+          type: object
+          required: 
+            - documentNumber
+          description: Objeto que contém informações sobre o titular da conta.
+          properties:
+            documentNumber:
+              type: string
+              description: Número do documento.
+
     EntryStatus:
       enum:
         - OWNED
@@ -2172,7 +2310,7 @@ components:
           type: string
           description: ISPB do provedor.
       additionalProperties: false
-
+      
   securitySchemes:
     Bearer:
       type: http
