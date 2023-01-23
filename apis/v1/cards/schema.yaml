@@ -2328,7 +2328,7 @@ paths:
   /cards-pci/{proxy}/wallet/{wallet}/brand/{brand}:
     post:
       tags:
-        - Wallets
+        - Carteiras digitais
       summary: Geração de token
       description: |
         <div class="bkly-ref-description">
