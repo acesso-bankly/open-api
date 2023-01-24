@@ -409,40 +409,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
         - Bearer: []
-  
-  /pix/stub/claim/acknowledge:
-    post:
-      tags:
-        - Reivindicação de chaves
-      summary: Simulação de reconhecimento de pedido de reivindicação
-      description: |
-        <div class="bkly-ref-description">
-          <p>Simule o reconhecimento de um pedido de reivindicação de portabilidade ou de posse de chaves por parte de outra instituição. </p>
-          <span class="bkly-ref-small-simulacao-tag">simulação</span>
-        </div>
-      parameters:
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AcknowledgementSimulationRequest"
-      responses:
-        '201':
-          description: Solicitação aceita com sucesso.
-      security:
-        - Bearer: []
 
   /pix/claims/{claimId}/confirm:
     patch:
@@ -546,6 +512,40 @@ paths:
                 $ref: "#/components/schemas/ClaimResponse"
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+      security:
+        - Bearer: []
+
+  /pix/stub/claim/acknowledge:
+    post:
+      tags:
+        - Reivindicação de chaves
+      summary: Simulação de reconhecimento de pedido de reivindicação
+      description: |
+        <div class="bkly-ref-description">
+          <p>Simule o reconhecimento de um pedido de reivindicação de portabilidade ou de posse de chaves por parte de outra instituição. </p>
+          <span class="bkly-ref-small-simulacao-tag">simulação</span>
+        </div>
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type : string
+        - name: x-bkly-pix-user-id
+          in: header
+          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcknowledgementSimulationRequest"
+      responses:
+        '201':
+          description: Solicitação aceita com sucesso.
       security:
         - Bearer: []
 
@@ -1327,7 +1327,7 @@ components:
         - claimId
         - claimType
         - addressingKey
-        - donor
+        - claimer
         - status
         - createdAt
         - resolutionLimitDate
@@ -1348,19 +1348,20 @@ components:
           description: Objeto que contém informações sobre o doador da chave.
           $ref: '#/components/schemas/DonorInfo'
         status:
+          description: Para garantir que a simulação funcione, o valor do status deve ser OPEN.
           $ref: '#/components/schemas/ClaimStatus'
         createdAt:
           type: string
           format: date-time
-          description: Data em que o pedido foi realizado.
+          description: Data em que o pedido foi realizado. Para garantir que a simulação funcione, a data de criação deve ser a mesma retornada na requisição de [criação pedido de reivindicação de chave Pix](https://docs.bankly.com.br/docs/reivindicacao-chave).
         resolutionLimitDate:
           type: string
           format: date-time
-          description: Data limite para o doador de portabilidade realizar ações, como concluir ou cancelar o pedido de reivindicação.
+          description: Data limite para o doador de portabilidade realizar ações, como concluir ou cancelar o pedido de reivindicação. Para garantir que a simulação funcione, a data limite deve ser a mesma retornada na requisição de [criação pedido de reivindicação de chave Pix](https://docs.bankly.com.br/docs/reivindicacao-chave).
         conclusionLimitDate:
           type: string
           format: date-time
-          description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido.
+          description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido. Para garantir que a simulação funcione, a data de conclusão deve ser a mesma retornada na requisição de [criação pedido de reivindicação de chave Pix](https://docs.bankly.com.br/docs/reivindicacao-chave).
 
     AdditionalData:
       type: object
@@ -1544,6 +1545,11 @@ components:
     
     ClaimerInfo:
       type: object
+      required:
+        - branch
+        - number
+        - bankISPB
+        - holder
       properties:
         branch:
           type: string
@@ -1556,6 +1562,8 @@ components:
           description: ISPB da instituição financeira.
         holder:
           type: object
+          required:
+            - documentNumber
           description: Objeto que contém informações sobre o titular da conta.
           properties:
             documentNumber:
