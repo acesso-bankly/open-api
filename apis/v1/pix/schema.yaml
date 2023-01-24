@@ -1328,6 +1328,7 @@ components:
         - claimType
         - addressingKey
         - claimer
+        - donor
         - status
         - createdAt
         - resolutionLimitDate
@@ -1543,33 +1544,6 @@ components:
         - EXTERNAL
       type: string
     
-    ClaimerInfo:
-      type: object
-      required:
-        - branch
-        - number
-        - bankISPB
-        - holder
-      properties:
-        branch:
-          type: string
-          description: Número da agência.
-        number:
-          type: string
-          description: Número da conta.
-        bankISPB:
-          type: string
-          description: ISPB da instituição financeira.
-        holder:
-          type: object
-          required:
-            - documentNumber
-          description: Objeto que contém informações sobre o titular da conta.
-          properties:
-            documentNumber:
-              type: string
-              description: Número do documento.
-
     ClaimAccount:
       type: object
       properties:
@@ -1627,6 +1601,33 @@ components:
           nullable: true
       additionalProperties: false
 
+    ClaimerInfo:
+      type: object
+      required:
+        - branch
+        - number
+        - bankISPB
+        - holder
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+        bankISPB:
+          type: string
+          description: ISPB da instituição financeira.
+        holder:
+          type: object
+          required:
+            - documentNumber
+          description: Objeto que contém informações sobre o titular da conta.
+          properties:
+            documentNumber:
+              type: string
+              description: Número do documento.
+ 
     ClaimsFrom:
       enum:
         - Claimer
