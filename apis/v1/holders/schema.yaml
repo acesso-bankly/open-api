@@ -1366,7 +1366,7 @@ components:
           type: boolean
           description: Pessoa exposta politicamente. <b>Obsoleto</b>. Utilize o campo <code>pep</code>.
         pep:
-          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Pep"
         participationPercentage:
           type: string
