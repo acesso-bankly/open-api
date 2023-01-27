@@ -773,7 +773,6 @@ components:
           description: Token correspondente ao documento de procuração pública legal.
           type: string
           nullable: true
-      additionalProperties: false
 
     DocumentToken:
       type: string
