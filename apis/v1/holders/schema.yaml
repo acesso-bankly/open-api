@@ -748,7 +748,7 @@ components:
     
     Documentation:
       type: object
-      desccription: Objeto que contém informações dos documentos enviados por meio do endpoint de [Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)](https://docs.bankly.com.br/docs/envio-documentos-corporativos).
+      description: Objeto que contém informações dos documentos enviados por meio do endpoint de [Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)](https://docs.bankly.com.br/docs/envio-documentos-corporativos).
       required:
         - articlesOfIncorporation
         - lastContractChange
