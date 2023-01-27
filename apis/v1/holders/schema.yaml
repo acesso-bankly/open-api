@@ -849,7 +849,7 @@ components:
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         occupation:
-          descriptio: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Occupation"
         isPoliticallyExposedPerson:
           type: boolean
@@ -1361,7 +1361,7 @@ components:
           description: Endereço de e-mail do sócio. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           nullable: true
         occupation:
-          descriptio: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Occupation"
         isPoliticallyExposedPerson:
           type: boolean
