@@ -1415,21 +1415,23 @@ components:
     
     Pep:
       type: object
+      description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       properties:
         level:
           type: string
-          description: Nível de exposição política do cliente, atendendo à Circular nº 3.978.
+          description: Nível de exposição política do cliente.
           enum:
             - NONE
             - SELF
             - RELATED
 
     PepResponse:
+      description: Objeto que informa o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       type: object
       properties:
         level:
           type: string
-          description: Nível de exposição política do cliente, atendendo à Circular nº 3.978.
+          description: Nível de exposição política do cliente.
           enum:
             - NONE
             - SELF
