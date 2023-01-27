@@ -1394,7 +1394,7 @@ components:
           description: Razão social da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessType:
-          description: Apenas para sócio <b>pessoa jurídica</b>.
+          description: Tipo da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/BusinessType"
         legalRepresentatives:
           type: array
@@ -1409,7 +1409,7 @@ components:
           description: Sócios da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         declaredAnnualBilling:
-          description: Apenas para sócio <b>pessoa jurídica</b>.
+          description: Faixa de faturamento anual da empresa.Apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/DeclaredAnnualBiling"
       additionalProperties: false
     
