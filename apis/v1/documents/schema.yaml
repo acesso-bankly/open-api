@@ -552,7 +552,7 @@ components:
       properties:
         isLastDocument:
           type: boolean
-          description: Esse campo deve apresentar o valor TRUE.
+          description: Para garantir o sucesso no envio do documento, esse campo sempre deve apresentar o valor TRUE.
         encrypted:
           type: string
           description: Esse campo deve ser preenchido com o valor do campo <code>encrypted</code>, retornado ao efetuar uma captura de imagem com sucesso utilizando o SDK da Unico. 

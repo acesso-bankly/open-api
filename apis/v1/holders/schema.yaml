@@ -238,6 +238,48 @@ paths:
         "500":
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
  
+  /corporation-business/{documentNumber}:
+    put:
+      tags:
+        - Pessoa jurídica
+      summary: Registro de pessoa jurídica (LTDA, S.A. ou TS)
+      description: |
+        <div class="bkly-ref-description">
+          <p>Registre (ou substitua) uma nova empresa (LTDA, S.A. ou TS). O pedido de registro será analisado e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getbusinessregistration">Consulta do registro da empresa</a>. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
+        </div>
+      operationId: RegisterCorporationBusinessAsync
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
+      responses:
+        "202":
+          description: Requisição foi aceita e está sendo processada.
+          headers:
+            x-bkly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string
+            Location:
+              description: Localização do recurso recém-criado ou em análise.
+              schema:
+                type: string
+        "400":
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        "409":
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+      security:
+        - Bearer: []
+
   /business/{documentNumber}/cancel:
     patch:
       tags:
@@ -273,51 +315,6 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/422"
         "500":
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
-
-  /corporation-business/{documentNumber}:
-    put:
-      tags:
-        - Pessoa jurídica
-      summary: Registro de pessoa jurídica (LTDA, S.A. ou TS)
-      description: |
-        <div class="bkly-ref-description">
-          <p>
-            Registre (ou substitua) uma nova empresa (LTDA, S.A. ou TS).
-            O pedido de registro será analisado e você pode obter o resultado consultando o registro da empresa. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.
-          </p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
-        </div>
-      operationId: RegisterCorporationBusinessAsync
-      parameters:
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterCorporationBusinessRequest"
-      responses:
-        "202":
-          description: Requisição foi aceita e está sendo processada.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-            Location:
-              description: Localização do recurso recém-criado ou em análise.
-              schema:
-                type: string
-        "400":
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        "409":
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        "500":
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
-      security:
-        - Bearer: []
 
 security:
   - Bearer: []
@@ -751,6 +748,7 @@ components:
     
     Documentation:
       type: object
+      description: Objeto que contém informações dos documentos enviados por meio do endpoint de [Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)](https://docs.bankly.com.br/docs/envio-documentos-corporativos).
       required:
         - articlesOfIncorporation
         - lastContractChange
@@ -758,24 +756,23 @@ components:
         - legalRepresentative
       properties:
         articlesOfIncorporation:
-          description: Id correspondente do documento do contrato social ou estatuto social da empresa.
+          description: Token correspondente ao documento do contrato social ou estatuto social da empresa.
           type: string
           nullable: true
         lastContractChange:
-          description: Id correspondente do documento da última alteração contratual ou última ata de eleição.
+          description: Token correspondente ao documento da última alteração contratual ou última ata de eleição.
           type: string
           nullable: true
         balanceSheet:
-          description: Id correspondente do documento de declaração de faturamento dos últimos 12 meses ou balanço social.
-          type: string
-          nullable: true
-        powerOfAttorney:
-          description: Id correspondente do documento de procuração pública legal.
+          description: Token correspondente ao documento de declaração de faturamento dos últimos 12 meses ou balanço social.
           type: string
           nullable: true
         legalRepresentative:
           $ref: "#/components/schemas/Image"
-      additionalProperties: false
+        powerOfAttorney:
+          description: Token correspondente ao documento de procuração pública legal.
+          type: string
+          nullable: true
 
     DocumentToken:
       type: string
@@ -783,7 +780,7 @@ components:
 
     Image:
       type: object
-      description: Documentos de ao menos um dos representantes legais, é possível usar o RG, CNH, RNE, DNI e CRNM.
+      description: Documentos de ao menos um dos representantes legais. É possível usar o RG, CNH, RNE, DNI e CRNM.
       required:
         - documentNumber
         - selfie
@@ -850,6 +847,15 @@ components:
           type: string
           description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
+        occupation:
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          $ref: "#/components/schemas/Occupation"
+        isPoliticallyExposedPerson:
+          type: boolean
+          description: Pessoa exposta politicamente. <b>Obsoleto</b>. Considere o campo <code>pep</code>.
+        pep:
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          $ref: "#/components/schemas/Pep"
         participationPercentage:
           type: string
           description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
@@ -860,29 +866,26 @@ components:
           nullable: true
         tradingName:
           type: string
-          description: Nome fantasia da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          description: Nome fantasia da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          description: Razão social da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
           nullable: true
         businessType:
           $ref: "#/components/schemas/BusinessType"
-          description: Somente retornado para clientes do tipo LTDA / S.A. / TS.
-        isPoliticallyExposedPerson:
-          type: boolean
-          description: Pessoa exposta politicamente. Apenas para sócio pessoa física.
+          description: Somente para clientes do tipo LTDA / S.A. / TS.
         legalRepresentatives:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Representantes legais da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          description: Representantes legais da empresa (apenas para sócio <b>pessoa jurídica</b>). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
           nullable: true
         owners:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Sócios da empresa (apenas para sócio pessoa jurídica). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
+          description: Sócios da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
     
@@ -975,23 +978,26 @@ components:
     LegalRepresentativePerson:
       type: object
       required:
+        - documentNumber
+        - registerName
         - birthDate
         - motherName
         - email
-        - isPoliticallyExposedPerson
-        - registerName
+        - declaredIncome
+        - occupation
+        - pep
+        - phone
         - address
-        - documentNumber
+        - memberQualification
       properties:
-        powerOfAttorney:
-          $ref: "#/components/schemas/PowerOfAttorney"
-        memberQualification:
+        documentNumber:
           type: string
-          description: Qualificação de integrante.
+          description: Número do documento CPF. Informe somente os números.
           nullable: true
-        socialName:
+          readOnly: true
+        registerName:
           type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
           nullable: true
         birthDate:
           type: string
@@ -1003,24 +1009,31 @@ components:
           nullable: true
         email:
           type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois representante legal.
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois representantes legais.
           nullable: true
+        declaredIncome:
+          $ref: "#/components/schemas/DeclaredIncome"
+        occupation:
+          $ref: "#/components/schemas/Occupation"
         isPoliticallyExposedPerson:
           type: boolean
-          description: Pessoa exposta politicamente.
-        registerName:
-          type: string
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
-          nullable: true
+          description: Pessoa exposta politicamente. <b>Obsoleto</b>. Utilize o campo <code>pep</code>.
+        pep:
+          $ref: "#/components/schemas/Pep"
         phone:
           $ref: "#/components/schemas/Phone"
         address:
           $ref: "#/components/schemas/Address"
-        documentNumber:
+        memberQualification:
           type: string
-          description: Número do documento CPF. Informe somente os números.
+          description: Indique a qualificação da pessoa física, de acordo com a natureza jurídica, conforme a tabela do [Anexo 5 da Instrução Normativa RFB nº 1863/2018](https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/cadastros/cnpj/tabelas-utilizadas-pelo-programa-cnpj/Anexo_V3.pdf).
           nullable: true
-          readOnly: true
+        powerOfAttorney:
+          $ref: "#/components/schemas/PowerOfAttorney"
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
+          nullable: true
       additionalProperties: false
 
     LegalRepresentativeRequest:
@@ -1326,17 +1339,38 @@ components:
         - phone
         - email
       properties:
-        participationPercentage:
-          type: string
-          description: Percentual de participação (0 a 100).
-          nullable: true
         documentNumber:
           type: string
           description: Número de documento (CPF ou CNPJ). Informe somente números.
           nullable: true
         registerName:
           type: string
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM). Apenas para sócio pessoa física.
+          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM). <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          nullable: true
+        birthDate:
+          type: string
+          description: Data de nascimento do sócio. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          format: date-time
+        motherName:
+          type: string
+          description: Nome da mãe do cliente conforme consta no documento de identificação. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          nullable: true
+        email:
+          type: string
+          description: Endereço de e-mail do sócio. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          nullable: true
+        occupation:
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          $ref: "#/components/schemas/Occupation"
+        isPoliticallyExposedPerson:
+          type: boolean
+          description: Pessoa exposta politicamente. <b>Obsoleto</b>. Utilize o campo <code>pep</code>.
+        pep:
+          description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          $ref: "#/components/schemas/Pep"
+        participationPercentage:
+          type: string
+          description: Percentual de participação (0 a 100).
           nullable: true
         socialName:
           type: string
@@ -1346,62 +1380,58 @@ components:
           $ref: "#/components/schemas/Phone"
         address:
           $ref: "#/components/schemas/Address"
-        birthDate:
-          type: string
-          description: Data de nascimento do sócio. Apenas para sócio pessoa física.
-          format: date-time
-        motherName:
-          type: string
-          description: Nome da mãe do cliente conforme consta no documento de identificação. Apenas para sócio pessoa física.
-          nullable: true
-        email:
-          type: string
-          description: Endereço de e-mail do sócio.
-          nullable: true
+        incomeDeclared:
+          type: number
+          description: Renda declarada. **Obsoleto**. Utilize o campo <code>declaredIncome</code> para pessoa física ou <code>declaredAnnualBilling</code> para pessoa jurídica.
+        declaredIncome:
+          $ref: "#/components/schemas/DeclaredIncome"
         tradingName:
           type: string
-          description: Nome fantasia da empresa. Apenas para sócio pessoa jurídica.
+          description: Nome fantasia da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa. Apenas para sócio pessoa jurídica.
+          description: Razão social da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessType:
+          description: Tipo da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/BusinessType"
-        isPoliticallyExposedPerson:
-          type: boolean
-          description: Pessoa exposta politicamente. Apenas para sócio pessoa física.
         legalRepresentatives:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Representantes legais da empresa. Apenas para sócio pessoa jurídica.
+          description: Representantes legais da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         owners:
           type: array
           items:
             $ref: "#/components/schemas/Owner"
-          description: Sócios da empresa. Apenas para sócio pessoa jurídica.
+          description: Sócios da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
+        declaredAnnualBilling:
+          description: Faixa de faturamento anual da empresa.Apenas para sócio <b>pessoa jurídica</b>.
+          $ref: "#/components/schemas/DeclaredAnnualBiling"
       additionalProperties: false
     
     Pep:
       type: object
+      description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       properties:
         level:
           type: string
-          description: Nível de exposição política do cliente, atendendo à Circular nº 3.978.
+          description: Nível de exposição política do cliente.
           enum:
             - NONE
             - SELF
             - RELATED
 
     PepResponse:
+      description: Objeto que informa o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       type: object
       properties:
         level:
           type: string
-          description: Nível de exposição política do cliente, atendendo à Circular nº 3.978.
+          description: Nível de exposição política do cliente.
           enum:
             - NONE
             - SELF
@@ -1442,6 +1472,7 @@ components:
       additionalProperties: false
     
     PowerOfAttorney:
+      description: Objeto que contém a data de início da procuração (`startDate`) e a data fim (`endDate`). Não é possível utilizar uma procuração que irá vencer em até 30 dias, a partir da data de envio da requisição. 
       type: object
       properties:
         startDate:
@@ -1607,21 +1638,25 @@ components:
 
     RegisterCorporationBusinessRequest:
       required:
-        - businessAddress
-        - businessName
-        - businessSize
         - businessType
+        - businessSize
         - cnaeCode
         - legalNature
         - openingDate
-        - annualBilling
+        - declaredAnnualBililng
         - phone
-        - legalRepresentative
+        - legalRepresentatives
+        - businessName
+        - businessEmail
+        - businessAddress
+        - documentation
       type: object
       properties:
         businessType:
+          description: Tipo da empresa.
           $ref: "#/components/schemas/CorporationBusinessType"
         businessSize:
+          description: Tamanho da empresa.
           $ref: "#/components/schemas/CorporationBusinessSize"
         cnaeCode:
           type: string
@@ -1633,12 +1668,14 @@ components:
           nullable: true
         openingDate:
           type: string
-          description: Data de abertura da empresa.
+          description: Data de abertura da empresa. 
           format: date-time
         annualBilling:
           type: number
-          description: Faturamento anual da empresa.
+          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBililng</code>.
           format: double
+        declaredAnnualBililng:
+          $ref: "#/components/schemas/DeclaredAnnualBiling"
         phone:
           $ref: "#/components/schemas/Phone"
         legalRepresentatives:
@@ -1647,21 +1684,11 @@ components:
             $ref: "#/components/schemas/LegalRepresentativePerson"
           description: Representantes legais da empresa.
           nullable: true
-        owners:
-          type: array
-          items:
-            $ref: "#/components/schemas/Owner"
-          description: Sócios da empresa. Campo obrigatório <b>somente</b> para empresas no formato LTDA (pessoa física);
-          nullable: true
         businessName:
           maxLength: 256
           minLength: 1
           type: string
           description: Razão social da empresa.
-        tradingName:
-          type: string
-          description: Nome fantasia da empresa.
-          nullable: true
         businessEmail:
           type: string
           description: E-mail comercial da empresa.
@@ -1671,6 +1698,16 @@ components:
           $ref: "#/components/schemas/Address"
         documentation:
           $ref: "#/components/schemas/Documentation"
+        owners:
+          type: array
+          items:
+            $ref: "#/components/schemas/Owner"
+          description: Sócios da empresa. Campo obrigatório <b>somente</b> para empresas do tipo LTDA, se o tipo de pessoa societária for <b>pessoa física</b>. Para S.A. e TS, a utilização desse campo é opcional.
+          nullable: true
+        tradingName:
+          type: string
+          description: Nome fantasia da empresa.
+          nullable: true  
       additionalProperties: false
     
     UpdateCustomerRequest:
