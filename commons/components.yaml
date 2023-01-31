@@ -23,8 +23,8 @@ components:
         type: string
         default: 1
       
-    ApiVersion2:
-      name: api-version
+    BanklyVersion:
+      name: bankly-version
       in: header
       description: |
         Versão da API.
@@ -148,8 +148,26 @@ components:
       schema:
         $ref: '#/components/schemas/X-Correlation-Id'
 
+    Bankly-Correlation-Id:  
+      name: bankly-correlation-id
+      in: header 
+      description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-Correlation-Id'
+
     X-Idempotency-Key:
       name: x-idempotency-key
+      in: header
+      description: Chave de idempotência para a requisição (UUID v4).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+
+    Bankly-Idempotency-Key:
+      name: bankly-idempotency-key
       in: header
       description: Chave de idempotência para a requisição (UUID v4).
       required: true
@@ -349,6 +367,7 @@ components:
     X-Correlation-Id:
       type: string
       description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
+
     
   headers:
     CorrelationId:
