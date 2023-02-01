@@ -13,7 +13,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Gere um hash e um código numérico para a criação do TOTP.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: totp.create</span>
         </div>
       operationId: CreateTotpAsync
@@ -67,7 +67,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Valide o código numérico recebido pelo cliente e o seu hash.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: totp.validate</span>
         </div>
       parameters:
