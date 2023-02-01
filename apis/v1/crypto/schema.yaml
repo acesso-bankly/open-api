@@ -13,7 +13,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a cotação do valor para compra e venda de criptomoeda.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
            <span class="bkly-ref-scope-tag">scope: crypto.price.read</span>
         </div>
         [block:callout]
@@ -68,7 +68,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a cotação de criptomoedas de um período específico.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.graph.read</span>
         </div>
         [block:callout]
@@ -124,7 +124,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
@@ -178,7 +178,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a execução da ordem de compra ou venda de criptomoedas para efetivar uma dessas operações.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span>
+          <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
