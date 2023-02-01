@@ -120,7 +120,7 @@ paths:
     post:
       tags:
         - Operações com criptomoedas  
-      summary: Criação de ordem de compra e venda de criptomoedas
+      summary: Criação de intenção de compra e venda de criptomoedas
       description: |
         <div class="bkly-ref-description">
           <p>Crie uma ordem de compra ou venda de criptomoedas.</p> 
