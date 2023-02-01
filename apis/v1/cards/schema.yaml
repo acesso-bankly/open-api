@@ -1614,7 +1614,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Altere o limite de crédito ativo de um cartão pós-pago.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       parameters:
@@ -2179,7 +2179,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha o rastreio do cartão pelo seu proxy.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
       operationId: trackingGetByProxy
@@ -2261,7 +2261,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Atualize o endereço do destinatário para uma nova tentativa de entrega.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span>
+          <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
       operationId: trackingUpdateAddress
@@ -2333,7 +2333,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
             <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
-            <span class="bkly-ref-small-beta-tag">beta</span> 
+            <span class="bkly-ref-small-stable-tag">stable</span> 
             <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
           </div>
       

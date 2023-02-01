@@ -892,7 +892,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
         [block:callout]
         {
@@ -994,7 +994,7 @@ paths:
       description: | 
         <div class="bkly-ref-description">
           <p>Para emitir um QR Code, é necessário possuir uma chave no DICT registrada previamente.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.qrcode-dynamic-payment.create</span>
         </div>
       operationId: CreateDynamicQRCodePaymentAsync

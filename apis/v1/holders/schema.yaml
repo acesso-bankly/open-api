@@ -246,7 +246,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Registre (ou substitua) uma nova empresa (LTDA, S.A. ou TS). O pedido de registro será analisado e você poderá obter o resultado dessa análise por meio do endpoint <a href="/reference/getbusinessregistration">Consulta do registro da empresa</a>. Caso o cadastro não exista, ele será criado. Se já existir, os dados serão sobrepostos.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
         </div>
       operationId: RegisterCorporationBusinessAsync

@@ -98,7 +98,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha uma lista de instituições financeiras e suas informações, como o ISPB, os produtos ofertados, o tipo de banco (se é folha, destino ou ambos), dentre outros.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: banklist.read</span>
          [block:callout]
         {
