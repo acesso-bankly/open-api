@@ -627,7 +627,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/pix-cadastro-chaves)."
+          "body": "Para mais informações, confira a documentação <a href= "/docs/cadastro-de-chaves">Cadastro de chaves</a>."
         }
         [/block]
       operationId: CreateEntryAsync
