@@ -1335,6 +1335,12 @@ components:
         - participationPercentage
         - phone
         - address
+        - pep
+        - occupation
+        - declaredIncome
+        - declaredAnnualBilling
+        - businessName
+        - businessType
       properties:
         documentNumber:
           type: string
@@ -1381,6 +1387,7 @@ components:
           type: number
           description: Renda declarada. **Obsoleto**. Utilize o campo <code>declaredIncome</code> para pessoa física ou <code>declaredAnnualBilling</code> para pessoa jurídica.
         declaredIncome:
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/DeclaredIncome"
         tradingName:
           type: string
@@ -1388,10 +1395,10 @@ components:
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa. Apenas para sócio <b>pessoa jurídica</b>.
+          description: Razão social da empresa. ApenObrigatótio apenas  para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessType:
-          description: Tipo da empresa. Apenas para sócio <b>pessoa jurídica</b>.
+          description: Tipo da empresa. Obrigatótio apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/BusinessType"
         legalRepresentatives:
           type: array
@@ -1406,7 +1413,7 @@ components:
           description: Sócios da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         declaredAnnualBilling:
-          description: Faixa de faturamento anual da empresa.Apenas para sócio <b>pessoa jurídica</b>.
+          description: Faixa de faturamento anual da empresa. Obrigatório apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/DeclaredAnnualBiling"
       additionalProperties: false
     
