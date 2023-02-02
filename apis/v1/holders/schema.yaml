@@ -1000,7 +1000,7 @@ components:
         owners:
           type: array
           items:
-            $ref: "#/components/schemas/LegalRepresentativeOwners"
+            $ref: "#/components/schemas/LegalRepresentativeOwner"
           description: Sócios da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
