@@ -619,7 +619,7 @@ paths:
       summary: Cadastro de chaves
       description: |
         <div class="bkly-ref-description">
-          <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica.</p>
+          <p>Cadastre até cinco chaves para contas com titular pessoa física e vinte chaves para contas com titular pessoa jurídica. <br/>Para mais informações, confira a documentação <a href="https://docs.bankly.com.br/docs/cadastro-de-chaves">Cadastro de chaves</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.entries.create</span>
         </div>
@@ -627,7 +627,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação <a href= "/docs/cadastro-de-chaves">Cadastro de chaves</a>."
+          "body": "Para mais informações, confira a documentação [Cadastro de chaves](/docs/cadastro-de-chaves)."
         }
         [/block]
       operationId: CreateEntryAsync
