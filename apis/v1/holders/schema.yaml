@@ -453,7 +453,7 @@ components:
         status:
           $ref: "#/components/schemas/Status"
         declaredAnnualBilling:
-          $ref: "#/components/schemas/DeclaredAnnualBiling"
+          $ref: "#/components/schemas/DeclaredAnnualBilling"
         confirmedAnnualBilling:
           type: string
           description: Indica se o valor de faturamento informado foi confirmado no Bureau de informação. 
@@ -712,7 +712,7 @@ components:
           format: date-time
       additionalProperties: false
     
-    DeclaredAnnualBiling:
+    DeclaredAnnualBilling:
       type: string
       description: Faixa de faturamento anual da empresa.
       enum:
@@ -996,6 +996,10 @@ components:
           type: string
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
           nullable: true
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
+          nullable: true
         birthDate:
           type: string
           description: Data de nascimento do representante legal. O cliente deve possuir no mínimo 16 anos.
@@ -1027,10 +1031,6 @@ components:
           nullable: true
         powerOfAttorney:
           $ref: "#/components/schemas/PowerOfAttorney"
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
-          nullable: true
       additionalProperties: false
 
     LegalRepresentativeRequest:
@@ -1331,16 +1331,10 @@ components:
       type: object
       required:
         - documentNumber
-        - email
         - participationPercentage
+        - email
         - phone
         - address
-        - pep
-        - occupation
-        - declaredIncome
-        - declaredAnnualBilling
-        - businessName
-        - businessType
       properties:
         documentNumber:
           type: string
@@ -1349,6 +1343,10 @@ components:
         registerName:
           type: string
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM). <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          nullable: true
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física.
           nullable: true
         birthDate:
           type: string
@@ -1360,7 +1358,7 @@ components:
           nullable: true
         email:
           type: string
-          description: Endereço de e-mail do sócio. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          description: Endereço de e-mail do sócio ou de sua empresa.
           nullable: true
         occupation:
           description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
@@ -1371,24 +1369,20 @@ components:
         pep:
           description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Pep"
-        participationPercentage:
-          type: string
-          description: Percentual de participação (0 a 100).
-          nullable: true
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada, saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf). Apenas para sócio pessoa física.
-          nullable: true
-        phone:
-          $ref: "#/components/schemas/Phone"
-        address:
-          $ref: "#/components/schemas/Address"
         incomeDeclared:
           type: number
           description: Renda declarada. **Obsoleto**. Utilize o campo <code>declaredIncome</code> para pessoa física ou <code>declaredAnnualBilling</code> para pessoa jurídica.
         declaredIncome:
           description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/DeclaredIncome"
+        participationPercentage:
+          type: string
+          description: Percentual de participação (0 a 100).
+          nullable: true         
+        phone:
+          $ref: "#/components/schemas/Phone"
+        address:
+          $ref: "#/components/schemas/Address"        
         tradingName:
           type: string
           description: Nome fantasia da empresa. Apenas para sócio <b>pessoa jurídica</b>.
@@ -1400,6 +1394,9 @@ components:
         businessType:
           description: Tipo da empresa. Obrigatótio apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/BusinessType"
+        declaredAnnualBilling:
+          description: Faixa de faturamento anual da empresa. Obrigatório apenas para sócio <b>pessoa jurídica</b>.
+          $ref: "#/components/schemas/DeclaredAnnualBilling"
         legalRepresentatives:
           type: array
           items:
@@ -1412,9 +1409,6 @@ components:
             $ref: "#/components/schemas/Owner"
           description: Sócios da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
-        declaredAnnualBilling:
-          description: Faixa de faturamento anual da empresa. Obrigatório apenas para sócio <b>pessoa jurídica</b>.
-          $ref: "#/components/schemas/DeclaredAnnualBiling"
       additionalProperties: false
     
     Pep:
@@ -1599,7 +1593,7 @@ components:
           description: Endereço da empresa registrado no cartão CNPJ.
           $ref: "#/components/schemas/Address"
         declaredAnnualBilling:
-          $ref: "#/components/schemas/DeclaredAnnualBiling"
+          $ref: "#/components/schemas/DeclaredAnnualBilling"
         legalRepresentative:
           description: Representante legal da empresa.
           $ref: "#/components/schemas/LegalRepresentativeRequest"
@@ -1612,7 +1606,7 @@ components:
         - cnaeCode
         - legalNature
         - openingDate
-        - declaredAnnualBililng
+        - declaredAnnualBilling
         - phone
         - legalRepresentatives
         - businessName
@@ -1621,12 +1615,6 @@ components:
         - documentation
       type: object
       properties:
-        businessType:
-          description: Tipo da empresa.
-          $ref: "#/components/schemas/CorporationBusinessType"
-        businessSize:
-          description: Tamanho da empresa.
-          $ref: "#/components/schemas/CorporationBusinessSize"
         businessName:
           maxLength: 256
           minLength: 1
@@ -1636,6 +1624,12 @@ components:
           type: string
           description: Nome fantasia da empresa.
           nullable: true  
+        businessType:
+          description: Tipo da empresa.
+          $ref: "#/components/schemas/CorporationBusinessType"
+        businessSize:
+          description: Tamanho da empresa.
+          $ref: "#/components/schemas/CorporationBusinessSize"       
         cnaeCode:
           type: string
           description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa.
@@ -1650,10 +1644,10 @@ components:
           format: date-time
         annualBilling:
           type: number
-          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBililng</code>.
+          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBilling</code>.
           format: double
-        declaredAnnualBililng:
-          $ref: "#/components/schemas/DeclaredAnnualBiling"
+        declaredAnnualBilling:
+          $ref: "#/components/schemas/DeclaredAnnualBilling"
         phone:
           $ref: "#/components/schemas/Phone"
         businessEmail:
@@ -1675,7 +1669,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Owner"
-          description: Sócios da empresa. Objeto obrigatório <b>somente</b> para empresas do tipo LTDA. Para S.A. e TS, o envio desse objeto é opcional.
+          description: Sócios da empresa. Objeto obrigatório <b>somente</b> para empresas do tipo LTDA. Para S.A. e TS, o envio desse objeto é opcional. <br /> Caso seja enviado, deve-se observar a obrigatoriedade de suas propriedades.
           nullable: true
       additionalProperties: false
     
