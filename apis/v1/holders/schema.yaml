@@ -370,48 +370,6 @@ components:
           type: string
           description: "Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR."
       additionalProperties: false
-    
-    AddressLegalRepresentativeOwner:
-      type: object
-      properties:
-        zipCode:
-          minLength: 1
-          type: string
-          description: O CEP correspondente ao endereço.
-        addressLine:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Logradouro (Nome da rua, avenida etc.).
-        buildingNumber:
-          maxLength: 10
-          minLength: 1
-          type: string
-          description: Número da residência.
-        complement:
-          maxLength: 256
-          type: string
-          description: "Complemento do endereço. Exemplo: Apto 123, Casa B etc."
-          nullable: true
-        neighborhood:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome do bairro ou distrito.
-        city:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome da cidade.
-        state:
-          minLength: 1
-          type: string
-          description: Sigla do estado brasileiro conforme a ISO 3166-2:BR.
-        country:
-          minLength: 1
-          type: string
-          description: "Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR."
-      additionalProperties: false
 
     AddressResponse:
       type: object
@@ -856,7 +814,8 @@ components:
         - address
         - email
         - motherName
-        - isPoliticallyExposedPerson
+        - pep
+        - occupation
       type: object
       properties:
         documentNumber:
@@ -867,6 +826,31 @@ components:
           minLength: 1
           type: string
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
+        socialName:
+          type: string
+          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
+          nullable: true
+        tradingName:
+          type: string
+          description: Nome fantasia da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
+          nullable: true
+        motherName:
+          type: string
+          description: Nome da mãe do representante legal conforme consta no documento de identificação.
+          nullable: true
+        email:
+          maxLength: 256
+          minLength: 1
+          type: string
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
+          format: email
+        businessName:
+          type: string
+          description: Razão social da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
+          nullable: true
+        businessType:
+          $ref: "#/components/schemas/BusinessType"
+          description: Somente para clientes do tipo LTDA / S.A. / TS.
         birthDate:
           maxLength: 10
           minLength: 10
@@ -879,16 +863,6 @@ components:
         address:
           description: Endereço do representante legal da empresa.
           $ref: "#/components/schemas/Address"
-        motherName:
-          type: string
-          description: Nome da mãe do representante legal conforme consta no documento de identificação.
-          nullable: true
-        email:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email
         occupation:
           description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Occupation"
@@ -898,25 +872,6 @@ components:
         pep:
           description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/Pep"
-        participationPercentage:
-          type: string
-          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
-          nullable: true
-        tradingName:
-          type: string
-          description: Nome fantasia da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessName:
-          type: string
-          description: Razão social da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessType:
-          $ref: "#/components/schemas/BusinessType"
-          description: Somente para clientes do tipo LTDA / S.A. / TS.
         legalRepresentatives:
           type: array
           items:
@@ -927,80 +882,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/LegalRepresentative"
-          description: Sócios da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
-          nullable: true
-      additionalProperties: false
-    
-    LegalRepresentativeOwner:
-      type: object
-      properties:
-        documentNumber:
-          description: Número do documento CPF do cliente.
-          type: string
-        registerName:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
-        birthDate:
-          maxLength: 10
-          minLength: 10
-          type: string
-          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
-          format: date-time
-        phone:
-          description: Telefone de contato do representante legal da empresa.
-          $ref: "#/components/schemas/PhoneLegalRepresentativeOwner"
-        address:
-          description: Endereço do representante legal da empresa.
-          $ref: "#/components/schemas/AddressLegalRepresentativeOwner"
-        motherName:
-          type: string
-          description: Nome da mãe do representante legal conforme consta no documento de identificação.
-          nullable: true
-        email:
-          maxLength: 256
-          minLength: 1
-          type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
-          format: email
-        occupation:
-          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
-          $ref: "#/components/schemas/Occupation"
-        isPoliticallyExposedPerson:
-          type: boolean
-          description: Pessoa exposta politicamente. <b>Obsoleto</b>. Considere o campo <code>pep</code>.
-        pep:
-          $ref: "#/components/schemas/PepLegalRepresentativeOwner"
-        participationPercentage:
-          type: string
-          description: Percentual de participação (0 a 100). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        socialName:
-          type: string
-          description: Nome pelo qual a pessoa gostaria de ser chamada. Para saber mais, consulte a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf)
-          nullable: true
-        tradingName:
-          type: string
-          description: Nome fantasia da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessName:
-          type: string
-          description: Razão social da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
-          nullable: true
-        businessType:
-          $ref: "#/components/schemas/BusinessType"
-          description: Somente para clientes do tipo LTDA / S.A. / TS.
-        legalRepresentatives:
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentativeOwner"
-          description: Representantes legais da empresa (apenas para sócio <b>pessoa jurídica</b>). Campo retornado somente para clientes do tipo LTDA / S.A. / TS.
-          nullable: true
-        owners:
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentativeOwner"
           description: Sócios da empresa. Apenas para sócio pessoa jurídica do tipo LTDA / S.A. / TS.
           nullable: true
       additionalProperties: false
@@ -1454,6 +1335,12 @@ components:
         - participationPercentage
         - phone
         - address
+        - pep
+        - occupation
+        - declaredIncome
+        - declaredAnnualBilling
+        - businessName
+        - businessType
       properties:
         documentNumber:
           type: string
@@ -1500,6 +1387,7 @@ components:
           type: number
           description: Renda declarada. **Obsoleto**. Utilize o campo <code>declaredIncome</code> para pessoa física ou <code>declaredAnnualBilling</code> para pessoa jurídica.
         declaredIncome:
+          description: <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           $ref: "#/components/schemas/DeclaredIncome"
         tradingName:
           type: string
@@ -1507,16 +1395,16 @@ components:
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa. Apenas para sócio <b>pessoa jurídica</b>.
+          description: Razão social da empresa. ApenObrigatótio apenas  para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessType:
-          description: Tipo da empresa. Apenas para sócio <b>pessoa jurídica</b>.
+          description: Tipo da empresa. Obrigatótio apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/BusinessType"
         legalRepresentatives:
           type: array
           items:
-            $ref: "#/components/schemas/LegalRepresentativeOwner"
-          description: Representantes legais da empresa. Apenas para sócio <b>pessoa jurídica</b>.
+            $ref: "#/components/schemas/LegalRepresentative"
+          description: Representantes legais da empresa. Apenas para sócio <b>pessoa jurídica</b>. O envio desse objeto é opcional. Porém, caso seja enviado, deve-se observar a obrigatoriedade de suas propriedades.
           nullable: true
         owners:
           type: array
@@ -1525,7 +1413,7 @@ components:
           description: Sócios da empresa. Apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         declaredAnnualBilling:
-          description: Faixa de faturamento anual da empresa.Apenas para sócio <b>pessoa jurídica</b>.
+          description: Faixa de faturamento anual da empresa. Obrigatório apenas para sócio <b>pessoa jurídica</b>.
           $ref: "#/components/schemas/DeclaredAnnualBiling"
       additionalProperties: false
     
@@ -1534,18 +1422,6 @@ components:
       description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       required:
         - level
-      properties:
-        level:
-          type: string
-          description: Nível de exposição política do cliente.
-          enum:
-            - NONE
-            - SELF
-            - RELATED
-    
-    PepLegalRepresentativeOwner:
-      type: object
-      description: Objeto onde deve ser informado o nível de exposição política do cliente, atendendo à Circular nº 3.978.
       properties:
         level:
           type: string
@@ -1574,21 +1450,6 @@ components:
       required:
         - countryCode
         - number
-      type: object
-      properties:
-        countryCode:
-          minLength: 1
-          type: string
-          description:
-            Código DDI do país. Por enquanto é permitido apenas 55 ou +55
-            (Brasil).
-        number:
-          minLength: 1
-          type: string
-          description: Número de telefone incluindo DDD.
-      additionalProperties: false
-    
-    PhoneLegalRepresentativeOwner:
       type: object
       properties:
         countryCode:
@@ -1744,43 +1605,6 @@ components:
           $ref: "#/components/schemas/LegalRepresentativeRequest"
       additionalProperties: false
     
-    SendedDocumentationRequest:
-      type: object
-      required:
-        - "selfie"
-        - "idCardFront"
-        - "idCardBack"
-      description: Objeto onde devem ser informadas as referências dos documentos enviados para análise.
-      properties:
-        selfie:
-          $ref: "#/components/schemas/DocumentToken"
-        idCardFront:
-          $ref: "#/components/schemas/DocumentToken"
-        idCardBack:
-          $ref: "#/components/schemas/DocumentToken"
-
-    SendedDocumentationResponse:
-      type: object
-      description: Objeto que contém as informações referentes aos documentos enviados para análise.
-      properties:
-        selfie:
-          $ref: "#/components/schemas/DocumentToken"
-        idCardFront:
-          $ref: "#/components/schemas/DocumentToken"
-        idCardBack:
-          $ref: "#/components/schemas/DocumentToken"
-
-    Status:
-      type: string
-      description: Status da análise KYC realizada no registro do cliente.
-      enum:
-        - PENDING_APPROVAL
-        - APPROVED
-        - REPROVED
-        - REVOKED
-        - CANCELED
-        - BLACKLISTED
-
     RegisterCorporationBusinessRequest:
       required:
         - businessType
@@ -1832,12 +1656,6 @@ components:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         phone:
           $ref: "#/components/schemas/Phone"
-        legalRepresentatives:
-          type: array
-          items:
-            $ref: "#/components/schemas/LegalRepresentativePerson"
-          description: Representantes legais da empresa.
-          nullable: true
         businessEmail:
           type: string
           description: E-mail comercial da empresa.
@@ -1846,7 +1664,13 @@ components:
         businessAddress:
           $ref: "#/components/schemas/Address"
         documentation:
-          $ref: "#/components/schemas/Documentation"
+          $ref: "#/components/schemas/Documentation"        
+        legalRepresentatives:
+          type: array
+          items:
+            $ref: "#/components/schemas/LegalRepresentativePerson"
+          description: Representantes legais da empresa.
+          nullable: true
         owners:
           type: array
           items:
@@ -1855,6 +1679,43 @@ components:
           nullable: true
       additionalProperties: false
     
+    SendedDocumentationRequest:
+      type: object
+      required:
+        - "selfie"
+        - "idCardFront"
+        - "idCardBack"
+      description: Objeto onde devem ser informadas as referências dos documentos enviados para análise.
+      properties:
+        selfie:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardFront:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardBack:
+          $ref: "#/components/schemas/DocumentToken"
+
+    SendedDocumentationResponse:
+      type: object
+      description: Objeto que contém as informações referentes aos documentos enviados para análise.
+      properties:
+        selfie:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardFront:
+          $ref: "#/components/schemas/DocumentToken"
+        idCardBack:
+          $ref: "#/components/schemas/DocumentToken"
+
+    Status:
+      type: string
+      description: Status da análise KYC realizada no registro do cliente.
+      enum:
+        - PENDING_APPROVAL
+        - APPROVED
+        - REPROVED
+        - REVOKED
+        - CANCELED
+        - BLACKLISTED
+ 
     UpdateCustomerRequest:
       type: object
       properties:
