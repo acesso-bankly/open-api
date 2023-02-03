@@ -1612,7 +1612,7 @@ components:
         - cnaeCode
         - legalNature
         - openingDate
-        - declaredAnnualBililng
+        - declaredAnnualBilling
         - phone
         - legalRepresentatives
         - businessName
@@ -1650,9 +1650,9 @@ components:
           format: date-time
         annualBilling:
           type: number
-          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBililng</code>.
+          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBilling</code>.
           format: double
-        declaredAnnualBililng:
+        declaredAnnualBilling:
           $ref: "#/components/schemas/DeclaredAnnualBiling"
         phone:
           $ref: "#/components/schemas/Phone"
