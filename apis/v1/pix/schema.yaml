@@ -1013,11 +1013,14 @@ paths:
       responses:
         '200':
           description: Recurso criado com sucesso.
-          headers:
-            x-bkly-correlation-id:
-              description: Id correlação da operação requisitada.
+          content:
+            application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  encodedValue:
+                    description: QR Code codificado em base64.
+                    type: string
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
       security:
