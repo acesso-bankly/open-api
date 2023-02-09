@@ -24,7 +24,7 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: '#/components/parameters/Market'
@@ -79,7 +79,7 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: '#/components/parameters/Market'
@@ -128,7 +128,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
@@ -182,7 +182,7 @@ paths:
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
@@ -239,6 +239,19 @@ components:
       type: http
   
   parameters:
+    BanklyVersion:
+      name: bankly-version
+      in: header
+      description: |
+        Data em que ocorreu a alteração no contrato.
+        _Neste caso, insira **2023-01-30**._
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: "2023-01-30"
+    
     Market:
       name: market
       required: true
