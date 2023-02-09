@@ -250,7 +250,7 @@ components:
       explode: false
       schema:
         type: string
-        default: 2023-01-30
+        default: "2023-01-30"
     
     Market:
       name: market
