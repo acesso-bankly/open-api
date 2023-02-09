@@ -22,19 +22,6 @@ components:
       schema:
         type: string
         default: 1
-      
-    BanklyVersion:
-      name: bankly-version
-      in: header
-      description: |
-        Versão da API.
-        _Utilize este endpoint na **versão 2.0**._
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-        default: 2
 
     ApiVersion2:
       name: api-version
