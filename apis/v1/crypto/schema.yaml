@@ -250,7 +250,6 @@ components:
       explode: false
       schema:
         type: string
-        format: date-time
         default: 2023-01-30
     
     Market:
