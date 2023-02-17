@@ -257,7 +257,7 @@ components:
       required: true
       in: query
       schema:
-        description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+        description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
         enum:
           - BTC:BRL
         type: string
@@ -265,14 +265,14 @@ components:
     Type:
       name: type
       in: query
-      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e a primeira letra do valor deve ser informado em letra maiúscula.
+      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e a primeira letra do valor deve ser minúscula.
       required: true
       schema: 
         enum:
-          - Daily
-          - Weekly
-          - Monthly
-          - Annually
+          - daily
+          - weekly
+          - monthly
+          - annually
         type: string
   
   schemas:
@@ -288,7 +288,7 @@ components:
             - SELL
         market:
           type: string
-          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         amount:
@@ -368,7 +368,7 @@ components:
             - SELL
         market:
           type: string
-          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         account:
@@ -541,7 +541,7 @@ components:
             - SELL
         market:
           type: string
-          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         status:
@@ -596,7 +596,7 @@ components:
       type: object
       properties:
         market:
-          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
           type: string
@@ -641,7 +641,7 @@ components:
       properties:
         market:
           type: string
-          description: O mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
         points:
