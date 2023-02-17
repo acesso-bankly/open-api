@@ -200,7 +200,7 @@ paths:
             schema:
               $ref: "#/components/schemas/OrderExecutionBodyDto"
       responses: 
-        "200":
+        "201":
           description: Execução de ordem de compra e venda realizada com sucesso.
           content:
             application/json:
