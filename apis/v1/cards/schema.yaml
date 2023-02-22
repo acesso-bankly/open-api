@@ -2572,7 +2572,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número do documento do cliente (CPF ou CNPJ).
+          description: Número do documento do cliente (CPF || CNPJ).
           schema:
             type: string
         - name: contract
