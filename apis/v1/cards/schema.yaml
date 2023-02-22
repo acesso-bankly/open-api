@@ -3452,7 +3452,13 @@ components:
         - ContactlessMagneticStripe
         - ContactlessInput
         - Visa
-        
+    
+    creditEvaluationStatus:
+      type: string
+      enum:
+        - Approved
+        - Reproved
+
     getContractCreditResponse:
       type: object
       properties:
@@ -3523,12 +3529,18 @@ components:
           properties:
             status:
               type: integer
+              description: Situação da avaliação de crédito.
+              $ref: "#/components/schemas/creditEvaluationStatus"
             evaluatedAt:
               type: string
+              format: date-time
+              description: Data em que ocorreu a avaliação.
             reasonRefusal:
               type: string
+              description: Motivo de reprovação.
             policy:
               type: string
+              description: Política utilizada na avaliação.
         acceptanceTerm:
           $ref: "#/components/schemas/acceptanceTerm"
         acceptanceTermHistory:
