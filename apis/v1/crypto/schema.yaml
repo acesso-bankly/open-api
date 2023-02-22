@@ -467,13 +467,9 @@ components:
         currency:
           description: Código da moeda com base na ISO-4217.
           type: string
-        priority:
-          description: Booleano que indica se a cobrança ao parceiro será realizada na liquidação ou após.
-          type: boolean
       required:
         - value
         - currency
-        - priority
 
     FeeValueObject:
       type: object
@@ -484,9 +480,6 @@ components:
         currency:
           description: Código da moeda com base na ISO-4217.
           type: string
-        priority:
-          description: Booleano que indica se a cobrança ao parceiro será realizada na liquidação ou após.
-          type: boolean
 
     DataOrderExecutionDto:
       type: object
