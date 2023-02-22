@@ -265,7 +265,7 @@ components:
     Type:
       name: type
       in: query
-      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e a primeira letra do valor deve ser minúscula.
+      description: Informe o período que deseja exibir. Esse campo é <i>case sensitive</i> e a primeira letra do valor deve ser <b>minúscula</b>.
       required: true
       schema: 
         enum:
