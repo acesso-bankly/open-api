@@ -2572,7 +2572,7 @@ paths:
         - name: documentNumber
           in: path
           required: true
-          description: Número do documento do cliente (CPF || CNPJ).
+          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
         - name: contract
@@ -3895,7 +3895,40 @@ components:
           description: O solicitante do chamado de reanálise.
           $ref: "#/components/schemas/CreditReanalyzeOriginType"
       additionalProperties: false
-
+    AcceptCreditLimitIncreaseDto:
+      type: object
+      required:
+        - authorization
+        - idState
+        - token
+        - terms
+        - trace
+        - userInfo
+      properties:
+        authorization:
+          type: string
+          description: Token que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
+          nullable: true
+        idState:
+          type: string
+          description: Identificador da contratação.
+          nullable: true
+        token:
+          type: string
+          description: Token de SMS ou Token de email que confirma a identidade do usuário que assinou o aceite.
+          nullable: true
+        terms:
+          type: string
+          description: Texto do contrato que foi aceito pelo cliente. Pode-se remover as quebras de linha e enviar o texto corrido do aceite.
+          nullable: true
+        trace:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TraceDto"
+          nullable: true
+        userInfo:
+          "$ref": "#/components/schemas/UserInfoDto"
+      additionalProperties: false
     TraceDto:
       type: object
       required:
@@ -3941,36 +3974,6 @@ components:
           type: string
           description: Número de telefone do cliente, com DDD.
           nullable: true
-      additionalProperties: false
-    AcceptCreditLimitIncreaseDto:
-      type: object
-      required:
-        - authorization
-        - idState
-        - token
-        - terms
-        - trace
-        - userInfo
-      properties:
-        authorization:
-          type: string
-          nullable: true
-        idState:
-          type: string
-          nullable: true
-        token:
-          type: string
-          nullable: true
-        terms:
-          type: string
-          nullable: true
-        trace:
-          type: array
-          items:
-            "$ref": "#/components/schemas/TraceDto"
-          nullable: true
-        userInfo:
-          "$ref": "#/components/schemas/UserInfoDto"
       additionalProperties: false
 x-readme:
   explorer-enabled: true
