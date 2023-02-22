@@ -63,9 +63,6 @@ jobs:
     if: ${{ success() && (github.event_name == 'pull_request' || github.ref == 'refs/heads/main') }}
     needs: validate
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
     steps:
       - uses: actions/checkout@v2 
 
@@ -88,97 +85,81 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/holders/schema.yaml' --id=${{ secrets.HOLDERS_API_README_ID_KEY_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Accounts API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Auth API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/totp/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Pix API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish TED API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
-        with:
-          node-version: ${{ matrix.node-version }} 
+        with: 
           rdme: openapi './apis/v1/limits/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io
-        with:
-          node-version: ${{ matrix.node-version }} 
+        with: 
           rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/boletos/schema.yaml' --id=${{ secrets.BOLETO_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Helpers API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/helpers/schema.yaml' --id=${{ secrets.HELPER_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Pay Bill API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
         
       - uses: readmeio/rdme@7.0.3
         name: Publish Fee Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/fee/schema.yaml' --id=${{ secrets.FEE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Card Transactions to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Crypto to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Invoice to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
   deployProd:
     name: "Deploy / Prod"
@@ -186,9 +167,6 @@ jobs:
     needs: [validate, deployDev]
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
     steps:
       - uses: actions/checkout@v2  
           
@@ -202,95 +180,79 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Holders API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/holders/schema.yaml' --id=${{ secrets.HOLDERS_API_README_ID_KEY }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Accounts API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/accounts/schema.yaml' --id=${{ secrets.ACCOUNTS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Auth API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/totp/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/events/schema.yaml' --id=${{ secrets.WEBHOOKS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Pix API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/pix/schema.yaml' --id=${{ secrets.PIX_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish TED API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/ted/schema.yaml' --id=${{ secrets.TED_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Limits API Reference to readme.io
-        with:
-          node-version: ${{ matrix.node-version }} 
+        with: 
           rdme: openapi './apis/v1/limits/schema.yaml' --id=${{ secrets.LIMITS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Cards API Reference to readme.io
-        with:
-          node-version: ${{ matrix.node-version }} 
+        with: 
           rdme: openapi './apis/v1/cards/schema.yaml' --id=${{ secrets.CARDS_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletos API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/boletos/schema.yaml' --id=${{ secrets.BOLETO_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Helpers API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/helpers/schema.yaml' --id=${{ secrets.HELPER_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Pay Bill API Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/paybill/schema.yaml' --id=${{ secrets.PAYBILL_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Fee Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/fee/schema.yaml' --id=${{ secrets.FEE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Publish Card Transactions to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/cards/transactions/schema.yaml' --id=${{ secrets.CARDS_TRANSACTION_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Crypto to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/crypto/schema.yaml' --id=${{ secrets.CRYPTO_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
       - uses: readmeio/rdme@7.0.3
         name: Invoice to Reference to readme.io
         with:
-          node-version: ${{ matrix.node-version }}
           rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
