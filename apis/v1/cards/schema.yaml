@@ -3260,7 +3260,7 @@ components:
       properties:
         name:
           type: string
-          description: Nome do cliente.
+          description: Nome completo do cliente.
         socialName:
           type: string
           description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
@@ -3269,6 +3269,7 @@ components:
           description: Nome da mãe do cliente.
         birthDate:
           type: string
+          format: date-time
           description: Data de nascimento do cliente.
         programId:
           type: string
@@ -3292,7 +3293,7 @@ components:
           description: E-mail do cliente.
         phone:
           type: object
-          description: Número de telefone do cliente.
+          description: Número de telefone do cliente, com o DDD.
           properties:
             type:
               $ref: "#/components/schemas/phoneType"
@@ -3457,7 +3458,7 @@ components:
       properties:
         name:
           type: string
-          description: Nome do cliente.
+          description: Nome completo do cliente.
         socialName:
           type: string
           description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
@@ -3466,6 +3467,7 @@ components:
           description: Nome da mãe do cliente.
         birthDate:
           type: string
+          format: date-time
           description: Data de nascimento do cliente.
         programId:
           type: string
@@ -3506,7 +3508,7 @@ components:
           $ref: "#/components/schemas/address"
         phone:
           type: object
-          description: Número de telefone do cliente.
+          description: Número de telefone do cliente, com DDD.
           properties:
             type:
               $ref: "#/components/schemas/phoneType"
@@ -3896,6 +3898,9 @@ components:
 
     TraceDto:
       type: object
+      required:
+        - state
+        - date
       properties:
         state:
           type: string
@@ -3903,15 +3908,22 @@ components:
           nullable: true
         date:
           type: string
-          description: Data do aceite, no formato YYYY-MM-DDTHH:mm:SS.MMMZ.
+          format: date-time
+          description: Data do aceite.
           nullable: true
       additionalProperties: false
     UserInfoDto:
       type: object
+      required:
+        - address
+        - customerId
+        - mail
+        - name
+        - phone
       properties:
         address:
           type: string
-          description: Endereço completo do cliente. Informe o bairro, número, cidade e estado.
+          description: Endereço completo do cliente.
           nullable: true
         customerId:
           type: string
@@ -3923,15 +3935,22 @@ components:
           nullable: true
         name:
           type: string
-          description: Nome do cliente como consta no documento.
+          description: Nome completo do cliente
           nullable: true
         phone:
           type: string
-          description: Número de telefone do cliente.
+          description: Número de telefone do cliente, com DDD.
           nullable: true
       additionalProperties: false
     AcceptCreditLimitIncreaseDto:
       type: object
+      required:
+        - authorization
+        - idState
+        - token
+        - terms
+        - trace
+        - userInfo
       properties:
         authorization:
           type: string
