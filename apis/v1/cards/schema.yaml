@@ -2474,7 +2474,7 @@ paths:
               $ref: "#/components/schemas/acceptanceContractRequest"
       responses:
         '202':
-          description: O contrato de crédito foi aceito.
+          description: O aceite da proposta do contrato de crédito foi enviado com sucesso.
         '401':
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '500':
@@ -2837,58 +2837,58 @@ components:
               description: Quantidade de dias, a partir do dia de vencimento, até o fechamento da fatura.
             futureCalendarMonths:
               type: integer
-              description: É a quantidade de fatura pré cadastradas na base na criação da conta.
+              description: É o número de faturas pré-cadastradas na base de criação da conta.
             daysAccountLockDelay:
               type: integer
-              description: aaa
+              description: Quantidade de dias após o atraso no pagamento da fatura em que será realizado o bloqueio do cartão.
             accrualStop:
               type: integer
-              description: aaa
+              description: Quantidade de dias, após o atraso no pagamento da fatura, para que o cliente entre em negociação de dívida.
             delayInvoiceRate:
               type: number
-              description: aaa
+              description: Valor cobrado pelo atraso do pagamento da fatura (além dos juros).
             rotatingRate:
               type: number
-              description: aaa
+              description: Taxa de juros cobrada para faturas não pagas ou pagas parcialmente.
             minimumValueOfRefinanceInstallment:
               type: number
-              description: aaa
+              description: Valor mínimo de parcela para faturas que terão o pagamento parcelado.
             invoiceRefinanceRate:
               type: number
-              description: aaa
+              description: Valor cobrado pelo parcelamento do pagamento da fatura (além dos juros).
             maximumNumberInstallmentsRefinance:
               type: integer
-              description: aaa
+              description: Número máximo de parcelas para pagamento parcelado da fatura.
             annualValue:
               type: number
-              description: aaa
+              description: Valor cobrado anualmente para que o cliente tenha o cartão ativo.
             annuityInstallments:
               type: integer
-              description: aaa
+              description: Número máximo de parcelas no qual o valor da anuidade pode ser dividido.
             iofFirstDay:
               type: boolean
-              description: aaa
+              description: Indica se o cálculo de IOF será feito no primeiro dia do mês ou na data de corte da fatura.
             minimumAmountInstallmentAgreementInvoice:
               type: number
-              description: aaa
+              description: Valor mínimo referente ao pagamento da fatura após o início da fase de negociação.
             minimumEntryInvoiceAgreement:
               type: number
-              description: aaa
+              description: Valor mínimo referente ao pagamento da fatura no início da fase de negociação.
             maximumEntryInvoiceAgreement:
               type: number
-              description: aaa
+              description: Valor máximo referente ao pagamento da fatura no início da fase de negociação.
             minimumPercentageInvoiceAgreement:
               type: number
-              description: aaa
+              description: Taxa mínima referente ao pagamento da fatura no início da fase de negociação.
             maximumEntryAgreementInvoicePercentage:
               type: number
-              description: aaa
+              description: Taxa máxima referente ao pagamento da fatura no início da fase de negociação.
             deadlineInDaysForNewAnalysisRequest:
               type: integer
-              description: aaa
+              description: Quantidade de dias em que o cliente pode solicitar uma nova avaliação, após a reprovação do crédito.
             deadlineInDaysForExpirationOfAnalysis:
               type: integer
-              description: aaa
+              description: Quantidade de dias em que o cliente pode solicitar uma nova avaliação, após a aprovação do crédito.
         dataHash:
           type: string
           description: Termos e condições aceitos pelo cliente.
