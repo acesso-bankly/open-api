@@ -2825,13 +2825,13 @@ components:
           properties:
             diaryIof:
               type: number
-              description: Imposto sobre operações financeiras.
+              description: Valor diário do Imposto sobre Operações Financeiras (IOF).
             fixedIof:
               type: number
-              description: Imposto sobre operações financeiras.
+              description: Valor fixo do Imposto sobre Operações Financeiras (IOF).
             internationalIof:
               type: number
-              description: Imposto sobre operações financeiras.
+              description: Valor internacional do Imposto sobre Operações Financeiras (IOF).
             daysAdvanceCut:
               type: integer
               description: Quantidade de dias, a partir do dia de vencimento, até o fechamento da fatura.
@@ -3597,7 +3597,7 @@ components:
           type: object
           properties:
             status:
-              type: integer
+              type: string
               description: Situação da avaliação de crédito.
               $ref: "#/components/schemas/creditEvaluationStatus"
             evaluatedAt:
