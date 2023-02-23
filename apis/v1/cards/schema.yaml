@@ -2437,7 +2437,7 @@ paths:
               $ref: "#/components/schemas/createCustomerRequest"
       responses:
         "202":
-          description: A solicitação foi aceita e a análise de crédito foi concluída.
+          description: A solicitação foi aceita e a análise de crédito foi criada.
           content:
             application/json:
               schema:
@@ -2825,48 +2825,70 @@ components:
           properties:
             diaryIof:
               type: number
+              description: Imposto sobre operações financeiras.
             fixedIof:
               type: number
+              description: Imposto sobre operações financeiras.
             internationalIof:
               type: number
+              description: Imposto sobre operações financeiras.
             daysAdvanceCut:
               type: integer
+              description: Quantidade de dias, a partir do dia de vencimento, até o fechamento da fatura.
             futureCalendarMonths:
               type: integer
+              description: É a quantidade de fatura pré cadastradas na base na criação da conta.
             daysAccountLockDelay:
               type: integer
+              description: aaa
             accrualStop:
               type: integer
+              description: aaa
             delayInvoiceRate:
               type: number
+              description: aaa
             rotatingRate:
               type: number
+              description: aaa
             minimumValueOfRefinanceInstallment:
               type: number
+              description: aaa
             invoiceRefinanceRate:
               type: number
+              description: aaa
             maximumNumberInstallmentsRefinance:
               type: integer
+              description: aaa
             annualValue:
               type: number
+              description: aaa
             annuityInstallments:
               type: integer
+              description: aaa
             iofFirstDay:
               type: boolean
+              description: aaa
             minimumAmountInstallmentAgreementInvoice:
               type: number
+              description: aaa
             minimumEntryInvoiceAgreement:
               type: number
+              description: aaa
             maximumEntryInvoiceAgreement:
               type: number
+              description: aaa
             minimumPercentageInvoiceAgreement:
               type: number
+              description: aaa
             maximumEntryAgreementInvoicePercentage:
               type: number
+              description: aaa
             deadlineInDaysForNewAnalysisRequest:
               type: integer
+              description: aaa
             deadlineInDaysForExpirationOfAnalysis:
               type: integer
+              description: aaa
         dataHash:
           type: string
           description: Termos e condições aceitos pelo cliente.
@@ -2884,6 +2906,41 @@ components:
         - activateCode
         - password
     
+    addressRequest:
+      type: object
+      description: Endereço do cliente.
+      required:
+        - zipCode
+        - addressLine
+        - neighborhood
+        - city
+        - state
+        - country
+      properties:
+        zipCode:
+          type: string
+          description: CEP de endereço.
+        addressLine:
+          type: string
+        buildingNumber:
+          type: string
+          description: Número do endereço.
+        complement:
+          type: string
+          description: Complemento do endereço.
+        neighborhood:
+          type: string
+          description: Bairro do endereço.
+        city:
+          type: string
+          description: Cidade do endereço.
+        state:
+          type: string
+          description: Estado do endereço.
+        country:
+          type: string
+          description: País do endereço.
+
     address:
       type: object
       description: Endereço do cliente.
@@ -3308,7 +3365,7 @@ components:
             - value
             - countryCode
         address:
-          $ref: "#/components/schemas/address"
+          $ref: "#/components/schemas/addressRequest"
       required:
         - programId
         - documentNumber
@@ -3459,6 +3516,17 @@ components:
         - Approved
         - Reproved
 
+    creditContractStatus:
+      type: string
+      enum:
+        - Pending
+        - Approved
+        - Reproved
+        - Canceled
+        - Expired
+        - Signed
+        - Blocked
+
     getContractCreditResponse:
       type: object
       properties:
@@ -3488,8 +3556,9 @@ components:
           type: string
           description: Proxy do cartão.
         status:
-          type: integer
-          description: Status do contrato de crédito.
+          type: string
+          description: Situação do contrato de crédito.
+          $ref: "#/components/schemas/creditContractStatus"
         contract:
           type: string
           description: Número do contrato de crédito.
