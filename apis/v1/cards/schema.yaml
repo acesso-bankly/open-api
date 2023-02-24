@@ -3570,7 +3570,7 @@ components:
           $ref: "#/components/schemas/incomeBracket"
         incomeBracketRange:
           type: number
-          description: Renda salarial do cliente.
+          description: Valor intermediário da faixa salarial do cliente.
         expirationDate:
           type: string
           description: Data de expiração da proposta de crédito.
@@ -3628,7 +3628,7 @@ components:
     
     incomeBracket:
       type: string
-      description: Renda salarial do cliente.
+      description: Faixa salarial do cliente.
       enum:
         - LessThousand
         - FromThousandToTwoThousand
