@@ -3992,7 +3992,7 @@ components:
           nullable: true
         idState:
           type: string
-          description: Identificador da contratação.
+          description: Identificador do contrato.
           nullable: true
         token:
           type: string
@@ -4004,11 +4004,12 @@ components:
           nullable: true
         trace:
           type: array
+          description: Objeto que contém os dados de rastreio do usuário solicitante.
           items:
-            "$ref": "#/components/schemas/TraceDto"
+            $ref: "#/components/schemas/TraceDto"
           nullable: true
         userInfo:
-          "$ref": "#/components/schemas/UserInfoDto"
+          $ref: "#/components/schemas/UserInfoDto"
       additionalProperties: false
     TraceDto:
       type: object
@@ -4028,6 +4029,7 @@ components:
       additionalProperties: false
     UserInfoDto:
       type: object
+      description: Objeto que contém os dados do usuário no momento em que solicitou o crédito.
       required:
         - address
         - customerId
