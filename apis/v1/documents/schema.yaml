@@ -270,9 +270,9 @@ components:
         documentSide:
           $ref: '#/components/schemas/DocumentSide'
         provider: 
-           $ref: '#/components/schemas/Provider'
+          $ref: '#/components/schemas/Provider'
         providerMetadata:
-           $ref: '#/components/schemas/ProviderMetadata'         
+          $ref: '#/components/schemas/ProviderMetadata'
         image:
           type: string
           description: Arquivo da imagem no formato .jpeg, .jpg ou .png. 
@@ -549,6 +549,7 @@ components:
     ProviderMetadata:
       description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
       type: object
+      format: string
       properties:
         isLastDocument:
           type: boolean
