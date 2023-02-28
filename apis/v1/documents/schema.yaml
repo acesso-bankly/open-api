@@ -179,7 +179,7 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                style: spaceDelimited
+                style: deepObject
                 explode: false
               image:
                 style: form
