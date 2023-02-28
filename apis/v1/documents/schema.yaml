@@ -179,7 +179,7 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                contentType: text/plain
+                contentType: application/json
               image:
                 style: form
       responses:
