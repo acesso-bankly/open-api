@@ -2068,7 +2068,7 @@ paths:
           description: O valor máximo permitido é de 100.
           required: false
           schema:
-            type: integer
+            type: string
         - name: startDate
           in: query
           required: true
