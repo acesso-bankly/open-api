@@ -179,22 +179,7 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                style: form
-                explode: false
-              image:
-                style: form
-          application/json:
-            schema:
-              $ref: "#/components/schemas/DeepfaceDocumentAnalysis"
-            encoding:
-              documentType:
-                style: form
-              documentSide:
-                style: form
-              provider:
-                style: form
-              providerMetadata:
-                style: form
+                style: deepObject
                 explode: false
               image:
                 style: form
