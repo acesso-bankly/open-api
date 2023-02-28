@@ -3353,6 +3353,7 @@ components:
           $ref: "#/components/schemas/sex"
         email:
           type: string
+          format: email
           description: E-mail do cliente.
         phone:
           type: object
@@ -3584,6 +3585,7 @@ components:
           $ref: "#/components/schemas/sex"
         email:
           type: string
+          format: email
           description: E-mail do cliente.
         address:
           $ref: "#/components/schemas/address"
@@ -4053,6 +4055,7 @@ components:
           nullable: true
         mail:
           type: string
+          format: email
           description: E-mail do cliente.
           nullable: true
         name:
