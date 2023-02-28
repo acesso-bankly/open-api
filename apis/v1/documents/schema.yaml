@@ -179,8 +179,8 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                style: deepObject
-                explode: true
+                style: form
+                explode: false
               image:
                 style: form
       responses:
