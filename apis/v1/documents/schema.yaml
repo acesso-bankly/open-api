@@ -179,8 +179,7 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                contentType: object
-                style: form
+                style: pipeDelimited
                 explode: false
               image:
                 style: form
