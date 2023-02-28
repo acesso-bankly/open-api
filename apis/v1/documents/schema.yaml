@@ -171,6 +171,17 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/DeepfaceDocumentAnalysis"
+            encoding:
+              documentType:
+                style: form
+              documentSide:
+                style: form
+              provider:
+                style: form
+              providerMetadata:
+                style: deepObject
+              image:
+                style: form
       responses:
         '202':
           $ref: 'http://localhost:3320/commons/components#/components/responses/202'
@@ -277,6 +288,7 @@ components:
           type: string
           description: Arquivo da imagem no formato .jpeg, .jpg ou .png. 
           format: binary
+          nullable: true
       required:
         - documentType
         - documentSide
@@ -549,7 +561,6 @@ components:
     ProviderMetadata:
       description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
       type: object
-      format: string
       properties:
         isLastDocument:
           type: boolean

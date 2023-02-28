@@ -4025,7 +4025,7 @@ components:
       properties:
         state:
           type: string
-          description: Estado do aceite.
+          description: Log de navegação do cliente nas telas do frontend, desde o login até a tela de aceite.
           nullable: true
         date:
           type: string
