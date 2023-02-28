@@ -180,7 +180,7 @@ paths:
                 style: form
               providerMetadata:
                 style: deepObject
-                explode: false
+                explode: true
               image:
                 style: form
       responses:
