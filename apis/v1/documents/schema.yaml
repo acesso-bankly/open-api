@@ -180,6 +180,8 @@ paths:
                 style: form
               providerMetadata:
                 contentType: application/json
+                style: form
+                explode: false
               image:
                 style: form
       responses:
