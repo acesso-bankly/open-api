@@ -179,8 +179,7 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                style: form
-                explode: false
+                contentType: text/plain
               image:
                 style: form
       responses:
@@ -561,7 +560,6 @@ components:
 
     ProviderMetadata:
       description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
-      format: string
       type: object
       properties:
         isLastDocument:
