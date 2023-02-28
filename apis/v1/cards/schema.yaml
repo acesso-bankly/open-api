@@ -1786,6 +1786,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "É possível cancelar um cartão por meio da alteração do seu status."
+        }
+        [/block]
       operationId: cardChangeCardStatus
       parameters:
         - name: proxy
