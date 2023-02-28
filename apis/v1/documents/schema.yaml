@@ -179,7 +179,8 @@ paths:
               provider:
                 style: form
               providerMetadata:
-                contentType: application/json
+                style: deepObject
+                explode: true
               image:
                 style: form
       responses:
