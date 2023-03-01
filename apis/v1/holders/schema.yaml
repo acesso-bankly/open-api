@@ -712,6 +712,27 @@ components:
           format: date-time
       additionalProperties: false
     
+    DeclaredAnnualBillingRequest:
+      type: string
+      description: Faixa de faturamento anual da empresa.
+      enum:
+        - UP_TO_FIFTY_THOUSAND
+        - MORE_THAN_FIFTY_THOUSAND_UP_TO_ONE_HUNDRED_THOUSAND
+        - MORE_THAN_ONE_HUNDRED_THOUSAND_UP_TO_TWO_HUNDRED_AND_FIFTY_THOUSAND
+        - MORE_THAN_TWO_HUNDRED_AND_FIFTY_THOUSAND_UP_TO_FIVE_HUNDRED_THOUSAND
+        - MORE_THAN_FIVE_HUNDRED_THOUSAND_UP_TO_ONE_MILLION
+        - MORE_THAN_ONE_MILLION_UP_TO_TWO_MILLION_AND_FIVE_HUNDRED_THOUSAND
+        - MORE_THAN_TWO_MILLION_AND_FIVE_HUNDRED_THOUSAND_UP_TO_FIVE_MILLION
+        - MORE_THAN_FIVE_MILLION_UP_TO_TEN_MILLION
+        - MORE_THAN_TEN_MILLION_UP_TO_TWENTY_FIVE_MILLION
+        - MORE_THAN_TWENTY_FIVE_MILLION_UP_TO_FIFTY_MILLION
+        - MORE_THAN_FIFTY_MILLION_UP_TO_ONE_HUNDRED_MILLION
+        - MORE_THAN_ONE_HUNDRED_MILLION_UP_TO_TWO_HUNDRED_AND_FIFTY_MILLION
+        - MORE_THAN_TWO_HUNDRED_AND_FIFTY_MILLION_UP_TO_FIVE_HUNDRED_MILLION
+        - MORE_THAN_FIVE_HUNDRED_MILLION
+        - EXEMPT_COMPANY
+        - INACTIVE_COMPANY
+
     DeclaredAnnualBilling:
       type: string
       description: Faixa de faturamento anual da empresa.
@@ -730,8 +751,8 @@ components:
         - MORE_THAN_ONE_HUNDRED_MILLION_UP_TO_TWO_HUNDRED_AND_FIFTY_MILLION
         - MORE_THAN_TWO_HUNDRED_AND_FIFTY_MILLION_UP_TO_FIVE_HUNDRED_MILLION
         - MORE_THAN_FIVE_HUNDRED_MILLION
-        - NOT_DECLARED
         - EXEMPT_COMPANY
+        - NOT_DECLARED
         - INACTIVE_COMPANY
 
     DeclaredIncome:
@@ -1396,7 +1417,7 @@ components:
           $ref: "#/components/schemas/BusinessType"
         declaredAnnualBilling:
           description: Faixa de faturamento anual da empresa. Obrigatório apenas para sócio <b>pessoa jurídica</b>.
-          $ref: "#/components/schemas/DeclaredAnnualBilling"
+          $ref: "#/components/schemas/DeclaredAnnualBillingRequest"
         legalRepresentatives:
           type: array
           items:
@@ -1593,7 +1614,7 @@ components:
           description: Endereço da empresa registrado no cartão CNPJ.
           $ref: "#/components/schemas/Address"
         declaredAnnualBilling:
-          $ref: "#/components/schemas/DeclaredAnnualBilling"
+          $ref: "#/components/schemas/DeclaredAnnualBillingRequest"
         legalRepresentative:
           description: Representante legal da empresa.
           $ref: "#/components/schemas/LegalRepresentativeRequest"
@@ -1647,7 +1668,7 @@ components:
           description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBilling</code>.
           format: double
         declaredAnnualBilling:
-          $ref: "#/components/schemas/DeclaredAnnualBilling"
+          $ref: "#/components/schemas/DeclaredAnnualBillingRequest"
         phone:
           $ref: "#/components/schemas/Phone"
         businessEmail:

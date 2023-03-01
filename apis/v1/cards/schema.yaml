@@ -1786,6 +1786,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "É possível cancelar um cartão por meio da alteração do seu status."
+        }
+        [/block]
       operationId: cardChangeCardStatus
       parameters:
         - name: proxy
@@ -2061,7 +2068,7 @@ paths:
           description: O valor máximo permitido é de 100.
           required: false
           schema:
-            type: integer
+            type: string
         - name: startDate
           in: query
           required: true
@@ -2437,7 +2444,7 @@ paths:
               $ref: "#/components/schemas/createCustomerRequest"
       responses:
         "202":
-          description: A solicitação foi aceita e a análise de crédito foi concluída.
+          description: A solicitação foi aceita e a análise de crédito foi criada.
           content:
             application/json:
               schema:
@@ -2452,6 +2459,10 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
 
   /cards/credits/terms-and-conditions/acceptance:
     post:
@@ -2474,9 +2485,11 @@ paths:
               $ref: "#/components/schemas/acceptanceContractRequest"
       responses:
         '202':
-          description: O contrato de crédito foi aceito.
+          description: O aceite da proposta do contrato de crédito foi enviado com sucesso.
         '401':
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
 
@@ -2516,6 +2529,86 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
+  /cards/credits/document/{documentNumber}/contracts/{contract}/reanalyze:
+    put:
+      tags:
+        - Análise de crédito 
+      summary: Reanálise do limite de contrato de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite a reanálise do limite de contrato de crédito do seu cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
+        </div>
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - name: documentNumber
+          in: path
+          required: true
+          description: Número do documento do cliente (CPF ou CNPJ).
+          schema:
+            type: string
+        - name: contract
+          in: path
+          description: Número do contrato de crédito do cliente.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReanalyzeCreditDto"
+      responses:
+        '202':
+          description: A solicitação de reanálise do limite foi criada.
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '406':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+
+  /cards/credits/document/{documentNumber}/contracts/{contract}/acceptance:
+    put:
+      tags:
+        - Análise de crédito 
+      summary: Aceite do novo limite de contrato de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Após o pedido de reanálise ser aprovado, o cliente do parceiro deverá aceitar a nova proposta de limite de contrato de crédito.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
+        </div>
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - name: documentNumber
+          in: path
+          required: true
+          description: Número do documento do cliente (CPF ou CNPJ).
+          schema:
+            type: string
+        - name: contract
+          in: path
+          description: Número do contrato de crédito do cliente.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcceptCreditLimitIncreaseDto"
+      responses:
+        '202':
+          description: O aceite da nova proposta do contrato de crédito foi enviado com sucesso.
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
 
 
 security:
@@ -2747,48 +2840,70 @@ components:
           properties:
             diaryIof:
               type: number
+              description: Valor diário do Imposto sobre Operações Financeiras (IOF).
             fixedIof:
               type: number
+              description: Valor fixo do Imposto sobre Operações Financeiras (IOF).
             internationalIof:
               type: number
+              description: Valor internacional do Imposto sobre Operações Financeiras (IOF).
             daysAdvanceCut:
               type: integer
+              description: Quantidade de dias, a partir do dia de vencimento, até o fechamento da fatura.
             futureCalendarMonths:
               type: integer
+              description: Número de faturas pré-cadastradas na base de criação da conta.
             daysAccountLockDelay:
               type: integer
+              description: Quantidade de dias após o atraso no pagamento da fatura em que será realizado o bloqueio do cartão.
             accrualStop:
               type: integer
+              description: Quantidade de dias, após o atraso no pagamento da fatura, para que o cliente entre em negociação de dívida.
             delayInvoiceRate:
               type: number
+              description: Valor cobrado pelo atraso do pagamento da fatura (além dos juros).
             rotatingRate:
               type: number
+              description: Taxa de juros cobrada para faturas não pagas ou pagas parcialmente.
             minimumValueOfRefinanceInstallment:
               type: number
+              description: Valor mínimo de parcela para faturas que terão o pagamento parcelado.
             invoiceRefinanceRate:
               type: number
+              description: Valor cobrado pelo parcelamento do pagamento da fatura (além dos juros).
             maximumNumberInstallmentsRefinance:
               type: integer
+              description: Número máximo de parcelas para pagamento parcelado da fatura.
             annualValue:
               type: number
+              description: Valor cobrado anualmente para que o cliente tenha o cartão ativo.
             annuityInstallments:
               type: integer
+              description: Número máximo de parcelas no qual o valor da anuidade pode ser dividido.
             iofFirstDay:
               type: boolean
+              description: Indica se o cálculo de IOF será feito no primeiro dia do mês (true) ou na data de corte da fatura (false).
             minimumAmountInstallmentAgreementInvoice:
               type: number
+              description: Valor mínimo referente ao pagamento da fatura após o início da fase de negociação.
             minimumEntryInvoiceAgreement:
               type: number
+              description: Valor mínimo referente ao pagamento da fatura no início da fase de negociação.
             maximumEntryInvoiceAgreement:
               type: number
+              description: Valor máximo referente ao pagamento da fatura no início da fase de negociação.
             minimumPercentageInvoiceAgreement:
               type: number
+              description: Taxa mínima referente ao pagamento da fatura no início da fase de negociação.
             maximumEntryAgreementInvoicePercentage:
               type: number
+              description: Taxa máxima referente ao pagamento da fatura no início da fase de negociação.
             deadlineInDaysForNewAnalysisRequest:
               type: integer
+              description: Quantidade de dias em que o cliente pode solicitar uma nova avaliação, após a reprovação do crédito.
             deadlineInDaysForExpirationOfAnalysis:
               type: integer
+              description: Quantidade de dias em que o cliente pode solicitar uma nova avaliação, após a aprovação do crédito.
         dataHash:
           type: string
           description: Termos e condições aceitos pelo cliente.
@@ -2806,6 +2921,42 @@ components:
         - activateCode
         - password
     
+    addressRequest:
+      type: object
+      description: Endereço do cliente.
+      required:
+        - zipCode
+        - addressLine
+        - neighborhood
+        - city
+        - state
+        - country
+      properties:
+        zipCode:
+          type: string
+          description: CEP de endereço.
+        addressLine:
+          type: string
+          description: Logradouro (nome da rua, avenida etc.).
+        buildingNumber:
+          type: string
+          description: Número do endereço.
+        complement:
+          type: string
+          description: Complemento do endereço.
+        neighborhood:
+          type: string
+          description: Bairro do endereço.
+        city:
+          type: string
+          description: Cidade do endereço.
+        state:
+          type: string
+          description: Estado do endereço.
+        country:
+          type: string
+          description: País do endereço.
+
     address:
       type: object
       description: Endereço do cliente.
@@ -3182,7 +3333,7 @@ components:
       properties:
         name:
           type: string
-          description: Nome do cliente.
+          description: Nome completo do cliente.
         socialName:
           type: string
           description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
@@ -3191,6 +3342,7 @@ components:
           description: Nome da mãe do cliente.
         birthDate:
           type: string
+          format: date-time
           description: Data de nascimento do cliente.
         programId:
           type: string
@@ -3211,10 +3363,11 @@ components:
           $ref: "#/components/schemas/sex"
         email:
           type: string
+          format: email
           description: E-mail do cliente.
         phone:
           type: object
-          description: Número de telefone do cliente.
+          description: Número de telefone do cliente, com o DDD.
           properties:
             type:
               $ref: "#/components/schemas/phoneType"
@@ -3229,7 +3382,7 @@ components:
             - value
             - countryCode
         address:
-          $ref: "#/components/schemas/address"
+          $ref: "#/components/schemas/addressRequest"
       required:
         - programId
         - documentNumber
@@ -3373,13 +3526,30 @@ components:
         - ContactlessMagneticStripe
         - ContactlessInput
         - Visa
-        
+    
+    creditEvaluationStatus:
+      type: string
+      enum:
+        - Approved
+        - Reproved
+
+    creditContractStatus:
+      type: string
+      enum:
+        - Pending
+        - Approved
+        - Reproved
+        - Canceled
+        - Expired
+        - Signed
+        - Blocked
+
     getContractCreditResponse:
       type: object
       properties:
         name:
           type: string
-          description: Nome do cliente.
+          description: Nome completo do cliente.
         socialName:
           type: string
           description: Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
@@ -3388,6 +3558,7 @@ components:
           description: Nome da mãe do cliente.
         birthDate:
           type: string
+          format: date-time
           description: Data de nascimento do cliente.
         programId:
           type: string
@@ -3402,8 +3573,9 @@ components:
           type: string
           description: Proxy do cartão.
         status:
-          type: integer
-          description: Status do contrato de crédito.
+          type: string
+          description: Situação do contrato de crédito.
+          $ref: "#/components/schemas/creditContractStatus"
         contract:
           type: string
           description: Número do contrato de crédito.
@@ -3415,7 +3587,7 @@ components:
           $ref: "#/components/schemas/incomeBracket"
         incomeBracketRange:
           type: number
-          description: Renda salarial do cliente.
+          description: Valor intermediário da faixa salarial do cliente.
         expirationDate:
           type: string
           description: Data de expiração da proposta de crédito.
@@ -3423,12 +3595,13 @@ components:
           $ref: "#/components/schemas/sex"
         email:
           type: string
+          format: email
           description: E-mail do cliente.
         address:
           $ref: "#/components/schemas/address"
         phone:
           type: object
-          description: Número de telefone do cliente.
+          description: Número de telefone do cliente, com DDD.
           properties:
             type:
               $ref: "#/components/schemas/phoneType"
@@ -3442,13 +3615,19 @@ components:
           type: object
           properties:
             status:
-              type: integer
+              type: string
+              description: Situação da avaliação de crédito.
+              $ref: "#/components/schemas/creditEvaluationStatus"
             evaluatedAt:
               type: string
+              format: date-time
+              description: Data em que ocorreu a avaliação.
             reasonRefusal:
               type: string
+              description: Motivo de reprovação.
             policy:
               type: string
+              description: Política utilizada na avaliação.
         acceptanceTerm:
           $ref: "#/components/schemas/acceptanceTerm"
         acceptanceTermHistory:
@@ -3467,7 +3646,7 @@ components:
     
     incomeBracket:
       type: string
-      description: Renda salarial do cliente.
+      description: Faixa salarial do cliente.
       enum:
         - LessThousand
         - FromThousandToTwoThousand
@@ -3518,7 +3697,7 @@ components:
                     description: Número da conta na qual o cartão foi transacionado.
                   agency: 
                     type: string
-                    description: Agencia da conta na qual o cartão foi transacionado.
+                    description: Agência da conta na qual o cartão foi transacionado.
               amount:
                 type: object
                 properties:
@@ -3533,10 +3712,10 @@ components:
                     description: Valor líquido da transação.
                   iof: 
                     type: number
-                    description: Valor do imposto de operações financeira.
+                    description: Valor do Imposto de Operações Financeiras.
                   markup: 
                     type: number
-                    description: Tarifa de conversão de moeda em caso de compras internacional.
+                    description: Tarifa de conversão de moeda em caso de compras internacionais.
               merchant:
                 type: object
                 properties:
@@ -3554,13 +3733,13 @@ components:
                     description: Cidade onde ocorreu a transação.
               authorizationCode:
                 type: string
-                description: Indentificador da transação na adquirente.
+                description: Identificador da transação na adquirente.
               countryCode:
                 type: string
                 description: Código do país onde ocorreu a transação.
               currencyCode:
                 type: string
-                description: Códiga da moeda que foi realizada a transação.
+                description: Código da moeda em que foi realizada a transação.
               entryMode:
                 type: string
                 $ref: "#/components/schemas/entryModeTypes"
@@ -3568,7 +3747,7 @@ components:
               status:
                 type: string
                 $ref: "#/components/schemas/transactionsStatus"
-                description: Status da transação.
+                description: Situação da transação.
               transactionTimestamp:
                 type: string
                 description: Data em que ocorreu a transação (formato 'yyyy-MM-ddTHH:mm:ss+00:00').
@@ -3800,6 +3979,104 @@ components:
           type: number
           description: Novo limite de crédito ativo (definido pelo cliente).
 
+    
+    CreditReanalyzeOriginType:
+      enum:
+      - COMPANY_REQUEST
+      - CUSTOMER_REQUEST
+      type: string
+    ReanalyzeCreditDto:
+      type: object
+      required:
+        - origin
+      properties:
+        origin:
+          description: Solicitante do chamado de reanálise.
+          $ref: "#/components/schemas/CreditReanalyzeOriginType"
+      additionalProperties: false
+    AcceptCreditLimitIncreaseDto:
+      type: object
+      required:
+        - authorization
+        - idState
+        - token
+        - terms
+        - trace
+        - userInfo
+      properties:
+        authorization:
+          type: string
+          description: Token que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
+          nullable: true
+        idState:
+          type: string
+          description: Identificador do contrato.
+          nullable: true
+        token:
+          type: string
+          description: Token de SMS/email que confirma a identidade do usuário que assinou o aceite.
+          nullable: true
+        terms:
+          type: string
+          description: "Insira o texto do contrato que foi aceito pelo cliente. Sugestão: pode-se remover as quebras de linha e enviar o texto corrido do aceite."
+          nullable: true
+        trace:
+          type: array
+          description: Objeto que contém os dados de rastreio do usuário solicitante.
+          items:
+            $ref: "#/components/schemas/TraceDto"
+          nullable: true
+        userInfo:
+          $ref: "#/components/schemas/UserInfoDto"
+      additionalProperties: false
+    TraceDto:
+      type: object
+      required:
+        - state
+        - date
+      properties:
+        state:
+          type: string
+          description: Log de navegação do cliente nas telas do frontend, desde o login até a tela de aceite.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: Data do aceite.
+          nullable: true
+      additionalProperties: false
+    UserInfoDto:
+      type: object
+      description: Objeto que contém os dados do usuário no momento em que solicitou o crédito.
+      required:
+        - address
+        - customerId
+        - mail
+        - name
+        - phone
+      properties:
+        address:
+          type: string
+          description: Endereço completo do cliente.
+          nullable: true
+        customerId:
+          type: string
+          description: Identificador único do cliente.
+          nullable: true
+        mail:
+          type: string
+          format: email
+          description: E-mail do cliente.
+          nullable: true
+        name:
+          type: string
+          description: Nome completo do cliente
+          nullable: true
+        phone:
+          type: string
+          description: Número de telefone do cliente, com DDD.
+          nullable: true
+      additionalProperties: false
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
