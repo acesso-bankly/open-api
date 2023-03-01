@@ -2568,6 +2568,8 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '406':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
 
   /cards/credits/document/{documentNumber}/contracts/{contract}/acceptance:
     put:
@@ -2880,7 +2882,7 @@ components:
               description: Número máximo de parcelas no qual o valor da anuidade pode ser dividido.
             iofFirstDay:
               type: boolean
-              description: Indica se o cálculo de IOF será feito no primeiro dia do mês ou na data de corte da fatura.
+              description: Indica se o cálculo de IOF será feito no primeiro dia do mês (true) ou na data de corte da fatura (false).
             minimumAmountInstallmentAgreementInvoice:
               type: number
               description: Valor mínimo referente ao pagamento da fatura após o início da fase de negociação.
