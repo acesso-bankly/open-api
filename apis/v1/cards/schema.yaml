@@ -3696,7 +3696,7 @@ components:
                     description: Número da conta na qual o cartão foi transacionado.
                   agency: 
                     type: string
-                    description: Agencia da conta na qual o cartão foi transacionado.
+                    description: Agência da conta na qual o cartão foi transacionado.
               amount:
                 type: object
                 properties:
@@ -3711,10 +3711,10 @@ components:
                     description: Valor líquido da transação.
                   iof: 
                     type: number
-                    description: Valor do imposto de operações financeira.
+                    description: Valor do Imposto de Operações Financeiras.
                   markup: 
                     type: number
-                    description: Tarifa de conversão de moeda em caso de compras internacional.
+                    description: Tarifa de conversão de moeda em caso de compras internacionais.
               merchant:
                 type: object
                 properties:
@@ -3732,13 +3732,13 @@ components:
                     description: Cidade onde ocorreu a transação.
               authorizationCode:
                 type: string
-                description: Indentificador da transação na adquirente.
+                description: Identificador da transação na adquirente.
               countryCode:
                 type: string
                 description: Código do país onde ocorreu a transação.
               currencyCode:
                 type: string
-                description: Códiga da moeda que foi realizada a transação.
+                description: Código da moeda em que foi realizada a transação.
               entryMode:
                 type: string
                 $ref: "#/components/schemas/entryModeTypes"
@@ -3746,7 +3746,7 @@ components:
               status:
                 type: string
                 $ref: "#/components/schemas/transactionsStatus"
-                description: Status da transação.
+                description: Situação da transação.
               transactionTimestamp:
                 type: string
                 description: Data em que ocorreu a transação (formato 'yyyy-MM-ddTHH:mm:ss+00:00').
