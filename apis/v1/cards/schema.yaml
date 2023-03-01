@@ -2852,7 +2852,7 @@ components:
               description: Quantidade de dias, a partir do dia de vencimento, até o fechamento da fatura.
             futureCalendarMonths:
               type: integer
-              description: É o número de faturas pré-cadastradas na base de criação da conta.
+              description: Número de faturas pré-cadastradas na base de criação da conta.
             daysAccountLockDelay:
               type: integer
               description: Quantidade de dias após o atraso no pagamento da fatura em que será realizado o bloqueio do cartão.
@@ -2937,6 +2937,7 @@ components:
           description: CEP de endereço.
         addressLine:
           type: string
+          description: Logradouro (nome da rua, avenida etc.).
         buildingNumber:
           type: string
           description: Número do endereço.
@@ -3990,7 +3991,7 @@ components:
         - origin
       properties:
         origin:
-          description: O solicitante do chamado de reanálise.
+          description: Solicitante do chamado de reanálise.
           $ref: "#/components/schemas/CreditReanalyzeOriginType"
       additionalProperties: false
     AcceptCreditLimitIncreaseDto:
