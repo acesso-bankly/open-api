@@ -3035,10 +3035,10 @@ components:
           description: Código de ativação do cartão.
         bankAgency:
           type: string
-          description: Agência do cliente.
+          description: Número da agência do cliente.
         bankAccount:
           type: string
-          description: Conta do cliente.
+          description: Número da conta do cliente.
         lastFourDigits:
           type: string
           description: Últimos 04 dígitos do cartão.

@@ -262,7 +262,7 @@ paths:
     get:
       tags:
         - Mensagens
-      summary: Mensagens processadas
+      summary: Consulta de mensagens enviadas
       description: |
         <div class="bkly-ref-description">
           <p>Consulte todas as mensagens processadas por um webhook Bankly em um determinado período.</p> 
