@@ -1536,7 +1536,7 @@ components:
         - NOT_ALLOWED
         - ALLOWED
       type: string
-      description: "Para que o usuário pagador possa alterar o valor a ser pago no momento da transação, esse campo deve ser preenchido com “ALOWED”. Caso contrário, informe \"NOT_ALLOWED\". Se esse campo não for enviado, o sistema assumirá que não é permitida a alteração do valor a ser pago."
+      description: Campo que indica se o valor a ser pago pode (“ALLOWED”) ou não ("NOT_ALLOWED") ser alterado no momento da transação. Caso o valor "NOT_ALLOWED" seja informado, o campo <code>amount</code> deve ser preenchido <b>obrigatoriamente</b>.
 
     ChannelResponse:
       enum:
@@ -1748,10 +1748,6 @@ components:
       properties:
         addressingKey:
           $ref: "#/components/schemas/AddressingKey"
-        amount:
-          type: number
-          format: double
-          description: "Valor a ser pago. Caso esse campo não seja informado, o changeAmountType será automaticamente preenchido como “ALOWED” e o usuário pagador poderá alterar o valor do QR Code."
         recipientName:
           type: string
           nullable: true
@@ -1773,6 +1769,10 @@ components:
           $ref: "#/components/schemas/Payer"
         changeAmountType:
           $ref: "#/components/schemas/ChangeAmountType"
+        amount:
+          type: number
+          format: double
+          description: Valor a ser pago. 
         expiresAt:
           type: string
           format: date-time
