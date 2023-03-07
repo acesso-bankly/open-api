@@ -2049,23 +2049,26 @@ components:
     Payer:
       type: object
       required:
+        - type
         - address
+        - documentNumber
+        - name
       properties:
         type:
           $ref: "#/components/schemas/PersonType"
-          description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica). Caso esse campo não seja informado, o sistema assume que o tipo de pagador é CUSTOMER."
+          description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica)."
         address:
           $ref: "#/components/schemas/Address"
         documentNumber:
           type: string
-          description: "Documento do pagador. Se o documento do pagador for informado, seu nome deverá ser enviado (name)."
+          description: "Número do documento do pagador."
           nullable: true
         name:
           type: string
-          description: "Nome do pagador. Embora o nome do pagador não seja obrigatório, caso ele seja informado, será obrigatório informar seu documento (documentNumber)."
+          description: "Nome do pagador."
           nullable: true
       additionalProperties: false
-      description: "O único dado obrigatório do campo payer é o subcampo city, que deve ser preenchido com a cidade do pagador."
+      description: "Objeto que contém informações sobre o pagador."
 
     Payment:
       type: object
