@@ -2783,18 +2783,18 @@ components:
         password:
           type: string
           description: Senha que será utilizada nas compras (4 dígitos).
-        bankAgency:
-          type: string
-          description: Número da agência (4 dígitos).
         bankAccount:
           type: string
-          description: Número da conta ao qual o cartão será vinculado.
-        alias:
+          description: Número da conta de pagamento ao qual o cartão será vinculado.
+        bankAgency:
           type: string
-          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres). 
+          description: Número da agência (4 dígitos) do banco ao qual a conta de pagamento pertence.
         documentNumber:
           type: string
-          description:  Número do documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.   
+          description: Número do documento (CPF ou CNPJ) do titular da conta de pagamento. Informe somente números. Tamanho máximo de 14 caracteres.
+        alias:
+          type: string
+          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).    
       required:
         - documentNumber
         - password
