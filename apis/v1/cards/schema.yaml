@@ -1257,7 +1257,7 @@ paths:
       summary: Por conta
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte os cartões vinculados a uma conta de pagamentos.</p> 
+          <p>Consulte os cartões vinculados a uma conta.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -2785,13 +2785,13 @@ components:
           description: Senha que será utilizada nas compras (4 dígitos).
         bankAccount:
           type: string
-          description: Número da conta de pagamento ao qual o cartão será vinculado.
+          description: Número da conta ao qual o cartão será vinculado.
         bankAgency:
           type: string
-          description: Número da agência (4 dígitos) do banco ao qual a conta de pagamento pertence.
+          description: Número da agência (4 dígitos) do banco ao qual a conta pertence.
         documentNumber:
           type: string
-          description: Número do documento (CPF ou CNPJ) do titular da conta de pagamento. Informe somente números. Tamanho máximo de 14 caracteres.
+          description: Número do documento (CPF ou CNPJ) do titular da conta. Informe somente números. Tamanho máximo de 14 caracteres.
         alias:
           type: string
           description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).    
