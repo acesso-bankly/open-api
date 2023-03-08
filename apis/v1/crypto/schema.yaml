@@ -307,14 +307,11 @@ components:
           $ref: "#/components/schemas/AmountValueBodyObject"
         fee:
           $ref: "#/components/schemas/FeeValueBodyObject"
-        account:
-          $ref: "#/components/schemas/AccountValueBodyObject"
       required:
         - market
         - type
         - amount
         - fee
-        - account
 
     OrderIntentionBodyDto:
       type: object
