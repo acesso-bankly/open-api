@@ -129,6 +129,7 @@ paths:
         </div>
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyUserId'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
@@ -183,6 +184,7 @@ paths:
         </div>
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
+        - $ref: '#/components/parameters/BanklyUserId'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
@@ -252,6 +254,16 @@ components:
         type: string
         default: "2023-01-30"
     
+    BanklyUserId:
+      name: bankly-user-id
+      in: header
+      description: Número do documento do usuário que fez a requisição.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+
     Market:
       name: market
       required: true
