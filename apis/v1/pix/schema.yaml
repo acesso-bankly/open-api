@@ -1380,19 +1380,25 @@ components:
 
     Address:
       type: object
+      required:
+        - city
+        - zipCode
       properties:
         addressLine:
           type: string
+          description: Logradouro (Nome da rua, avenida etc.).
           nullable: true
         state:
           type: string
+          description: "Sigla do estado brasileiro conforme a ISO 3166-2:BR. Exemplo: SP."
           nullable: true
         city:
           type: string
           nullable: true
-          description: O valor máximo é de <b>15 caracteres</b> para esse campo.
+          description:  Nome da cidade. O valor máximo é de <b>15 caracteres</b> para esse campo.
         zipCode:
           type: string
+          description: Código postal do endereço.
           nullable: true
       additionalProperties: false
 
