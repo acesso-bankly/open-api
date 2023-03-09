@@ -2063,21 +2063,21 @@ components:
         - documentNumber
         - name
       properties:
+        name:
+          type: string
+          description: "Nome do pagador."
+          nullable: true
+        documentNumber:
+          type: string
+          description: "Número do documento do pagador."
+          nullable: true
         type:
           $ref: "#/components/schemas/PersonType"
           description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica)."
         address:
           $ref: "#/components/schemas/Address"
-        documentNumber:
-          type: string
-          description: "Número do documento do pagador."
-          nullable: true
-        name:
-          type: string
-          description: "Nome do pagador."
-          nullable: true
       additionalProperties: false
-      description: "Objeto que contém informações sobre o pagador."
+      description: Objeto que contém informações sobre o pagador.
 
     Payment:
       type: object
