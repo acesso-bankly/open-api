@@ -257,7 +257,7 @@ components:
     BanklyUserId:
       name: bankly-user-id
       in: header
-      description: Número do documento do usuário que fez a requisição.
+      description: Número do documento do usuário que irá fazer a requisição.
       required: true
       style: simple
       explode: false
@@ -380,8 +380,6 @@ components:
           description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
           enum:
             - BTC:BRL
-        account:
-          $ref: "#/components/schemas/AccountValueObject"
         price:
           description: Objeto contendo informações sobre o preço da criptomoeda.
           $ref: "#/components/schemas/PriceValueObject"
