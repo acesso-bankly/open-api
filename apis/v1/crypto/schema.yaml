@@ -542,11 +542,10 @@ components:
           description: Situação da ordem de execução de compra ou venda.
           enum:
             - CREATED
-            - EXECUTED
+            - IN_PROCESS
+            - DONE
             - CANCELED
             - EXPIRED
-            - IN_PROCESS
-            - ERROR
         account:
           $ref: "#/components/schemas/AccountValueObject"
         price:
