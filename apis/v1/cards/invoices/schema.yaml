@@ -226,7 +226,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize o adiantamento do pagamento das parcelas de um refinancimento. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
         [block:callout]
         {
@@ -239,6 +239,7 @@ paths:
         - $ref: "#/components/parameters/StatementId"
         - $ref: "#/components/parameters/StatementItemId"
         - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
       requestBody:
         content:
           application/json:
