@@ -412,13 +412,6 @@ components:
       headers:
         x-bkly-correlation-id:
           $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
 
     '403':
       description: |
@@ -426,13 +419,6 @@ components:
       headers:
         x-bkly-correlation-id:
           $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
     
     '404':
       description: |
@@ -440,27 +426,6 @@ components:
       headers:
         x-bkly-correlation-id:
           $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
-
-    '405':
-      description: |
-        Recurso acessado com método não suportado.
-      headers:
-        x-bkly-correlation-id:
-          $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
 
     '406':
       description: A solicitação não foi aceita.
@@ -471,23 +436,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
     
-    '408':
-      description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
-      headers:
-        x-bkly-correlation-id:
-          $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
-
     '409':
       description: |
         A solicitação conflitou com o estado atual do recurso existente no servidor.
@@ -502,20 +451,6 @@ components:
             accountDetailedExample:
               $ref: '#/components/examples/errorResponse'
     
-    '415':
-      description: |
-        Formato de payload não suportado.
-      headers:
-        x-bkly-correlation-id:
-          $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
-
     '422':
       description: |
         A sintaxe da requisição está correta, mas não foi possível processá-la devido a uma regra de negócio.
@@ -530,33 +465,12 @@ components:
             accountDetailedExample:
               $ref: '#/components/examples/errorResponse'
     
-    '429':
-      description: |
-        A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
-      headers:
-        x-bkly-correlation-id:
-          $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
-
     '500':
       description: |
         Ocorreu algum erro inexperado em nosso servidor.
       headers:
         x-bkly-correlation-id:
           $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
 
     '503':
       description: |
@@ -564,13 +478,6 @@ components:
       headers:
         x-bkly-correlation-id:
           $ref: '#/components/headers/CorrelationId'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          examples:
-            accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
 
   securitySchemes:
     Bearer:
@@ -596,6 +503,4 @@ components:
           - code: SOME_ERROR_CODE
             messages:
               - '{{Some error message}}'
-        reference: 0
-
       summary: Erro de negócio
