@@ -67,7 +67,7 @@ paths:
     get:
       tags:
       - Consulta de faturas
-      summary: Consulta de faturas 
+      summary: Consulta de fatura por período
       description: |
         <div class="bkly-ref-description">
           <p>Consulte as faturas do cartão de um determinado período.</p> 
@@ -218,6 +218,42 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
   
+  /cards/invoices/{statementId}/item/{statementItemId}/advancement:
+    post:
+      tags:
+        - Pagamento de faturas
+      summary: Antecipação de parcela de refinanciamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o adiantamento do pagamento das parcelas de um refinancimento. </p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Somente será possível gerar o adiantamento de parcelas de faturas cujo <code>transactionType</code> aprensente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
+        }
+        [/block]
+      parameters:
+        - $ref: "#/components/parameters/StatementId"
+        - $ref: "#/components/parameters/StatementItemId"
+        - $ref: "#/components/parameters/apiVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdvanceInstallmentsRequest"
+      responses:
+        '202':
+          description: Pagamento de parcelas adiantado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvancedItemsDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+
 security:
   - bearerAuth: []
 
@@ -227,6 +263,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  
   parameters:
     apiVersion:
       name: api-version
@@ -260,6 +297,14 @@ components:
         format: int32
         description: Identificador único da fatura.
 
+    StatementItemId:
+      name: statementItemId
+      required: true 
+      schema: 
+        type: integer
+        format: int32
+        description: Identificador do item da fatura.
+
     Proxy:
       name: proxy
       in: path
@@ -270,6 +315,35 @@ components:
         description: Identificador do cartão utilizado na transação.
   
   schemas:
+    AdvanceInstallmentsRequest:
+      type: object
+      required: 
+        - installmentAdvanceQuantity
+        - removeInterest
+      properties:
+        installmentAdvanceQuantity:
+          type: integer
+          format: int32
+          description: Quantidade de parcelas a serem antecipadas.
+        removeInterest:
+          type: boolean
+          description: Sinaliza se os encargos das parcelas devem ser antecipados ou não.
+      additionalProperties: false
+
+    AdvancedItemsDto:
+      type: object
+      properties:
+        statementId:
+          type: integer
+          format: int32
+          description: Identificação única da fatura.
+        statementItemsId:
+          type: array
+            items:
+              type: integer
+              format: int32
+          description: Lista que contém os IDs dos itens de fatura que foram antecipados.
+
     CycleType:
       enum:
         - Open
@@ -278,6 +352,7 @@ components:
         - DueDate (atrasado)
       type: string
       description: Situação da fatura.
+    
     StatementPaymentStatus:
       enum:
         - Pending
@@ -285,6 +360,7 @@ components:
         - PartialPaid
       type: string
       description: Situação do pagamento da fatura.
+    
     CardDto:
       type: object
       properties:
@@ -292,7 +368,7 @@ components:
           type: string
           nullable: true
           description: Identificador do cartão utilizado na transação.
-        lastFourDigits:
+        lastFourDigits: 
           type: string
           nullable: true
           description: Quatro últimos dígitos do cartão.
@@ -308,6 +384,7 @@ components:
           nullable: true
           description: Tipo do cartão.
       additionalProperties: false
+    
     TransactionInvoiceDto:
       type: object
       properties:
@@ -330,6 +407,7 @@ components:
         card:
           $ref: '#/components/schemas/CardDto'
       additionalProperties: false
+    
     AmountType:
       enum:
         - NotMapper
@@ -338,6 +416,7 @@ components:
         - Billet
       type: string
       description: Indicador do item de fatura.
+    
     AmountInvoiceDto:
       type: object
       properties:
@@ -352,6 +431,7 @@ components:
           nullable: true
           description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
       additionalProperties: false
+    
     FeeType:
       enum:
         - NotMapper
@@ -361,6 +441,7 @@ components:
         - Interest
       type: string
       description: Tipo da taxa.
+    
     FeeInvoiceDto:
       type: object
       properties:
@@ -490,6 +571,7 @@ components:
           nullable: true
           description: Descritivo do item da fatura.
       additionalProperties: false
+    
     PaymentType:
       enum:
         - Cash
@@ -498,17 +580,20 @@ components:
         - InstallmentWithoutEntry
       type: string
       description: Opção de pagamento.
+    
     PaymentOptionType:
       enum:
         - Boleto
       type: string
       description: Forma de pagamento.
+    
     PaymentStatus:
       enum:
         - Pending
         - Paid
       type: string
       description: Situação do pagamento.
+    
     InvoicePaymentDto:
       type: object
       properties:
@@ -551,6 +636,7 @@ components:
           nullable: true
           description: Data de liquidação do pagamento.
       additionalProperties: false
+    
     InstallmentDto:
       type: object
       properties:
@@ -584,6 +670,7 @@ components:
           format: int32
           description: Número da parcela.
       additionalProperties: false
+    
     CreditOfferDto:
       type: object
       properties:
@@ -694,6 +781,7 @@ components:
           items: {$ref: '#/components/schemas/InstallmentDto'}
           nullable: true
       additionalProperties: false
+    
     PaymentOptionsDto:
       type: object
       properties:
@@ -718,6 +806,7 @@ components:
         creditOffer:
           $ref: '#/components/schemas/CreditOfferDto'
       additionalProperties: false
+    
     InvoiceDto:
       type: object
       properties:
@@ -778,6 +867,7 @@ components:
           items: {$ref: '#/components/schemas/ItemInvoiceDto'}
           nullable: true
       additionalProperties: false
+    
     InvoiceResumeDto:
       type: object
       properties:
@@ -819,6 +909,7 @@ components:
           description: Valor pago.
           nullable: true
       additionalProperties: false
+    
     PreviousResumeInvoicesDto:
       type: object
       properties:
@@ -827,6 +918,7 @@ components:
           items: {$ref: '#/components/schemas/InvoiceResumeDto'}
           nullable: true
       additionalProperties: false
+    
     CreditLimitDto:
       type: object
       properties:
@@ -843,6 +935,7 @@ components:
           format: double
           description: Limite de crédito disponível.
       additionalProperties: false
+    
     CreatePaymentCommand:
       type: object
       required:
@@ -860,6 +953,7 @@ components:
           description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
           nullable: true
       additionalProperties: false
+    
     PaymentStatusDto:
       type: object
       properties:
@@ -874,6 +968,7 @@ components:
           nullable: true
           description: Identificador da forma de pagamento.
       additionalProperties: false
+    
     PaymentOptionsInstallmentsDto:
       type: object
       properties:
