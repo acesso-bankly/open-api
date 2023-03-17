@@ -1990,6 +1990,19 @@ paths:
       responses:
         '200':
           description: Solicitação recebida. O retorno traz os dados dos lotes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/nextStatusResponse"
+              examples:
+                response:
+                  value:
+                    [
+                      {
+                        value: "ExpiredCanceled",
+                        isDefinitive: true
+                      }
+                    ]         
         '204':
           description: Não foram encontrados lotes.              
         '400':
@@ -3980,7 +3993,21 @@ components:
           type: number
           description: Novo limite de crédito ativo (definido pelo cliente).
 
-    
+    nextStatusResponse:
+      type: array
+      description: Lista de objetos contem informações sobre os próximos status do cartão.
+      items:
+        type: object
+        properties:
+          value:
+            type: string
+            description: Próximo status do cartão.
+          isDefinitive: 
+            type: boolean
+            description: Indica a reversibilidade do status, sendo TRUE para reversível e FALSE para irreversível.
+
+
+
     CreditReanalyzeOriginType:
       enum:
       - COMPANY_REQUEST
