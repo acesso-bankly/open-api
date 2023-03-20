@@ -342,9 +342,9 @@ components:
           description: Identificação única da fatura.
         statementItemsId:
           type: array
-            items:
-              type: integer
-              format: int32
+          items:
+            type: integer
+            format: int32
           description: Lista que contém os IDs dos itens de fatura que foram antecipados.
 
     CycleType:
