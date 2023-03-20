@@ -48,9 +48,9 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
-      - $ref: "#/components/parameters/StatementId"
-      - $ref: "#/components/parameters/apiVersion"
-      - $ref: "#/components/parameters/authorization"
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Solicitação aceita com sucesso.
@@ -142,14 +142,14 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
       parameters:
-        - $ref: "#/components/parameters/StatementId"
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePaymentCommand"
+              $ref: '#/components/schemas/CreatePaymentCommand'
       responses:
         '202':
           description: Solicitação aceita com sucesso.
@@ -173,9 +173,9 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
-      - $ref: "#/components/parameters/StatementId"
-      - $ref: "#/components/parameters/apiVersion"
-      - $ref: "#/components/parameters/authorization"
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Solicitação aceita com sucesso.
@@ -184,7 +184,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/PaymentOptionsDto"
+                  $ref: '#/components/schemas/PaymentOptionsDto'
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
@@ -201,9 +201,9 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
-      - $ref: "#/components/parameters/StatementId"
-      - $ref: "#/components/parameters/apiVersion"
-      - $ref: "#/components/parameters/authorization"
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
       responses:
         '200':
           description: Solicitação aceita com sucesso.
@@ -236,10 +236,10 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: "#/components/parameters/StatementId"
-        - $ref: "#/components/parameters/StatementItemId"
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/StatementItemId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
           application/json:
@@ -968,7 +968,7 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          $ref: "#/components/parameters/StatementId"
+          $ref: '#/components/parameters/StatementId'
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
