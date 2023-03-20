@@ -306,7 +306,7 @@ components:
       schema: 
         type: integer
         format: int32
-        description: Identificador do item da fatura.
+        description: Identificador de um item de referência da fatura em aberto.
 
     Proxy:
       name: proxy
@@ -337,9 +337,7 @@ components:
       type: object
       properties:
         statementId:
-          type: integer
-          format: int32
-          description: Identificação única da fatura.
+          - $ref: "#/components/schemas/StatementId"
         statementItemsId:
           type: array
           items:
@@ -566,9 +564,7 @@ components:
           items: {$ref: '#/components/schemas/FeeInvoiceDto'}
           nullable: true
         statementItemId:
-          type: integer
-          format: int32
-          description: Indicador do item de fatura.
+          - $ref: "#/components/schemas/StatementItemId"
         transactionDescription:
           type: string
           nullable: true
@@ -793,9 +789,7 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
+           - $ref: "#/components/schemas/StatementId"
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
@@ -814,9 +808,7 @@ components:
       type: object
       properties:
         statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
+          - $ref: "#/components/schemas/StatementId"
         month:
           type: integer
           format: int32
@@ -875,9 +867,7 @@ components:
       type: object
       properties:
         statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
+          - $ref: "#/components/schemas/StatementId"
         month:
           type: integer
           format: int32
@@ -980,9 +970,7 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
+          - $ref: "#/components/schemas/StatementId"
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
