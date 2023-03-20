@@ -337,7 +337,7 @@ components:
       type: object
       properties:
         statementId:
-          - $ref: "#/components/schemas/StatementId"
+          - $ref: "#/components/parameters/StatementId"
         statementItemsId:
           type: array
           items:
@@ -564,7 +564,7 @@ components:
           items: {$ref: '#/components/schemas/FeeInvoiceDto'}
           nullable: true
         statementItemId:
-          - $ref: "#/components/schemas/StatementItemId"
+          - $ref: "#/components/parameters/StatementItemId"
         transactionDescription:
           type: string
           nullable: true
@@ -789,7 +789,7 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-           - $ref: "#/components/schemas/StatementId"
+           - $ref: "#/components/parameters/StatementId"
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
@@ -808,7 +808,7 @@ components:
       type: object
       properties:
         statementId:
-          - $ref: "#/components/schemas/StatementId"
+          - $ref: "#/components/parameters/StatementId"
         month:
           type: integer
           format: int32
@@ -867,7 +867,7 @@ components:
       type: object
       properties:
         statementId:
-          - $ref: "#/components/schemas/StatementId"
+          - $ref: "#/components/parameters/StatementId"
         month:
           type: integer
           format: int32
@@ -970,7 +970,7 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          - $ref: "#/components/schemas/StatementId"
+          - $ref: "#/components/parameters/StatementId"
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
