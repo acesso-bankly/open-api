@@ -254,6 +254,8 @@ paths:
                 $ref: "#/components/schemas/AdvancedItemsDto"
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
 security:
   - bearerAuth: []
