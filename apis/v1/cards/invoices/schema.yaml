@@ -341,6 +341,7 @@ components:
           $ref: "#/components/parameters/StatementId"
         statementItemId:
           $ref: "#/components/parameters/StatementItemId"
+      additionalProperties: false
 
     CycleType:
       enum:
