@@ -293,7 +293,6 @@ components:
 
     StatementId:
       name: statementId
-      in: path
       required: true
       schema:
         type: integer
@@ -302,7 +301,6 @@ components:
 
     StatementItemId:
       name: statementItemId
-      in: path
       required: true 
       schema: 
         type: integer
@@ -562,7 +560,7 @@ components:
           items: {$ref: '#/components/schemas/FeeInvoiceDto'}
           nullable: true
         statementItemId:
-          $ref: "#/components/parameters/StatementItemId"
+          $ref: '#/components/parameters/StatementItemId'
         transactionDescription:
           type: string
           nullable: true
