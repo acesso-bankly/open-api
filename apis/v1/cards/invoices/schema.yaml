@@ -339,12 +339,8 @@ components:
       properties:
         statementId:
           $ref: "#/components/parameters/StatementId"
-        statementItemsId:
-          type: array
-          items:
-            type: integer
-            format: int32
-          description: Lista que contém os IDs dos itens de fatura que foram antecipados.
+        statementItemId:
+          $ref: "#/components/parameters/StatementItemId"
 
     CycleType:
       enum:
