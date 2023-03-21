@@ -232,7 +232,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Somente será possível gerar o adiantamento de itens de faturas cujo <code>transactionType</code> aprensente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
+          "body": "Somente será possível gerar o adiantamento de itens de faturas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
         }
         [/block]
       parameters:
@@ -247,7 +247,7 @@ paths:
               $ref: "#/components/schemas/AdvanceInstallmentsRequest"
       responses:
         '202':
-          description: Pagamento de parcelas adiantado com sucesso.
+          description: Antecipação de parcelas processada com sucesso.
           content:
             application/json:
               schema:
@@ -331,7 +331,7 @@ components:
           description: Quantidade de parcelas a serem antecipadas.
         removeInterest:
           type: boolean
-          description: Sinaliza se os encargos das parcelas devem ser antecipados ou não.
+          description: Sinaliza se os encargos das parcelas devem ser removidos (TRUE) ou não (FALSE). Como se trata de parcelas de refinanciamento, preencha este campo com <b>TRUE</b>.
       additionalProperties: false
 
     AdvancedItemsDto:
@@ -342,9 +342,11 @@ components:
           format: int32
           description: Identificador único da fatura.
         statementItemId:
-          type: integer
-          format: int32
-          description: Identificador de um item de referência da fatura em aberto.
+          type: array
+          items: 
+            type: integer
+            format: int32
+          description: Lista que contém os Ids dos itens da fatura antecipada.
       additionalProperties: false
 
     CycleType:
