@@ -294,6 +294,7 @@ components:
     StatementId:
       name: statementId
       required: true
+      in: path
       schema:
         type: integer
         format: int32
