@@ -346,7 +346,7 @@ components:
           items: 
             type: integer
             format: int32
-          description: Lista que contém os Ids dos itens da fatura antecipada.
+          description: Lista que contém os Ids das parcelas de refinanciamento antecipadas.
       additionalProperties: false
 
     CycleType:
