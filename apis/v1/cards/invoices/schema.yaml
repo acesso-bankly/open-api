@@ -222,7 +222,7 @@ paths:
     post:
       tags:
         - Pagamento de faturas
-      summary: Antecipação de parcela de refinanciamento
+      summary: Antecipação de parcelas 
       description: |
         <div class="bkly-ref-description">
           <p>Realize o adiantamento do pagamento das parcelas de um refinancimento. </p> 
@@ -232,7 +232,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Somente será possível gerar o adiantamento de itens de faturas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
+          "body": "Somente será possível gerar o adiantamento de parcelas de refinanciamento cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
         }
         [/block]
       parameters:
@@ -298,16 +298,15 @@ components:
       schema:
         type: integer
         format: int32
-        description: Identificador único da fatura.
+        description: Identificador único da fatura em aberto.
 
     StatementItemId:
       name: statementItemId
-      in: path
-      required: true 
+      in: path 
       schema: 
         type: integer
         format: int32
-        description: Identificador de um item de referência da fatura em aberto.
+        description: Identificador da parcela de refinanciamento a ser antecipada.
 
     Proxy:
       name: proxy
