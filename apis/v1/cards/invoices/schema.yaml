@@ -341,7 +341,7 @@ components:
           type: integer
           format: int32
           description: Identificador único da fatura.
-        statementItemId:
+        statementItemsId:
           type: array
           items: 
             type: integer
