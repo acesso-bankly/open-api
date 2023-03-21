@@ -302,8 +302,8 @@ components:
 
     StatementItemId:
       name: statementItemId
-      in: path 
-      required: false 
+      required: false
+      in: path  
       schema: 
         type: integer
         format: int32
