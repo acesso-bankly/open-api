@@ -342,7 +342,9 @@ components:
           format: int32
           description: Identificador único da fatura.
         statementItemId:
-          $ref: "#/components/parameters/StatementItemId"
+          type: integer
+          format: int32
+          description: Identificador de um item de referência da fatura em aberto.
       additionalProperties: false
 
     CycleType:
@@ -564,7 +566,9 @@ components:
           items: {$ref: '#/components/schemas/FeeInvoiceDto'}
           nullable: true
         statementItemId:
-          $ref: '#/components/parameters/StatementItemId'
+          type: integer
+          format: int32
+          description: Indicador do item de fatura.
         transactionDescription:
           type: string
           nullable: true
