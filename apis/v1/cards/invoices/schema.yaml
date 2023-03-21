@@ -302,7 +302,6 @@ components:
 
     StatementItemId:
       name: statementItemId
-      required: false
       in: path  
       schema: 
         type: integer
