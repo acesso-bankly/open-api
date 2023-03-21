@@ -338,7 +338,9 @@ components:
       type: object
       properties:
         statementId:
-          $ref: "#/components/parameters/StatementId"
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         statementItemId:
           $ref: "#/components/parameters/StatementItemId"
       additionalProperties: false
@@ -787,7 +789,9 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          $ref: "#/components/parameters/StatementId"
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
@@ -806,7 +810,9 @@ components:
       type: object
       properties:
         statementId:
-          $ref: "#/components/parameters/StatementId"
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         month:
           type: integer
           format: int32
@@ -865,7 +871,9 @@ components:
       type: object
       properties:
         statementId:
-          $ref: "#/components/parameters/StatementId"
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         month:
           type: integer
           format: int32
@@ -968,7 +976,9 @@ components:
           format: int32
           description: Identificador único da opção de pagamento.
         statementId:
-          $ref: '#/components/parameters/StatementId'
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
