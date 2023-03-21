@@ -303,7 +303,7 @@ components:
     StatementItemId:
       name: statementItemId
       required: false
-      in: query  
+      in: path  
       schema: 
         type: integer
         format: int32
