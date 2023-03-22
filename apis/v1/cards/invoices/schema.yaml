@@ -307,7 +307,7 @@ components:
       schema: 
         type: integer
         format: int32
-        description: Identificador da parcela de refinanciamento a ser antecipada.
+        description: Identificador de uma das parcelas de refinanciamento passíveis de serem antecipadas.
 
     Proxy:
       name: proxy
