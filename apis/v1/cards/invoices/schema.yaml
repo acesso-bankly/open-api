@@ -232,7 +232,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Somente será possível gerar o adiantamento de parcelas de refinanciamento cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
+          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
         }
         [/block]
       parameters:
