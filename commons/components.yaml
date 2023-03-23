@@ -588,6 +588,7 @@ components:
             propertyName: '{{propertyName}}'
             messages:
               - '{{"propertyName" error message}}'
+        reference: "link"
       summary: Parametro inválido
   
     errorResponse:
@@ -596,6 +597,6 @@ components:
           - code: SOME_ERROR_CODE
             messages:
               - '{{Some error message}}'
-        reference: 0
+        reference: "link"
 
       summary: Erro de negócio
