@@ -189,12 +189,11 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
         - name: authenticationCode
-          # TODO: codigo recebido no outro endpoint
           required: true
           in: path
           schema:
             type: string
-            description: Valor retornado no campo authenticationCode do endpoint de Criação de ordem de compra e venda de criptomoedas.
+            description: Identificador da transação retornado no endpoint de Criação de ordem de compra e venda de criptomoedas.
       requestBody:
         required: true
         content:
@@ -232,6 +231,38 @@ paths:
            $ref: 'http://localhost:3320/commons/components#/components/responses/429'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'     
+
+    get: 
+      tags:
+        - Operações com criptomoedas 
+      summary: Consulta de ordem de compra e venda
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a consulta de uma ordem específica de compra ou venda de criptomoedas.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span>
+          <span class="bkly-ref-scope-tag">scope: crypto.order.read </span>
+        </div>
+      parameters:
+        - $ref: '#/components/parameters/BanklyVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Correlation-Id'
+        - name: authenticationCode
+          required: true
+          in: path
+          schema:
+            type: string
+            description: Identificador da transação retornado no endpoint de Criação de ordem de compra e venda de criptomoedas.
+      responses: 
+        "200":
+          description: Ordem retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderQueryResponseDto"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
 
 components:
   securitySchemes:
@@ -559,11 +590,64 @@ components:
         total:
           $ref: "#/components/schemas/TotalValueObject"
         createdAt:
-          description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de criação da execução da ordem de compra ou venda."
           format: date-time
           type: string
         updatedAt:
-          description: "Data de atualização da ordem de compra ou venda (formato YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de atualização da ordem de compra ou venda."
+          format: date-time
+          type: string
+
+    OrderQueryDto:
+      type: object
+      properties:
+        authenticationCode:
+          type: string
+          example: 60c66bce-0127-4e07-a35d-d14d31e4126a
+          description: Identificador da transação informado no <i>path</i> desta requisição.
+        type:
+          type: string
+          description: Tipo de ordem (compra ou venda).
+          enum:
+            - PURCHASE
+            - SELL
+        market:
+          type: string
+          description: Mercado, o qual é constituído da sigla da criptomoeda com a sigla do real. 
+          enum:
+            - BTC:BRL
+        status:
+          type: string
+          description: Situação da ordem de execução de compra ou venda.
+          enum:
+            - CREATED
+            - IN_PROCESS
+            - DONE
+            - EXPIRED
+        account:
+          description: Esse objeto não retorna caso o <i>status</i> da ordem seja CREATED ou EXPIRED.
+          $ref: "#/components/schemas/AccountValueObject"
+        price:
+          description: Objeto que contém informações sobre o preço da criptomoeda.
+          $ref: "#/components/schemas/PriceValueObject"
+        amount:
+          $ref: "#/components/schemas/AmountValueObject"
+        fee:
+          $ref: "#/components/schemas/FeeValueObject"
+        quota:
+          $ref: "#/components/schemas/QuotaValueObject"
+        total:
+          $ref: "#/components/schemas/TotalValueObject"
+        createdAt:
+          description: "Data de criação da ordem de compra ou venda."
+          format: date-time
+          type: string
+        updatedAt:
+          description: "Data de atualização da ordem de compra ou venda."
+          format: date-time
+          type: string
+        data.expiresIn:
+          description: "Data de expiração da ordem de compra ou venda. Campo retornado apenas para ordens com <i>status</i> CREATED."
           format: date-time
           type: string
 
@@ -573,6 +657,22 @@ components:
         data:
           description: Objeto que contém informações sobre a execução de ordem de compra e venda de criptomoedas.
           $ref: "#/components/schemas/OrderExecutionDto"
+        metadata:
+          description: Dicionário de metadados que trará dados adicionais da requisição.
+          additionalProperties: true
+          type: object
+        links:
+          type: array
+          description: Links de próximos estados válidos da entidade/recurso.
+          items:
+            type: object
+
+    OrderQueryResponseDto:
+      type: object
+      properties:
+        data:
+          description: Objeto que contém informações sobre a ordem de compra ou venda consultada.
+          $ref: "#/components/schemas/OrderQueryDto"
         metadata:
           description: Dicionário de metadados que trará dados adicionais da requisição.
           additionalProperties: true
