@@ -544,7 +544,6 @@ components:
             - CREATED
             - IN_PROCESS
             - DONE
-            - CANCELED
             - EXPIRED
         account:
           $ref: "#/components/schemas/AccountValueObject"
@@ -563,8 +562,8 @@ components:
           description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
           format: date-time
           type: string
-        expiresIn:
-          description: "Data de expiração da execução da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+        updatedAt:
+          description: "Data de atualização da ordem de compra ou venda (formato YYYY-MM-DDTHH:mm:SS.MMMZ)."
           format: date-time
           type: string
 
