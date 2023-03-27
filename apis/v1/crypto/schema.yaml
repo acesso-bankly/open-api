@@ -599,7 +599,7 @@ components:
           type: string
 
     OrderQueryDto:
-       type: object
+      type: object
       properties:
         authenticationCode:
           type: string
