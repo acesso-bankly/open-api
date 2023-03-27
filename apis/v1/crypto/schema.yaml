@@ -254,7 +254,7 @@ paths:
             description: Identificador da transação retornado no endpoint de Criação de ordem de compra e venda de criptomoedas.
       responses: 
         "200":
-          description: Execução de ordem de compra e venda realizada com sucesso.
+          description: Ordem retornada com sucesso.
           content:
             application/json:
               schema:
@@ -590,11 +590,11 @@ components:
         total:
           $ref: "#/components/schemas/TotalValueObject"
         createdAt:
-          description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de criação da execução da ordem de compra ou venda."
           format: date-time
           type: string
         updatedAt:
-          description: "Data de atualização da ordem de compra ou venda (formato YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de atualização da ordem de compra ou venda."
           format: date-time
           type: string
 
@@ -639,15 +639,15 @@ components:
         total:
           $ref: "#/components/schemas/TotalValueObject"
         createdAt:
-          description: "Data de criação da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de criação da ordem de compra ou venda."
           format: date-time
           type: string
         updatedAt:
-          description: "Data de atualização da ordem de compra ou venda (formato YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de atualização da ordem de compra ou venda."
           format: date-time
           type: string
         data.expiresIn:
-          description: "Data de expiração da ordem de compra ou venda (formato YYYY-MM-DDTHH:mm:SS.MMMZ). Campo retornado apenas para ordens com <i>status</i> CREATED."
+          description: "Data de expiração da ordem de compra ou venda. Campo retornado apenas para ordens com <i>status</i> CREATED."
           format: date-time
           type: string
 
