@@ -14,6 +14,7 @@ module.exports = [
 	"totp",
 	"paybill",
 	"pix",
-	"ted"
+	"ted",
+	"credit"
 	
 ]

@@ -56,6 +56,7 @@ jobs:
             ./apis/v1/fee/schema.yaml
             ./apis/v1/cards/transactions/schema.yaml
             ./apis/v1/crypto/schema.yaml
+            ./apis/v1/credit/schema.yaml
     
   deployDev:
     name: "Deploy / Dev"
@@ -169,6 +170,12 @@ jobs:
         name: Publish Invoice to Reference to readme.io
         with:
           rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Credit to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+  
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -268,3 +275,8 @@ jobs:
         name: Invoice to Reference to readme.io
         with:
           rdme: openapi './apis/v1/cards/invoices/schema.yaml' --id=${{ secrets.INVOICE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+        
+      - uses: readmeio/rdme@7.0.3
+        name: Credit to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
