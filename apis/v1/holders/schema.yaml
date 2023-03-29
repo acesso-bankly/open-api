@@ -1011,8 +1011,6 @@ components:
         documentNumber:
           type: string
           description: Número do documento CPF. Informe somente os números.
-          nullable: true
-          readOnly: true
         registerName:
           type: string
           description: Nome conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do representante legal.
