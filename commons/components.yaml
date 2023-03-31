@@ -37,7 +37,7 @@ components:
         default: 2
 
     Authorization: 
-      name: authorization
+      name: Authorization
       in: header 
       required: true
       style: simple
@@ -132,6 +132,14 @@ components:
       schema:
         $ref: '#/components/schemas/AccountNumber'
     
+    X-bkly-pix-user-id:
+      name: x-bkly-pix-user-id
+      in: header
+      description: Número do documento do usuário que está fazendo a requisição. Insira apenas números, sem formatação. 
+      required: true
+      schema:
+        type: string
+
     X-Company-Key:
       name: x-company-key
       in: header

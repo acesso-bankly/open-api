@@ -270,24 +270,15 @@ paths:
       operationId: GetAccountEntriesAsync
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
         - name: accountNumber
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que solicita a consulta.
-          required: true
-          schema:
-            type: string
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
       responses:
         "200":
           description: Chave encontrada.
@@ -319,17 +310,12 @@ paths:
         </div>
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
           in: header
           required: true
           schema:
             type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
-          required: true
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
@@ -370,11 +356,8 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: documentNumber
           in: query
           required: true
@@ -423,17 +406,8 @@ paths:
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: claimId
           in: path
           required: true
@@ -475,11 +449,8 @@ paths:
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: claimId
           in: path
           required: true
@@ -487,12 +458,6 @@ paths:
           schema:
             type: string
             nullable: true
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
-          required: true
-          schema:
-            type: string
         - name: x-bkly-transactional-hash
           in: header
           description: O envio desse campo no header da requisição é obrigatório <b>apenas</b> para reivindicação de chaves do tipo <b>e-mail</b> e <b>telefone</b>. Ele deve ser preenchido com o hash gerado na criação do código TOTP.
@@ -527,17 +492,8 @@ paths:
         </div>
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação. 
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
           application/json:
@@ -569,17 +525,8 @@ paths:
         [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que está fazendo a requisição. Insira apenas números, sem formatação.
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: claimId
           in: path
           required: true
@@ -633,11 +580,7 @@ paths:
       operationId: CreateEntryAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -678,24 +621,15 @@ paths:
       operationId: GetAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
             nullable: true
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que solicita a consulta.
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
         '200':
           description: Recurso encontrado.
@@ -731,24 +665,15 @@ paths:
       operationId: DeleteAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: addressingKeyValue
           in: path
           required: true
           schema:
             type: string
-            nullable: true
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Deve informar o número do documento do cliente que solicita a exclusão da chave.
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+            nullable: true        
       responses:
         '200':
           description: Chave excluída com sucesso.
@@ -789,16 +714,8 @@ paths:
       operationId: CreatePixCashOutTransactionAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -844,6 +761,9 @@ paths:
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: accountNumber
           in: path
           required: true
@@ -855,19 +775,7 @@ paths:
           required: true
           schema:
             type: string
-            nullable: true
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que solicita a consulta.
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+            nullable: true        
       responses:
         '200':
           description: Consulta retornada com sucesso.
@@ -954,16 +862,8 @@ paths:
       operationId: CreateStaticQRCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
-        - name: x-bkly-pix-user-id
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -1000,11 +900,7 @@ paths:
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type : string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
           application/json:
@@ -1047,17 +943,8 @@ paths:
       operationId: DecodeQRCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: x-bkly-pix-user-id
-          in: header
-          description: Informe o número do documento do cliente que solicita a leitura do QR Code.
-          required: true
-          schema:
-            type: string  
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string  
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization" 
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -1134,7 +1021,7 @@ components:
       schema:
         type: string
         nullable: true
-
+  
   schemas:
     DocumentNumberType:
       enum:
@@ -1807,6 +1694,7 @@ components:
         description:
           type: string
           nullable: true
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. O texto deve conter no máximo 140 caracteres.
         sender:
           $ref: '#/components/schemas/PersonRequestSender'
         initializationType:
