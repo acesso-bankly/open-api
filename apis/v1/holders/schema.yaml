@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding Completo](https://docs.bankly.com.br/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
