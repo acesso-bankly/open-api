@@ -77,7 +77,7 @@ paths:
       summary: Consulta do resultado da análise do documento
       description: |
         <div class="bkly-ref-description">
-          <p>Após realizar o [envio de documentos pessoais para análise com o ID ONE](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one), utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
+          <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
         </div>  
