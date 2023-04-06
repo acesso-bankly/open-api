@@ -2173,7 +2173,6 @@ components:
           type: string
           description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
-        recipient:
 
       additionalProperties: false
 
