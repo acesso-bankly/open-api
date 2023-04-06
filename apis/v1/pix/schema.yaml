@@ -747,7 +747,7 @@ paths:
       summary: Consulta do status da transação
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a consulta do status dos pagamentos realizados via Pix. Para isso, é necessário ter um <b>AuthenticationCode</b> válido.</p>
+          <p>Realize a consulta do status das transferências e pagamentos realizados via Pix. Para isso, é necessário ter um <b>authenticationCode</b> válido.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.read</span>
         </div>
         [block:callout]
@@ -2092,8 +2092,11 @@ components:
           $ref: '#/components/schemas/BankStatus'
         documentNumber:
           type: string
-          description: Número do documento (CPF ou CNPJ).
+          description: Número do documento.
           nullable: true
+        documentType:
+          type: string
+          description: Tipo de documento (CPF ou CNPJ).
         name:
           type: string
           description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
