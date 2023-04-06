@@ -1973,7 +1973,7 @@ components:
       properties:
         name:
           type: string
-          description: "Nome do pagador."
+          description: "Nome do pagador. O valor máximo é de <b>15 caracteres</b> para esse campo."
           nullable: true
         documentNumber:
           type: string
