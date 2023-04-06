@@ -714,7 +714,6 @@ paths:
       operationId: CreatePixCashOutTransactionAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
@@ -747,7 +746,7 @@ paths:
       summary: Consulta do status da transação
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a consulta do status dos pagamentos realizados via Pix. Para isso, é necessário ter um <b>AuthenticationCode</b> válido.</p>
+          <p>Realize a consulta do status das transferências e pagamentos realizados via Pix. Para isso, é necessário ter um <b>authenticationCode</b> válido.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.read</span>
         </div>
         [block:callout]
@@ -761,7 +760,6 @@ paths:
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: accountNumber
@@ -799,7 +797,7 @@ paths:
       summary: Devolução de transferência Pix
       description: |
         <div class="bkly-ref-description">
-          <p><b>Importante!</b> Para realizar uma devolução, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
+          <p>Realize a devolução de valores recebidos via Pix. <b>Importante!</b> Para que uma devolução possa ocorrer, é necessário que a transação tenha acontecido dentro dos últimos 90 dias.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.create</span>
         </div>
         [block:callout]
@@ -812,11 +810,7 @@ paths:
       operationId: CreateRefundAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - name: authorization
-          in: header 
-          required: true
-          schema:
-            type : string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -829,7 +823,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePixRefundRequest'
+                $ref: '#/components/schemas/CreatPixRefundResponse'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
@@ -837,8 +831,7 @@ paths:
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
-      
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'      
       security:
         - Bearer: []
         
@@ -993,7 +986,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
-
 
 components:
   parameters:
@@ -1751,7 +1743,7 @@ components:
           type: string
           description: Identificador retornado nas operações de cash-out. Seu valor é utilizado para verificar os status da transação no endpoint de consulta de status.
       additionalProperties: false
-   
+
     CreatePixRefundRequest:
       type: object
       required:
@@ -1760,18 +1752,16 @@ components:
         - amount
         - refundCode
       properties:
-        correlationId:
-          type: string
-          nullable: true
-          readOnly: true
         account:
-          $ref: '#/components/schemas/AccountSenderResponse'
+          $ref: '#/components/schemas/AccountSender'
         authenticationCode:
           type: string
           format: uuid
+          description: Código de autenticação do pagamento.
         amount:
           type: number
           format: double
+          description: Valor devolvido.
         refundCode:
           $ref: '#/components/schemas/RefundCode'
         refundReason:
@@ -1782,6 +1772,36 @@ components:
           nullable: true
       additionalProperties: false
    
+    CreatPixRefundResponse:
+      type: object
+      properties:
+        authenticationCode: 
+          type: string
+          format: uuid
+          description: Código de autenticação do pagamento.
+        amount:
+          type: number
+          format: double
+          description: Valor devolvido.
+        description: 
+          type: string
+          description: Descrição da devolução.
+        correlationId:
+          type: string
+          description: GUID da requisição.
+        sender:
+          $ref: '#/components/schemas/PixPersonSenderResponse'
+        recipient:
+          $ref: '#/components/schemas/PixPersonRecipientResponse'
+        status:
+          $ref: '#/components/schemas/PixTransferStatusResponse'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
     CreateStaticQRCodeRequest:
       required:
         - addressingKey
@@ -2069,8 +2089,11 @@ components:
           $ref: '#/components/schemas/BankStatus'
         documentNumber:
           type: string
-          description: Número do documento (CPF ou CNPJ).
+          description: Número do documento.
           nullable: true
+        documentType:
+          type: string
+          description: Tipo de documento (CPF ou CNPJ).
         name:
           type: string
           description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
@@ -2093,6 +2116,26 @@ components:
           description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
       additionalProperties: false
+    
+    PixPersonRecipientResponse:
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountRecipientResponse'
+        bank:
+          $ref: '#/components/schemas/BankRecipientResponse'
+        documentNumber:
+          type: string
+          description: Número do documento.
+          nullable: true
+        documentType:
+          type: string
+          description: Tipo de documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+      additionalProperties: false
 
     PixPersonSender:
       type: object
@@ -2109,6 +2152,28 @@ components:
           type: string
           description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
           nullable: true
+      additionalProperties: false
+    
+    PixPersonSenderResponse:
+      type: object
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountSenderResponse'
+        bank:
+          $ref: '#/components/schemas/BankSenderResponse'
+        documentNumber:
+          type: string
+          description: Número do documento.
+          nullable: true
+        documentType:
+          type: string
+          description: Tipo de documento (CPF ou CNPJ).
+          nullable: true
+        name:
+          type: string
+          description: Nome de registro conforme consta no cadastro da conta.<br /> Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa.
+          nullable: true
+
       additionalProperties: false
 
     PixTransferResponse:
