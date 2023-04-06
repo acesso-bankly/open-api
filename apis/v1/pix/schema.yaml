@@ -714,7 +714,6 @@ paths:
       operationId: CreatePixCashOutTransactionAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
@@ -761,7 +760,6 @@ paths:
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: accountNumber
@@ -988,7 +986,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
-
 
 components:
   parameters:
