@@ -1850,7 +1850,8 @@ components:
         value:
           type: string
           description: Número do documento.
-
+      additionalProperties: false
+      
     DonorInfo:
       type: object
       required:
