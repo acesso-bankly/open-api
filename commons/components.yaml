@@ -401,6 +401,14 @@ components:
         Location:
           $ref: '#/components/headers/Location'
     
+    '204':
+      description: A requisição foi aceita e está sendo processada.
+      headers:
+        x-bkly-correlation-id:
+          $ref: '#/components/headers/CorrelationId'
+        Location:
+          $ref: '#/components/headers/Location'
+    
     '400':
       description: Há algum problema com a sua requisição.
       headers:

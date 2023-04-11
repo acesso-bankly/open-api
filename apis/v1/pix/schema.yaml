@@ -675,12 +675,8 @@ paths:
             type: string
             nullable: true        
       responses:
-        '200':
-          description: Chave excluída com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetEntryResponse'
+        '204':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
@@ -1845,6 +1841,16 @@ components:
           type: string
       additionalProperties: false
     
+    Document:
+      type: object
+      properties: 
+        type: 
+          type: string
+          description: Tipo de documento, o qual pode ser CPF ou CNPJ.
+        value:
+          type: string
+          description: Número do documento.
+
     DonorInfo:
       type: object
       required:
@@ -1931,7 +1937,7 @@ components:
         socialName: 
           type: string
         document:
-         type: string
+          $ref: '#/components/schemas/Document'
       additionalProperties: false
  
     HolderType:
