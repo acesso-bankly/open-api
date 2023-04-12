@@ -675,12 +675,8 @@ paths:
             type: string
             nullable: true        
       responses:
-        '200':
-          description: Chave excluída com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetEntryResponse'
+        '204':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/204'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
@@ -1021,6 +1017,7 @@ components:
           - CNPJ
       type: string
       description: Tipo do documento.
+    
     Document:
       type: object
       properties:
@@ -1031,6 +1028,7 @@ components:
         type:
           $ref: "#/components/schemas/DocumentNumberType"
       additionalProperties: false
+    
     BookmarkContact:
       type: object
       properties:
@@ -1045,6 +1043,7 @@ components:
           description: Situação da conta favorecida (Enabled - Disabled ou Active - Inactive).
           nullable: true
       additionalProperties: false
+    
     BookmarkBasicResponse:
       type: object
       properties:
@@ -1055,6 +1054,7 @@ components:
         contact:
             $ref: "#/components/schemas/BookmarkContact"
       additionalProperties: false
+    
     BookmarkAccountType:
       enum:
       - Checking
@@ -1063,6 +1063,7 @@ components:
       - Payment
       type: string
       description: Tipo de conta.
+    
     BookmarkBank:
       type: object
       properties:
@@ -1078,6 +1079,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    
     BookmarkAccount:
       type: object
       properties:
@@ -1094,6 +1096,7 @@ components:
         bank:
           $ref: "#/components/schemas/BookmarkBank"
       additionalProperties: false
+    
     BookmarkDetailedResponse:
       type: object
       properties:
@@ -1107,7 +1110,6 @@ components:
             items: {$ref: "#/components/schemas/BookmarkAccount"}
             nullable: true
       additionalProperties: false
-
 
     Account:
       required:
@@ -1844,7 +1846,7 @@ components:
         encodedValue:
           type: string
       additionalProperties: false
-    
+
     DonorInfo:
       type: object
       required:
@@ -1931,7 +1933,7 @@ components:
         socialName: 
           type: string
         document:
-         type: string
+          $ref: '#/components/schemas/Document'
       additionalProperties: false
  
     HolderType:
