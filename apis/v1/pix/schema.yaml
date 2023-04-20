@@ -958,7 +958,7 @@ paths:
                   qrCodeType:
                     description: Informa se o QR Code é estático ou dinâmico. 
                     type: string
-                  PayerQrCodeDynamicResponse:
+                  payer:
                     $ref: '#/components/schemas/PayerQrCodeDynamicResponse'
                   holder:
                     $ref: '#/components/schemas/PersonalInformationHolder'  
