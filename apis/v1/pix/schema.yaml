@@ -922,13 +922,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
-        [block:callout]
-        {
-          "type": "info",
-          "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Decodificação de QR Code](/docs/pix-decodificacao-qrcode)."
-        }
-        [/block]
+        
       operationId: DecodeQRCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
