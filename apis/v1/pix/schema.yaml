@@ -958,6 +958,8 @@ paths:
                   qrCodeType:
                     description: Informa se o QR Code é estático ou dinâmico. 
                     type: string
+                  payer:
+                    $ref: '#/components/schemas/PayerQrCodeDynamicResponse'
                   holder:
                     $ref: '#/components/schemas/PersonalInformationHolder'  
                   bank:
@@ -1989,6 +1991,24 @@ components:
       additionalProperties: false
       description: Objeto que contém informações sobre o pagador.
 
+    PayerQrCodeDynamicResponse:
+      description: Objeto que contém informações sobre o pagador. Reetornado apenas na decodificação de <b>QR Codes dinâmicos</b>.
+      properties:
+        name:
+          type: string
+          description: "Nome do pagador. O valor máximo é de <b>15 caracteres</b> para esse campo."
+          nullable: true
+        documentNumber:
+          type: string
+          description: "Número do documento do pagador."
+          nullable: true
+        type:
+          $ref: "#/components/schemas/PersonType"
+          description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica)."
+        address:
+          $ref: "#/components/schemas/Address"
+      additionalProperties: false
+      
     Payment:
       type: object
       properties:

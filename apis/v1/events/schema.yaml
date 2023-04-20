@@ -19,16 +19,8 @@ paths:
         </div>  
       operationId: RegisterWebhookAsync
       parameters:
-        - name: api-version
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
           content:
             application/json:
@@ -58,6 +50,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+    
     get:
       tags:
         - Configurações dos webhooks
@@ -87,15 +80,8 @@ paths:
             minimum: 1
             type: integer
             format: int32
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
           description: Recurso encontrado
@@ -136,15 +122,8 @@ paths:
             minLength: 1
             type: string
             format: uuid
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
           description: Recurso encontrado.
@@ -163,13 +142,14 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+    
     patch:
       tags:
           - Configurações dos webhooks
       summary: Alteração da configuração
       description: |
         <div class="bkly-ref-description">
-          <p>Altere a chave pública, a chave privada e/ou a URI do endpoint de um webhook Bankly.</p> 
+          <p>Altere a chave pública, a chave privada e/ou a URI do endpoint dde um webhook configurado pelo parceiro.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>  
@@ -182,15 +162,8 @@ paths:
           schema: 
             type: string
             format: uuid
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
           application/json:
@@ -214,6 +187,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+    
     delete: 
       tags:
         - Configurações dos webhooks
@@ -233,15 +207,8 @@ paths:
             minLength: 1
             type: string
             format: uuid
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '204':
           description: A requisição foi processada com sucesso, mas não há conteúdo
@@ -310,16 +277,8 @@ paths:
             minimum: 1
             type: integer
             format: int32
-        - name: api-version
-          in: header
-          required: true
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
           description: Recurso encontrado.
@@ -346,7 +305,7 @@ paths:
       summary: Reprocessamento de mensagens
       description: | 
         <div class="bkly-ref-description">
-          <p>Reenvie uma mensagem processada a partir do seu id de idempotência.</p>
+          <p>Reenvie uma mensagem processada a partir de sua chave de idempotência.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
         </div>
@@ -359,17 +318,12 @@ paths:
           minLength: 1
           type: string
           format: uuid
-      - name: authorization
-        in: header
-        required: true
-        schema:
-          type: string
-      - name: api-version
-        in: header
-        schema:
-          type: string
+          description:  Chave de idempotência, utilizada para evitar a duplicidade de transações.
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+      - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      
       responses:
-        '200':
+        '202':
           description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
@@ -407,15 +361,8 @@ paths:
             minLength: 1
             type: string
             format: uuid
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '204':
           description: A requisição foi processada com sucesso, mas não há conteúdo a ser retornado.
@@ -451,15 +398,8 @@ paths:
             minLength: 1
             type: string
             format: uuid
-        - name: api-version
-          in: header
-          schema:
-            type: string
-        - name: authorization
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '204':
           description: Requisição foi processada com sucesso, mas não há conteúdo
@@ -478,6 +418,131 @@ paths:
 
 components:
   schemas:
+    HookResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        context:
+          type: string
+          nullable: true
+        eventName:
+          type: string
+          nullable: true
+        uri:
+          type: string
+          nullable: true
+        publicKey:
+          type: string
+          nullable: true
+      additionalProperties: false 
+
+    HookResponseSuccessResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/HookResponse"
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false  
+     
+    Link:
+      type: object
+      properties:
+        url:
+          type: string
+          nullable: true
+        rel:
+          type: string
+          nullable: true
+        method:
+          type: string
+          nullable: true
+      additionalProperties: false  
+     
+    ProcessedMessageSearchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProcessedMessageSearchResponseItem"
+          nullable: true
+          readOnly: true
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        meta:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties: false
+          nullable: true
+      additionalProperties: false   
+    
+    ProcessedMessageSearchResponseItem:
+      type: object
+      properties:
+        idempotencyKey:
+          type: string
+          format: uuid
+          description:  Chave de idempotência, utilizada para evitar a duplicidade de transações.
+        state:
+          $ref: "#/components/schemas/ProcessedMessageState"
+        destination:
+          type: string
+          nullable: true
+          description: URI de destino da mensagem.
+        sentDate:
+          type: string
+          format: date-time
+          description: Data de envio da mensagem.
+        eventName:
+          type: string
+          nullable: true
+          description: Nome do evento.
+        retryCount:
+          type: integer
+          format: int32
+          description: Número de tentativas de reenvio.
+        elapsedEventCapture:
+          type: string
+          format: date-span
+          description: Tempo de captura do evento.
+        elapsedHttpCall:
+          type: string
+          format: date-span
+          description: Tempo de execução da chamada Http.
+        context:
+          type: string
+          nullable: true
+          description: Contexto em que os eventos foram enviados. 
+      additionalProperties: false
+    
+    ProcessedMessageState:
+      enum:
+        - Success
+        - Failed
+        - Hold
+      type: string
+    
     WebhookRegistrationRequest:
       required:
         - context
@@ -519,68 +584,7 @@ components:
           minLength: 1
           type: string
       additionalProperties: false
-    HookResponseSuccessResponse:
-      type: object
-      properties:
-        data:
-          $ref: "#/components/schemas/HookResponse"
-        links:
-          type: array
-          items:
-            $ref: "#/components/schemas/Link"
-          nullable: true
-          readOnly: true
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: false
-          nullable: true
-      additionalProperties: false  
-    HookResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          nullable: true
-        context:
-          type: string
-          nullable: true
-        eventName:
-          type: string
-          nullable: true
-        uri:
-          type: string
-          nullable: true
-        publicKey:
-          type: string
-          nullable: true
-      additionalProperties: false  
-    Link:
-      type: object
-      properties:
-        url:
-          type: string
-          nullable: true
-        rel:
-          type: string
-          nullable: true
-        method:
-          type: string
-          nullable: true
-      additionalProperties: false  
-    WebhookSearchResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/WebhookSearchItemResponse"
-          nullable: true
-          readOnly: true
+
     WebhookSearchItemResponse:
       type: object
       properties:
@@ -613,11 +617,23 @@ components:
         status:
           $ref: "#/components/schemas/WebhookStatus"
       additionalProperties: false
+
+    WebhookSearchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/WebhookSearchItemResponse"
+          nullable: true
+          readOnly: true
+    
     WebhookStatus:
       enum:
         - Disabled
         - Enabled
       type: string
+    
     WebhookUpdateRequest:
       required:
         - privateKey
@@ -641,60 +657,3 @@ components:
           minLength: 1
           type: string
       additionalProperties: false 
-    ProcessedMessageState:
-      enum:
-        - Success
-        - Failed
-      type: string
-    ProcessedMessageSearchResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/ProcessedMessageSearchResponseItem"
-          nullable: true
-          readOnly: true
-        links:
-          type: array
-          items:
-            $ref: "#/components/schemas/Link"
-          nullable: true
-          readOnly: true
-        meta:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: false
-          nullable: true
-      additionalProperties: false   
-    ProcessedMessageSearchResponseItem:
-      type: object
-      properties:
-        idempotencyKey:
-          type: string
-          format: uuid
-        state:
-          $ref: "#/components/schemas/ProcessedMessageState"
-        destination:
-          type: string
-          nullable: true
-        sentDate:
-          type: string
-          format: date-time
-        eventName:
-          type: string
-          nullable: true
-        retryCount:
-          type: integer
-          format: int32
-        elapsedEventCapture:
-          type: string
-          format: date-span
-        elapsedHttpCall:
-          type: string
-          format: date-span
-        context:
-          type: string
-          nullable: true
-      additionalProperties: false
