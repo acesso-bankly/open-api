@@ -2009,30 +2009,39 @@ components:
         baseValue:
           type: number
           format: double
+          description: 	Valor de base.
         interestValue:
           type: number
           format: double
+          description: Valor de juros.
         penaltyValue:
           type: number
           format: double
+          description: Valor de multa.
         discountValue:
           type: number
           format: double
+          description: Valor do desconto.
+        reductionValue:
+          type: number
+          format: double
+          description: Valor do abatimento.
         totalValue:
           type: number
           format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do total da compra ou transferência.
+          description: Valor do total da compra ou transferência.
         dueDate:
           type: string
           format: date-time
+          description: 	Data de vencimento do pagamento.
         changeValue:
           type: number
           format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Troco</b>.<br /> Indica o valor do troco em espécie.
+          description: Valor do troco em espécie. <br /> Retornado apenas em caso de <b>decodificação de QR Code para Pix Troco</b>. 
         withdrawalValue:
           type: string
           format: double
-          description: Retornado em caso de <b>decodificação de QR Code para Pix Saque</b>.<br /> Indica o valor do saque em espécie.
+          description: Valor do saque em espécie. <br /> Retornado apenas em caso de <b>decodificação de QR Code para Pix Saque</b>. 
       additionalProperties: false
     
     PersonalInformationHolder:
