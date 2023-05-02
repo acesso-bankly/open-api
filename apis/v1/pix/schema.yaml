@@ -889,6 +889,8 @@ paths:
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
