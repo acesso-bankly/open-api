@@ -2005,6 +2005,19 @@ components:
           $ref: "http://localhost:3320/commons/components#/components/schemas/BankBranch"
         number:
           $ref: "http://localhost:3320/commons/components#/components/schemas/AccountNumber"
+        type:
+          description: Tipo de conta.
+          type: string
+          enum:
+            - checking
+            - payment
+        bank:
+          description: Objeto que contém os dados bancários da conta.
+          $ref: "#/components/schemas/Bank"
+        programId:
+          description: Identificador do programa de contas que determina o tipo de conta.
+          type: string
+        
       additionalProperties: false
 
     ReasonType:
@@ -2034,9 +2047,6 @@ components:
 
     accountDetailedExample:
       value:
-        branch: "0001"
-        number: "123456"
-        status: "ACTIVE"
         balance:
           available:
             amount: 0.00
@@ -2047,6 +2057,14 @@ components:
           blocked:
             amount: 0.00
             currency: "BRL"
+        branch: "0001"
+        number: "123456"
+        status: "ACTIVE"
+        type: "Checking"
+        bank:
+          ispb: "13140088" 
+          code: "332"
+          name: "Acesso Soluções De Pagamento SA - Instituição de Pagamento"
       summary: Conta de pagamento com saldo
 
     listOfAccounts:
