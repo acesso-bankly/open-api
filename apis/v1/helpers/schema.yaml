@@ -22,19 +22,15 @@ paths:
       parameters:
         - name: zipCode
           in: path
-          description: O CEP correspondente ao endereço
+          description: Código postal correspondente ao endereço.
           required: true
           schema:
             type: string
-            description: O CEP correspondente ao endereço
+            description: Código postal correspondente ao endereço.
             nullable: true
             example: '05402100'
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         '200':
           description: Recurso encontrado
@@ -415,33 +411,34 @@ components:
       required: true
       schema:
         type: string
+  
   schemas:
     Address:
       type: object
       properties:
         zipCode:
           type: string
-          description: O CEP correspondente ao endereço
+          description: Código postal correspondente ao endereço.
           nullable: true
         addressLine:
           type: string
-          description: Nome da rua (ou avenida)
+          description: Nome da rua (ou avenida).
           nullable: true
         neighborhood:
           type: string
-          description: Nome do bairro ou distrito
+          description: Nome do bairro ou distrito.
           nullable: true
         city:
           type: string
-          description: Nome da cidade
+          description: Nome da cidade.
           nullable: true
         state:
           type: string
-          description: "Sigla do estado brasileiro conforme a ISO 3166-2:BR.\r\n'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'"
+          description: "Sigla do estado brasileiro, conforme a ISO 3166-2:BR.\r\n'AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG','MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'"
           nullable: true
         country:
           type: string
-          description: 'Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR.'
+          description: 'Sigla do país (Brasil), conforme a ISO 3166-2. Exemplo: BR.'
           nullable: true
       additionalProperties: false
     
