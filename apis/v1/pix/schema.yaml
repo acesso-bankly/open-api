@@ -1686,7 +1686,7 @@ components:
         description:
           type: string
           nullable: true
-          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. O texto deve conter no máximo 140 caracteres.
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. O texto pode conter no máximo 140 caracteres e não aceita nenhum caractere especial (exceto hífen).
         sender:
           $ref: '#/components/schemas/PersonRequestSender'
         initializationType:
