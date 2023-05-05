@@ -422,7 +422,7 @@ components:
           nullable: true
         addressLine:
           type: string
-          description: Nome da rua (ou avenida).
+          description: Logradouro (nome da rua, avenida etc.).
           nullable: true
         neighborhood:
           type: string
