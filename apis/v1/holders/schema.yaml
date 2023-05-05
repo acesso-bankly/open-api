@@ -94,7 +94,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
             <p>Realize a atualização de determinados dados cadastrais de clientes do tipo pessoa física.</p>
-            <span class="bkly-ref-small-beta-tag">beta</span> 
+            <span class="bkly-ref-small-stable-tag">stable</span> 
             <span class="bkly-ref-scope-tag">scope: customer.update</span>
           </div>   
       parameters:
