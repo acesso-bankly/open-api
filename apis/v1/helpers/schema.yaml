@@ -488,7 +488,7 @@ components:
           nullable: true
         code:
           type: string
-          description: Código do banco. Este campo somente é retornado caso a instituição seja participante do SPB (possui TED). As instituições que participam somente do SPI (que só possuem PIX) não retornarão o campo <code>code</code> nessa pesquisa.
+          description: Código do banco. Este campo somente é retornado caso a instituição seja participante do SPB (possui TED). As instituições que participam somente do SPI (que só possuem Pix) não retornarão o campo <code>code</code> nessa pesquisa.
           nullable: true
         shortName:
           type: string
