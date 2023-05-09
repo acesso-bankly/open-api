@@ -79,7 +79,7 @@ components:
       name: accountNumber
       in: path
       description: |
-        Número da conta de pagamento.
+        Número da conta.
       required: true
       style: simple
       explode: false
