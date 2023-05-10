@@ -93,7 +93,7 @@ paths:
       summary: Listagem de instituições financeiras
       description: |
         <div class="bkly-ref-description">
-          <p>Obtenha uma lista de instituições financeiras e suas informações, como o ISPB, os produtos ofertados, o tipo de banco (se é folha, destino ou ambos), dentre outros.</p>
+          <p>Obtenha uma lista de instituições financeiras e suas informações, como o ISPB, os produtos ofertados, o tipo de banco (se é folha, destino ou ambos), dentre outras.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: banklist.read</span>
          [block:callout]
@@ -136,16 +136,12 @@ paths:
             type: string
             description: Quantidade de bancos a serem exibidos por página.
             default: 20
-        - name: api-version
-          in: header
-          description: Versão da API. Atualmente estamos na 1.0.
-          required: true
-          schema:
-            type: string
-        - $ref: "#/components/parameters/authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -479,7 +475,6 @@ components:
       type: string
       description: Nome do produto.
 
-
     Bank:
       type: object
       properties:
@@ -493,7 +488,7 @@ components:
           nullable: true
         code:
           type: string
-          description: Código do banco. Normalmente identificado nas transferências STR (TED). Este campo somente é retornado caso a instituição seja participante do PIX.
+          description: Código do banco. Este campo somente é retornado caso a instituição seja participante do SPB (possui TED). As instituições que participam somente do SPI (que só possuem Pix) não retornarão o campo <code>code</code> nessa pesquisa.
           nullable: true
         shortName:
           type: string
@@ -513,7 +508,7 @@ components:
           type: array
           items:
             type: string
-          description: Lista que contém as funções do banco, referente à portabilidade de salário ("Payroll" e/ou "Destination"). Este campo somente é retornado caso o banco possua portabilidade de salário (accountPortability) como produto.
+          description: Lista que contém as funções do banco, referentes à portabilidade de salário ("Payroll" e/ou "Destination"). Este campo somente é retornado caso o banco possua portabilidade de salário (accountPortability) como produto.
       additionalProperties: false  
 ## TODO: colocar ponto final
   securitySchemes:
