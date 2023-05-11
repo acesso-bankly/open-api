@@ -29,6 +29,7 @@ paths:
       operationId: UploadDocument
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
       requestBody:
         content:
@@ -84,6 +85,7 @@ paths:
       operationId: GetDocumentAnalysis
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: '#/components/parameters/ResultLevel'
         - $ref: '#/components/parameters/AnalysisToken'
@@ -127,6 +129,7 @@ paths:
         </div>
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
       requestBody:
         required: true
