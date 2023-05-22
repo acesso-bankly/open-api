@@ -89,7 +89,7 @@ paths:
       summary: Consulta de contas
       description: |
         <div class="bkly-ref-description">
-          <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus respectivos status.</p> 
+          <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus <i>status</i>.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
@@ -185,7 +185,7 @@ paths:
       summary: Consulta de contas
       description: |
         <div class="bkly-ref-description">
-          <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
+          <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus <i>status</i>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
