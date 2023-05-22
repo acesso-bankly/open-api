@@ -86,7 +86,7 @@ paths:
     get:
       tags:
         - Conta pessoa física
-      summary: Consulta de contas do cliente pessoa física
+      summary: Consulta de contas
       description: |
         <div class="bkly-ref-description">
           <p>Retornaremos uma lista com todas as contas desse cliente, independentemente de seus respectivos status.</p> 
@@ -126,13 +126,20 @@ paths:
     post:
       tags:
         - Conta pessoa física
-      summary: Criação de conta de pagamentos pessoa física
+      summary: Abertura de conta
       description: |
         <div class="bkly-ref-description">
-          <p>Antes de criar uma conta de pagamento, é necessário ter o registro do titular (pessoa física) previamente aprovado.</p>
+          <p>Este <i>endpoint</i> permite a criação de contas de pagamento para clientes do tipo pessoa física que tiveram seu registro previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>
+        [block:callout]
+          {
+            "type": "warning",
+            "title": "Importante",
+            "body": "Caso as [Multi accounts](https://docs.bankly.com.br/docs/multi-accounts) estejam ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+          }
+        [/block]
       operationId: CreatePersonalAccount
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
@@ -175,7 +182,7 @@ paths:
     get:
       tags:
         - Conta pessoa jurídica
-      summary: Consulta de contas do cliente pessoa jurídica
+      summary: Consulta de contas
       description: |
         <div class="bkly-ref-description">
           <p>Retornaremos uma lista com todas as contas dessa empresa, independentemente de seus respectivos status.</p>
@@ -215,26 +222,26 @@ paths:
     post:
       tags:
         - Conta pessoa jurídica
-      summary: Criação de conta de pagamentos para uma empresa
+      summary: Abertura de conta
       description: |
         <div class="bkly-ref-description">
-          <p>A empresa poderá ter até 5 contas de pagamento. Para isso, é necessário ter o registro do titular (pessoa jurídica) previamente aprovado.</p>
+          <p>Este <i>endpoint</i> permite a criação de contas de pagamento para clientes do tipo pessoa jurídica que tiveram seu registro previamente aprovado.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.create</span>
         </div>  
         [block:callout]
-        {
-          "type": "warning",
-          "title": "Importante",
-          "body": "Considere o uso do header ```Idempotency-Key```, a fim de evitar criar contas indesejadas."
-        }
+          {
+            "type": "warning",
+            "title": "Importante",
+            "body": "Caso as [Multi accounts](https://docs.bankly.com.br/docs/multi-accounts) estejam ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+          }
         [/block]
       operationId: CreateBusinessAccount
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey"
       requestBody:
         content:
           application/json:
