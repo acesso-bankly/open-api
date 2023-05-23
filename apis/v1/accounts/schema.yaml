@@ -137,7 +137,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Caso as [Multi accounts](https://docs.bankly.com.br/docs/multi-accounts) estejam ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
           }
         [/block]
       operationId: CreatePersonalAccount
@@ -233,7 +233,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Caso as [Multi accounts](https://docs.bankly.com.br/docs/multi-accounts) estejam ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
           }
         [/block]
       operationId: CreateBusinessAccount
