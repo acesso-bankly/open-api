@@ -154,7 +154,7 @@ components:
         access_token:
           type: string
           description: |
-            Token de acesso no formato JWT (Json Web Token).
+            Token de acesso.
         expires_in:
           type: string
           description: >

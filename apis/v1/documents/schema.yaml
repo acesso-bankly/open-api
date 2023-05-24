@@ -610,7 +610,6 @@ components:
       type: http
       description: Inclua o token de autorização do tipo Bearer
       scheme: bearer
-      bearerFormat: JWT
 
   examples:
     
