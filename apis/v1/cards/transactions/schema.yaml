@@ -181,7 +181,7 @@ components:
       type: http
       description: Inclua o token de autorização do tipo Bearer
       scheme: bearer
-      bearerFormat: JWT
+
 x-explorer-enabled: true
 x-samples-enabled: true
 x-samples-languages:

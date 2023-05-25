@@ -2135,7 +2135,6 @@ components:
       type: http
       description: Inclua um token de autorização do tipo Bearer.
       scheme: bearer
-      bearerFormat: JWT
 
 x-readme:
   explorer-enabled: true
