@@ -225,7 +225,7 @@ paths:
       summary: Antecipação de parcelas 
       description: |
         <div class="bkly-ref-description">
-          <p>Realize o adiantamento de parcelas referentes a um refinancimento. </p> 
+          <p>Realize o adiantamento de parcelas referentes a um refinancimento.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
         [block:callout]
