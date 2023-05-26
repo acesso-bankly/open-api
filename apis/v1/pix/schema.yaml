@@ -376,7 +376,7 @@ paths:
             $ref: "#/components/schemas/ClaimStatus"      
       responses:
         '200':
-          description: Recurso encontrado
+          description: Recurso encontrado.
           headers:
             x-bkly-correlation-id:
               description: Id correlação da operação requisitada.
@@ -413,6 +413,7 @@ paths:
           required: true
           schema:
             type: string
+            description: Identificador único do pedido. 
             nullable: true
       requestBody:
         content:
@@ -421,7 +422,7 @@ paths:
               $ref: "#/components/schemas/ClaimConfirmRequest"
       responses:
         '200':
-          description: Reivindicação confirmada.
+          description: Pedido de reivindicação confirmado.
           headers:
             x-bkly-correlation-id:
               description: Id de correlação da operação requisitada.
@@ -430,7 +431,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ClaimResponse"
+                $ref: "#/components/schemas/ClaimResponseConfirm"
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
@@ -1314,7 +1315,7 @@ components:
         - PHONE
         - EVP
       type: string
-      description: "Tipo de chave de endereçamento do DICT. Exemplo: CPF, CNPJ, EMAIL, PHONE ou EVP. Observação: chaves do tipo EVP não entram em processo de reivindicação."
+      description: "Tipo de chave de endereçamento do DICT. <b>Observação</b>: chaves do tipo EVP não entram em processo de reivindicação."
     
     Bank:
       type: object
@@ -1481,6 +1482,21 @@ components:
         bank:
           $ref: "#/components/schemas/BankClaim"
     
+    ClaimAccountClaimerConfirm:
+      type: object
+      description: Objeto que contém os dados do banco e da conta do reivindicador.
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+          nullable: true
+        number:
+          type: string
+          description: Número da conta.
+          nullable: true
+        bank:
+          $ref: "#/components/schemas/BankIspb"
+
     ClaimAccountDonor:
       type: object
       description: Objeto que contém os dados do banco e da conta do doador.
@@ -1600,6 +1616,57 @@ components:
         - SYSTEM
       type: string
 
+    ClaimResponseConfirm:
+      type: object
+      properties:
+        claimId:
+          type: string
+          nullable: true
+          description: Identificação única de pedido de portabilidade ou posse. Esse valor deverá ser utilizado todas as vezes que você realizar uma operação referente a essa reivindicação, como consulta, cancelamento etc.
+        type:
+          $ref: "#/components/schemas/ClaimType"
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        claimer:
+          $ref: "#/components/schemas/ClaimAccountClaimerConfirm"
+        donor:
+          $ref: "#/components/schemas/ClaimAccountDonor"
+        status:
+          $ref: "#/components/schemas/ClaimStatus"
+        previousStatus:
+          description: Situação que o pedido de reinvindicação apresentava em etapa anterior.
+          $ref: "#/components/schemas/ClaimStatus"
+        confirmReason:
+          $ref: "#/components/schemas/ClaimConfirmReason"
+        confirmedBy:
+          $ref: "#/components/schemas/ClaimPerson"
+        createdAt:
+          type: string
+          format: date-time
+          description: Data de criação do pedido de reivindicação.
+        updatedAt:
+          type: string
+          format: date-time
+          description: Data de atualização do pedido de reivindicação.
+          nullable: true
+        resolutionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de portabilidade realizar ações, como concluir ou cancelar o pedido de reivindicação.
+          nullable: true
+        conclusionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido.
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+          description: Data de confirmação do pedido de reivindicação.
+          nullable: true
+
+      additionalProperties: false
+
     ClaimResponseCreated:
       type: object
       properties:
@@ -1708,9 +1775,6 @@ components:
           $ref: "#/components/schemas/ClaimAccountDonor"
         status:
           $ref: "#/components/schemas/ClaimStatus"
-        previousStatus:
-          description: Situação que o pedido de reinvindicação apresentava em etapa anterior.
-          $ref: "#/components/schemas/ClaimStatus"
         confirmReason:
           $ref: "#/components/schemas/ClaimConfirmReason"
         confirmedBy:
@@ -1737,10 +1801,6 @@ components:
           format: date-time
           description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido.
           nullable: true
-        canceledAt:
-          type: string
-          format: date-time
-          nullable: true
         confirmedAt:
           type: string
           format: date-time
@@ -1750,6 +1810,11 @@ components:
           type: string
           format: date-time
           description: Data em que o pedido de reivindicação foi completado.
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          description: Data de cancelamento do pedido de reivindicação.
           nullable: true
       additionalProperties: false
 
