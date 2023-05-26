@@ -1534,7 +1534,7 @@ components:
           nullable: true
         bank:
           $ref: "#/components/schemas/BankIspb"
-        additionalProperties: false
+      additionalProperties: false
 
     ClaimCancelReason:
       description: Motivo do cancelamento do pedido de reivindicação.
