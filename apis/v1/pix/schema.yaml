@@ -1692,7 +1692,7 @@ components:
         addressingKey:
           $ref: "#/components/schemas/AddressingKey"
         claimer:
-          $ref: "#/components/schemas/ClaimAccount"
+          $ref: "#/components/schemas/ClaimAccountClaimer"
         bank:
           $ref: "#/components/schemas/ClaimBank"
       additionalProperties: false
