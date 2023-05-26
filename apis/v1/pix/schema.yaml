@@ -514,7 +514,7 @@ paths:
       summary: Cancelamento de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
-          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Somento o <b>doador</b> pode realizar o cancelamento, desde que o status do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
+          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Somento o <b>doador</b> pode realizar o cancelamento, desde que o <i>status</i> do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
@@ -522,16 +522,22 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de e-mail e telefone após validar a posse da chave através do código TOTP."
+          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de <i>e-mail</i> e telefone após validar a posse da chave por meio do código TOTP."
         }
         [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: x-bkly-transactional-hash
+          in: header
+          description: O envio desse campo no header da requisição é obrigatório <b>apenas</b> para reivindicação de chaves do tipo <b>e-mail</b> e <b>telefone</b>. Ele deve ser preenchido com o hash gerado na criação do código TOTP.
+          schema:
+            type: string         
         - name: claimId
           in: path
           required: true
+          description: Identificador único do pedido. Esse valor é retornado na criação de pedido de reivindicação de chave, no evento PIX_CLAIM_WAS_CONFIRMED e na consulta de pedidos de reivindicação. 
           schema:
             type: string
             nullable: true
