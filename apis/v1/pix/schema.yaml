@@ -387,7 +387,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ClaimResponse"
+                  $ref: "#/components/schemas/ClaimResponseQuery"
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
       security:
@@ -1350,6 +1350,14 @@ components:
 
       additionalProperties: false
     
+    BankIspb:
+      type: object
+      properties:
+        ispb:
+          type: string
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
+          nullable: true
+
     BankName:
       type: object
       properties:
@@ -1485,10 +1493,28 @@ components:
           type: string
           description: Número da conta.
           nullable: true
-
+        bank:
+          $ref: "#/components/schemas/BankIspb"
       additionalProperties: false
     
+    ClaimAccountQuery:
+      type: object
+      description: Objeto que contém os dados do banco e da conta do reivindicador.
+      properties:
+        branch:
+          type: string
+          description: Número da agência.
+          nullable: true
+        number:
+          type: string
+          description: Número da conta.
+          nullable: true
+        bank:
+          $ref: "#/components/schemas/BankIspb"
+        additionalProperties: false
+
     ClaimCancelReason:
+      description: Motivo do cancelamento do pedido de reivindicação.
       enum:
         - CLAIMER_REQUEST
         - DONOR_REQUEST
@@ -1506,6 +1532,7 @@ components:
           $ref: "#/components/schemas/ClaimCancelReason"
     
     ClaimConfirmReason:
+      description: Motivo da confirmação do pedido de reinvindicação.
       enum:
         - DONOR_REQUEST
         - ACCOUNT_CLOSURE
@@ -1566,6 +1593,7 @@ components:
       type: string
 
     ClaimPerson:
+      description: Autor da confirmação ou cacelamento do pedido.
       enum:
         - DONOR
         - CLAIMER
@@ -1663,6 +1691,68 @@ components:
           nullable: true
       additionalProperties: false
 
+    ClaimResponseQuery:
+      type: object
+      properties:
+        claimId:
+          type: string
+          nullable: true
+          description: Identificação única de pedido de portabilidade ou posse. Esse valor deverá ser utilizado todas as vezes que você realizar uma operação referente a essa reivindicação, como consulta, cancelamento etc.
+        type:
+          $ref: "#/components/schemas/ClaimType"
+        addressingKey:
+          $ref: "#/components/schemas/AddressingKey"
+        claimer:
+          $ref: "#/components/schemas/ClaimAccountQuery"
+        donor:
+          $ref: "#/components/schemas/ClaimAccountDonor"
+        status:
+          $ref: "#/components/schemas/ClaimStatus"
+        previousStatus:
+          description: Situação que o pedido de reinvindicação apresentava em etapa anterior.
+          $ref: "#/components/schemas/ClaimStatus"
+        confirmReason:
+          $ref: "#/components/schemas/ClaimConfirmReason"
+        confirmedBy:
+          $ref: "#/components/schemas/ClaimPerson"
+        cancelReason:
+          $ref: "#/components/schemas/ClaimCancelReason"
+        canceledBy:
+          $ref: "#/components/schemas/ClaimPerson"
+        createdAt:
+          type: string
+          format: date-time
+          description: Data de criação do pedido de reivindicação.
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        resolutionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de portabilidade realizar ações, como concluir ou cancelar o pedido de reivindicação.
+          nullable: true
+        conclusionLimitDate:
+          type: string
+          format: date-time
+          description: Data limite para o doador de posse e o reivindicador (tanto de posse como de portabilidade) confirmarem ou cancelarem o pedido.
+          nullable: true
+        canceledAt:
+          type: string
+          format: date-time
+          nullable: true
+        confirmedAt:
+          type: string
+          format: date-time
+          description: Data de confirmação do pedido de reivindicação.
+          nullable: true
+        completedAt:
+          type: string
+          format: date-time
+          description: Data em que o pedido de reivindicação foi completado.
+          nullable: true
+      additionalProperties: false
+
     ClaimType:
       enum:
         - PORTABILITY
@@ -1693,8 +1783,6 @@ components:
           $ref: "#/components/schemas/AddressingKey"
         claimer:
           $ref: "#/components/schemas/ClaimAccountClaimer"
-        bank:
-          $ref: "#/components/schemas/ClaimBank"
       additionalProperties: false
  
     CreateEntryRequest:
