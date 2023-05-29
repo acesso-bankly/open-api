@@ -514,8 +514,8 @@ paths:
       summary: Cancelamento de um pedido de reivindicação
       description: |
         <div class="bkly-ref-description">
-          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Somento o <b>doador</b> pode realizar o cancelamento, desde que o <i>status</i> do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Cancele um pedido de reivindicação de posse ou portabilidade de uma chave. Tanto o doador quanto o reivindicador poderão realizar o cancelamento, desde que o <i>status</i> do pedido de reivindicação esteja como WAITING_RESOLUTION.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: pix.claims.cancel</span>
         </div>
         [block:callout]
@@ -1537,7 +1537,7 @@ components:
       additionalProperties: false
 
     ClaimCancelReason:
-      description: Motivo do cancelamento do pedido de reivindicação.
+      description: Motivo de cancelamento do pedido de reivindicação.
       enum:
         - CLAIMER_REQUEST
         - DONOR_REQUEST
