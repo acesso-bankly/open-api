@@ -522,7 +522,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "O cliente só poderá cancelar um pedido de reivindicação de posse ou portabilidade de <i>e-mail</i> e telefone após validar a posse da chave por meio do código TOTP."
+          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de <i>e-mail</i> e telefone após validar a posse da chave por meio do código TOTP."
         }
         [/block]
       parameters:
