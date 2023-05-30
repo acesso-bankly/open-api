@@ -630,7 +630,7 @@ components:
           nullable: true
         phone:
           description: Objeto onde devem ser informados os novos dados de telefone do cliente. Recordamos que um mesmo número de telefone não poderá ser usado por dois clientes. As propriedades desse objeto somente são obrigatórias em caso de alteração de telefone.
-          $ref: "#/components/schemas/Phone"
+          $ref: "#/components/schemas/PhonePf"
         address:
           description: Objeto onde devem ser informados novos os dados de endereço do cliente. As propriedades desse objeto somente são obrigatórias em caso de alteração de endereço.
           $ref: "#/components/schemas/Address"
@@ -1468,9 +1468,23 @@ components:
         countryCode:
           minLength: 1
           type: string
-          description:
-            Código DDI do país. Por enquanto é permitido apenas 55 ou +55
-            (Brasil).
+          description: Código DDI do país. 
+        number:
+          minLength: 1
+          type: string
+          description: Número de telefone incluindo DDD.
+      additionalProperties: false
+    
+    PhonePf:
+      required:
+        - countryCode
+        - number
+      type: object
+      properties:
+        countryCode:
+          minLength: 1
+          type: string
+          description: Código DDI do país. Esteja atento à lista de países bloqueados para o Onboarding presente na página <a href="https://docs.bankly.com.br/docs/registro-pessoa-fisica">Registro de pessoa física</a>.
         number:
           minLength: 1
           type: string
@@ -1554,7 +1568,7 @@ components:
           format: date-time
         phone:
           description: Objeto onde devem ser informados os dados do telefone do cliente.
-          $ref: "#/components/schemas/Phone"
+          $ref: "#/components/schemas/PhonePf"
         address:
           description: Objeto onde devem ser informados os dados do endereço do cliente.
           $ref: "#/components/schemas/Address"
