@@ -240,7 +240,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a consulta de uma ordem específica de compra ou venda de criptomoedas.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span>
-          <span class="bkly-ref-scope-tag">scope: crypto.order.read </span>
+          <span class="bkly-ref-scope-tag">scope: crypto.order.read</span>
         </div>
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
@@ -274,15 +274,13 @@ components:
     BanklyVersion:
       name: bankly-version
       in: header
-      description: |
-        Data em que ocorreu a alteração no contrato.
-        _Neste caso, insira **2023-01-30**._
+      description: Data em que ocorreu a alteração no contrato. Neste caso, insira **2023-01-30**.
       required: true
       style: simple
       explode: false
       schema:
         type: string
-        default: "2023-01-30"
+        default: "2023-01-30" 
     
     BanklyUserId:
       name: bankly-user-id
