@@ -1,0 +1,1022 @@
+openapi: 3.0.1
+info:
+  title: ID One
+  description: |
+    Envie imagens e consulte o resultado das análises, registre, ative, desative e autorize dispositivos móveis.
+  version: '1.0'
+servers:
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
+paths:
+  /document-analysis/{documentNumber}:   
+    get:
+      tags:
+        - Análise de documentos
+      summary: Consulta do resultado da análise de imagens
+      description: |
+        <div class="bkly-ref-description">
+          <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
+        </div>  
+      operationId: GetDocumentAnalysis
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: '#/components/parameters/ResultLevel'
+        - $ref: '#/components/parameters/AnalysisToken'
+      responses:
+        '200':
+          description: Recurso encontrado
+          headers:
+            x-bkly-correlation-id:
+              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAnalysisResponse'
+              examples:
+                Selfie:
+                  $ref: '#/components/examples/Selfie'
+                DocumentFront:
+                  $ref: '#/components/examples/DocumentFront'
+                DocumentBack:
+                  $ref: '#/components/examples/DocumentBack'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '403':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
+  /devices:
+    put:
+      tags: 
+        - Gestão de dispositivos
+      summary: Registro de novo dispositivo móvel
+      description: |
+        <div class="bkly-ref-description">
+          <p>Registre um novo dispositivo móvel para um cliente (proprietário). Opcionalmente, é possível ativar o disposito informando o parâmetro <code>activate=true</code>.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: device.create</span>
+        </div>  
+      operationId: RegisterDevicesAsync
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeviceRegistrationRequest"
+      responses:
+        '201':
+          description: Recurso criado com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              $ref:
+                $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+            Location:
+              description: Localização do recurso recém-criado ou em análise.
+                schema: 
+                  type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeviceResponseSuccessResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
+  /devices/{deviceHash}:activate:
+    patch:
+      tags: 
+        - Gestão de dispositivos
+      summary: Ativação de dispositivo móvel
+      description: |
+        <div class="bkly-ref-description">
+          <p>Ative um dispositivo móvel, vinculando-o a um cliente (proprietário).</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: device.activate</span>
+        </div>  
+      operationId: ActivateDeviceAsync
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: deviceHash
+            in: path
+            required: true
+            schema: 
+              type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActivateDeviceRequest"
+      responses:
+        '200':
+          description: A requisição foi processada com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              $ref:
+                $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+          content:
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/DeviceDeactivationResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
+  /devices/{deviceHash}:deactivate:
+    patch:
+      tags: 
+        - Gestão de dispositivos
+      summary: Desativação de dispositivo móvel
+      description: |
+        <div class="bkly-ref-description">
+          <p>Desative um dispositivo móvel, desvinculando-o de um cliente (proprietário).</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: device.deactivate</span>
+        </div>  
+      operationId: DeactivateDeviceAsync
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: deviceHash
+            in: path
+            required: true
+            schema: 
+              type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeactivateDeviceRequest"
+      responses:
+        '200':
+          description: A requisição foi processada com sucesso.
+          headers:
+            x-bkly-correlation-id:
+              $ref:
+                $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+          content:
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/DeviceDeactivationResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
+  /devices/{deviceHash}:
+    get:
+      tags: 
+        - Gestão de dispositivos
+      summary: Consulta do registro de dispositivo móvel
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte o registro de um determinado dispositivo móvel. Você pode obter um resultado resumido (BASIC) ou detalhado (DETAILED).</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: device.read</span>
+        </div> 
+      operationId: GetDeviceAsync
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: deviceHash
+            in: path
+            required: true
+            schema: 
+              type: string
+      responses:
+        '200':
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              $ref:
+                $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+          content:
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/DeviceDeactivationResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+  
+  /document-analysis/{documentNumber}/deepface:
+    post:
+      tags:
+        - ID One
+      summary: Envio de documentos pessoais para análise com ID One
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o envio de imagens de documentos (SELFIE, RG, CNH, RNE, DNI ou CRNM) para o fluxo de análise com ID One.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
+        </div>
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DeepfaceDocumentAnalysis"
+            encoding:
+              documentType:
+                style: form
+              documentSide:
+                style: form
+              provider:
+                style: form
+              providerMetadata:
+                style: deepObject
+                explode: true
+              image:
+                style: form
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
+
+security:
+  - Bearer: []
+
+components:
+  parameters:  
+    ResultLevel:
+      name: resultLevel
+      in: query
+      description: |
+        Tipo de retorno da API.
+        _(ONLY_STATUS, DETAILED)_
+      required: false
+      style: form
+      explode: true
+      schema:
+        $ref: '#/components/schemas/ResultLevel'
+    
+    AnalysisToken:
+      name: token
+      in: query
+      description: Lista de tokens de análise do documento.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: array
+        description: Lista de tokens de análise do documento.
+        nullable: true
+        items:
+          type: string
+  
+  schemas:
+    ActivateDeviceRequest:
+      type: object
+      properties: 
+        owner: 
+          $ref: "#/components/schemas/Owner"
+    
+    AgeRange:
+      type: object
+      description: Faixa de idade identificada.
+      properties:
+        low:
+          description: |
+            Idade mínima detectada.
+          type: integer
+          format: int32
+          nullable: true
+        high:
+          description: |
+            Idade máxima detectada.
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    
+    AnalysisStatus:
+      type: string
+      description: |
+        Status da análise da imagem.
+        _(ANALYZING, PARTIALLY_ANALYZED, ANALYSIS_COMPLETED, UNEXPECTED_ERROR)_
+      enum:
+        - ANALYZING
+        - PARTIALLY_ANALYZED
+        - ANALYSIS_COMPLETED
+        - UNEXPECTED_ERROR
+    
+    Battery: 
+      type: object
+      properties: 
+        level:
+          type: number
+          format: double
+          nullable: true
+        isCharging: 
+          type: boolean
+          nullable: true
+      additionalProperties: false
+
+    Confidence:
+      description: |
+        Nível de confiança da análise.
+      type: number
+      format: double
+      nullable: false
+
+    Connection:
+      type: object
+      properties: 
+        carrier: 
+          type: string
+          nullable: true
+        network: 
+          $ref: "#/components/schemas/Network"
+        isAirPlaneMode: 
+          type: boolean
+          nullable: true
+        additionalProperties: false
+
+    CorporateDocumenteRequest:
+      type: object
+      required:
+        - documentType
+        - file
+      properties:
+        documentType:
+          type: string
+          description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE, BALANCE_SHEET ou POWER_OF_ATTORNEY)
+          enum:
+            - ARTICLES_OF_INCORPORATION
+            - LAST_CONTRACT_CHANGE
+            - BALANCE_SHEET
+            - POWER_OF_ATTORNEY
+        file:
+          type: string
+          format: binary
+          description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
+
+    DeactivateDeviceRequest:
+      type: object
+      properties: 
+        owner:
+          $ref: "#/components/schemas/Owner"
+      additionalProperties": false
+
+    Device:
+      type: object
+      properties: 
+        owner: 
+          $ref: "#/components/schemas/Owner"
+
+    DeviceDeactivationResponse:
+      type: object
+      properties: 
+        data: 
+          $ref: "#/components/schemas/DeviceResponse"
+        links: 
+          type: array
+          items:
+            $ref": "#/components/schemas/Link"
+          nullable: true
+          readOnly: true
+        meta:
+          type: object
+          additionalProperties: { }
+          nullable: true
+      additionalProperties": false
+
+    DeviceDetails: 
+      type: object
+      properties: 
+        system: 
+          $ref: "#/components/schemas/SystemDetails"
+        storage: 
+          $ref: "#/components/schemas/Storage"
+        connection: 
+          $ref: "#/components/schemas/Connection"
+        battery: 
+          $ref: "#/components/schemas/Battery"
+        firstInstallTime: 
+          type: integer
+          format: int64
+          nullable: true
+        isPinOrFingerPrint: 
+          type: boolean
+          nullable: true
+      additionalProperties: false
+
+    DeviceRegistrationRequest:
+      type: object
+        properties: 
+          device: 
+            $ref": "#/components/schemas/Device"
+        additionalProperties: false
+
+    DeviceResponse: 
+      type: object
+      properties: 
+        hash: 
+          type": string
+          nullable: true
+        status: 
+          $ref: "#/components/schemas/DeviceStatus"
+        createdAt: 
+          type: string
+          format: date-time
+        updatedAt: 
+          type: string
+          format: date-time
+          nullable: true
+        owner: 
+          $ref: "#/components/schemas/Owner"
+        uniqueId": 
+          type: string
+          nullable: true
+        type: 
+          type: string
+          nullable: true
+        model:
+          type: string
+          nullable: true
+        brand: 
+          type: string
+          nullable: true
+        totalMemory: 
+          type: integer
+          format: int64
+        pushToken:
+            type: string"
+            nullable: true
+        details: 
+          $ref: "#/components/schemas/DeviceDetails"
+      additionalProperties: false
+
+    DeviceResponseSuccessResponse:
+      type: object
+      properties:
+        data: 
+          $ref: "#/components/schemas/DeviceResponse"
+        links: 
+          type: array
+          items: 
+            $ref: "#/components/schemas/Link"
+            nullable: true
+            readOnly: true
+        meta: 
+          type: object
+          additionalProperties: {}
+          nullable: true
+      additionalProperties: false
+
+    DeviceStatus: 
+      enum: 
+        - INACTIVE
+        - ENABLED 
+        - DISABLED
+        - BLOCKED
+      type: string
+
+    DeepfaceDocumentAnalysis:
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType' 
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        provider: 
+          $ref: '#/components/schemas/Provider'
+        providerMetadata:
+          $ref: '#/components/schemas/ProviderMetadata'
+        image:
+          type: string
+          description: Arquivo da imagem no formato .jpeg, .jpg ou .png. 
+          format: binary
+          nullable: true
+      required:
+        - documentType
+        - documentSide
+        - image
+        - provider
+      additionalProperties: false
+    
+    DocType: 
+      enum: 
+        - CPF
+        - CNPJ
+      type: string
+
+    Document: 
+      type: object
+        properties: 
+          value: 
+            type: string
+            nullable: true
+          type: 
+            $ref: "#/components/schemas/DocType"
+        additionalProperties: false
+
+    DocumentAnalysisForm:
+      required:
+        - documentType
+        - documentSide
+        - image
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        image:
+          type: string
+          description: Arquivo da imagem (.jpeg, .jpg ou .png). Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
+          format: binary
+          nullable: true
+      
+    DocumentAnalysisResponse:
+      type: object
+      properties:
+        token:
+          description: Token da análise.
+          type: string
+          nullable: true
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        status:
+          $ref: '#/components/schemas/AnalysisStatus'
+        faceMatch:
+          $ref: '#/components/schemas/FaceMatch'
+        faceDetails:
+          $ref: '#/components/schemas/FaceDetails'
+        documentDetails:
+          $ref: '#/components/schemas/DocumentDetails'
+        liveness:
+          $ref: '#/components/schemas/Liveness'
+        analyzedAt:
+          description: Data da análise do documento.
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+   
+    DocumentDetails:
+      description: |
+        Informações extraídas documento analisado.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/OcrStatus'
+        identifiedDocumentType:
+          description: Tipo do documento detectado.
+          type: string
+          nullable: true
+        idNumber:
+          description: Número do RG.
+          type: string
+          nullable: true
+        cpfNumber:
+          description: Número do CPF.
+          type: string
+          nullable: true
+        birthDate:
+          description: Data de nascimento.
+          type: string
+          nullable: true
+        fatherName:
+          description: Nome do pai do titular do documento.
+          type: string
+          nullable: true
+        motherName:
+          description: Nome do mãe do titular do documento.
+          type: string
+          nullable: true
+        registerName:
+          description: Nome do titular do documento.
+          type: string
+          nullable: true
+        validDate:
+          description: Validade do documento.
+          type: string
+          nullable: true
+        driveLicenseCategory:
+          description: Categoria da CNH.
+          type: string
+          nullable: true
+        driveLicenseNumber:
+          description: Número da licença (CNH) do motorista.
+          type: string
+          nullable: true
+        driveLicenseFirstQualifyingDate:
+          description: Data da primeira habilitação (CNH) do motorista.
+          type: string
+          nullable: true
+        federativeUnit:
+          description: Unidade Federativa onde o documento foi emitido.
+          type: string
+          nullable: true
+        issuedBy:
+          description: Órgão emissor do documento.
+          type: string
+          nullable: true
+        issuePlace:
+          description: Localidade onde o documento foi emitido.
+          type: string
+          nullable: true
+        issueDate:
+          description: Data em que o documento foi emitido.
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    DocumentType:
+      type: string
+      description: |
+        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
+      enum:
+        - RG
+        - CNH
+        - RNE
+        - CRNM
+        - DNI
+        - SELFIE
+
+    DocumentSide:
+      type: string
+      description: |
+        Lado do documento (FRONT ou BACK). Quando o tipo do documento for SELFIE, este parâmetro será desprezado.
+      enum:
+        - FRONT
+        - BACK
+
+    Error:
+      $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
+
+    ErrorResponse:
+      $ref: http://localhost:3320/commons/components#/components/schemas/Error
+    
+    FaceDetails:
+      description: |
+        Informações da análise facial.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceDetailsStatus'
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+        ageRange:
+          $ref: '#/components/schemas/AgeRange'
+        gender:
+          $ref: '#/components/schemas/FacialDetail'
+        sunglasses:
+          $ref: '#/components/schemas/FacialDetail'
+        eyesOpen:
+          $ref: '#/components/schemas/FacialDetail'
+        emotions:
+          description: |
+            Lista de expressões detectadas.
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/FacialDetail'
+      additionalProperties: false
+    
+    FaceDetailsStatus:
+      description: |
+        Resultado da análise facial.
+        _(DETECTED_FACE, MANY_FACES_DETECTED, COULD_NOT_DETECT_FACE)_
+      type: string
+      enum:
+        - DETECTED_FACE
+        - MANY_FACES_DETECTED
+        - COULD_NOT_DETECT_FACE
+
+    FaceMatch:
+      description: |
+        Informações da Análise Face Match.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceMatchStatus'
+        similarity:
+          description: |
+            Nível de similaridade entre as faces comparadas.
+          type: number
+          format: double
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+
+    FaceMatchStatus: 
+      description: |
+        Resultado da análise face match.
+        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTED)_
+      type: string
+      enum:
+        - HAS_FACE_MATCH
+        - UNMATCHED_DOCUMENT
+        - MANY_FACES_DETECTED
+
+    FacialDetail:
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties: false
+          description: Tipo do detalhe facial identificado.
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+    
+    FileTokenResponse:
+      required:
+        - token
+      type: object
+      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
+      properties:
+        token:
+          type: string
+
+    Link:
+      type: object
+      properties: 
+        url: 
+          type: string
+          nullable: true
+        rel: 
+          type: string
+          nullable: true
+        method:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    Liveness:
+      description: |
+        Informações da análise de prova de vida.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/LivenessStatus'
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+
+    LivenessStatus:
+      description: |
+        Resultado da análise de prova de vida.
+        _(LIVENESS_FOUND, NO_LIVENESS, COULD_NOT_DETECT_FACE)_
+      type: string
+      enum:
+        - LIVENESS_FOUND
+        - NO_LIVENESS
+        - COULD_NOT_DETECT_FACE
+     
+    Network: 
+      type: object
+      properties:
+        ipAddress: 
+          type: string
+          nullable: true
+        macAddress: 
+          type: string
+          nullable: true
+      additionalProperties": false
+
+    OcrStatus:
+      description: |
+        Resultado da análise OCR.
+        _(DETECTED_DOCUMENT, NO_DOCUMENT_FOUND, NO_INFO_FOUND)_
+      type: string
+      enum:
+        - DETECTED_DOCUMENT
+        - NO_DOCUMENT_FOUND
+        - NO_INFO_FOUND
+
+    Owner:
+      type: object
+      properties: 
+        document: 
+          $ref: "#/components/schemas/Document"
+      additionalProperties: false
+
+    Provider:
+      type: string
+      description: Para envio de selfie, informe "UNICO_CHECK", para envio de documentos, o campo deve apresentar o valor “BANKLY”.
+      enum:
+        - UNICO_CHECK
+        - BANKLY
+
+    ProviderMetadata:
+      description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
+      type: object
+      properties:
+        isLastDocument:
+          type: boolean
+          description: Para garantir o sucesso no envio do documento, esse campo sempre deve apresentar o valor TRUE.
+        encrypted:
+          type: string
+          description: Esse campo deve ser preenchido com o valor do campo <code>encrypted</code>, retornado ao efetuar uma captura de imagem com sucesso utilizando o SDK da Unico. 
+      required:
+        - "isLastDocument" 
+        - "encrypted"
+
+    ResultLevel:
+      type: string
+      description: |
+        Tipo de retorno da API.
+        _(ONLY_STATUS, DETAILED)_
+      default: ONLY_STATUS
+      enum:
+        - ONLY_STATUS
+        - DETAILED
+
+    Storage: 
+      type: object
+      properties:
+        totalDiskCapacity: 
+          type: integer
+          format": int64
+          nullable: true
+        freeDiskStorage: 
+          type: integer
+          format: int64
+          nullable: true
+      additionalProperties: false
+
+    SystemDetails:
+      type: object
+      properties: 
+        name: 
+          type: string
+          nullabl": true
+        version: 
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        locale: 
+          type: string
+          nullable: true
+        buildNumber: 
+          type: string
+          nullable: true
+        fontScale: 
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+
+    UploadDocumentResponse:
+      type: object
+      properties:
+        token:
+          description: Token da análise
+          type: string
+          nullable: true
+      additionalProperties: false
+
+  responses:
+    '202':
+      description: Requisição foi aceita e está sendo processada.
+      headers:
+        x-bkly-correlation-id:
+          $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+        Location:
+          $ref: 'http://localhost:3320/commons/components#/components/headers/Location'
+
+  securitySchemes:
+    Bearer:
+      type: http
+      description: Inclua o token de autorização do tipo Bearer
+      scheme: bearer
+
+  examples:
+    
+    Selfie:
+      value:
+        - token: string
+          documentType: SELFIE
+          documentSide: FRONT
+          status: ANALYSIS_COMPLETED
+          liveness:
+            status: LIVENESS_FOUND
+            confidence: 1.9746
+          faceDetails:
+            status: DETECTED_FACE
+            confidence: 99.99689
+            ageRange:
+              low: 18
+              high: 23
+            gender:
+              value: Male
+              confidence: 99.21723
+            sunglasses:
+              value: false
+              confidence: 99.40401
+            eyesOpen:
+              value: false
+              confidence: 57.259457
+            emotions:
+              - value: CALM
+                confidence: 95.32976
+              - value: SAD
+                confidence: 2.078439
+              - value: CONFUSED
+                confidence: 0.9475501
+              - value: ANGRY
+                confidence: 0.6159508
+              - value: SURPRISED
+                confidence: 0.37119603
+              - value: FEAR
+                confidence: 0.24299896
+              - value: HAPPY
+                confidence: 0.20983662
+              - value: DISGUSTED
+                confidence: 0.20425977
+          analyzedAt: '2021-08-31T21:20:58.754Z'
+      summary: Selfie (do cliente ou representante legal)
+  
+    DocumentFront:
+      value:
+        - token: string
+          documentType: RG
+          documentSide: FRONT
+          status: ANALYSIS_COMPLETED
+          faceMatch:
+            status: HAS_FACE_MATCH
+            similarity: 99.98459
+            confidence: 99.99835
+          documentDetails:
+            status: DETECTED_DOCUMENT
+            identifiedDocumentType: RG
+            idNumber: string
+            cpfNumber: string
+            birthDate: string
+            fatherName: string
+            motherName: string
+            registerName: string
+            validDate: string
+            driveLicenseCategory: string
+            driveLicenseNumber: string
+            driveLicenseFirstQualifyingDate: string
+            federativeUnit: string
+            issuedBy: string
+            issuePlace: string
+            issueDate: string
+          analyzedAt: '2021-08-31T21:20:58.754Z'
+      summary: Frente do documento (o lado que tem foto)
+  
+    DocumentBack:
+      value:
+        - token: string
+          documentType: RG
+          documentSide: BACK
+          status: ANALYSIS_COMPLETED
+          documentDetails:
+            status: DETECTED_DOCUMENT
+            identifiedDocumentType: RG
+            idNumber: string
+            cpfNumber: string
+            birthDate: string
+            fatherName: string
+            motherName: string
+            registerName: string
+            validDate: string
+            driveLicenseCategory: string
+            driveLicenseNumber: string
+            driveLicenseFirstQualifyingDate: string
+            federativeUnit: string
+            issuedBy: string
+            issuePlace: string
+            issueDate: string
+          analyzedAt: '2021-08-31T21:20:58.754Z'
+      summary: Verso do documento (o lado que não tem foto)
+
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true
+  samples-languages:
+    - curl

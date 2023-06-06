@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Gestão de Clientes
+  title: Registro do cliente
   description: |
     Registre, atualize, consulte o cadasto de clientes pessoa física ou
     jurídica. Um cliente com cadastro pode se tornar titular de contas de
