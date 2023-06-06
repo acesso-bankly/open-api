@@ -391,7 +391,7 @@ components:
         links: 
           type: array
           items:
-            $ref": "#/components/schemas/Link"
+            $ref: "#/components/schemas/Link"
           nullable: true
           readOnly: true
         meta:
