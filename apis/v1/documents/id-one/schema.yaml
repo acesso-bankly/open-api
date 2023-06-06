@@ -427,14 +427,14 @@ components:
       type: object
       properties: 
         device: 
-          $ref": "#/components/schemas/Device"
+          $ref: "#/components/schemas/Device"
       additionalProperties: false
 
     DeviceResponse: 
       type: object
       properties: 
         hash: 
-          type": string
+          type: string
           nullable: true
         status: 
           $ref: "#/components/schemas/DeviceStatus"
@@ -463,7 +463,7 @@ components:
           type: integer
           format: int64
         pushToken:
-            type: string"
+            type: string
             nullable: true
         details: 
           $ref: "#/components/schemas/DeviceDetails"
@@ -856,7 +856,7 @@ components:
       properties:
         totalDiskCapacity: 
           type: integer
-          format": int64
+          format: int64
           nullable: true
         freeDiskStorage: 
           type: integer
