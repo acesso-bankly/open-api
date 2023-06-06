@@ -162,7 +162,7 @@ paths:
           description: A requisição foi processada com sucesso.
           headers:
             x-bkly-correlation-id:
-              $ref: http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
           content:
             application/json: 
               schema: 
