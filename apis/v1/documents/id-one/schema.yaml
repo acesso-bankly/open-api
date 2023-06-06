@@ -352,7 +352,7 @@ components:
         isAirPlaneMode: 
           type: boolean
           nullable: true
-        additionalProperties: false
+      additionalProperties: false
 
     CorporateDocumenteRequest:
       type: object
@@ -378,7 +378,7 @@ components:
       properties: 
         owner:
           $ref: "#/components/schemas/Owner"
-      additionalProperties": false
+      additionalProperties: false
 
     Device:
       type: object
@@ -401,7 +401,7 @@ components:
           type: object
           additionalProperties: { }
           nullable: true
-      additionalProperties": false
+      additionalProperties: false
 
     DeviceDetails: 
       type: object
@@ -425,10 +425,10 @@ components:
 
     DeviceRegistrationRequest:
       type: object
-        properties: 
-          device: 
-            $ref": "#/components/schemas/Device"
-        additionalProperties: false
+      properties: 
+        device: 
+          $ref": "#/components/schemas/Device"
+      additionalProperties: false
 
     DeviceResponse: 
       type: object
@@ -447,7 +447,7 @@ components:
           nullable: true
         owner: 
           $ref: "#/components/schemas/Owner"
-        uniqueId": 
+        uniqueId: 
           type: string
           nullable: true
         type: 
@@ -525,13 +525,13 @@ components:
 
     Document: 
       type: object
-        properties: 
-          value: 
-            type: string
-            nullable: true
-          type: 
-            $ref: "#/components/schemas/DocType"
-        additionalProperties: false
+      properties: 
+        value: 
+          type: string
+          nullable: true
+        type: 
+          $ref: "#/components/schemas/DocType"
+      additionalProperties: false
 
     DocumentAnalysisForm:
       required:
@@ -801,7 +801,7 @@ components:
         macAddress: 
           type: string
           nullable: true
-      additionalProperties": false
+      additionalProperties: false
 
     OcrStatus:
       description: |
@@ -869,7 +869,7 @@ components:
       properties: 
         name: 
           type: string
-          nullabl": true
+          nullable: true
         version: 
           type: string
           nullable: true
