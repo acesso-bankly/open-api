@@ -109,7 +109,7 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish ID One Documents API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.ID_ONE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
@@ -214,7 +214,7 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish ID One Documents API Reference to readme.io
         with:
-          rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.ID_ONE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
       - uses: readmeio/rdme@7.0.3
         name: Publish Events and Webhooks API Reference to readme.io
