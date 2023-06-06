@@ -44,6 +44,7 @@ jobs:
             ./apis/v1/accounts/schema.yaml
             ./apis/v1/boletos/schema.yaml
             ./apis/v1/cards/schema.yaml
+            ./apis/v1/documents/schema.yaml
             ./apis/v1/documents/id-one/schema.yaml
             ./apis/v1/events/schema.yaml
             ./apis/v1/helpers/schema.yaml
@@ -105,9 +106,14 @@ jobs:
         name: Publish Auth API Reference to readme.io
         with:
           rdme: openapi './apis/v1/totp/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+      
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          
+      - uses: readmeio/rdme@7.0.3
+        name: Publish ID One Documents API Reference to readme.io
         with:
           rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
@@ -210,9 +216,14 @@ jobs:
         name: Publish Auth API Reference to readme.io
         with:
           rdme: openapi './apis/v1/totp/schema.yaml' --id=${{ secrets.AUTH_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
-          
+      
       - uses: readmeio/rdme@7.0.3
         name: Publish Documents API Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/documents/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+      
+      - uses: readmeio/rdme@7.0.3
+        name: Publish ID One Documents API Reference to readme.io
         with:
           rdme: openapi './apis/v1/documents/id-one/schema.yaml' --id=${{ secrets.KYC_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
           
