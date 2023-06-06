@@ -475,8 +475,8 @@ components:
           type: array
           items: 
             $ref: "#/components/schemas/Link"
-            nullable: true
-            readOnly: true
+          nullable: true
+          readOnly: true
         meta: 
           type: object
           additionalProperties: {}
