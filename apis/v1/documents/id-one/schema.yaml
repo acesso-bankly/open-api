@@ -76,12 +76,9 @@ paths:
           description: Recurso criado com sucesso.
           headers:
             x-bkly-correlation-id:
-              $ref:
-                $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
+              $ref: 'http://localhost:3320/commons/components#/components/headers/CorrelationId'
             Location:
-              description: Localização do recurso recém-criado ou em análise.
-                schema: 
-                  type: string
+              $ref: "http://localhost:3320/commons/components#/components/headers/Location"
           content:
             application/json:
               schema:
