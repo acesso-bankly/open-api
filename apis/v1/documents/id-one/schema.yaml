@@ -106,10 +106,10 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: deviceHash
-            in: path
-            required: true
-            schema: 
-              type: string
+          in: path
+          required: true
+          schema: 
+            type: string
       requestBody:
         content:
           application/json:
@@ -149,10 +149,10 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: deviceHash
-            in: path
-            required: true
-            schema: 
-              type: string
+          in: path
+          required: true
+          schema: 
+            type: string
       requestBody:
         content:
           application/json:
@@ -192,10 +192,10 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - name: deviceHash
-            in: path
-            required: true
-            schema: 
-              type: string
+          in: path
+          required: true
+          schema: 
+            type: string
       responses:
         '200':
           description: Recurso encontrado.
