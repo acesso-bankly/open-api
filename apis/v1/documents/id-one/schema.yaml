@@ -14,13 +14,11 @@ paths:
       summary: Envio de documentos pessoais para análise com ID One
       description: |
         <div class="bkly-ref-description">
-          <p>Para obter as informações completas sobre como realizar o envio de imagens de documentos (<i>selfie</i>, RG, CNH, RNE, DNI ou CRNM), consulte a documentação <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">Envio e análise de documentos pessoais com ID One</a>.</p>
+          <p>Para saber como realizar o envio de imagens de documentos (<i>selfie</i>, RG, CNH, RNE, DNI ou CRNM), consulte a documentação <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">Envio e análise de documentos pessoais com ID One</a>.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
       parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - name: documentNumber
           in: path
           required: true
