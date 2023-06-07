@@ -14,7 +14,7 @@ paths:
       summary: Envio de documentos pessoais para análise com ID One
       description: |
         <div class="bkly-ref-description">
-          <p>Para saber como realizar o envio de imagens de documentos (<i>selfie</i>, RG, CNH, RNE, DNI ou CRNM), consulte a documentação <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">Envio e análise de documentos pessoais com ID One</a>.</p>
+          <p>Devido a uma limitação desta plataforma, é preciso utilizar a documentação <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">Envio e análise de documentos pessoais com ID One</a> para obter informações sobre este endpoint.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
