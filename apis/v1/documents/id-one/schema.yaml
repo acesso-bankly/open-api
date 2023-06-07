@@ -14,14 +14,14 @@ paths:
       summary: Envio de documentos pessoais para análise com ID One
       description: |
         <div class="bkly-ref-description">
-          <p>Este endpoint possibilita o envio da <i>selfie</i> e dos documentos pessoais do cliente para dar início ao processo de Onboarding.</p>
+          <p>Este <i>endpoint</i> possibilita o envio da <i>selfie</i> e dos documentos pessoais do cliente para dar início ao processo de Onboarding.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
         </div>
         [block:callout]
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação [Envio e análise de documentos pessoais com ID One](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one) para obter informações sobre este endpoint."
+            "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação [Envio e análise de documentos pessoais com ID One](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one) para obter informações sobre este <i>endpoint</i>."
           }
         [/block]
       parameters:
