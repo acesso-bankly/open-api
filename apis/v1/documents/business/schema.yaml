@@ -1,9 +1,8 @@
 openapi: 3.0.1
 info:
-  title: KYC (Know Your Customer)
+  title: Documentos LTDA, S.A. e TS
   description: |
-    Antes de abrir uma conta de pagamento ou solicitar um cartão de crédito
-    (pré-pago), conheça mais sobre o seu cliente.
+    Envie imagens e consulte o resultado das análises, registre, ative, desative e autorize dispositivos móveis.
   version: '1.0'
 servers:
   - url: 'https://api-mtls.sandbox.bankly.com.br'
@@ -76,7 +75,7 @@ paths:
     get:
       tags:
         - Análise de documentos
-      summary: Consulta do resultado da análise do documento
+      summary: Consulta do resultado da análise de imagens
       description: |
         <div class="bkly-ref-description">
           <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
@@ -152,44 +151,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - bearer: []
-
-  /document-analysis/{documentNumber}/deepface:
-    post:
-      tags:
-        - ID One
-      summary: Envio de documentos pessoais para análise com ID One
-      description: |
-        <div class="bkly-ref-description">
-          <p>Realize o envio de imagens de documentos (SELFIE, RG, CNH, RNE, DNI ou CRNM) para o fluxo de análise com ID One.</p>
-          <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
-        </div>
-      parameters:
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/DeepfaceDocumentAnalysis"
-            encoding:
-              documentType:
-                style: form
-              documentSide:
-                style: form
-              provider:
-                style: form
-              providerMetadata:
-                style: deepObject
-                explode: true
-              image:
-                style: form
-      responses:
-        '202':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
 
 security:
   - Bearer: []
