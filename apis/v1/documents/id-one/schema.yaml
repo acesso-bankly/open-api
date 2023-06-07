@@ -21,7 +21,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">Envio e análise de documentos pessoais com ID One</a> para obter informações sobre este endpoint."
+            "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação [Envio e análise de documentos pessoais com ID One](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one) para obter informações sobre este endpoint."
           }
         [/block]
       parameters:
