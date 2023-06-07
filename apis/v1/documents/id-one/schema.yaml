@@ -18,6 +18,9 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.deepface.write</span>
         </div>
+      responses:
+        '202':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/202'
 
   /document-analysis/{documentNumber}:   
     get:
