@@ -367,26 +367,26 @@ components:
         owner: 
           $ref: "#/components/schemas/Owner"
         uniqueId: 
-          type": string
-          nullable: true
-        type": 
           type: string
           nullable: true
-          model: 
-            type: string
-            nullable: true
-          brand: 
-            type: string
-            nullable: true
-          totalMemory: 
-            type: integer
-            format: int64
-          pushToken: 
-            type: string
-            nullable: true
-          details: 
-            $ref: "#/components/schemas/DeviceDetails"
-        additionalProperties: false   
+        type: 
+          type: string
+          nullable: true
+        model: 
+          type: string
+          nullable: true
+        brand: 
+          type: string
+          nullable: true
+        totalMemory: 
+          type: integer
+          format: int64
+        pushToken: 
+          type: string
+          nullable: true
+        details: 
+          $ref: "#/components/schemas/DeviceDetails"
+      additionalProperties: false   
 
     DeviceDeactivationResponse:
       type: object
