@@ -83,7 +83,7 @@ paths:
       summary: Registro de novo dispositivo móvel
       description: |
         <div class="bkly-ref-description">
-          <p>Registre um novo dispositivo móvel para um cliente (proprietário). Opcionalmente, é possível ativar o disposito informando o parâmetro <code>activate=true</code>.</p>
+          <p>Registre um novo dispositivo móvel para um cliente (proprietário).</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: device.create</span>
         </div>  
