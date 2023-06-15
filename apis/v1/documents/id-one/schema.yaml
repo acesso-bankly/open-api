@@ -76,6 +76,28 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
+  /customers/{documentNumber}/biometry-token:
+    post:
+      tags: 
+        - Token de autenticação de identidade
+        summary: Solicitação de novo token
+        description: |
+          <div class="bkly-ref-description">
+            <p>Solicite um novo token de autenticação de identidade para seu cliente.</p>
+            <span class="bkly-ref-small-stable-tag">stable</span> 
+            <span class="bkly-ref-scope-tag">scope: </span>
+          </div>  
+        parameters: 
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
+          - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref:
+
   /devices:
     put:
       tags: 
