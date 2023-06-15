@@ -614,4 +614,14 @@ components:
               - '{{Some error message}}'
         reference: "link"
 
-      summary: Erro de negócio
+      summary: Erro comum/específico
+    
+    serverErrorResponse:
+      value:
+        errors:
+          - code: SOME_ERROR_CODE
+            messages:
+              - '{{Some error message}}'
+        reference: "link"
+
+      summary: Erro no servidor
