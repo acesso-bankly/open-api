@@ -257,6 +257,34 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
+  /cards/invoices/{statementId}/item/{statementItemId}/installmentsAdvancementSimulation:
+    get:
+      tags:
+        - Pagamento de faturas
+      summary: Simulação de antecipação de parcelas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a simulação do adiantamento de parcelas referentes a um refinancimento.</p> 
+          <span class="bkly-ref-small-stable-tag">????</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+      parameters:
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/StatementItemId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+      responses:
+        '202':
+            description: Simulação de antecipação de parcelas processada com sucesso.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/InstallmentAdvancementSimulationDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
 security:
   - bearerAuth: []
 
@@ -674,6 +702,35 @@ components:
           format: int32
           description: Número da parcela.
       additionalProperties: false
+    
+    InstallmentAdvancementSimulationDto:
+      type: array
+      description: Lista de objetos contendo informações sobre as parcelas passíveis de serem antecipadas.
+      items:
+        type: object
+        properties:
+          statementId:
+            type: integer
+            format: int32
+            description: Identificador único da fatura em aberto.
+          statementItemId:
+            type: integer
+            format: int32
+            description: Identificador da parcela de refinanciamento passível de ser antecipada.
+          installmentNumber:
+            type: integer
+            format: int32
+            description: Número da parcela.
+          paymentAmount:
+            type: number
+            description: Valor total da parcela.
+          interestAmount:
+            type: number
+            description: Valor dos encargos aplicados à parcela.
+          adjustedAmount:
+            type: number
+            description: Valor ajustado da parcela após a remoção dos encargos.
+        additionalProperties: false
     
     CreditOfferDto:
       type: object
