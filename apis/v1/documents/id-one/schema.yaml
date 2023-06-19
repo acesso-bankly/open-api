@@ -80,26 +80,26 @@ paths:
     post:
       tags: 
         - Token de autenticação de identidade
-        summary: Solicitação de novo token
-        description: |
-          <div class="bkly-ref-description">
-            <p>Solicite um novo token de autenticação de identidade para o seu cliente.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> 
-            <span class="bkly-ref-scope-tag">scope: </span>
-          </div>  
-        operationId: createIdToken
-        parameters: 
-          - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-          - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-          - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
-          - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
-          - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
-        requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IdToken' 
-        responses:
+      summary: Solicitação de novo token
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite um novo token de autenticação de identidade para o seu cliente.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: </span>
+        </div>  
+      operationId: createIdToken
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdToken' 
+      responses:
           '200':
           description: OK 
           content: Recurso criado com sucesso.
