@@ -914,13 +914,13 @@ components:
 
     ProviderMetaDataIdToken:
       required:
-        - ProviderMetaData 
-        type: object
-        properties:
-          encrypted:
-            type: string
-            format: string
-            example: "099db6528fa686230c4d38b5116cf5581c4009f8b51795923993020be9cd1045"
+        - encrypted 
+      type: object
+      properties:
+        encrypted:
+          type: string
+          format: string
+          example: "099db6528fa686230c4d38b5116cf5581c4009f8b51795923993020be9cd1045"
 
     ResponseIdToken:
       properties:
