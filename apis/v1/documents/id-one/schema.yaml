@@ -92,7 +92,6 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
       requestBody:
         content:
@@ -352,7 +351,7 @@ components:
 
     Claims:
       required:
-        - claims 
+        - deviceHash 
       type: object
       properties:
         deviceHash:
@@ -808,6 +807,8 @@ components:
     IdToken:
       required:
         - challenge 
+        - claims
+        - provider
       type: object
       properties:
         challenge:
