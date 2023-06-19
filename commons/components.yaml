@@ -148,6 +148,14 @@ components:
       schema: 
         type: string
 
+    X-bkly-correlation-id:
+      name: x-bkly-correlation-id
+      in: header 
+      description: Id de correlação da requisição, usado para rastrear uma sequência de chamadas de APIs. Informe um GUID v4, que deverá ser gerado a cada nova requisição.
+      required: true
+      schema:
+        type: string
+
     X-Correlation-Id:  
       name: x-correlation-id
       in: header 

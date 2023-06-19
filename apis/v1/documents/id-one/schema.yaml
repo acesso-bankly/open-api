@@ -76,6 +76,41 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
+  /customers/{documentNumber}/biometry-token:
+    post:
+      tags: 
+        - Token de autenticação de identidade
+      summary: Solicitação de novo token
+      description: |
+        <div class="bkly-ref-description">
+          <p>Solicite um novo token de autenticação de identidade para o seu cliente.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: security.biometry-token.create</span>
+        </div>  
+      operationId: createIdToken
+      parameters: 
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Company-Key'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdToken' 
+      responses:
+        '200':
+          description: Recurso criado com sucesso.
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseIdToken'   
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'       
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+
   /devices:
     put:
       tags: 
@@ -313,6 +348,17 @@ components:
         isCharging: 
           type: boolean
           nullable: true
+      additionalProperties: false
+
+    Claims:
+      required:
+        - claims 
+      type: object
+      properties:
+        deviceHash:
+          type: string
+          format: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
       additionalProperties: false
 
     Confidence:
@@ -759,6 +805,29 @@ components:
         token:
           type: string
 
+    IdToken:
+      required:
+        - challenge 
+      type: object
+      properties:
+        challenge:
+          type: string
+          format: string
+          example: "DEVICE_VERIFICATION"
+        claims:
+          $ref: '#/components/schemas/Claims'
+        ttl:
+          type: integer
+          format: int32
+          example: "900"
+        provider:
+          type: string
+          format: string
+          example: "UNICO_CHECK"
+        providerMetadata:
+          $ref: '#/components/schemas/ProviderMetaDataIdToken'
+      additionalProperties: false
+
     Link:
       type: object
       properties: 
@@ -842,6 +911,27 @@ components:
       required:
         - "isLastDocument" 
         - "encrypted"
+
+    ProviderMetaDataIdToken:
+      required:
+        - encrypted 
+      type: object
+      properties:
+        encrypted:
+          type: string
+          format: string
+          example: "099db6528fa686230c4d38b5116cf5581c4009f8b51795923993020be9cd1045"
+
+    ResponseIdToken:
+      properties:
+        IdToken:
+          type: string
+          format: string
+          example: "b7f84c3a-6d2b-4ac4-b882-ed38f8c76a52"
+        expiresIn:
+          type: integer
+          format: int32
+          example: 900
 
     ResultLevel:
       type: string
