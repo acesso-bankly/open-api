@@ -272,9 +272,8 @@ paths:
         - $ref: '#/components/parameters/StatementItemId'
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       responses:
-        '202':
+        '200':
             description: Simulação de antecipação de parcelas processada com sucesso.
             content:
               application/json:
