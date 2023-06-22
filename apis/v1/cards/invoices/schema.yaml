@@ -265,7 +265,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a simulação do adiantamento de parcelas referentes a um refinancimento.</p> 
-          <span class="bkly-ref-small-stable-tag">????</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
         - $ref: '#/components/parameters/StatementId'
