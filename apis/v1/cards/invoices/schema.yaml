@@ -193,7 +193,7 @@ paths:
   /cards/invoices/{statementId}/installments:
     post:
       tags:
-      - Pagamento de faturas
+      - Refinanciamento de fatura
       summary: Simulação de parcelamentos de uma fatura
       description: |
         <div class="bkly-ref-description">
@@ -221,7 +221,7 @@ paths:
   /cards/invoices/{statementId}/item/{statementItemId}/advancement:
     post:
       tags:
-        - Pagamento de faturas
+        - Refinanciamento de fatura
       summary: Antecipação de parcelas 
       description: |
         <div class="bkly-ref-description">
@@ -260,13 +260,20 @@ paths:
   /cards/invoices/{statementId}/item/{statementItemId}/installmentsAdvancementSimulation:
     get:
       tags:
-        - Pagamento de faturas
+        - Refinanciamento de fatura
       summary: Simulação de antecipação de parcelas
       description: |
         <div class="bkly-ref-description">
           <p>Realize a simulação do adiantamento de parcelas referentes a um refinancimento.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Simulação de antecipação de parcelas](/docs/simulacao-de-antecipacao-de-parcelas)."
+        }
+        [/block]
       parameters:
         - $ref: '#/components/parameters/StatementId'
         - $ref: '#/components/parameters/StatementItemId'
@@ -704,7 +711,7 @@ components:
     
     InstallmentAdvancementSimulationDto:
       type: array
-      description: Lista de objetos contendo informações sobre as parcelas passíveis de serem antecipadas.
+      description: Lista de objetos contendo informações sobre <b>todas/b> as parcelas passíveis de serem antecipadas.
       items:
         type: object
         properties:
