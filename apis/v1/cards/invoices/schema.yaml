@@ -197,7 +197,7 @@ paths:
       summary: Simulação de parcelamentos de uma fatura
       description: |
         <div class="bkly-ref-description">
-          <p>Simule o processo de antecipação de forma a saber o valor, sem o juros de financiamento, que a parcela antecipada irá assumir antes de confirmar a operação.</p> 
+          <p>Simule os possíveis parcelamentos de uma fatura e seus valores.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
       parameters:
@@ -264,7 +264,7 @@ paths:
       summary: Simulação de antecipação de parcelas
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a simulação do adiantamento de parcelas referentes a um refinancimento.</p> 
+          <p>Simule o processo de antecipação de forma a saber o valor, sem o juros de financiamento, que a parcela antecipada irá assumir antes de confirmar a operação.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
         [block:callout]
