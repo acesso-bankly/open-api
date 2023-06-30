@@ -161,8 +161,8 @@ paths:
           description: Sem autorização para realizar a solicitação.
         '404':
           description: O cartão não existe.
-        '409':
-          description: Requisição em conflito com as regras de negócio contratadas.
+        '406':
+          description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
           content:
             application/json:
               schema:
@@ -171,7 +171,7 @@ paths:
                 response:
                   value:
                     reference: https://bankly.readme.io/reference
-                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+                    errors: [{ code: 115, message: [ Program does not belong to lot! ], reasons: [] }]
         '500':
           description: Ocorrência de erro inesperado.
           content:
@@ -258,35 +258,8 @@ paths:
                         "2500011000021160417",
                         "2500011000068618940" 
                     ]
-        '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: length, message: [ Password must be 4 characters in length. You entered 5 characters. ], reasons: [] },
-                            { code: required, message: [ Document must not be empty. ], reasons: [] },
-                            { code: required, message: [ Bank Agency must not be empty. ], reasons: [] },
-                            { code: required, message: [ Bank Account must not be empty. ], reasons: [] }]
-        '401':
-          description: Sem autorização para realizar a solicitação.
         '404':
-          description: Lote não encontrado.
-        '500':
-          description: Ocorrência de erro inesperado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: 999, message: [ Unidentified error! ], reasons: [] }]
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1724,8 +1697,8 @@ paths:
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não existir.
-        '409':
-          description: Requisição em conflito com as regras de negócio contratado.
+        '406':
+          description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
           content:
             application/json:
               schema:
@@ -1734,7 +1707,7 @@ paths:
                 response:
                   value:
                     reference: https://bankly.readme.io/reference
-                    errors: [{ code: 301, message: [ Internal server error processor ], reasons: [] }]
+                    errors: [{ code: 115, message: [ Program does not belong to lot! ], reasons: [] }]
         '500':
           description: Ocorrência de erro inesperado.
           content:
@@ -1824,8 +1797,8 @@ paths:
           description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não exisitir.
-        '409':
-          description: Requisição em conflito com as regras de negócio contratado.
+        '406':
+          description: A requisição é válida, porém não foi aceita devido a alguma regra de negócio contratada.
           content:
             application/json:
               schema:
@@ -1834,7 +1807,7 @@ paths:
                 response:
                   value:
                     reference: https://bankly.readme.io/reference
-                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
+                    errors: [{ code: 115, message: [ Program does not belong to lot! ], reasons: [] }]
         '500':
           description: Ocorrência de erro inesperado.
           content:
@@ -1900,32 +1873,8 @@ paths:
       responses:
         '200':
           description: Alteração realizada com sucesso.
-        '400':
-          description: Existem erros no preenchimento da requisição.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: conflict, message: [ The value ok is not valid. ], reasons: [] }]
-        '401':
-          description: Sem autorização para realizar a solicitação.
         '404':
           description: Se o cartão não existir.
-        '409':
-          description: Requisição em conflito com as regras de negócio contratado.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/cardErrorResponse"
-              examples:
-                response:
-                  value:
-                    reference: https://bankly.readme.io/reference
-                    errors: [{ code: 008, message: [ Card does not belong to this customer! ], reasons: [] }]
         '500':
           description: Ocorrência de erro inesperado.
           content:
