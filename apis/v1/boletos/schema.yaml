@@ -157,7 +157,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira a documentação [Emissão de boleto](/docs/emissao-de-boleto) para mais informações."
+          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
         }
         [/block]
       operationId: GetPDF
