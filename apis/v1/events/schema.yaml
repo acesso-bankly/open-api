@@ -272,7 +272,14 @@ paths:
           <p>Consulte todas as mensagens processadas por um webhook Bankly em um determinado período.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.read</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de mensagens enviadas](/docs/pesquisa-de-mensagens-enviadas)."
+        }
+        [/block]    
       operationId: SearchProcessedMessageAsync
       parameters:
         - name: startDate
@@ -281,12 +288,14 @@ paths:
           schema:
             type: string
             format: date-time
+            description: Data de inicial das mensagens a serem exibidas na pesquisa.
         - name: endDate
           in: query
           required: true
           schema:
             type: string
             format: date-time
+            description: Data de final das mensagens a serem exibidas.
         - name: state
           in: query
           schema:
@@ -296,17 +305,20 @@ paths:
           schema:
             type: string
             nullable: true
+            description: Nome do evento.
         - name: context
           in: query
           schema:
             type: string
             nullable: true
+            description: Contexto em que os eventos foram enviados.
         - name: page
           in: query
           schema:
             minimum: 1
             type: integer
             format: int32
+            description: Número da página que deseja consultar.
         - name: pageSize
           in: query
           schema:
@@ -314,6 +326,7 @@ paths:
             minimum: 1
             type: integer
             format: int32
+            description: Quantidade de resultados a serem exibidos por página.
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
@@ -432,6 +445,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.write</span>
         </div>
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
@@ -600,6 +614,7 @@ components:
         - Failed
         - Hold
       type: string
+      description: Situação das mensagens a serem consultadas.
     
     WebhookRegistrationRequest:
       required:
