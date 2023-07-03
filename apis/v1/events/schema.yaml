@@ -228,7 +228,14 @@ paths:
           <p>Realize a exclusão de uma configuração de webhook quando necessário.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.delete</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Exclusão de configuração](/docs/exclusao-configuracao)."
+        }
+        [/block]
       operationId: DeleteWebhookAsync
       parameters:
         - name: id
@@ -238,6 +245,7 @@ paths:
             minLength: 1
             type: string
             format: uuid
+            description: Identificador do webhook, que pode ser obtido na consulta de todas as configurações de webhooks.
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
