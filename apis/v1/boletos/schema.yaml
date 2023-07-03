@@ -79,7 +79,7 @@ paths:
   /bankslip/branch/{branch}/number/{number}/{authenticationCode}:
     get:
       tags:
-        - Emissão de boleto
+        - Consultas
       summary: Consulta por authenticationCode
       description: |
         <div class="bkly-ref-description">
@@ -185,7 +185,7 @@ paths:
   /bankslip/searchstatus/{date}:
     get:
       tags:
-        - Emissão de boleto
+        - Consultas
       summary: Consulta de boletos por data
       description: |
         <div class="bkly-ref-description">
@@ -360,7 +360,7 @@ components:
           nullable: true
         branch:
           type: string
-          description: Agência da conta.
+          description: Número da gência bancária.
           nullable: true
       additionalProperties: false
       
@@ -523,7 +523,7 @@ components:
           description: Nome fantasia do pagador.
         address:
           description: Objeto que deverá conter informações sobre o endereço do pagador.
-          $ref: '#/components/schemas/Address'
+          $ref: '#/components/schemas/PayerAddress'
       additionalProperties: false
 
     CreateBankslipRequest:
@@ -898,6 +898,7 @@ components:
         nextPageToken:
           type: string
           nullable: true
+          description: Token referente a próxima página a ser consultada.
         data:
           type: array
           items:
@@ -917,6 +918,7 @@ components:
           description: Identificador único do boleto.
           format: uuid
         account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
           $ref: '#/components/schemas/Account'
       additionalProperties: false
     
