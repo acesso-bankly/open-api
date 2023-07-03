@@ -311,6 +311,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -333,15 +334,8 @@ paths:
               description: Id de correlação da operação requisitada.
               schema:
                 type: string
-        
         '400':
-          description: Há algum problema com a sua requisição. Verifique se os valores dos campos enviados estão corretos e se o boleto possui um status válido para pagamento.
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
       
@@ -934,6 +928,10 @@ components:
           description: Identificador único do boleto.
           format: uuid
         account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
+          required:
+            - number
+            - branch
           $ref: '#/components/schemas/Account'
       additionalProperties: false
   
