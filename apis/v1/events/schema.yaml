@@ -116,7 +116,14 @@ paths:
           <p>Realize a consulta das configurações de um webhook específico.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.read</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de configuração de webhook específico](/docs/consulta-configuracao-especifica)."
+        }
+        [/block]
       operationId: GetWebhookAsync
       parameters:
         - name: id
