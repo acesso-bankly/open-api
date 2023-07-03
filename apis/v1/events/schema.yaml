@@ -388,7 +388,14 @@ paths:
           <p>Desabilite a configuração de um webhook vinculado a um evento Bankly quando necessário.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Desabilitar uma configuração](/docs/desabilitar-configuracao)."
+        }
+        [/block]  
       operationId: DisableWebhookAsync
       parameters:
         - name: id
@@ -398,6 +405,7 @@ paths:
             minLength: 1
             type: string
             format: uuid
+            description: Identificador do webhook, que pode ser obtido na consulta de todas as configurações de webhooks.
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
