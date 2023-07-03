@@ -16,6 +16,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: totp.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Geração do hash e do código numérico](/docs/totp-geracao-de-hash)."
+        }
+        [/block]
       operationId: CreateTotpAsync
       parameters:
         - name: api-version
@@ -70,6 +77,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: totp.validate</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Validação do hash e do código numérico](/docs/totp-validacao-do-hash)."
+        }
+        [/block]
       parameters:
         - name: api-version
           in: header
@@ -175,6 +189,7 @@ components:
       enum:
         - Pix
       type: string
+      description: Contexto de uso do TOTP.
     
     CreateTotpRequest:
       required:
@@ -191,7 +206,10 @@ components:
           $ref: "#/components/schemas/Context"
         operation:
           $ref: "#/components/schemas/Operation"
-        data: {}
+        data:
+          type: string
+          description: Campo dinâmico para que o parceiro insira as informações necessárias a serem enviadas, de acordo com a operação (<code>operation</code>).
+
       additionalProperties: false
     
     CreateTotpResponse:
@@ -199,9 +217,11 @@ components:
       properties:
         hash:
           type: string
+          description: Código criptografado que o parceiro deverá armazenar para posterior validação.
           nullable: true
         code:
           type: string
+          description: Código numérico que o parceiro deverá enviar a seu cliente.
           nullable: true
       additionalProperties: false
     
@@ -211,6 +231,7 @@ components:
         - Ownership
         - RegisterEntry
       type: string
+      description: Finalidade da geração do TOTP.
     
     ProblemDetails:
       type: object
@@ -242,10 +263,12 @@ components:
         code:
           maxLength: 6
           minLength: 1
+          description: Código numérico informado pelo cliente.
           type: string
         hash:
           minLength: 1
           type: string
+          description: Hash associado ao código numérico, retornado na geração do código TOTP.
         userId:
           type: string
           nullable: true
@@ -257,10 +280,12 @@ components:
       properties:
         hash:
           type: string
+          description: Hash associado ao código numérico, retornado na geração do TOTP.
           nullable: true
         expirationInSeconds:
           type: integer
           format: int32
+          description: Tempo de expiração do hash em segundos.
       additionalProperties: false
 x-readme:
   explorer-enabled: true
