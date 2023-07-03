@@ -827,11 +827,11 @@ components:
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/PayerPerson'
         recipientFinal:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/RecipientPerson'
         recipientOrigin:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/OriginPerson'
         payments:
           type: array
           items:
