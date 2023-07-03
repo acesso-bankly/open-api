@@ -174,7 +174,14 @@ paths:
           <p>Altere a chave pública, a chave privada e/ou a URI do endpoint dde um webhook configurado pelo parceiro.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de configuração](/docs/alteracao-configuracao)."
+        }
+        [/block]
       operationId: UpdateWebhookAsync
       parameters:
         - name: id
@@ -205,6 +212,10 @@ paths:
                 $ref: "#/components/schemas/HookResponseSuccessResponse"
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '409':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/409'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
     
