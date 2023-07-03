@@ -385,15 +385,19 @@ components:
         addressLine:
           type: string
           nullable: true
+          description: Endereço do pagador.
         city:
           type: string
           nullable: true
+          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
         state:
           type: string
           nullable: true
+          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
         zipCode:
           type: string
           nullable: true
+          description: Código postal do endereço.
       additionalProperties: false
     
     Person:
@@ -419,13 +423,17 @@ components:
         document:
           type: string
           nullable: true
+          description: Número do documento (CPF ou CNPJ) do pagador.
         name:
           type: string
           nullable: true
+          description: Nome do pagador.
         tradeName:
           type: string
           nullable: true
+          description: Nome fantasia do pagador.
         address:
+          description: Objeto que contém informações sobre o endereço do pagador.
           $ref: '#/components/schemas/Address'
       additionalProperties: false
 
@@ -442,6 +450,9 @@ components:
           description: Identificador externo do boleto.
           nullable: true
         account:
+          required:
+            - number
+            - branch
           $ref: '#/components/schemas/Account'
         documentNumber:
           type: string
