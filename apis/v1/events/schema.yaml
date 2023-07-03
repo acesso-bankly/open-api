@@ -16,7 +16,14 @@ paths:
           <p>Registre um novo webhook para um evento Bankly.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: webhook.write</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Registro de um novo webhook](/docs/registro-de-um-novo-webhook)."
+        }
+        [/block]  
       operationId: RegisterWebhookAsync
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
@@ -414,21 +421,27 @@ components:
         id:
           type: string
           format: uuid
+          description: Identificador da configuração de webhook.
         name:
           type: string
           nullable: true
+          description: Nome da configuração.
         context:
           type: string
           nullable: true
+          description: Nome do contexto do evento para o qual a configuração de webhook foi criada.
         eventName:
           type: string
           nullable: true
+          description: Nome do evento assinado.
         uri:
           type: string
           nullable: true
+          description: URI da API fornecida pelo parceiro para o recebimento dos eventos.
         publicKey:
           type: string
           nullable: true
+          description: Chave aleatória gerada pelo parceiro e que será enviada pelo Bankly nos cabeçalhos dos eventos de webhook.
       additionalProperties: false 
 
     HookResponseSuccessResponse:
@@ -438,6 +451,7 @@ components:
           $ref: "#/components/schemas/HookResponse"
         links:
           type: array
+          description: Lista de links de próximos estados válidos da entidade/recurso.
           items:
             $ref: "#/components/schemas/Link"
           nullable: true
@@ -456,12 +470,15 @@ components:
         url:
           type: string
           nullable: true
+          description: URLs que podem ser utilizadas em um próximo estado da entidade.
         rel:
           type: string
           nullable: true
+          description: Descrição de como a URL se relaciona com o recurso atual.
         method:
           type: string
           nullable: true
+          description: Tipo de verbo que deve ser utilizado para acessar a URL.
       additionalProperties: false  
      
     ProcessedMessageSearchResponse:
