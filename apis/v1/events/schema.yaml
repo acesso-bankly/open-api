@@ -359,6 +359,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Reprocessamento de mensagens](/docs/webhooks-reprocessamento-mensagens)."
+        }
+        [/block]   
       operationId: ResendProcessedMessageAsync
       parameters:
       - name: idempotencyKey
@@ -371,7 +378,6 @@ paths:
           description:  Chave de idempotência, utilizada para evitar a duplicidade de transações.
       - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-      
       responses:
         '202':
           description: Recurso encontrado.
