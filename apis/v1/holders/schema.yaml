@@ -100,10 +100,17 @@ paths:
       summary: Atualização cadastral
       description: |
         <div class="bkly-ref-description">
-            <p>Realize a atualização de determinados dados cadastrais de clientes do tipo pessoa física.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> 
-            <span class="bkly-ref-scope-tag">scope: customer.update</span>
-          </div>   
+          <p>Realize a atualização de determinados dados cadastrais de clientes do tipo pessoa física.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Atualização cadastral](/docs/atualizacao-cadastral)."
+        }
+        [/block]  
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
