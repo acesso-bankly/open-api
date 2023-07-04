@@ -42,7 +42,14 @@ paths:
           <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do status da análise](/docs/consulta-status-analise)."
+        }
+        [/block]
       operationId: GetDocumentAnalysis
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/CustomerDocument'
