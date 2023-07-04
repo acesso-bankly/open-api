@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
@@ -150,6 +150,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Offboarding de pessoa física](/docs/offboarding-pessoa-fisica)."
+        }
+        [/block]
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/CustomerDocument
@@ -191,7 +198,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED e BLOCKED_."
+          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED e BLOCKED_. Para mais informações, consulte a documentação [Registro de MEI, EI, EIRELI ou SLU](/docs/onboarding-mei-ei-slu). "
         }
         [/block]
       operationId: PutBusinessRegistration
@@ -229,6 +236,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do registro da empresa](/docs/consulta-registro-empresa)."
+        }
+        [/block]
       operationId: GetBusinessRegistration
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
