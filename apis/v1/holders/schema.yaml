@@ -167,6 +167,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "403":
           $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "409":
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
         "422":
