@@ -15,7 +15,14 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a transferência de valores via TED entre contas pertencentes ao Bankly e do Bankly para contas de outras instituições financeiras.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.create</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Transferência via TED](/docs/transferencia-via-ted)."
+        }
+        [/block]  
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'     
@@ -31,8 +38,10 @@ paths:
                   type: integer
                   description: Valor a ser transferido.
                 sender:
+                  description: Objeto que deverá conter os dados do pagador da transação.
                   $ref: '#/components/schemas/sender'
                 recipient:
+                  description: Objeto que deverá conter os dados do recebedor da transação.
                   $ref: '#/components/schemas/recipient'
                 description:
                   type: string
@@ -70,7 +79,14 @@ paths:
         <div class="bkly-ref-description">
           <p>Consulte todas as TEDs realizadas a partir da conta informada.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta por conta](/docs/ted-consulta-conta)."
+        }
+        [/block]  
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
@@ -122,12 +138,14 @@ paths:
                           type: string
                           description: GUID informado em cada requisição realizada no <i>endpoint</i>.
                         sender:
+                          description: Objeto que contém os dados do pagador da transação.
                           $ref: '#/components/schemas/holderComplete'
                         recipient:
+                          description: Objeto que contém os dados do recebedor da transação.
                           $ref: '#/components/schemas/holderComplete'
                         channel:
                           type: string
-                          description: 	Indica se a transação é interna (INTERNAL) ou externa (EXTERNAL).
+                          description: Indica se a transação é interna (INTERNAL) ou externa (EXTERNAL).
                         status:
                           type: string
                           $ref: "#/components/schemas/tedStatus"
