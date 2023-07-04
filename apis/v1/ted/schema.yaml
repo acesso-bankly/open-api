@@ -178,7 +178,14 @@ paths:
         <div class="bkly-ref-description">
           <p>Realize a consulta específica de uma transferência via TED por meio de seu código de autenticação (<code>authenticationCode</code>).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: ted.cashout.read</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta por código de autenticação](/docs/ted-consulta-codigo-autenticacao)."
+        }
+        [/block]  
       parameters:
         - in: path 
           name: authenticationCode
@@ -226,8 +233,10 @@ paths:
                     type: string
                     description: GUID informado em cada requisição realizada no <i>endpoint</i>.
                   sender:
+                    description: Objeto que contém os dados do pagador da transação.
                     $ref: '#/components/schemas/holderComplete'
                   recipient:
+                    description: Objeto que contém os dados do recebedor da transação.
                     $ref: '#/components/schemas/holderComplete'
                   channel:
                     type: string
