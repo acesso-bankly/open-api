@@ -62,6 +62,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do registro do cliente](/docs/consulta-registro-cliente)."
+        }
+        [/block]
       operationId: GetCustomerRegistration
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
@@ -1239,7 +1246,8 @@ components:
 
     OccupationResponse:
       type: string
-      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente). 
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente).
+      enum:
         - OCP0001 
         - OCP0002	
         - OCP0003	
