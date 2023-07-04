@@ -322,6 +322,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.cancel</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Offboarding de pessoa jurídica](/docs/offboarding-pessoa-juridica)."
+        }
+        [/block]
       operationId: CancelBusinessRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/BusinessDocument
@@ -339,6 +346,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "403":
           $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "409":
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
         "422":
