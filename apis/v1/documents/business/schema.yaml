@@ -127,6 +127,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Envio de documentos LTDA, S.A. e TS](/docs/envio-documentos-corporativos)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
