@@ -36,6 +36,7 @@ paths:
           required: true
           schema:
             type : string
+            description: Token de autorização do tipo Bearer.
         - name: x-bkly-user-id
           in: header
           description: Informe o número do documento do cliente que solicita a consulta (11 dígitos para CPF e 14 para CNPJ).
