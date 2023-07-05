@@ -277,11 +277,9 @@ paths:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
               schema:
-                type: string
-        
+                type: string 
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-      
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'     
       security:
         - Bearer: []
   
