@@ -85,7 +85,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Solicite um novo token de autenticação de identidade para o seu cliente.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: security.biometry-token.create</span>
+          <span class="bkly-ref-scope-tag">scope: security.id-token.create</span>
         </div>  
       operationId: createIdToken
       parameters: 
