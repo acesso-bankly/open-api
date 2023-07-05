@@ -17,12 +17,29 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        [block]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de dados de uma conta](/docs/consulta-de-dados-de-uma-conta)."
+        }
+        [/block]
       operationId: GetAccount
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "#/components/parameters/IncludeBalance"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: code
+          in: query
+          schema:
+            type: string
+            description: Código do banco da conta consultada. Para conta corrente, este campo é <b>obrigatório</b>.
+        - name: branch
+          in: query
+          schema:
+            type: string
+            description: Número da agência associada à conta consultada. Para conta corrente, este campo é <b>obrigatório</b>.
       responses:
         "200":
           description: Recurso encontrado.
@@ -512,6 +529,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
         "503":
           $ref: "http://localhost:3320/commons/components#/components/responses/503"
+
+
 
   /pockets/{pocketNumber}:
     get:
