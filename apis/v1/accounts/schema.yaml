@@ -17,7 +17,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
-        [block]
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
@@ -76,7 +76,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.close</span>
         </div>
-        [block]
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
