@@ -226,6 +226,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        [block]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de contas](/docs/consulta-contas-cliente-pessoa-juridica)."
+        }
+        [/block]
       operationId: GetBusinessAccounts
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
