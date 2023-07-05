@@ -93,11 +93,47 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de contas](/docs/consulta-contas-cliente-pessoa-fisica)."
+        }
+        [/block]
       operationId: GetPersonalAccounts
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Código do banco da conta consultada.
+        - name: branch
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Número da agência associada à conta consultada.
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - checking
+              - payment
+            description: Tipo de conta.
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - active
+              - closed
+            description: Situação da conta.
       responses:
         "200":
           description: Recurso encontrado.
@@ -1996,9 +2032,11 @@ components:
         status:
           $ref: "#/components/schemas/AccountStatus"
         branch:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/BankBranch"
+          type: string
+          description: Número da agência bancária.
         number:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/AccountNumber"
+          type: string
+          description: Número da conta de pagamento.
         type:
           description: Tipo de conta.
           type: string
