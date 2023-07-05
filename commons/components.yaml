@@ -21,7 +21,7 @@ components:
       explode: false
       schema:
         type: string
-        default: 1
+        default: 1.0
 
     ApiVersion2:
       name: api-version
