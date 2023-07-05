@@ -76,10 +76,18 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.close</span>
         </div>
+        [block]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Encerramento de conta](/docs/encerramento-contas)."
+        }
+        [/block]
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
+        - $ref: "#/components/parameters/AccountNumRequest"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
           application/json:
@@ -953,6 +961,13 @@ components:
         type: string
         nullable: true
 
+    AccountNumRequest:
+      name: accountNumRequest
+      in: path
+      required: true
+      schema:
+        type: string
+        description: Número da conta a ser encerrada.
   schemas:
     PaymentAccountHolder:
       type: object
@@ -2121,8 +2136,7 @@ components:
     ReasonType:
       type: string
       description: |
-        Motivo do encerramento. 
-        _Default: **HOLDER_REQUEST**_.
+        Motivo do encerramento.
       default: HOLDER_REQUEST
       enum:
         - HOLDER_REQUEST
