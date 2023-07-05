@@ -137,7 +137,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas. Para mais informações, confira a documentação [Abertura de conta](/docs/abertura-de-conta-pessoa-fisica)."
           }
         [/block]
       operationId: CreatePersonalAccount
@@ -1872,7 +1872,7 @@ components:
           format: double
         currency:
           description: |
-            Moeda corrente. _Default: *BRL*_
+            Código da moeda com base na ISO 4217. _Default: *BRL*_
           type: string
       additionalProperties: false
 
@@ -1892,7 +1892,7 @@ components:
       additionalProperties: false
 
     SummarizedBalance:
-      description: Saldo sumarizado da conta.
+      description: Objeto que contém informações sobre o saldo sumarizado da conta.
       type: object
       properties:
         inProcess:
@@ -1908,13 +1908,15 @@ components:
 
     AccountStatus:
       type: string
-      description: Status da conta, que pode ser ACTIVE ou CLOSED.
+      enum:
+      - ACTIVE
+      - CLOSED
+      description: Situação da conta.
 
     AccountType:
       type: string
       description: |
-        Tipo da conta a ser criada. 
-        _Default: **PAYMENT_ACCOUNT**_.
+        Tipo da conta a ser criada.
       default: PAYMENT_ACCOUNT
       enum:
         - PAYMENT_ACCOUNT
@@ -2045,9 +2047,11 @@ components:
         status:
           $ref: "#/components/schemas/AccountStatus"
         branch:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/BankBranch"
+          type: string
+          description: Número da agência bancária.
         number:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/AccountNumber"
+          type: string
+          description: Número da conta de pagamento.
 
     ReasonType:
       type: string
