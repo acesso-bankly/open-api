@@ -1456,6 +1456,7 @@ components:
         - CPF
         - CNPJ
       type: string
+      description: Tipo do documento do titular da conta.
 
     Document:
       type: object
@@ -1816,16 +1817,20 @@ components:
 
     Link:
       type: object
+      description: Links de próximos estados válidos da entidade/recurso.
       properties:
         url:
           type: string
           nullable: true
+          description: URLs que podem ser utilizadas em um próximo estado da entidade. Nesse caso, trata-se da própria requisição realizada.
         rel:
           type: string
           nullable: true
+          description: Descrição de como a URL se relaciona com o recurso atual.
         method:
           type: string
           nullable: true
+          description: Tipo de verbo que deve ser utilizado para acessar a URL. Nesse caso, é o GET.
       additionalProperties: false
 
     ClosureReason:
