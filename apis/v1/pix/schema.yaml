@@ -364,6 +364,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Criação de pedido de reivindicação](/docs/reivindicacao-chave)."
+        }
+        [/block]
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
@@ -399,6 +406,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/503'
       security:
         - Bearer: []
+    
     get:
       tags:
         - Reivindicação de chaves
@@ -409,6 +417,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta dos pedidos de reivindicação](/docs/consulta-pedidos-reivindicacao)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
@@ -460,6 +475,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.claims.confirm</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Confirmação do pedido de reivindicação](/docs/confirmacao-pedido-reivindicacao)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
@@ -488,6 +510,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ClaimResponseConfirm"
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
@@ -504,6 +528,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">scope: pix.claims.complete</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Completando um pedido de reivindicação](/docs/completando-um-pedido)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
@@ -520,7 +551,6 @@ paths:
           schema:
             type: string
             nullable: true
-  
       responses:
         '200':
           description: Pedido de reivindicação completado.
@@ -578,7 +608,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de <i>e-mail</i> e telefone após validar a posse da chave por meio do código TOTP."
+          "body": "O cliente doador só poderá cancelar um pedido de reivindicação de posse ou portabilidade de <i>e-mail</i> e telefone após validar a posse da chave por meio do código TOTP. Confira a documentação [Cancelamento de um pedido de reivindicação](/docs/cancelamento-pedido-reivindicacao) para mais informações."
         }
         [/block]
       parameters:
@@ -1669,6 +1699,7 @@ components:
         - Claimer
         - Donor
       type: string
+      description: O solicitante do pedido.
 
     ClaimPerson:
       description: Autor da confirmação ou cacelamento do pedido.
