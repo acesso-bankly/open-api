@@ -20,6 +20,13 @@ paths:
           <p>Consulte uma fatura aberta por meio do proxy do cartão.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura aberta](/docs/consulta-de-fatura-aberta)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/DocumentNumber"
         - $ref: "#/components/parameters/Proxy"
@@ -47,6 +54,13 @@ paths:
           <p>Consulte uma fatura específica por meio do seu ID, independentemente do seu status. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura pelo ID](/docs/consulta-de-fatura-por-id)."
+        }
+        [/block]
       parameters:
       - $ref: '#/components/parameters/StatementId'
       - $ref: '#/components/parameters/apiVersion'
@@ -73,6 +87,13 @@ paths:
           <p>Consulte as faturas do cartão de um determinado período.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura por período](/docs/consultas-de-faturas)."
+        }
+        [/block]
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
       - $ref: "#/components/parameters/Proxy"
@@ -114,6 +135,13 @@ paths:
           <p>Consulte o limite de crédito do cartão.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do limite de crédito](/docs/consulta-de-limite-de-credito)."
+        }
+        [/block]
       parameters:
       - $ref: "#/components/parameters/DocumentNumber"
       - $ref: "#/components/parameters/Proxy"
@@ -141,6 +169,13 @@ paths:
           <p>Gere uma forma de pagamento para uma fatura específica, por meio do seu ID.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Geração de uma forma de pagamento](/docs/geracao-forma-pagamento)."
+        }
+        [/block]
       parameters:
         - $ref: '#/components/parameters/StatementId'
         - $ref: '#/components/parameters/apiVersion'
@@ -172,6 +207,13 @@ paths:
           <p>Consulte as opções de pagamento de uma fatura.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de opções de pagamento](/docs/consulta-de-opcoes-pagamento)."
+        }
+        [/block]
       parameters:
       - $ref: '#/components/parameters/StatementId'
       - $ref: '#/components/parameters/apiVersion'
@@ -200,6 +242,13 @@ paths:
           <p>Simule os possíveis parcelamentos de uma fatura e seus valores.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Simulação de parcelamentos de uma fatura](/docs/simulacao-de-parcelamentos-fatura)."
+        }
+        [/block]
       parameters:
       - $ref: '#/components/parameters/StatementId'
       - $ref: '#/components/parameters/apiVersion'
@@ -232,7 +281,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>."
+          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>. Confira a documentação [Antecipação de parcelas](/docs/antecipacao-de-parcelas) para mais informações."
         }
         [/block]
       parameters:
