@@ -19,6 +19,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Ativação de favorecido](/docs/ativacao-de-favorecido)."
+        }
+        [/block]
       operationId: EnableBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
@@ -48,6 +55,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:customer.bookmark.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Desativação de favorecido](/docs/desativacao-de-favorecido)."
+        }
+        [/block]
       operationId: DisableBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
@@ -76,6 +90,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de um favorecido](/docs/consulta-de-favorecido)."
+        }
+        [/block]
       operationId: GetBookmarksForCustomerAsync
       parameters:
         - $ref: "#/components/parameters/CustomerDocumentNumber"
@@ -109,6 +130,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:customer.bookmark.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de todos os favorecidos](/docs/consulta-de-todos-favorecidos)."
+        }
+        [/block]
       operationId: ListBookmarksForCustomerAsync
       parameters:
       - $ref: "#/components/parameters/CustomerDocumentNumber"
@@ -143,6 +171,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Ativação de favorecido](/docs/ativacao-de-favorecido)."
+        }
+        [/block]
       operationId: EnableBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
@@ -172,6 +207,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Desativação de favorecido](/docs/desativacao-de-favorecido)."
+        }
+        [/block]
       operationId: DisableBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
@@ -200,6 +242,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de um favorecido](/docs/consulta-de-favorecido)."
+        }
+        [/block]
       operationId: GetBookmarksForBusinessAsync
       parameters:
         - $ref: "#/components/parameters/BusinessDocumentNumber"
@@ -233,6 +282,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope:business.bookmark.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de todos os favorecidos](/docs/consulta-de-todos-favorecidos)."
+        }
+        [/block]
       operationId: ListBookmarksForBusinessAsync
       parameters:
       - $ref: "#/components/parameters/BusinessDocumentNumber"
@@ -1001,7 +1057,7 @@ components:
         type: string
     CustomerDocumentNumber:
       name: documentNumber
-      description: número do CPF do cliente. Informe somente números.
+      description: Número do CPF do cliente. Informe somente números.
       in: path
       required: true
       schema:
@@ -1009,7 +1065,7 @@ components:
         nullable: true
     BusinessDocumentNumber:
       name: documentNumber
-      description: número do CNPJ do cliente. Informe somente números.
+      description: Número do CNPJ do cliente. Informe somente números.
       in: path
       required: true
       schema:
