@@ -17,12 +17,29 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de dados de uma conta](/docs/consulta-de-dados-de-uma-conta)."
+        }
+        [/block]
       operationId: GetAccount
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "#/components/parameters/IncludeBalance"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: code
+          in: query
+          schema:
+            type: string
+            description: Código do banco da conta consultada. Para conta corrente, este campo é <b>obrigatório</b>.
+        - name: branch
+          in: query
+          schema:
+            type: string
+            description: Número da agência associada à conta consultada. Para conta corrente, este campo é <b>obrigatório</b>.
       responses:
         "200":
           description: Recurso encontrado.
@@ -47,7 +64,7 @@ paths:
         "500":
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
-  /accounts/{accountNumber}/closure:
+  /accounts/{accountNumRequest}/closure:
     patch:
       tags:
         - Conta de pagamentos
@@ -59,10 +76,18 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.close</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Encerramento de conta](/docs/encerramento-contas)."
+        }
+        [/block]
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
+        - $ref: "#/components/parameters/AccountNumRequest"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
           application/json:
@@ -93,11 +118,48 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de contas](/docs/consulta-contas-cliente-pessoa-fisica)."
+        }
+        [/block]
       operationId: GetPersonalAccounts
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Código do banco da conta consultada.
+        - name: branch
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Número da agência associada à conta consultada.
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - checking
+              - payment
+            description: Tipo de conta.
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - active
+              - closed
+            description: Situação da conta.
       responses:
         "200":
           description: Recurso encontrado.
@@ -137,7 +199,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas. Para mais informações, confira a documentação [Abertura de conta](/docs/abertura-de-conta-pessoa-fisica)."
           }
         [/block]
       operationId: CreatePersonalAccount
@@ -189,6 +251,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de contas](/docs/consulta-contas-cliente-pessoa-juridica)."
+        }
+        [/block]
       operationId: GetBusinessAccounts
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
@@ -233,7 +302,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas."
+            "body": "Caso cliente possua [multicontas](https://docs.bankly.com.br/docs/multi-accounts) ativas, o parceiro deverá utilizar o cabeçalho <code>Idempotency-Key</code> nas requisições, a fim de evitar a criação de contas duplicadas. Para mais informações, confira a documentação [Abertura de conta](/docs/abertura-de-conta-pessoa-juridica). "
           }
         [/block]
       operationId: CreateBusinessAccount
@@ -338,6 +407,7 @@ paths:
       security:
         - Bearer: []
 
+
   /accounts/{accountNumber}/pockets:
     post:
       tags:
@@ -353,7 +423,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para criar uma conta pocket, é necessário ter uma conta de pagamento ativa."
+          "body": "Para criar uma conta pocket, é necessário ter uma conta de pagamento ativa. Para mais informações, consulte a documentação [Criação de conta pocket](/docs/criacao-de-conta-pocket)."
         }
         [/block]
       operationId: CreatePocketAsync
@@ -411,8 +481,15 @@ paths:
         <div class="bkly-ref-description">
           <p>Obtenha uma lista com os dados de todas as contas pockets associadas a uma conta de pagamento. A busca permite filtrar pelo status e pelo tipo da conta pocket.</p> 
           <span class="bkly-ref-small-stable-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">pocket.read</span>
+          <span class="bkly-ref-scope-tag">pocket.read</span> 
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta dos dados de todas as contas pockets](/docs/consulta-dados-todas-pockets)."
+        }
+        [/block]
       operationId: GetPocketsByAccountNumberAsync
       parameters:
         - name: accountNumber
@@ -480,6 +557,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta dos dados de uma conta pocket](/docs/consulta-dados-uma-pocket)."
+        }
+        [/block]
       operationId: GetPocketAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
@@ -525,6 +609,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do saldo de uma conta pocket](/docs/consulta-saldo-pocket)."
+        }
+        [/block]
       operationId: GetPocketBalanceAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
@@ -564,6 +655,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração do usuário](/docs/alteracao-usuario)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
@@ -615,7 +713,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível realizar a transferência, é necessário ter uma conta de pagamento ativa."
+          "body": "Para que seja possível realizar a transferência, é necessário ter uma conta de pagamento ativa. Consulte a documentação [Depósito em uma conta pocket](/docs/deposito-pocket) para mais informações."
         }
         [/block]
       operationId: CreateDepositTransactionAsync
@@ -679,7 +777,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível a transferência, é necessário ter uma conta de pagamento ativa."
+          "body": "Para que seja possível a transferência, é necessário ter uma conta de pagamento ativa. Consulte a documentação [Resgate de um valor da conta pocket](/docs/resgate-valor-pocket) para mais informações."
         }
         [/block]
       operationId: CreateWithdrawalTransactionAsync
@@ -740,6 +838,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.transaction.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de uma transação](/docs/consulta-uma-transacao)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
         - name: authenticationCode
@@ -787,6 +892,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">beta</span> 
           <span class="bkly-ref-scope-tag">pocket.close</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Encerramento de uma conta pocket](/docs/encerramento-pocket)."
+        }
+        [/block]
       operationId: ClosePocketAccountAsync
       parameters:
         - $ref: "#/components/parameters/PocketNumber"
@@ -890,6 +1002,13 @@ components:
         type: string
         nullable: true
 
+    AccountNumRequest:
+      name: accountNumRequest
+      in: path
+      required: true
+      schema:
+        type: string
+        description: Número da conta a ser encerrada.
   schemas:
     PaymentAccountHolder:
       type: object
@@ -1373,12 +1492,6 @@ components:
         holder:
           $ref: "#/components/schemas/HolderResponseDepRed"
 
-    DocumentNumberType:
-      enum:
-        - CPF
-        - CNPJ
-      type: string
-
     Document:
       type: object
       properties:
@@ -1387,7 +1500,11 @@ components:
           description: Número do documento do usuário.
           nullable: true
         type:
-          $ref: "#/components/schemas/DocumentNumberType"
+          enum:
+          - CPF
+          - CNPJ
+          type: string
+          description: Tipo do documento do titular da conta.
       additionalProperties: false
 
     User:
@@ -1738,16 +1855,20 @@ components:
 
     Link:
       type: object
+      description: Links de próximos estados válidos da entidade/recurso.
       properties:
         url:
           type: string
           nullable: true
+          description: URLs que podem ser utilizadas em um próximo estado da entidade. Nesse caso, trata-se da própria requisição realizada.
         rel:
           type: string
           nullable: true
+          description: Descrição de como a URL se relaciona com o recurso atual.
         method:
           type: string
           nullable: true
+          description: Tipo de verbo que deve ser utilizado para acessar a URL. Nesse caso, é o GET.
       additionalProperties: false
 
     ClosureReason:
@@ -1872,7 +1993,7 @@ components:
           format: double
         currency:
           description: |
-            Moeda corrente. _Default: *BRL*_
+            Código da moeda com base na ISO 4217. _Default: *BRL*_
           type: string
       additionalProperties: false
 
@@ -1892,7 +2013,7 @@ components:
       additionalProperties: false
 
     SummarizedBalance:
-      description: Saldo sumarizado da conta.
+      description: Objeto que contém informações sobre o saldo sumarizado da conta.
       type: object
       properties:
         inProcess:
@@ -1908,13 +2029,15 @@ components:
 
     AccountStatus:
       type: string
-      description: Status da conta, que pode ser ACTIVE ou CLOSED.
+      enum:
+      - ACTIVE
+      - CLOSED
+      description: Situação da conta.
 
     AccountType:
       type: string
       description: |
-        Tipo da conta a ser criada. 
-        _Default: **PAYMENT_ACCOUNT**_.
+        Tipo da conta a ser criada.
       default: PAYMENT_ACCOUNT
       enum:
         - PAYMENT_ACCOUNT
@@ -1994,9 +2117,11 @@ components:
         status:
           $ref: "#/components/schemas/AccountStatus"
         branch:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/BankBranch"
+          type: string
+          description: Número da agência bancária.
         number:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/AccountNumber"
+          type: string
+          description: Número da conta de pagamento.
         type:
           description: Tipo de conta.
           type: string
@@ -2045,15 +2170,16 @@ components:
         status:
           $ref: "#/components/schemas/AccountStatus"
         branch:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/BankBranch"
+          type: string
+          description: Número da agência bancária.
         number:
-          $ref: "http://localhost:3320/commons/components#/components/schemas/AccountNumber"
+          type: string
+          description: Número da conta de pagamento.
 
     ReasonType:
       type: string
       description: |
-        Motivo do encerramento. 
-        _Default: **HOLDER_REQUEST**_.
+        Motivo do encerramento.
       default: HOLDER_REQUEST
       enum:
         - HOLDER_REQUEST

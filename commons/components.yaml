@@ -21,7 +21,7 @@ components:
       explode: false
       schema:
         type: string
-        default: 1
+        default: 1.0
 
     ApiVersion2:
       name: api-version
@@ -44,6 +44,7 @@ components:
       explode: false
       schema:
         type : string
+        description: Token de autorização do tipo Bearer.
 
     IdempotencyKey:
       name: Idempotency-Key
@@ -442,7 +443,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Acesso não autorizado
 
     '403':
       description: |
@@ -456,7 +463,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Acesso negado pelo servidor
     
     '404':
       description: |
@@ -470,7 +483,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Recurso não encontrado
 
     '405':
       description: |
@@ -484,7 +503,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Método não suportado
 
     '406':
       description: A solicitação não foi aceita.
@@ -497,7 +522,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Solicitação recusada
     
     '408':
       description: O servidor não recebeu uma mensagem de solicitação completa dentro do tempo em que estava preparado para aguardar.
@@ -510,7 +541,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Período de solicitação expirado
 
     '409':
       description: |
@@ -524,7 +561,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Conflito entre regras de negócio
     
     '415':
       description: |
@@ -538,7 +581,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Formato de payload incorreto
 
     '422':
       description: |
@@ -552,7 +601,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Requisição incompatível com a regra de negócio
     
     '429':
       description: |
@@ -566,7 +621,13 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Operação recusada
 
     '500':
       description: |
@@ -594,8 +655,14 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
           examples:
             accountDetailedExample:
-              $ref: '#/components/examples/errorResponse'
-
+              value:
+                errors:
+                  - code: SOME_ERROR_CODE
+                    messages:
+                      - '{{Some error message}}'
+                reference: "link"
+              summary: Serviço indisponível
+    
   securitySchemes:
     Bearer:
       type: http

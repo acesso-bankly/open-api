@@ -22,6 +22,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Criação de cartão em lote](/docs/criacao-de-cartoes-em-lote)."
+        }
+        [/block]
       operationId: cardCreateCardsInLot
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -86,6 +93,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Vinculação do cartão com uma conta bancária](/docs/vinculacao-cartao-com-conta)."
+        }
+        [/block]
       operationId: cardbindNoName
       parameters:
         - name: activateCode
@@ -153,6 +167,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de lote por ID](/docs/consulta-de-lote-por-id)."
+        }
+        [/block]
       operationId: cardGetLotById
       parameters:
         - name: lotId
@@ -234,6 +255,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta dos lotes](/docs/consulta-de-lotes)."
+        }
+        [/block]
       operationId: cardGetLotsByCompanyKey
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -299,7 +327,14 @@ paths:
           <p>Crie um cartão virtual que será utilizado em compras não presenciais.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.create</span>
-        </div>  
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Emissão de cartão virtual](/docs/emissao-cartao-virtual)."
+        }
+        [/block]
       operationId: cardCreateVirtualCard
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -369,6 +404,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Emissão de cartão físico](/docs/emissao-cartao-fisico)."
+        }
+        [/block]
       operationId: cardCreatePhysicalCard
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -442,7 +484,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "O cartão múltiplo tem como principal característica ter no mesmo plástico um número pré e um pós. Porém, um dos números ficará adormecido enquanto o outro estiver ativo."
+          "body": "O cartão múltiplo tem como principal característica ter no mesmo plástico um número pré e um pós. Porém, um dos números ficará adormecido enquanto o outro estiver ativo. Confira a documentação [Emissão de cartão múltiplo](/docs/emissao-cartao-multiplo) para mais informações."
         }
         [/block]
       operationId: cardCreateMultipleCard
@@ -516,7 +558,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente."
+          "body": "Quando a segunda via for emitida, a primeira via será cancelada automaticamente. Confira a documentação [Emissão de segunda via](/docs/emissao-segunda-via) para mais informações."
         }
         [/block]
       operationId: createDuplicateCard
@@ -1132,6 +1174,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de senha](/docs/alteracao-de-senha-cartao)."
+        }
+        [/block]
       operationId: cardChangeCardPassword
       parameters:
         - name: proxy
@@ -1199,6 +1248,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de limite ativo de cartão pós-pago](/docs/alteracao-limite-ativo-cartao)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
@@ -1638,6 +1694,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Rastreio de cartões por proxy](/docs/rastreio-cartoes-por-proxy)."
+        }
+        [/block]
       operationId: trackingGetByProxy
       parameters:
         - name: proxy
@@ -1711,6 +1774,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de endereço](/docs/alteracao-endereco)."
+        }
+        [/block]
       operationId: trackingUpdateAddress
       parameters:
         - name: proxy
@@ -1773,6 +1843,13 @@ paths:
             <span class="bkly-ref-small-stable-tag">stable</span> 
             <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
           </div>
+          [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Geração de token](/docs/geracao-de-token)."
+        }
+        [/block]
       operationId: GenerateTokenizationForWallet
       parameters:
         - name: proxy
@@ -1866,13 +1943,15 @@ components:
       required: true
       schema:
         type: string
+        description: Versão da API. Atualmente estamos na versão 1.0.
         
     authorization:
       name: Authorization
       in: header
       required: true
       schema:
-        type: string 
+        type: string
+        description: Token de autorização do tipo Bearer.
 
     DocumentNumber:
       name: documentNumber
@@ -1881,6 +1960,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Número de documento de CPF ou CNPJ. Informe somente os números.
 
     Proxy:
       name: proxy
@@ -1889,6 +1969,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Identificador do cartão.
 
   schemas:
     createCardsInLotRequest:

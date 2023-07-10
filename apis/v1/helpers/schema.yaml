@@ -17,6 +17,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: zipcode.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de endereço por CEP](/docs/consulta-cep)."
+        }
+        [/block]
       
       operationId: GetAddress
       parameters:
@@ -100,7 +107,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Caso não seja enviado um valor no campo <code>product</code>, será assumido o valor padrão <b>TED</b>."
+          "body": "Caso não seja enviado um valor no campo <code>product</code>, será assumido o valor padrão <b>TED</b>. Confira a documentação [Listagem de instituições financeiras](/docs/listagem-bancos) para mais informações."
         }
         [/block]
         </div>
@@ -138,7 +145,6 @@ paths:
             default: 20
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-
       responses:
         '200':
           description: Recurso encontrado.
@@ -399,6 +405,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
       security:
         - Bearer: []
+
 components:
   parameters:
     authorization:

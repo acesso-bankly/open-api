@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](https://docs.bankly.com.br/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
@@ -62,6 +62,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do registro do cliente](/docs/consulta-registro-cliente)."
+        }
+        [/block]
       operationId: GetCustomerRegistration
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
@@ -93,10 +100,17 @@ paths:
       summary: Atualização cadastral
       description: |
         <div class="bkly-ref-description">
-            <p>Realize a atualização de determinados dados cadastrais de clientes do tipo pessoa física.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> 
-            <span class="bkly-ref-scope-tag">scope: customer.update</span>
-          </div>   
+          <p>Realize a atualização de determinados dados cadastrais de clientes do tipo pessoa física.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: customer.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Atualização cadastral](/docs/atualizacao-cadastral)."
+        }
+        [/block]  
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/CustomerDocument"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
@@ -136,6 +150,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: customer.cancel</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Offboarding de pessoa física](/docs/offboarding-pessoa-fisica)."
+        }
+        [/block]
       operationId: CancelCustomerRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/CustomerDocument
@@ -153,6 +174,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "403":
           $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "409":
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
         "422":
@@ -175,7 +198,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED e BLOCKED_."
+          "body": "Os possíveis status da empresa após essa análise são: _APPROVED, REPROVED, REVOKED e BLOCKED_. Para mais informações, consulte a documentação [Registro de MEI, EI, EIRELI ou SLU](/docs/onboarding-mei-ei-slu). "
         }
         [/block]
       operationId: PutBusinessRegistration
@@ -213,6 +236,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do registro da empresa](/docs/consulta-registro-empresa)."
+        }
+        [/block]
       operationId: GetBusinessRegistration
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
@@ -249,6 +279,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.corporation.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Registro de LTDA, S.A. e TS](/docs/registro-pj-ltda-sa-ts)."
+        }
+        [/block]
       operationId: RegisterCorporationBusinessAsync
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
@@ -292,6 +329,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: business.cancel</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Offboarding de pessoa jurídica](/docs/offboarding-pessoa-juridica)."
+        }
+        [/block]
       operationId: CancelBusinessRegistration
       parameters:
         - $ref: http://localhost:3320/commons/components#/components/parameters/BusinessDocument
@@ -309,6 +353,8 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         "403":
           $ref: "http://localhost:3320/commons/components#/components/responses/403"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
         "409":
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
         "422":
@@ -1239,7 +1285,8 @@ components:
 
     OccupationResponse:
       type: string
-      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente). 
+      description: Código de ocupação do cliente. Para conhecer a descrição dos códigos das ocupações, consulte a documentação [Código de ocupação do cliente](https://docs.bankly.com.br/docs/codigo-de-ocupacao-cliente).
+      enum:
         - OCP0001 
         - OCP0002	
         - OCP0003	

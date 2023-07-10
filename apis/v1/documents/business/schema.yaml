@@ -127,6 +127,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Envio de documentos LTDA, S.A. e TS](/docs/envio-documentos-corporativos)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
@@ -140,7 +147,7 @@ paths:
              
       responses:
         '201':
-          description: Requisição foi aceita
+          description: A requisição foi aceita
           content:
             application/json:
               schema:
@@ -228,7 +235,7 @@ components:
       properties:
         documentType:
           type: string
-          description: Tipo do documento (ARTICLES_OF_INCORPORATION, LAST_CONTRACT_CHANGE, BALANCE_SHEET ou POWER_OF_ATTORNEY)
+          description: Tipo do documento.
           enum:
             - ARTICLES_OF_INCORPORATION
             - LAST_CONTRACT_CHANGE
@@ -478,13 +485,11 @@ components:
       additionalProperties: false
     
     FileTokenResponse:
-      required:
-        - token
       type: object
-      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
       properties:
         token:
           type: string
+          description: Token identificador da imagem enviada, que deverá ser utilizado no processo de Onboarding de pessoa jurídica.
 
     Liveness:
       description: |

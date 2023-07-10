@@ -79,7 +79,7 @@ paths:
   /bankslip/branch/{branch}/number/{number}/{authenticationCode}:
     get:
       tags:
-        - Emissão de boleto
+        - Consultas
       summary: Consulta por authenticationCode
       description: |
         <div class="bkly-ref-description">
@@ -104,11 +104,13 @@ paths:
           required: true
           schema:
             type: string
+            description: Número da agência da conta que está emitindo o boleto.
         - name: number
           in: path
           required: true
           schema:
             type: string
+            description: Número da conta que está emitindo o boleto.
         - name: authenticationCode
           in: path
           required: true
@@ -155,7 +157,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira a documentação [Emissão de boleto](/docs/emissao-de-boleto) para mais informações."
+          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
         }
         [/block]
       operationId: GetPDF
@@ -183,7 +185,7 @@ paths:
   /bankslip/searchstatus/{date}:
     get:
       tags:
-        - Emissão de boleto
+        - Consultas
       summary: Consulta de boletos por data
       description: |
         <div class="bkly-ref-description">
@@ -275,11 +277,9 @@ paths:
             x-bankly-correlation-id:
               description: Id correlação da operação requisitada.
               schema:
-                type: string
-        
+                type: string 
         '400':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-      
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'     
       security:
         - Bearer: []
   
@@ -309,6 +309,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
       requestBody:
         content:
           application/json-patch+json:
@@ -331,15 +332,8 @@ paths:
               description: Id de correlação da operação requisitada.
               schema:
                 type: string
-        
         '400':
-          description: Há algum problema com a sua requisição. Verifique se os valores dos campos enviados estão corretos e se o boleto possui um status válido para pagamento.
-          headers:
-            x-bankly-correlation-id:
-              description: Id correlação da operação requisitada.
-              schema:
-                type: string
-
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '401':
           $ref: 'http://localhost:3320/commons/components#/components/responses/401'
       
@@ -358,7 +352,7 @@ components:
           nullable: true
         branch:
           type: string
-          description: Agência da conta.
+          description: Número da gência bancária.
           nullable: true
       additionalProperties: false
       
@@ -379,38 +373,129 @@ components:
         - Invoice
       type: string
     
-    Address:
+    PayerAddress:
       type: object
       properties:
         addressLine:
           type: string
           nullable: true
+          description: Endereço do pagador.
         city:
           type: string
           nullable: true
+          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
         state:
           type: string
           nullable: true
+          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
         zipCode:
           type: string
           nullable: true
+          description: Código postal do endereço.
+      additionalProperties: false
+
+    RecipientAddress:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          nullable: true
+          description: Endereço do recebedor.
+        city:
+          type: string
+          nullable: true
+          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
+        state:
+          type: string
+          nullable: true
+          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
+        zipCode:
+          type: string
+          nullable: true
+          description: Código postal do endereço.
       additionalProperties: false
     
-    Person:
+    OriginAddress:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          nullable: true
+          description: Endereço do solicitante.
+        city:
+          type: string
+          nullable: true
+          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
+        state:
+          type: string
+          nullable: true
+          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
+        zipCode:
+          type: string
+          nullable: true
+          description: Código postal do endereço.
+      additionalProperties: false
+
+    PayerPerson:
       type: object
       properties:
         document:
           type: string
           nullable: true
+          description: Número do documento (CPF ou CNPJ) do pagador.
         name:
           type: string
           nullable: true
+          description: Nome do pagador.
         tradeName:
           type: string
           nullable: true
+          description: Nome fantasia do pagador.
         address:
-          $ref: '#/components/schemas/Address'
+          description: Objeto que contém informações sobre o endereço do pagador.
+          $ref: '#/components/schemas/PayerAddress'
       additionalProperties: false
+
+    RecipientPerson:
+      type: object
+      properties:
+        document:
+          type: string
+          nullable: true
+          description: Número do documento (CPF ou CNPJ) do recebedor.
+        name:
+          type: string
+          nullable: true
+          description: Nome do recebedor.
+        tradeName:
+          type: string
+          nullable: true
+          description: Nome fantasia do recebedor.
+        address:
+          description: Objeto que contém informações sobre o endereço do recebedor.
+          $ref: '#/components/schemas/RecipientAddress'
+      additionalProperties: false
+
+    OriginPerson:
+      type: object
+      properties:
+        document:
+          type: string
+          nullable: true
+          description: Número do documento (CPF ou CNPJ) do solicitante.
+        name:
+          type: string
+          nullable: true
+          description: Nome do solicitante.
+        tradeName:
+          type: string
+          nullable: true
+          description: Nome fantasia do solicitante.
+        address:
+          description: Objeto que contém informações sobre o endereço do solicitante.
+          $ref: '#/components/schemas/OriginAddress'
+      additionalProperties: false
+
 
     PersonEmissao:
       description: Os dados do pagador são de preenchimento obrigatório em caso de emissão de boleto de cobrança.
@@ -419,14 +504,18 @@ components:
         document:
           type: string
           nullable: true
+          description: Número do documento (CPF ou CNPJ) do pagador.
         name:
           type: string
           nullable: true
+          description: Nome do pagador.
         tradeName:
           type: string
           nullable: true
+          description: Nome fantasia do pagador.
         address:
-          $ref: '#/components/schemas/Address'
+          description: Objeto que deverá conter informações sobre o endereço do pagador.
+          $ref: '#/components/schemas/PayerAddress'
       additionalProperties: false
 
     CreateBankslipRequest:
@@ -442,6 +531,9 @@ components:
           description: Identificador externo do boleto.
           nullable: true
         account:
+          required:
+            - number
+            - branch
           $ref: '#/components/schemas/Account'
         documentNumber:
           type: string
@@ -586,6 +678,7 @@ components:
         - CancelledByRecipient
         - CancelledByDeadLine
       type: string
+      description: Situação do boleto.
     
     PriceValue:
       type: object
@@ -594,9 +687,11 @@ components:
           type: string
           nullable: true
           readOnly: true
+          description: Código da moeda com base na ISO-4217.
         value:
           type: number
           format: double
+          description: Valor pago.
       additionalProperties: false
     
     PaymentChannelType:
@@ -617,9 +712,11 @@ components:
         id:
           type: string
           format: uuid
+          description: Identificador único do pagamento.
         amount:
           type: number
           format: double
+          description: Valor pago.
         paymentChannel:
           $ref: '#/components/schemas/PaymentChannelType'
         paidOutDate:
@@ -668,13 +765,17 @@ components:
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
-          $ref: '#/components/schemas/Person'
+          description: Objeto que contém informações sobre o pagador do boleto.
+          $ref: '#/components/schemas/PayerPerson'
         recipientFinal:
-          $ref: '#/components/schemas/Person'
+          description: Objeto que contém informações sobre o recebedor do pagamento.
+          $ref: '#/components/schemas/RecipientPerson'
         recipientOrigin:
-          $ref: '#/components/schemas/Person'
+          description: Objeto que contém informações sobre o cliente que solicitou a emissão do boleto.
+          $ref: '#/components/schemas/OriginPerson'
         payments:
           type: array
+          description: Lista de objetos contendo informações sobre os pagamentos realizados referentes ao boleto.
           items:
             $ref: '#/components/schemas/Payments'
           nullable: true
@@ -724,11 +825,11 @@ components:
         type:
           $ref: '#/components/schemas/BankslipType'
         payer:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/PayerPerson'
         recipientFinal:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/RecipientPerson'
         recipientOrigin:
-          $ref: '#/components/schemas/Person'
+          $ref: '#/components/schemas/OriginPerson'
         payments:
           type: array
           items:
@@ -789,6 +890,7 @@ components:
         nextPageToken:
           type: string
           nullable: true
+          description: Token referente a próxima página a ser consultada.
         data:
           type: array
           items:
@@ -808,6 +910,7 @@ components:
           description: Identificador único do boleto.
           format: uuid
         account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
           $ref: '#/components/schemas/Account'
       additionalProperties: false
     
@@ -823,6 +926,10 @@ components:
           description: Identificador único do boleto.
           format: uuid
         account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
+          required:
+            - number
+            - branch
           $ref: '#/components/schemas/Account'
       additionalProperties: false
   
