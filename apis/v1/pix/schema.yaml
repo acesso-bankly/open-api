@@ -674,8 +674,17 @@ paths:
       operationId: CreateEntryAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - name: x-bkly-transactional-hash
+          in: header
+          schema:
+            type: string
+            description: Hash gerado na validação TOTP (obrigatório para cadastro de chaves do tipo e-mail e telefone).
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - name: x-correlation-id
+          in: header 
+          schema:
+            type: string
+            description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
       requestBody:
         content:
           application/json:
@@ -724,6 +733,7 @@ paths:
           schema:
             type: string
             nullable: true
+            description: Valor da chave de endereçamento a ser consultada.
       responses:
         '200':
           description: Recurso encontrado.
@@ -733,6 +743,8 @@ paths:
                 $ref: '#/components/schemas/GetEntryResponse'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
         '503':
@@ -767,7 +779,8 @@ paths:
           required: true
           schema:
             type: string
-            nullable: true        
+            nullable: true
+            description: Valor da chave de endereçamento a ser consultada.       
       responses:
         '204':
           $ref: 'http://localhost:3320/commons/components#/components/responses/204'
@@ -1112,6 +1125,7 @@ components:
     
     Document:
       type: object
+      description: Objeto que contém os dados do documento do titular da conta.
       properties:
         value:
           type: string
@@ -1207,7 +1221,10 @@ components:
       required:
         - branch
         - number
+        - type
+        - bank
       type: object
+      description: Objeto que deverá conter os dados da conta à qual a chave Pix será vinculada.
       properties:
         branch:
           minLength: 1
@@ -1219,6 +1236,24 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/AccountType'
+        bank:
+          type: object
+          required:
+            - ispb
+            - code
+            - name
+          properties:
+            ispb:
+              type: string
+              description: ISPB (Identificador de Sistema de Pagamento Brasileiro) do banco.
+            code:
+              type: string
+              description: Código do banco.
+            name:
+              type: string
+              description: Nome do banco.
+            
+          
       additionalProperties: false
    
     AccountRecipient:
@@ -1296,6 +1331,7 @@ components:
         - SAVINGS
         - PAYMENT
       type: string
+      description: Tipo de conta.
     
     AcknowledgementSimulationRequest:
       type: object
@@ -1391,6 +1427,7 @@ components:
 
     AddressingKey:
       type: object
+      description: Objeto que contém os dados da chave Pix a ser cadastrada.
       properties:
         type:
           $ref: '#/components/schemas/AddressingKeyType'
@@ -2306,6 +2343,7 @@ components:
         - EXCLUDED
         - LOCKED_BY_CLAIM
       type: string
+      description: Situação da chave de endereçamento.
   
     Error:
       type: object
@@ -2335,6 +2373,7 @@ components:
         endToEndId:
           type: string
           nullable: true
+          description: Identificador único do Pix. Ele será utilizado quando o parceiro realizar um pagamento ou transferência via Pix.
         addressingKey:
           $ref: '#/components/schemas/AddressingKey'
         holder:
@@ -2344,20 +2383,29 @@ components:
         createdAt:
           type: string
           format: date-time
+          description: Data de criação da chave.
         ownedAt:
           type: string
           format: date-time
+          description: Última data em que a chave foi vinculada a uma conta.
       additionalProperties: false
   
     HolderGetEntryResponse:
       type: object
+      description: Objeto que contém os dados do titular da conta.
       properties:
         type:
          type: string
+         enum:
+          - CUSTOMER
+          - BUSINESS
+         description: Tipo de titular da conta.
         name:
          type: string
+         description: Nome do titular da conta conforme consta no documento de identificação.
         socialName: 
           type: string
+          description: Nome pelo qual o titular gostaria de ser chamado.
         document:
           $ref: '#/components/schemas/Document'
       additionalProperties: false
