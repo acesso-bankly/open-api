@@ -771,7 +771,6 @@ paths:
       operationId: DeleteAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - name: addressingKeyValue
@@ -835,8 +834,6 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
-        '422':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'   
       security:
@@ -865,18 +862,26 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - name: x-bankly-pix-user-id
+          in: header
+          required: true
+          schema:
+            type: string
+            description: Número do documento do usuário que está fazendo a requisição. Insira apenas números, sem formatação. 
         - name: accountNumber
           in: path
           required: true
           schema:
             type: string
             nullable: true
+            description: Número da conta que realizou o pagamento via Pix.
         - name: authenticationCode
           in: path
           required: true
           schema:
             type: string
-            nullable: true        
+            nullable: true
+            description: Código de autenticação da transação, recebido no retorno da requisição de Pix cash-out.      
       responses:
         '200':
           description: Consulta retornada com sucesso.
@@ -952,7 +957,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Emissão de QR Code](/docs/pix-emissao-qrcode)."
+          "body": "Para mais informações, confira a documentação [Emissão de QR Code estático](/docs/pix-emissao-qrcode-estatico)."
         }
         [/block]
       operationId: CreateStaticQRCodeAsync
@@ -975,10 +980,14 @@ paths:
                 type: object
                 properties:
                   encodedValue:
-                    description: QR Code codificado em base64.
+                    description: Código em base64, que contém todas as informações sobre o pagamento.
                     type: string
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '408':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []      
   
@@ -993,11 +1002,17 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.qrcode-dynamic-payment.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Emissão de QR Codes dinâmicos](/docs/pix-emissao-qrcode-dinamico)."
+        }
+        [/block]
       operationId: CreateDynamicQRCodePaymentAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
         content:
@@ -1013,10 +1028,12 @@ paths:
                 type: object
                 properties:
                   encodedValue:
-                    description: QR Code codificado em base64.
+                    description: Código em base64, que contém todas as informações sobre o pagamento.
                     type: string
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
         - Bearer: []
 
@@ -1031,7 +1048,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: pix.qrcode.read</span>
         </div>
-        
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Decodificação de QR Codes estáticos e dinâmicos](/docs/decodificacao-de-qr-code)."
+        }
+        [/block]
       operationId: DecodeQRCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -1056,6 +1079,7 @@ paths:
                     description: Identificador único gerado pelo Bacen que deverá ser informado ao realizar o pagamento do QR Code.
                   conciliationId:
                     type: string
+                    description: ID de conciliação, o qual pode ser utilizado para conciliação dos pagamentos.
                   addressingKey:
                     $ref: '#/components/schemas/AddressingKey'
                   qrCodeType:
@@ -1077,12 +1101,13 @@ paths:
                     $ref: '#/components/schemas/ChangeAmountDetail'
                   qrCodePurpose:
                     type: string
-                    description: Razão da emissão do QR Code.
-         
+                    description: Razão da emissão do QR Code.   
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '408':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
       security:
@@ -1176,6 +1201,7 @@ components:
         ispb:
           type: string
           nullable: true
+          description: ISPB (Identificador de Sistema de Pagamento Brasileiro) do banco.
         code:
           description: Código do banco.
           type: string
@@ -1282,9 +1308,11 @@ components:
         branch:
           minLength: 1
           type: string
+          description: Número da agência.
         number:
           minLength: 1
           type: string
+          description: Número da conta.
         type:
           $ref: '#/components/schemas/AccountType'
     
@@ -1298,9 +1326,11 @@ components:
         branch:
           minLength: 1
           type: string
+          description: Número da agência.
         number:
           minLength: 1
           type: string
+          description: Número da conta.
         type:
           enum:
           - CHECKING
@@ -1317,9 +1347,11 @@ components:
         branch:
           minLength: 1
           type: string
+          description: Número da agência.
         number:
           minLength: 1
           type: string
+          description: Número da conta.
         type:
           $ref: '#/components/schemas/AccountType'
       additionalProperties: false
@@ -1378,6 +1410,7 @@ components:
 
     AdditionalData:
       type: object
+      description: Lista contendo um ou mais subcampos, criados pelo emissor, para descrever informações adicionais. Este valor é somente leitura.
       properties:
         name:
           type: string
@@ -1427,6 +1460,21 @@ components:
 
     AddressingKey:
       type: object
+      description: Objeto que contém os dados da chave Pix a ser cadastrada.
+      properties:
+        type:
+          $ref: '#/components/schemas/AddressingKeyType'
+        value:
+          type: string
+          description: Valor da chave.
+          nullable: true
+      additionalProperties: false
+
+    AddressingKeyRequest:
+      type: object
+      required:
+        - type
+        - value
       description: Objeto que contém os dados da chave Pix a ser cadastrada.
       properties:
         type:
@@ -1506,14 +1554,15 @@ components:
         ispb:
           type: string
           nullable: true
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
         compe:
           type: string
           nullable: true
-          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
+          description: Código do banco. Campo não retornado em caso de pagamento de QR Code para Pix Troco.
         name:
           type: string
           nullable: true
-          description: Campo não retornado em caso de pagamento de QR Code para Pix Troco.
+          description: Nome do banco. Campo não retornado em caso de pagamento de QR Code para Pix Troco.
       additionalProperties: false
           
     BankRequestRecipient:
@@ -1530,6 +1579,7 @@ components:
         ispb:
           type: string
           nullable: true
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
         
     BankSenderResponse:
       type: object
@@ -1537,12 +1587,15 @@ components:
         ispb:
           type: string
           nullable: true
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
         compe:
           type: string
           nullable: true
+          description: Código do banco.
         name:
           type: string
           nullable: true
+          description: Nome do banco.
       additionalProperties: false
         
     BankStatus:
@@ -1551,6 +1604,7 @@ components:
         ispb:
           type: string
           nullable: true
+          description: ISPB (Identificador de Sistema de Pagamento Brasileiro) do banco.
         compe:
           type: string
           nullable: true
@@ -1584,6 +1638,7 @@ components:
         - INTERNAL
         - EXTERNAL
       type: string
+      description: Indica se a transação é interna ou externa.
     
     ClaimAccount:
       type: object
@@ -2100,7 +2155,7 @@ components:
       type: object
       properties:
         addressingKey:
-          $ref: "#/components/schemas/AddressingKey"
+          $ref: "#/components/schemas/AddressingKeyRequest"
         recipientName:
           type: string
           nullable: true
@@ -2129,11 +2184,9 @@ components:
         expiresAt:
           type: string
           format: date-time
-          nullable: true
-          description: "Data e hora em que o QR Code deve expirar, no formato \"YYYY-MM-DD 00:00:00\". Caso esse campo não seja informado, o QR Code irá expirar em 24h."
+          description: "Data e hora em que o QR Code deve expirar. Caso esse campo não seja informado, o QR Code irá expirar em 24h."
         payerRequestText:
           type: string
-          nullable: true
           description: "Texto que o pagador visualizará no momento da transação."
       additionalProperties: false
 
@@ -2189,6 +2242,7 @@ components:
         amount:
           type: number
           format: double
+          description: Valor enviado.
         withdrawalAmount:
           type: number
           format: double
@@ -2200,6 +2254,8 @@ components:
         description:
           type: string
           nullable: true
+          maxLength: 140
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação.
         sender:
           $ref: '#/components/schemas/PixPersonSender'
         recipient:
@@ -2232,9 +2288,11 @@ components:
         refundReason:
           type: string
           nullable: true
+          description: Campo opcional que permite descrever o motivo da devolução.
         description:
           type: string
           nullable: true
+          description: Campo opcional que permite adicionar uma descrição para a devolução.
       additionalProperties: false
    
     CreatPixRefundResponse:
@@ -2263,26 +2321,30 @@ components:
         createdAt:
           type: string
           format: date-time
+          description: Data de criação da transação.
         updatedAt:
           type: string
           format: date-time
+          description: Data de atualização da transação.
 
     CreateStaticQRCodeRequest:
       required:
         - addressingKey
         - recipientName
+        - location
       type: object
       properties:
         addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
+          $ref: '#/components/schemas/AddressingKeyRequest'
         amount:
           type: number
           format: double
-          description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
+          description: Campo que define o valor do pagamento. Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
           nullable: true
         recipientName:
           minLength: 1
           type: string
+          description: Nome do recebedor do pagamento.
         location:
           $ref: '#/components/schemas/Location'
         conciliationId:
@@ -2292,13 +2354,12 @@ components:
         categoryCode:
           type: string
           nullable: true
+          default: 0000
+          description: MCC (Merchant Category Code) é um número de quatro dígitos listado na ISO 18245 para serviços financeiros de varejo. Caso o usuário recebedor o possua, ele deve ser informado. 
         additionalData:
           type: string
           nullable: true
           description: Campo livre para informações adicionais. Seu tamanho máximo é definido por 73 subtraído o tamanho da chave. Considerando que uma chave tem o tamanho mínimo de 9 caracteres, o tamanho máximo deste campo é 64. Esse campo <b>não</b> aceita caracteres especiais.
-        withdrawalProviderIspb:
-          type: string
-          description: Informe o ISPB do provedor do saque.<br /> Preenchimento <b>exclusivo</b> e <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
       additionalProperties: false
       
     DecodeQRCodeRequest:
@@ -2308,6 +2369,7 @@ components:
       properties:
         encodedValue:
           type: string
+          description: Conteúdo do QR Code em base64.
       additionalProperties: false
 
     DonorInfo:
@@ -2418,25 +2480,31 @@ components:
  
     Location:
       type: object
-      description: Preenchimento <b>obrigatório</b> em caso de emissão de <b>QR Code para Pix Saque</b>.
+      required:
+        - city
+      description: Objeto que contém informações sobre a localidade do recebedor do pagamento.
       properties:
         city:
           type: string
           nullable: true
+          description: Nome da cidade.
         zipCode:
           type: string
           nullable: true
+          description: Código postal do endereço.
       additionalProperties: false
      
     LocationResponse:
       type: object
+      description: Objeto que contém informações sobre a localidade do recebedor do pagamento.
       properties:
         city:
           type: string
           nullable: true
+          description: Nome da cidade.
         zipCode:
           type: string
-          description: Retorna apenas na leitura de QR Codes estáticos.
+          description: Código postal do endereço. Retorna apenas na leitura de QR Codes estáticos.
       additionalProperties: false
     
     Payer:
@@ -2457,7 +2525,7 @@ components:
           nullable: true
         type:
           $ref: "#/components/schemas/PersonType"
-          description: "Tipo de pagador, que pode ser CUSTOMER (pessoa física) ou BUSINESS (pessoa jurídica)."
+          description: "Tipo de pagador."
         address:
           $ref: "#/components/schemas/Address"
       additionalProperties: false
@@ -2527,10 +2595,26 @@ components:
       properties:
         type:
           type: string
+          enum:
+          - CUSTOMER
+          - BUSINESS
+          description: Tipo de titular.
         name:
           type: string
+          description: Nome do titular.
         document:
-          type: string
+          type: object
+          description: Objeto que contém informações sobre o documento do titular.
+          properties:
+            value:
+              type: string
+              description: Número do documento.
+            type:
+              type: string
+              enum:
+              - CPF
+              - CNPJ
+              description: Tipo do documento.
         
     PersonRequestRecipient:
       type: object
@@ -2582,6 +2666,7 @@ components:
         - StaticQrCode
         - DynamicQrCode
       type: string
+      description: Modo pelo qual se dará a transação.
   
     PixPerson:
       type: object
@@ -2684,26 +2769,33 @@ components:
       properties:
         companyKey:
           type: string
+          description: Chave que identifica o parceiro dentro do Bankly.
         authenticationCode:
           type: string
           format: uuid
+          description: Código de autenticação da transação.
         endToEndId:
           type: string
           nullable: true
+          description: Identificador único do Pix.
         initializationType:
           $ref: '#/components/schemas/PixInitializationType'
         receiverReconciliationId:
           type: string
           nullable: true
+          description: ID de conciliação utilizado para conciliação dos pagamentos.
         amount:
           type: number
           format: double
+          description: Valor transacionado.
         description:
           type: string
           nullable: true
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação.
         correlationId:
           type: string
           nullable: true
+          description: GUID informado em cada requisição realizada no endpoint.
         sender:
           $ref: '#/components/schemas/PixPerson'
         recipient:
@@ -2717,10 +2809,12 @@ components:
         createdAt:
           type: string
           format: date-time
+          description: Data de criação da transação.
         updatedAt:
           type: string
           format: date-time
           nullable: true
+          description: Data de atualização da transação.
       additionalProperties: false
     
     PixTransferStatusResponse:
@@ -2730,12 +2824,14 @@ components:
         - UNDONE
         - CANCELED
       type: string
+      description: Situação da transação de Pix cash-out.
     
     PixTransferTypeResponse:
       enum:
         - CASH_OUT
         - REFUND
-      type: string      
+      type: string
+      description: Tipo de transação.      
 
     ProblemDetails:
       type: object
@@ -2772,6 +2868,7 @@ components:
         - MD06
         - SL02
       type: string
+      description:  Código da devolução.
 
     WithdrawalDetail:
       type: object
