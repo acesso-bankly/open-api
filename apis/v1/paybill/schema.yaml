@@ -16,12 +16,18 @@ paths:
           <p>Realize a validação por meio da linha digitável para verificar se o título está apto a ser pago.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: payment.validate</span>
-        </div> 
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Validação do título](/docs/validacao-do-pagamento)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-
       requestBody:
         content:
           application/json-patch+json:
@@ -36,7 +42,6 @@ paths:
           application/*+json:
             schema:
               $ref: '#/components/schemas/ValidateBillRequest'
-      
       responses:
         '200':
           description: A linha digitável foi validada.
@@ -63,12 +68,18 @@ paths:
           <p>Confirme o pagamento do título para que ele possa ser efetivado.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: payment.confirm</span>
-        </div> 
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Confirmação do pagamento](/docs/confirmacao-do-pagamento)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-       
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'   
       requestBody:
         content:
           application/json-patch+json:
@@ -83,7 +94,6 @@ paths:
           application/*+json:
             schema:
               $ref: '#/components/schemas/PayBillRequest'
-      
       responses:
         '200':
           description: O pagamento foi confirmado.
@@ -113,32 +123,21 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: payment.read</span>
         </div> 
-        
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de pagamento por conta](/docs/consulta-pagamento-por-conta)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - name: bankBranch
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: bankAccount
-          required: true
-          in: query
-          schema:
-            type: string
-        - name: pageSize
-          in: query
-          schema:
-            type: integer
-            format: int32
-            description: Número de itens por página que a consulta deve retornar.
-        - name: pageToken
-          in: query
-          schema:
-            type: string
-
+        - $ref: "#/components/parameters/BankBranch"
+        - $ref: "#/components/parameters/BankAccount"
+        - $ref: "#/components/parameters/PageSize"
+        - $ref: "#/components/parameters/PageToken"
       responses:
         '200':
           description: Recurso encontrado.
@@ -169,28 +168,21 @@ paths:
           <p>Consulte todos os detalhes de um pagamento específico (completado ou não) por meio de seu código de autenticação (<code>authenticationCode</code>).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: payment.read</span>
-        </div> 
-      
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta por código de autenticação](/docs/consulta-por-codigo-de-autenticacao)."
+        }
+        [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
-        - name: bankBranch
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: bankAccount
-          required: true
-          in: query
-          schema:
-            type: string
-        - name: authenticationCode
-          in: query
-          required: true
-          schema:
-            type: string
-        
+        - $ref: "#/components/parameters/BankBranch"
+        - $ref: "#/components/parameters/BankAccount"
+        - $ref: "#/components/parameters/AuthenticationCode"
       responses:
         '200':
           description: Recurso encontrado.
@@ -212,10 +204,52 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
 
 components:
+  parameters:
+    
+    AuthenticationCode:
+      name: authenticationCode
+      in: query
+      required: true
+      schema:
+        type: string
+        description: Código de autenticação do pagamento que se deseja consultar. O valor pode ser obtido no retorno da requisição de confirmação de pagamento.  
+    
+    BankBranch:
+      name: bankBranch
+      in: query
+      required: true
+      schema:
+        type: string
+        description: Número da agência do banco do pagador.
+
+    BankAccount:
+      name: bankAccount
+      required: true
+      in: query
+      schema:
+        type: string
+        description: Número da conta do pagador. 
+      
+    PageSize:
+      name: pageSize
+      in: query
+      schema:
+        type: integer
+        format: int32
+        description: Número de itens por página que a consulta deve retornar.
+
+    PageToken:
+      name: pageToken
+      in: query
+      schema:
+        type: string
+        description: Após a primeira consulta, será retornado um token no campo nextPage, que identifica as páginas retornadas. Caso deseje consultar a próxima página, é preciso informá-lo neste campo (<code>pageToken</code>).
+  
   schemas:
     
     BillBusinessHours:
-      type: object 
+      type: object
+      description: Objeto que contém informações sobre a faixa de horário permitida para pagamento. 
       properties:
         start:
           type: string
@@ -229,6 +263,7 @@ components:
     
     BillCharges:
       type: object
+      description: Objeto que contém informações sobre os encargos aplicados na transação.
       properties:
         interestAmountCalculated:
           type: number
@@ -244,17 +279,34 @@ components:
           description: Valor do desconto.
       additionalProperties: false
     
-    BillPerson:
+    BillRecipientPerson:
       type: object
+      description: Objeto que contém informações sobre o recebedor do pagamento.
       properties:
         name:
           type: string
           nullable: true
+          description: Nome do recebedor.
         documentNumber:
           type: string
           nullable: true
+          description: Número do documento do recebedor.
       additionalProperties: false
     
+    BillPayerPerson:
+      type: object
+      description: Objeto que contém informações sobre o cedente.
+      properties:
+        name:
+          type: string
+          nullable: true
+          description: Nome do cedente.
+        documentNumber:
+          type: string
+          nullable: true
+          description: Número do documento do cedente.
+      additionalProperties: false
+
     PayBillRequest:
       type: object
       required:
@@ -270,15 +322,19 @@ components:
         bankBranch:
           type: string
           nullable: true
+          description: Número da agência do banco do pagador.
         bankAccount:
           type: string
           nullable: true
+          description: Número da conta do pagador.
         amount:
           type: number
           format: double
+          description:  Valor a ser pago.
         description:
           type: string
           nullable: true
+          description: Descrição do pagamento.
       additionalProperties: false
     
     PayBillResponse:
@@ -287,12 +343,15 @@ components:
         authenticationCode:
           type: string
           format: uuid
+          description: Id de confirmação da transação que será utilizado para realizar consultas sobre o pagamento.
         settleDate:
           type: string
           format: date-time
+          description: Data em que o pagamento será liquidado, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. Caso a data de vencimento coincida com feriados ou finais de semana, esse campo informará a data do próximo dia útil.
       additionalProperties: false
 
     PayBillStatus:
+      description: Situação do pagamento.
       enum:
         - Created
         - Completed
@@ -304,47 +363,61 @@ components:
         nextPage:
           type: string
           nullable: true
+          description: Identificador da página retornada. Caso deseje consultar a próxima página, é preciso informá-lo no campo <code>pageToken</code>.
         authenticationCode:
           type: string
           format: uuid
+          description: Id de confirmação da transação que poderá ser utilizado para consultar um pagamento específico.
         bankBranch:
           type: string
           nullable: true
+          description: Número da agência do banco do pagador.
         bankAccount:
           type: string
           nullable: true
+          description: Número da conta do pagador.
         paymentDate:
           type: string
           format: date-time
+          description: Data do pagamento.
         status: 
           $ref: '#/components/schemas/PayBillStatus' 
         companyKey:
           type: string
           nullable: true
+          description: Chave identificadora da companhia.
         documentNumber:
           type: string
           nullable: true
+          description: Número do documento do pagador.
         confirmedAt:
           type: string
           format: date-time
+          description: Data da confirmação do pagamento.
         digitable:
           type: string
           nullable: true
+          description: Linha digitável.
         amount:
           type: number
           format: double
+          description: Valor pago.
         originalAmount:
           type: number
           format: double
+          description: Valor original, sem encargos.
         assignor:
           type: string
           nullable: true
+          description: Nome do cedente.
         recipientDocument:
           type: string
           nullable: true
+          description: Número do documento do recebedor.
         recipientName:
           type: string
           nullable: true
+          description: Nome do recebedor do pagamento.
         charges:
           $ref: '#/components/schemas/BillCharges'
         settleDate:
@@ -358,6 +431,7 @@ components:
         descritpion:
           type: string
           nullable: true
+          description: Descrição do pagamento.
       additionalProperties: false
 
     QueryAutenticationCodeResponse:
@@ -366,44 +440,57 @@ components:
         authenticationCode:
           type: string
           format: uuid
+          description: Id de confirmação da transação que poderá ser utilizado para consultar um pagamento específico.
         bankBranch:
           type: string
           nullable: true
+          description: Número da agência do banco do pagador.
         bankAccount:
           type: string
           nullable: true
+          description: Número da conta do pagador.
         paymentDate:
           type: string
           format: date-time
+          description: Data do pagamento.
         status: 
           $ref: '#/components/schemas/PayBillStatus' 
         companyKey:
           type: string
           nullable: true
+          description: Chave identificadora da companhia.
         documentNumber:
           type: string
           nullable: true
+          description: Número do documento do pagador.
         confirmedAt:
           type: string
           format: date-time
+          description: Data da confirmação do pagamento.
         digitable:
           type: string
           nullable: true
+          description: Linha digitável.
         amount:
           type: number
           format: double
+          description: Valor pago.
         originalAmount:
           type: number
           format: double
+          description: Valor original, sem encargos.
         assignor:
           type: string
           nullable: true
+          description: Nome do cedente.
         recipientDocument:
           type: string
           nullable: true
+          description: Número do documento do recebedor.
         recipientName:
           type: string
           nullable: true
+          description: Nome do recebedor do pagamento.
         charges:
           $ref: '#/components/schemas/BillCharges'
         settleDate:
@@ -417,6 +504,7 @@ components:
         descritpion:
           type: string
           nullable: true
+          description: Descrição do pagamento. 
       additionalProperties: false
 
     ValidateBillRequest:
@@ -440,10 +528,11 @@ components:
         assignor:
           type: string
           nullable: true
+          description: Nome do cedente.
         recipient:
-          $ref: '#/components/schemas/BillPerson'
+          $ref: '#/components/schemas/BillRecipientPerson'
         payer:
-          $ref: '#/components/schemas/BillPerson'
+          $ref: '#/components/schemas/BillPayerPerson'
         businessHours:
           $ref: '#/components/schemas/BillBusinessHours'
         dueDate:
@@ -462,21 +551,27 @@ components:
           type: number
           format: double
           nullable: true
+          description: Valor original, sem encargos.
         amount:
           type: number
           format: double
           nullable: true
+          description: Valor a ser pago.
         charges:
           $ref: '#/components/schemas/BillCharges'
         maxAmount:
           type: number
           format: double
+          description: Máximo valor permitido por pagamento.
         minAmount:
           type: number
           format: double
+          description: Mínimo valor permitido por pagamento.
         allowChangeAmount:
           type: boolean
+          description: Indica se é permitido pagamento parcial.
         digitable:
           type: string
           nullable: true
+          description: Linha digitável.
       additionalProperties: false
