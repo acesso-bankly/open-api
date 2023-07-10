@@ -18,6 +18,13 @@ paths:
           <p>Antes de emitir um cartão de crédito, solicite uma análise de crédito para seu cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Criação de análise de crédito](/docs/criacao-analise-credito)."
+        }
+        [/block]
       operationId: creditAnalysisCreate
       parameters:
         - $ref: "#/components/parameters/apiVersion"
@@ -60,6 +67,13 @@ paths:
           <p>Envie o aceite da proposta já aprovada de um contrato de crédito.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Aceite da proposta do contrato de crédito](/docs/aceite-proposta-contrato-credito)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
@@ -89,21 +103,28 @@ paths:
           <p>Consulte um contrato de crédito já existente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de contrato de crédito](/docs/consulta-contrato-de-credito)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
         - name: documentNumber
           in: path
           required: true
-          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
+            description: Número do documento do cliente (CPF ou CNPJ).
         - name: contract
           in: path
-          description: Número do contrato de crédito do cliente.
           required: true
           schema:
             type: string
+            description: Número do contrato de crédito do cliente.
       responses:
         '202':
           description: Retorno com informações do contrato de crédito especificado.
@@ -126,21 +147,28 @@ paths:
           <p>Solicite a reanálise do limite de contrato de crédito do seu cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Reanálise do limite de contrato de crédito](/docs/reanalise-contrato-credito)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
         - name: documentNumber
           in: path
           required: true
-          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
+            description: Número do documento do cliente (CPF ou CNPJ).
         - name: contract
           in: path
-          description: Número do contrato de crédito do cliente.
           required: true
           schema:
             type: string
+            description: Número do contrato de crédito do cliente.
       requestBody:
         required: true
         content:
@@ -167,21 +195,28 @@ paths:
           <p>Após o pedido de reanálise ser aprovado, o cliente do parceiro deverá aceitar a nova proposta de limite de contrato de crédito.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Aceite do novo limite de contrato de crédito](/docs/aceite-novo-limite)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
         - name: documentNumber
           in: path
           required: true
-          description: Número do documento do cliente (CPF ou CNPJ).
           schema:
             type: string
+            description: Número do documento do cliente (CPF ou CNPJ).
         - name: contract
           in: path
-          description: Número do contrato de crédito do cliente.
           required: true
           schema:
             type: string
+            description: Número do contrato de crédito do cliente.
       requestBody:
         required: true
         content:
@@ -212,13 +247,15 @@ components:
       required: true
       schema:
         type: string
+        description: Versão da API. Atualmente estamos na versão 1.0.
         
     authorization:
       name: Authorization
       in: header
       required: true
       schema:
-        type: string 
+        type: string
+        description: Token de autorização do tipo Bearer.
 
     DocumentNumber:
       name: documentNumber
@@ -227,6 +264,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Número de documento de CPF ou CNPJ. Informe somente os números.
 
     Proxy:
       name: proxy
@@ -235,6 +273,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Identificador do cartão.
 
   schemas:
     createCardsInLotRequest:

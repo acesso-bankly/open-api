@@ -50,6 +50,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: [ ]
+  
   /card-network-transactions/authentication/challenge/{challengeId}/confirm:
     patch:
       tags:
@@ -98,6 +99,7 @@ paths:
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
       security:
         - Bearer: [ ]
+
 components:
   schemas:
     CreateChallengeSimulatorCommand:

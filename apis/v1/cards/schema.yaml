@@ -1943,13 +1943,15 @@ components:
       required: true
       schema:
         type: string
+        description: Versão da API. Atualmente estamos na versão 1.0.
         
     authorization:
       name: Authorization
       in: header
       required: true
       schema:
-        type: string 
+        type: string
+        description: Token de autorização do tipo Bearer.
 
     DocumentNumber:
       name: documentNumber
@@ -1958,6 +1960,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Número de documento de CPF ou CNPJ. Informe somente os números.
 
     Proxy:
       name: proxy
@@ -1966,6 +1969,7 @@ components:
       schema:
         type: string
         nullable: true
+        description: Identificador do cartão.
 
   schemas:
     createCardsInLotRequest:
