@@ -1174,6 +1174,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de senha](/docs/alteracao-de-senha-cartao)."
+        }
+        [/block]
       operationId: cardChangeCardPassword
       parameters:
         - name: proxy
@@ -1241,6 +1248,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de limite ativo de cartão pós-pago](/docs/alteracao-limite-ativo-cartao)."
+        }
+        [/block]
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
@@ -1680,6 +1694,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Rastreio de cartões por proxy](/docs/rastreio-cartoes-por-proxy)."
+        }
+        [/block]
       operationId: trackingGetByProxy
       parameters:
         - name: proxy
@@ -1753,6 +1774,13 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span>
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de endereço](/docs/alteracao-endereco)."
+        }
+        [/block]
       operationId: trackingUpdateAddress
       parameters:
         - name: proxy
@@ -1815,6 +1843,13 @@ paths:
             <span class="bkly-ref-small-stable-tag">stable</span> 
             <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
           </div>
+          [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Geração de token](/docs/geracao-de-token)."
+        }
+        [/block]
       operationId: GenerateTokenizationForWallet
       parameters:
         - name: proxy
