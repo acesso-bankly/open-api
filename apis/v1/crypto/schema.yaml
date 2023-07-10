@@ -20,7 +20,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+          "body": "Atualmente, só é possível operar com bitcoins (BTC). Confira a documentação [Cotação de criptomoedas](/docs/cotacao-de-criptomoedas) para mais informações."
         }
         [/block]
       parameters:
@@ -75,7 +75,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Atualmente, só é possível operar com bitcoins (BTC)."
+          "body": "Atualmente, só é possível operar com bitcoins (BTC). Confira a documentação [Gráfico da cotação de criptomoedas por período](/docs/cotacao-criptomoedas-periodo) para mais informações."
         }
         [/block]
       parameters:
@@ -127,6 +127,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Criação de intenção de compra e venda de criptomoedas](/docs/criacao-ordem)."
+        }
+        [/block]
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
         - $ref: '#/components/parameters/BanklyUserId'
@@ -182,6 +189,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.order.create</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Execução de ordem de compra e venda de criptomoedas](/docs/execucao-ordem)."
+        }
+        [/block]
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
         - $ref: '#/components/parameters/BanklyUserId'
@@ -242,6 +256,13 @@ paths:
           <span class="bkly-ref-small-beta-tag">beta</span>
           <span class="bkly-ref-scope-tag">scope: crypto.order.read</span>
         </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de ordem de compra e venda](/docs/consulta-ordem-compra-venda)."
+        }
+        [/block]
       parameters:
         - $ref: '#/components/parameters/BanklyVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
