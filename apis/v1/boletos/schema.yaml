@@ -732,6 +732,9 @@ components:
           type: string
           format: uuid
           description: Identificador único do boleto.
+        barcode:
+          type: string
+          description: Número do código de barras do boleto.
         updatedAt:
           type: string
           format: date-time
@@ -871,6 +874,9 @@ components:
           type: string
           description: Identificador único do boleto.
           nullable: true
+        barcode:
+          type: string
+          description: Número do código de barras do boleto.
         status:
           $ref: '#/components/schemas/BankslipStatus'       
         updatedAt:
