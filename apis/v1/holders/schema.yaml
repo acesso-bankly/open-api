@@ -1455,7 +1455,7 @@ components:
           nullable: true
         businessName:
           type: string
-          description: Razão social da empresa. ApenObrigatótio apenas  para sócio <b>pessoa jurídica</b>.
+          description: Razão social da empresa. Obrigatótio apenas para sócio <b>pessoa jurídica</b>.
           nullable: true
         businessType:
           description: Tipo da empresa. Obrigatótio apenas para sócio <b>pessoa jurídica</b>.
@@ -1722,10 +1722,6 @@ components:
           type: string
           description: Data de abertura da empresa. 
           format: date-time
-        annualBilling:
-          type: number
-          description: Faturamento anual da empresa. <b>Obsoleto</b>. Utilize o campo <code>declaredAnnualBilling</code>.
-          format: double
         declaredAnnualBilling:
           $ref: "#/components/schemas/DeclaredAnnualBillingRequest"
         phone:
