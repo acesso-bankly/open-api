@@ -1303,7 +1303,7 @@ paths:
   /cards/{proxy}/activate:
     patch:
       tags:
-        - Status do cartão
+        - Gestão do status
       summary: Ativação de cartão
       description: |
         <div class="bkly-ref-description">
@@ -1369,7 +1369,7 @@ paths:
   /cards/{proxy}/status:
     patch:
       tags:
-        - Status do cartão
+        - Gestão do status
       summary: Alteração do status do cartão
       description: |
         <div class="bkly-ref-description">
@@ -1442,7 +1442,7 @@ paths:
   /cards/{proxy}/contactless:
     patch:
       tags:
-        - Status do cartão
+        - Gestão do status
       summary: Configuração do contactless
       description: |
         <div class="bkly-ref-description">
@@ -1501,7 +1501,7 @@ paths:
   /cards/{proxy}/nextStatus:
     get:
       tags:
-        - Status do cartão
+        - Gestão do status
       summary: Consulta dos próximos status
       description: |
         <div class="bkly-ref-description">
@@ -2576,8 +2576,6 @@ components:
           description: Atualizar cartões vinculados.
       required:
         - status
-        - password
-        - updateCardBinded
    
     createCardRequest:
       type: object
