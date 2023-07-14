@@ -931,7 +931,7 @@ components:
 
     ResponseIdToken:
       properties:
-        IdToken:
+        idToken:
           type: string
           format: string
           description: GUID do <i>token</i> gerado.
