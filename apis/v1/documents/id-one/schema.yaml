@@ -39,7 +39,7 @@ paths:
       summary: Consulta do resultado da análise de imagens
       description: |
         <div class="bkly-ref-description">
-          <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os tokens correspondentes às análises solicitadas.</p>
+          <p>Após realizar o <a href="https://docs.bankly.com.br/docs/envio-documentos-analise-id-one">envio de documentos pessoais para análise com o ID ONE</a>, utilize este endpoint para a consulta de resultados. Para obter mais de um resultado, informe os <i>tokens</i> correspondentes às análises solicitadas.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.read</span>
         </div>  
@@ -83,7 +83,7 @@ paths:
       summary: Solicitação de novo token
       description: |
         <div class="bkly-ref-description">
-          <p>Solicite um novo token de autenticação de identidade para o seu cliente.</p>
+          <p>Solicite um novo <i>token</i> de autenticação para realizar a confirmação da identidade do seu cliente.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: security.id-token.create</span>
         </div>  
@@ -290,13 +290,13 @@ components:
     AnalysisToken:
       name: token
       in: query
-      description: Lista de tokens de análise do documento.
+      description: Lista de <i>tokens</i> de análise do documento.
       required: false
       style: form
       explode: true
       schema:
         type: array
-        description: Lista de tokens de análise do documento.
+        description: Lista de <i>tokens</i> de análise do documento.
         nullable: true
         items:
           type: string
@@ -352,11 +352,12 @@ components:
     Claims:
       required:
         - deviceHash 
-      type: object
+      type: object 
       properties:
         deviceHash:
           type: string
           format: string
+          description: <i>Hash</i> do dispositivo, retornado no endpoint de registro de novo dispositivo móvel.
           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
       additionalProperties: false
 
@@ -601,7 +602,7 @@ components:
       type: object
       properties:
         token:
-          description: Token da análise.
+          description: <i>Token</i> da análise.
           type: string
           nullable: true
         documentType:
@@ -799,7 +800,7 @@ components:
       required:
         - token
       type: object
-      description: Token que será utilizado no processo de Onboarding de pessoa jurídica.
+      description: <i>Token</i> que será utilizado no processo de Onboarding de pessoa jurídica.
       properties:
         token:
           type: string
@@ -809,24 +810,28 @@ components:
         - challenge 
         - claims
         - provider
+        - providerMetadata
       type: object
       properties:
         challenge:
           type: string
           format: string
+          description: Tipo de desafio. Caso o <i>token</i> seja utilizado para a validação de um dispositivo, esse campo deve apresentar o valor "DEVICE_VERIFICATION”.
           example: "DEVICE_VERIFICATION"
         claims:
-          $ref: '#/components/schemas/Claims'
-        ttl:
-          type: integer
-          format: int32
-          example: "900"
+          $ref: '#/components/schemas/Claims'       
         provider:
           type: string
           format: string
+          description: Nome do provedor, que, nesse caso, é UNICO_CHECK.
           example: "UNICO_CHECK"
         providerMetadata:
           $ref: '#/components/schemas/ProviderMetaDataIdToken'
+        ttl:
+          type: integer
+          format: int32
+          description: Tempo de vida do <i>token</i>, que é de, no máximo, 900 segundos.
+          example: 900
       additionalProperties: false
 
     Link:
@@ -921,6 +926,7 @@ components:
         encrypted:
           type: string
           format: string
+          description: Imagem criptografada cujo tamanho não deve ultrapassar 4 MB.
           example: "099db6528fa686230c4d38b5116cf5581c4009f8b51795923993020be9cd1045"
 
     ResponseIdToken:
@@ -928,10 +934,12 @@ components:
         IdToken:
           type: string
           format: string
+          description: GUID do <i>token</i> gerado.
           example: "b7f84c3a-6d2b-4ac4-b882-ed38f8c76a52"
         expiresIn:
           type: integer
           format: int32
+          description: Tempo de vida do <i>token</i>, que é de, no máximo, 900 segundos.
           example: 900
 
     ResultLevel:
@@ -1002,7 +1010,7 @@ components:
   securitySchemes:
     Bearer:
       type: http
-      description: Inclua o token de autorização do tipo Bearer
+      description: Inclua o <i>token</i> de autorização do tipo Bearer
       scheme: bearer
 
   examples:
