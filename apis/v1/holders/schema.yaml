@@ -626,7 +626,7 @@ components:
           type: string
           nullable: true
         birthDate:
-          description: Data de nascimento do cliente.
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ.
           type: string
           format: date-time
         registerName:
@@ -746,7 +746,7 @@ components:
           $ref: "#/components/schemas/SendedDocumentationResponse"
         birthDate:
           type: string
-          description: Data de nascimento do cliente. 
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ.
           format: date-time
         createdAt:
           description: Data do primeiro registro do cliente.
@@ -922,7 +922,7 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. O representante legal deve possuir no mínimo **16 anos**.
           format: date-time
         phone:
           description: Telefone de contato do representante legal da empresa.
@@ -983,7 +983,7 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. O representante legal deve possuir no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
@@ -1064,7 +1064,7 @@ components:
           nullable: true
         birthDate:
           type: string
-          description: Data de nascimento do representante legal. O cliente deve possuir no mínimo 16 anos.
+          description: Data de nascimento do representante legal, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. O cliente deve possuir no mínimo 16 anos.
           format: date-time
         motherName:
           type: string
@@ -1145,7 +1145,7 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: Data de nascimento do cliente. O representante legal deve possuir no mínimo **16 anos**.
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. O representante legal deve possuir no mínimo **16 anos**.
           format: date-time
         motherName:
           type: string
@@ -1410,7 +1410,7 @@ components:
           nullable: true
         birthDate:
           type: string
-          description: Data de nascimento do sócio. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
+          description: Data de nascimento do sócio, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. <b>Obrigatório</b> apenas para sócio <b>pessoa física</b>.
           format: date-time
         motherName:
           type: string
@@ -1602,7 +1602,7 @@ components:
           maxLength: 10
           minLength: 10
           type: string
-          description: Data de nascimento do cliente.
+          description: Data de nascimento do cliente, no formato YYYY-MM-DDTHH:mm:SS.MMMZ.
           format: date-time
         phone:
           description: Objeto onde devem ser informados os dados do telefone do cliente.
