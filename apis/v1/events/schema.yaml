@@ -348,14 +348,14 @@ paths:
         '500':
           $ref: 'http://localhost:3320/commons/components#/components/responses/500'
   
-  /webhooks/processed-messages/{idempotencyKey}:
+  /webhooks/processed-messages/{id}:
     post:
       tags:
       - Mensagens
       summary: Reprocessamento de mensagens
       description: | 
         <div class="bkly-ref-description">
-          <p>Reenvie uma mensagem processada a partir de sua chave de idempotência.</p>
+          <p>Reenvie uma mensagem processada a partir de seu identificador de processamento.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope:  webhook.read</span>
         </div>
@@ -368,14 +368,14 @@ paths:
         [/block]   
       operationId: ResendProcessedMessageAsync
       parameters:
-      - name: idempotencyKey
+      - name: id
         in: path
         required: true
         schema:
           minLength: 1
           type: string
           format: uuid
-          description:  Chave de idempotência, utilizada para evitar a duplicidade de transações.
+          description: Identificador do processamento da mensagem.
       - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
       - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
@@ -578,6 +578,10 @@ components:
     ProcessedMessageSearchResponseItem:
       type: object
       properties:
+        id: 
+          type: string
+          format: uuid
+          description: Identificador do processamento.
         idempotencyKey:
           type: string
           format: uuid
