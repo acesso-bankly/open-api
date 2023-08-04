@@ -1847,20 +1847,6 @@ components:
       explode: true
       schema:
         $ref: '#/components/schemas/ResultLevel'
-    
-    AnalysisToken:
-      name: token
-      in: query
-      description: Lista de tokens de análise do documento.
-      required: false
-      style: form
-      explode: true
-      schema:
-        type: array
-        description: Lista de tokens de análise do documento.
-        nullable: true
-        items:
-          type: string
   
     AgeRange:
       type: object
