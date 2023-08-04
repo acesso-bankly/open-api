@@ -1835,18 +1835,6 @@ components:
         links:
           type: object
           description: Lista que contém os objetos referente ao HATEOS.
-    
-    ResultLevel:
-      name: resultLevel
-      in: query
-      description: |
-        Tipo de retorno da API.
-        _(ONLY_STATUS, DETAILED)_
-      required: false
-      style: form
-      explode: true
-      schema:
-        $ref: '#/components/schemas/ResultLevel'
   
     AgeRange:
       type: object
