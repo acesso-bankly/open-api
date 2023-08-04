@@ -300,7 +300,7 @@ paths:
              
       responses:
         '201':
-          description: A requisição foi aceita
+          description: A requisição foi aceita.
           content:
             application/json:
               schema:
@@ -1858,7 +1858,6 @@ components:
       type: string
       description: |
         Status da análise da imagem.
-        _(ANALYZING, PARTIALLY_ANALYZED, ANALYSIS_COMPLETED, UNEXPECTED_ERROR)_
       enum:
         - ANALYZING
         - PARTIALLY_ANALYZED
@@ -1961,7 +1960,7 @@ components:
    
     DocumentDetails:
       description: |
-        Informações extraídas documento analisado.
+        Informações extraídas do documento analisado.
       type: object
       properties:
         status:
@@ -2031,7 +2030,7 @@ components:
     DocumentType:
       type: string
       description: |
-        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
+        Tipo do documento.
       enum:
         - RG
         - CNH
@@ -2083,7 +2082,6 @@ components:
     FaceDetailsStatus:
       description: |
         Resultado da análise facial.
-        _(DETECTED_FACE, MANY_FACES_DETECTED, COULD_NOT_DETECT_FACE)_
       type: string
       enum:
         - DETECTED_FACE
@@ -2110,7 +2108,6 @@ components:
     FaceMatchStatus: 
       description: |
         Resultado da análise face match.
-        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTED)_
       type: string
       enum:
         - HAS_FACE_MATCH
@@ -2150,7 +2147,6 @@ components:
     LivenessStatus:
       description: |
         Resultado da análise de prova de vida.
-        _(LIVENESS_FOUND, NO_LIVENESS, COULD_NOT_DETECT_FACE)_
       type: string
       enum:
         - LIVENESS_FOUND
@@ -2160,7 +2156,6 @@ components:
     OcrStatus:
       description: |
         Resultado da análise OCR.
-        _(DETECTED_DOCUMENT, NO_DOCUMENT_FOUND, NO_INFO_FOUND)_
       type: string
       enum:
         - DETECTED_DOCUMENT
@@ -2192,7 +2187,7 @@ components:
       type: object
       properties:
         token:
-          description: Token da análise
+          description: Token da análise.
           type: string
           nullable: true
       additionalProperties: false
