@@ -268,6 +268,50 @@ paths:
         "500":
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
  
+  /document-analysis/{documentNumber}/corporation-business:
+    put:
+      tags:
+        - Pessoa jurídica
+      summary: Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)
+      operationId: UploadDocumentOnboardingPJLTDASATS
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o envio de imagens de documentos de pessoa jurídica (LTDA, S.A. e TS), para que seja possível realizar o fluxo de Onboarding.</p>
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Envio de documentos LTDA, S.A. e TS](/docs/envio-documentos-corporativos)."
+        }
+        [/block]
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/BusinessDocument'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/CorporateDocumenteRequest"
+             
+      responses:
+        '201':
+          description: A requisição foi aceita
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileTokenResponse"
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+      security:
+        - bearer: []
+
   /corporation-business/{documentNumber}:
     put:
       tags:
@@ -1792,6 +1836,403 @@ components:
           type: object
           description: Lista que contém os objetos referente ao HATEOS.
     
+    ResultLevel:
+      name: resultLevel
+      in: query
+      description: |
+        Tipo de retorno da API.
+        _(ONLY_STATUS, DETAILED)_
+      required: false
+      style: form
+      explode: true
+      schema:
+        $ref: '#/components/schemas/ResultLevel'
+    
+    AnalysisToken:
+      name: token
+      in: query
+      description: Lista de tokens de análise do documento.
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: array
+        description: Lista de tokens de análise do documento.
+        nullable: true
+        items:
+          type: string
+  
+    AgeRange:
+      type: object
+      description: Faixa de idade identificada.
+      properties:
+        low:
+          description: |
+            Idade mínima detectada.
+          type: integer
+          format: int32
+          nullable: true
+        high:
+          description: |
+            Idade máxima detectada.
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    
+    AnalysisStatus:
+      type: string
+      description: |
+        Status da análise da imagem.
+        _(ANALYZING, PARTIALLY_ANALYZED, ANALYSIS_COMPLETED, UNEXPECTED_ERROR)_
+      enum:
+        - ANALYZING
+        - PARTIALLY_ANALYZED
+        - ANALYSIS_COMPLETED
+        - UNEXPECTED_ERROR
+    
+    Confidence:
+      description: |
+        Nível de confiança da análise.
+      type: number
+      format: double
+      nullable: false
+
+    CorporateDocumenteRequest:
+      type: object
+      required:
+        - documentType
+        - file
+      properties:
+        documentType:
+          type: string
+          description: Tipo do documento.
+          enum:
+            - ARTICLES_OF_INCORPORATION
+            - LAST_CONTRACT_CHANGE
+            - BALANCE_SHEET
+            - POWER_OF_ATTORNEY
+        file:
+          type: string
+          format: binary
+          description: Arquivo do documento. Não deve ser superior à 8.5 MB. Apenas arquivos com a extensão '.pdf'.
+
+    DeepfaceDocumentAnalysis:
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType' 
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        provider: 
+          $ref: '#/components/schemas/Provider'
+        providerMetadata:
+          $ref: '#/components/schemas/ProviderMetadata'
+        image:
+          type: string
+          description: Arquivo da imagem no formato .jpeg, .jpg ou .png. 
+          format: binary
+          nullable: true
+      required:
+        - documentType
+        - documentSide
+        - image
+        - provider
+      additionalProperties: false
+    
+    DocumentAnalysisForm:
+      required:
+        - documentType
+        - documentSide
+        - image
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        image:
+          type: string
+          description: Arquivo da imagem (.jpeg, .jpg ou .png). Não deve ser superior à **1 MB**. A resolução deve ser compatível com [VGA](https://en.wikipedia.org/wiki/Video_Graphics_Array).
+          format: binary
+          nullable: true
+      
+    DocumentAnalysisResponse:
+      type: object
+      properties:
+        token:
+          description: Token da análise.
+          type: string
+          nullable: true
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentSide:
+          $ref: '#/components/schemas/DocumentSide'
+        status:
+          $ref: '#/components/schemas/AnalysisStatus'
+        faceMatch:
+          $ref: '#/components/schemas/FaceMatch'
+        faceDetails:
+          $ref: '#/components/schemas/FaceDetails'
+        documentDetails:
+          $ref: '#/components/schemas/DocumentDetails'
+        liveness:
+          $ref: '#/components/schemas/Liveness'
+        analyzedAt:
+          description: Data da análise do documento.
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+   
+    DocumentDetails:
+      description: |
+        Informações extraídas documento analisado.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/OcrStatus'
+        identifiedDocumentType:
+          description: Tipo do documento detectado.
+          type: string
+          nullable: true
+        idNumber:
+          description: Número do RG.
+          type: string
+          nullable: true
+        cpfNumber:
+          description: Número do CPF.
+          type: string
+          nullable: true
+        birthDate:
+          description: Data de nascimento.
+          type: string
+          nullable: true
+        fatherName:
+          description: Nome do pai do titular do documento.
+          type: string
+          nullable: true
+        motherName:
+          description: Nome do mãe do titular do documento.
+          type: string
+          nullable: true
+        registerName:
+          description: Nome do titular do documento.
+          type: string
+          nullable: true
+        validDate:
+          description: Validade do documento.
+          type: string
+          nullable: true
+        driveLicenseCategory:
+          description: Categoria da CNH.
+          type: string
+          nullable: true
+        driveLicenseNumber:
+          description: Número da licença (CNH) do motorista.
+          type: string
+          nullable: true
+        driveLicenseFirstQualifyingDate:
+          description: Data da primeira habilitação (CNH) do motorista.
+          type: string
+          nullable: true
+        federativeUnit:
+          description: Unidade Federativa onde o documento foi emitido.
+          type: string
+          nullable: true
+        issuedBy:
+          description: Órgão emissor do documento.
+          type: string
+          nullable: true
+        issuePlace:
+          description: Localidade onde o documento foi emitido.
+          type: string
+          nullable: true
+        issueDate:
+          description: Data em que o documento foi emitido.
+          type: string
+          nullable: true
+      additionalProperties: false
+    
+    DocumentType:
+      type: string
+      description: |
+        Tipo do documento (RG, CNH, RNE, CRNM, DNI e SELFIE).
+      enum:
+        - RG
+        - CNH
+        - RNE
+        - CRNM
+        - DNI
+        - SELFIE
+
+    DocumentSide:
+      type: string
+      description: |
+        Lado do documento (FRONT ou BACK). Quando o tipo do documento for SELFIE, este parâmetro será desprezado.
+      enum:
+        - FRONT
+        - BACK
+
+    Error:
+      $ref: http://localhost:3320/commons/components#/components/schemas/ErrorResponse
+
+    ErrorResponse:
+      $ref: http://localhost:3320/commons/components#/components/schemas/Error
+    
+    FaceDetails:
+      description: |
+        Informações da análise facial.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceDetailsStatus'
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+        ageRange:
+          $ref: '#/components/schemas/AgeRange'
+        gender:
+          $ref: '#/components/schemas/FacialDetail'
+        sunglasses:
+          $ref: '#/components/schemas/FacialDetail'
+        eyesOpen:
+          $ref: '#/components/schemas/FacialDetail'
+        emotions:
+          description: |
+            Lista de expressões detectadas.
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/FacialDetail'
+      additionalProperties: false
+    
+    FaceDetailsStatus:
+      description: |
+        Resultado da análise facial.
+        _(DETECTED_FACE, MANY_FACES_DETECTED, COULD_NOT_DETECT_FACE)_
+      type: string
+      enum:
+        - DETECTED_FACE
+        - MANY_FACES_DETECTED
+        - COULD_NOT_DETECT_FACE
+
+    FaceMatch:
+      description: |
+        Informações da Análise Face Match.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FaceMatchStatus'
+        similarity:
+          description: |
+            Nível de similaridade entre as faces comparadas.
+          type: number
+          format: double
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+
+    FaceMatchStatus: 
+      description: |
+        Resultado da análise face match.
+        _(HAS_FACE_MATCH, UNMATCHED_DOCUMENT, MANY_FACES_DETECTED)_
+      type: string
+      enum:
+        - HAS_FACE_MATCH
+        - UNMATCHED_DOCUMENT
+        - MANY_FACES_DETECTED
+
+    FacialDetail:
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties: false
+          description: Tipo do detalhe facial identificado.
+          nullable: true
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+    
+    FileTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token identificador da imagem enviada, que deverá ser utilizado no processo de Onboarding de pessoa jurídica.
+
+    Liveness:
+      description: |
+        Informações da análise de prova de vida.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/LivenessStatus'
+        confidence:
+          $ref: '#/components/schemas/Confidence'
+      additionalProperties: false
+
+    LivenessStatus:
+      description: |
+        Resultado da análise de prova de vida.
+        _(LIVENESS_FOUND, NO_LIVENESS, COULD_NOT_DETECT_FACE)_
+      type: string
+      enum:
+        - LIVENESS_FOUND
+        - NO_LIVENESS
+        - COULD_NOT_DETECT_FACE
+     
+    OcrStatus:
+      description: |
+        Resultado da análise OCR.
+        _(DETECTED_DOCUMENT, NO_DOCUMENT_FOUND, NO_INFO_FOUND)_
+      type: string
+      enum:
+        - DETECTED_DOCUMENT
+        - NO_DOCUMENT_FOUND
+        - NO_INFO_FOUND
+    
+    Provider:
+      type: string
+      description: Para envio de selfie, informe "UNICO_CHECK", para envio de documentos, o campo deve apresentar o valor “BANKLY”.
+      enum:
+        - UNICO_CHECK
+        - BANKLY
+
+    ProviderMetadata:
+      description: Objeto obrigatório <b>apenas</b> se o <code>provider</code> apresentar o valor UNICO_CHECK.
+      type: object
+      properties:
+        isLastDocument:
+          type: boolean
+          description: Para garantir o sucesso no envio do documento, esse campo sempre deve apresentar o valor TRUE.
+        encrypted:
+          type: string
+          description: Esse campo deve ser preenchido com o valor do campo <code>encrypted</code>, retornado ao efetuar uma captura de imagem com sucesso utilizando o SDK da Unico. 
+      required:
+        - "isLastDocument" 
+        - "encrypted"
+
+    ResultLevel:
+      type: string
+      description: |
+        Tipo de retorno da API.
+        _(ONLY_STATUS, DETAILED)_
+      default: ONLY_STATUS
+      enum:
+        - ONLY_STATUS
+        - DETAILED
+
+    UploadDocumentResponse:
+      type: object
+      properties:
+        token:
+          description: Token da análise
+          type: string
+          nullable: true
+      additionalProperties: false
+
   securitySchemes:
     Bearer:
       type: http
