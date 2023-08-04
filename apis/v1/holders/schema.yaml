@@ -2214,16 +2214,6 @@ components:
         - "isLastDocument" 
         - "encrypted"
 
-    ResultLevel:
-      type: string
-      description: |
-        Tipo de retorno da API.
-        _(ONLY_STATUS, DETAILED)_
-      default: ONLY_STATUS
-      enum:
-        - ONLY_STATUS
-        - DETAILED
-
     UploadDocumentResponse:
       type: object
       properties:
