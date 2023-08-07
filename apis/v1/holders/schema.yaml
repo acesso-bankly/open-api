@@ -296,8 +296,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/CorporateDocumenteRequest"
-             
+              $ref: "#/components/schemas/CorporateDocumenteRequest"             
       responses:
         '201':
           description: A requisição foi aceita.
@@ -863,7 +862,6 @@ components:
       required:
         - articlesOfIncorporation
         - lastContractChange
-        - balanceSheet
         - legalRepresentative
       properties:
         articlesOfIncorporation:
