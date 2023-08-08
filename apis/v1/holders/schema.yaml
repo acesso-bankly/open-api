@@ -277,7 +277,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize o envio de imagens de documentos de pessoa jurídica (LTDA, S.A. e TS), para que seja possível realizar o fluxo de Onboarding.</p>
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: kyc.document.write</span>
         </div>
         [block:callout]
