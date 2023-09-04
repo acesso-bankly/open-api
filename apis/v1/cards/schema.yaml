@@ -2783,6 +2783,7 @@ components:
       required:
         - status
         - documentNumber
+        - description
         - password
 
     creditErrorResponse:
