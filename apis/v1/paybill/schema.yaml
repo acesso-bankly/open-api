@@ -263,7 +263,7 @@ components:
     
     BillCharges:
       type: object
-      description: Objeto que contém informações sobre os encargos aplicados na transação.
+      description: Objeto que contém informações sobre os encargos aplicados na transação. Em caso de pagamentos desfeitos, esse objeto retornará seus campos com valores <b>nulos</b>.
       properties:
         interestAmountCalculated:
           type: number
