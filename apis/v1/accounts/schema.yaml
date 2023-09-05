@@ -407,7 +407,6 @@ paths:
       security:
         - Bearer: []
 
-
   /accounts/{accountNumber}/pockets:
     post:
       tags:
@@ -416,7 +415,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Crie uma conta pocket para que seja possível guardar dinheiro fora da conta de pagamento.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">pocket.create</span>
         </div>
         [block:callout]
@@ -480,7 +479,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Obtenha uma lista com os dados de todas as contas pockets associadas a uma conta de pagamento. A busca permite filtrar pelo status e pelo tipo da conta pocket.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span> 
         </div>
         [block:callout]
@@ -554,7 +553,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte os dados de uma conta pocket específica.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
         [block:callout]
@@ -606,7 +605,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Consulte o saldo disponível, bloqueado, em processamento e o total de uma conta pocket.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">pocket.read</span>
         </div>
         [block:callout]
@@ -652,7 +651,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a alteração do usuário de uma conta pocket.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">pocket.update</span>
         </div>
         [block:callout]
@@ -706,7 +705,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Deposite um valor da conta de pagamento para a conta pocket atrelada a ela.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">pocket.transaction.create</span>
         </div>
         [block:callout]
@@ -770,7 +769,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Transfira um valor da conta pocket para a conta de pagamento ao qual ela está associada.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">pocket.transaction.create</span>
         </div>
         [block:callout]
@@ -835,7 +834,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize consulta de uma transação específica, de depósito ou resgate, ocorrida entre a conta de pagamento e a pocket.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">pocket.transaction.read</span>
         </div>
         [block:callout]
@@ -889,7 +888,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Encerre uma conta pocket.</p> 
-          <span class="bkly-ref-small-stable-tag">beta</span> 
+          <span class="bkly-ref-small-stable-tag">stable</span>  
           <span class="bkly-ref-scope-tag">pocket.close</span>
         </div>
         [block:callout]
