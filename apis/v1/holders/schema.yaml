@@ -1688,10 +1688,10 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: Razão social da empresa. <br/><b>Importante:</b> não é possível enviar caracteres especiais neste campo.
+          description: Razão social da empresa. <br/><b>Importante:</b> este campo não aceita caracteres especiais.
         tradingName:
           type: string
-          description: Nome fantasia da empresa. <br/><b>Importante:</b> não é possível enviar caracteres especiais neste campo.
+          description: Nome fantasia da empresa. <br/><b>Importante:</b> este campo não aceita caracteres especiais.
           nullable: true
         businessEmail:
           type: string
@@ -1732,10 +1732,10 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: Razão social da empresa.
+          description: "Razão social da empresa. <b>Importante:</b> este campo não aceita caracteres especiais."
         tradingName:
           type: string
-          description: Nome fantasia da empresa.
+          description: "Nome fantasia da empresa. <b>Importante:</b> este campo não aceita caracteres especiais."
           nullable: true  
         businessType:
           description: Tipo da empresa.
