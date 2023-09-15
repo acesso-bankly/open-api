@@ -857,8 +857,6 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/LivenessStatus'
-        confidence:
-          $ref: '#/components/schemas/Confidence'
       additionalProperties: false
 
     LivenessStatus:
@@ -1022,7 +1020,6 @@ components:
           status: ANALYSIS_COMPLETED
           liveness:
             status: LIVENESS_FOUND
-            confidence: 1.9746
           faceDetails:
             status: DETECTED_FACE
             confidence: 99.99689
