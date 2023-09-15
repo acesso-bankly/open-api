@@ -741,6 +741,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEntryResponse'
+              examples:
+                CustomerExample:
+                  $ref: '#/components/examples/CustomerExample'
+                BusinessExample:
+                  $ref: '#/components/examples/BusinessExample'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
         '422':
@@ -2467,7 +2472,10 @@ components:
          description: Nome do titular da conta conforme consta no documento de identificação.
         socialName: 
           type: string
-          description: Nome pelo qual o titular gostaria de ser chamado.
+          description: Nome pelo qual o titular gostaria de ser chamado. Este campo <b>somente</b> será retornado em caso de consulta de chave de pessoa física.
+        tradingName:
+          type: string
+          description: Nome fantasia da empresa. Este campo <b>somente</b> será retornado em caso de consulta de chave de pessoa jurídica.
         document:
           $ref: '#/components/schemas/Document'
       additionalProperties: false
@@ -2890,6 +2898,44 @@ components:
       type: http
       description: Inclua o token de autorização do tipo Bearer.
       scheme: bearer
+
+  examples:
+    
+    CustomerExample:
+      value:
+        - endToEndId: "E1314008820210629151241054156224"
+          addressingKey:
+            type: "CPF"
+            value: "***426630**"
+          holder:
+            type: "CUSTOMER"
+            name: "Nísia Floresta"
+            socialName: "Nísia Floresta"
+            document:
+              value: "***426630**"
+              type: "CPF"
+          status: "OWNED"
+          createdAt: "2020-11-06T01:07:12.351+00:00"
+          ownedAt: "2020-11-06T01:07:12.337+00:00"
+      summary: Consulta de chave - PF
+
+    BusinessExample:
+      value:
+        - endToEndId: "E1314008820210629151241054156224"
+          addressingKey:
+            type: "EVP"
+            value: "73275ad1-ae06-4407-b488-d86c9f502bac"
+          holder:
+            type: "BUSINESS"
+            name: "Nísia Floresta"
+            tradingName: "Editora Nísia Floresta"
+            document:
+              value: "*456070001"
+              type: "CNPJ"
+          status: "OWNED"
+          createdAt: "2020-11-06T01:07:12.351+00:00"
+          ownedAt: "2020-11-06T01:07:12.337+00:00"
+      summary: Consulta de chave - PJ
 
 x-readme:
   explorer-enabled: true
