@@ -85,7 +85,7 @@ paths:
         [/block]
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: "#/components/parameters/AccountNumber"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
