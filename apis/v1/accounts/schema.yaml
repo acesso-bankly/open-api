@@ -64,7 +64,7 @@ paths:
         "500":
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
-  /accounts/{accountNumRequest}/closure:
+  /accounts/{accountNumber}/closure:
     patch:
       tags:
         - Conta de pagamentos
@@ -85,7 +85,7 @@ paths:
         [/block]
       operationId: CancelCustomerRegistration
       parameters:
-        - $ref: "#/components/parameters/AccountNumRequest"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/AccountNumber"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       requestBody:
@@ -1008,6 +1008,7 @@ components:
       schema:
         type: string
         description: Número da conta a ser encerrada.
+  
   schemas:
     PaymentAccountHolder:
       type: object
