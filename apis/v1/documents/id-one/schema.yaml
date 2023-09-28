@@ -13,15 +13,13 @@ paths:
         - Análise de documentos
       summary: Envio de documentos pessoais para análise com ID One
       description: |
-        <div class="bkly-ref-description">
-          [block:callout]
-            {
-              "type": "warning",
-              "title": "Importante",
-              "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação [Envio e análise de documentos pessoais com ID One](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one) para obter informações sobre este <i>endpoint</i>."
-            }
-          [/block]
-        </div>
+        [block:callout]
+          {
+            "type": "warning",
+            "title": "Importante",
+            "body": "Devido a uma limitação desta plataforma, é preciso utilizar a documentação [Envio e análise de documentos pessoais com ID One](https://docs.bankly.com.br/docs/envio-documentos-analise-id-one) para obter informações sobre este <i>endpoint</i>."
+          }
+        [/block]
       parameters:
         - name: documentNumber
           in: path
