@@ -2518,7 +2518,7 @@ components:
       type: object
       properties: 
         name:
-           type: string
+          type: string
           description: Nome do recebedor.
         documentNumber: 
           type: string
