@@ -1023,7 +1023,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateEnqueuePixCashoutManualRequest'
-      response:
+      responses:
         '202':
           description: Agendamento criado com sucesso.
           content:
