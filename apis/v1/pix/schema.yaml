@@ -1016,7 +1016,7 @@ paths:
       operationId: PostEnqueueScheduleAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
       requestBody:
         content:
@@ -2215,13 +2215,13 @@ components:
           description:  Data e horário máximos de liquidação do agendamento.
 
     CreateEnqueuePixCashoutManualResponse:
-      type: oject
+      type: object
       properties: 
         scheduling:
           $ref: '#/components/schemas/Scheduling'
         authenticationCode:
           type: string
-          description: dentificador único da transação. 
+          description: identificador único da transação. 
         amount:
           type: number
           format: double
