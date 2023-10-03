@@ -1026,7 +1026,6 @@ paths:
       response:
         '202':
           description: Agendamento criado com sucesso.
-          description: Devolução realizada com sucesso.
           content:
             application/json:
               schema:
