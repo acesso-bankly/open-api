@@ -996,6 +996,53 @@ paths:
       security:
         - Bearer: []      
   
+  /pix/cash-out/manual/enqueue:
+    post:
+      tags: 
+        - Pix agendado
+      summary: Agendamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o agendamento de um pagamento via Pix. </p>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: pix.cashout.enqueue.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Agendamento](/docs/agendamento)."
+        }
+        [/block]
+      operationId: PostEnqueueScheduleAsync
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnqueuePixCashoutManualRequest'
+      response:
+        '202':
+          description: Agendamento criado com sucesso.
+          description: Devolução realizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEnqueuePixCashoutManualResponse'
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '404':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '422':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/422'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'  
+      
+      security:
+        - Bearer: []      
+
   /pix/qrcodes/dynamic/payment:
     post:
       tags:
@@ -2143,6 +2190,51 @@ components:
           $ref: "#/components/schemas/ClaimAccountClaimer"
       additionalProperties: false
  
+    CreateEnqueuePixCashoutManualRequest:
+      type: object
+      required: 
+      - amount
+      - description
+      - sender
+      - recipient
+      - scheduleUntilAt
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Valor da transação.
+        description:
+          type: string
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> máximo de 140 caracteres, sem caracteres especiais.  
+        sender:
+          $ref: '#/components/schemas/EnqueueSender'
+        recipient:
+          $ref: '#/components/schemas/EnqueueRecipient'
+        scheduleUntilAt:
+          type: string
+          format: date-time
+          description:  Data e horário máximos de liquidação do agendamento.
+
+    CreateEnqueuePixCashoutManualResponse:
+      type: oject
+      properties: 
+        scheduling:
+          $ref: '#/components/schemas/Scheduling'
+        authenticationCode:
+          type: string
+          description: dentificador único da transação. 
+        amount:
+          type: number
+          format: double
+          description: Valor da transação.
+        description:
+          type: string
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> máximo de 140 caracteres, sem caracteres especiais.  
+        sender:
+          $ref: '#/components/schemas/EnqueueSenderResponse'
+        recipient:
+          $ref: '#/components/schemas/EnqueueRecipientResponse'
+
     CreateEntryRequest:
       type: object
       required:
@@ -2404,6 +2496,78 @@ components:
               type: string
               description: Número do documento.
 
+    EnqueueRecipient: 
+      type: object
+      required: 
+      - name
+      - documentNumber
+      - account
+      - bank
+      properties: 
+        name:
+          type: string
+          description: Nome do recebedor.
+        documentNumber: 
+          type: string
+          description: Número de documento de CPF ou CNPJ. Informe somente números.
+        account: 
+          $ref: '#/components/schemas/AccountSender'
+        bank:
+          $ref: '#/components/schemas/BankIspb'
+
+    EnqueueRecipientResponse: 
+      type: object
+      properties: 
+        name:
+           type: string
+          description: Nome do recebedor.
+        documentNumber: 
+          type: string
+          description: Número do documento.
+        documentType: 
+          type: string
+          description: Tipo de documento, o qual pode ser CPF ou CNPJ. 
+        account: 
+          $ref: '#/components/schemas/AccountRecipientResponse'
+        bank:
+          $ref: '#/components/schemas/BankIspb'
+    
+    EnqueueSender:
+      type: object
+      required: 
+      - name
+      - documentNumber
+      - account
+      - bank
+      properties: 
+        name:
+          type: string
+          description: Nome do pagador, conforme consta no cadastro da conta.
+        documentNumber: 
+          type: string
+          description: Número de documento de CPF ou CNPJ. Informe somente números.
+        account: 
+          $ref: '#/components/schemas/AccountSender'
+        bank:
+          $ref: '#/components/schemas/BankIspb'
+
+    EnqueueSenderResponse:
+      type: object
+      properties: 
+        name:
+          type: string
+          description: Nome do pagador.
+        documentNumber: 
+          type: string
+          description: Número do documento.
+        documentType: 
+          type: string
+          description: Tipo de documento, o qual pode ser CPF ou CNPJ. 
+        account: 
+          $ref: '#/components/schemas/AccountSenderResponse'
+        bank:
+          $ref: '#/components/schemas/BankIspb'
+     
     EntryStatus:
       enum:
         - OWNED
@@ -2877,6 +3041,22 @@ components:
         - SL02
       type: string
       description:  Código da devolução.
+
+    Scheduling:
+      type: object
+      properties:
+        remainingQuota:
+          type: integer
+          format: int32
+          description: Quantidade de transações que ainda podem ser enviadas. 
+        scheduleCode:
+          type: string
+          format: uuid
+          description: Código de identificação do agendamento.
+        schedulelAt:
+          type: string
+          format: date-time
+          description: Data e hora prevista de liquidação do Pix agendado.
 
     WithdrawalDetail:
       type: object
