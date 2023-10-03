@@ -2204,7 +2204,8 @@ components:
           description: Valor da transação.
         description:
           type: string
-          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> máximo de 140 caracteres, sem caracteres especiais.  
+          maxLength: 140
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> não são aceitos caracteres especiais.  
         sender:
           $ref: '#/components/schemas/EnqueueSender'
         recipient:
@@ -2221,14 +2222,15 @@ components:
           $ref: '#/components/schemas/Scheduling'
         authenticationCode:
           type: string
-          description: identificador único da transação. 
+          description: Identificador único da transação. 
         amount:
           type: number
           format: double
           description: Valor da transação.
         description:
           type: string
-          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> máximo de 140 caracteres, sem caracteres especiais.  
+          maxLength: 140
+          description: Campo que pode ser utilizado pelo usuário para enviar mensagens ao destinatário da transferência com informações sobre a transação. <b>Importante:</b> não são aceitos caracteres especiais.  
         sender:
           $ref: '#/components/schemas/EnqueueSenderResponse'
         recipient:
