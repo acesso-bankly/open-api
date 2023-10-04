@@ -1839,11 +1839,11 @@ paths:
       summary: Geração de token
       description: |
         <div class="bkly-ref-description">
-            <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> 
-            <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
-          </div>
-          [block:callout]
+          <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
+        </div>
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
