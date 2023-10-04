@@ -1303,7 +1303,7 @@ paths:
   /cards/{proxy}/activate:
     patch:
       tags:
-        - Gestão do status
+        - Status do cartão
       summary: Ativação de cartão
       description: |
         <div class="bkly-ref-description">
@@ -1369,7 +1369,7 @@ paths:
   /cards/{proxy}/status:
     patch:
       tags:
-        - Gestão do status
+        - Status do cartão
       summary: Alteração do status do cartão
       description: |
         <div class="bkly-ref-description">
@@ -1442,7 +1442,7 @@ paths:
   /cards/{proxy}/contactless:
     patch:
       tags:
-        - Gestão do status
+        - Status do cartão
       summary: Configuração do contactless
       description: |
         <div class="bkly-ref-description">
@@ -1501,7 +1501,7 @@ paths:
   /cards/{proxy}/nextStatus:
     get:
       tags:
-        - Gestão do status
+        - Status do cartão
       summary: Consulta dos próximos status
       description: |
         <div class="bkly-ref-description">
@@ -1839,11 +1839,11 @@ paths:
       summary: Geração de token
       description: |
         <div class="bkly-ref-description">
-            <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
-            <span class="bkly-ref-small-stable-tag">stable</span> 
-            <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
-          </div>
-          [block:callout]
+          <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
+        </div>
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
@@ -2576,6 +2576,8 @@ components:
           description: Atualizar cartões vinculados.
       required:
         - status
+        - password
+        - updateCardBinded
    
     createCardRequest:
       type: object
@@ -2781,6 +2783,7 @@ components:
       required:
         - status
         - documentNumber
+        - description
         - password
 
     creditErrorResponse:
