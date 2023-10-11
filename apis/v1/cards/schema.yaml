@@ -1972,6 +1972,7 @@ components:
         description: Identificador do cartão.
 
   schemas:
+
     createCardsInLotRequest:
       type: object
       properties:
@@ -1993,25 +1994,25 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
-              description: Número.
+              description: Número do prédio ou da casa.
             neighborhood:
               type: string
-              description: Bairro.
+              description: Nome do bairro.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade.
             state:
               type: string
-              description: Estado (informar a UF).
+              description: Nome do estado (informar a UF).
             country:
               type: string
-              description: País.
+              description: Nome do país.
           required:
             - zipCode
             - address
@@ -2030,7 +2031,7 @@ components:
       properties:
         lotId:
           type: string
-          description: Id do lote.
+          description: Identificador único do lote.
 
     cardLotsResponse:
       type: array
@@ -2039,12 +2040,13 @@ components:
         properties:
           lotId:
             type: string
-            description: Id do lote.
+            description: Identificador único do lote
           quantityOrder:
             type: integer
             description: Quantidade de cartões solicitados.    
           dateOrder:
             type: string
+            format: date-time
             description: Data da solicitação de criação do lote.
           programId:
             type: integer
@@ -2055,12 +2057,13 @@ components:
       properties:
         lotId:
           type: string
-          description: Id do lote.
+          description: Identificador único do lote
         quantityOrder:
           type: integer
           description: Quantidade de cartões solicitados.
         dateOrder:
           type: string
+          format: date-time
           description: Data da solicitação de criação do lote.
         programId:
           type: integer
@@ -2074,28 +2077,28 @@ components:
           properties:
             zipCode:
               type: string
-              description: CEP.
+              description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
-              description: Número.
+              description: Número do prédio ou da casa.
             neighborhood:
               type: string
-              description: Bairro.
+              description: Nome do bairro.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade.
             state:
               type: string
-              description: Estado (formato UF).
+              description: Nome do estado (informar a UF).
             country:
               type: string
-              description: País.
+              description: Nome do país.
     
     bindNoNameRequest:
       type: object
@@ -2154,6 +2157,7 @@ components:
       properties:
         signedAt:
           type: string
+          format: date-time
           description: Data e hora em que o contrato de crédito foi aceito/assinado.
         creditDetails:
           type: object
@@ -2260,50 +2264,51 @@ components:
           description: Logradouro (nome da rua, avenida etc.).
         buildingNumber:
           type: string
-          description: Número do endereço.
+          description: Número do prédio ou da casa.
         complement:
           type: string
           description: Complemento do endereço.
         neighborhood:
           type: string
-          description: Bairro do endereço.
+          description: Nome do bairro.
         city:
           type: string
-          description: Cidade do endereço.
+          description: Nome da cidade.
         state:
           type: string
-          description: Estado do endereço.
+          description: Nome do estado.
         country:
           type: string
-          description: País do endereço.
+          description: Nome do país.
 
     address:
       type: object
-      description: Endereço do cliente.
+      description: Objeto que contém o endereço do cliente.
       properties:
         zipCode:
           type: string
           description: CEP de endereço.
         addressLine:
           type: string
+          description: Logradouro (nome da rua, avenida etc.).
         buildingNumber:
           type: string
-          description: Número do endereço.
+          description: Número do prédio ou da casa.
         complement:
           type: string
           description: Complemento do endereço.
         neighborhood:
           type: string
-          description: Bairro do endereço.
+          description: Nome do bairro.
         city:
           type: string
-          description: Cidade do endereço.
+          description: Nome da cidade.
         state:
           type: string
-          description: Estado do endereço.
+          description: Nome do estado.
         country:
           type: string
-          description: País do endereço.
+          description: Nome do país.
     
     brandTypes:
       type: string
@@ -2315,7 +2320,7 @@ components:
       properties:
         proxy:
           type: string
-          description: Proxy do cartão criado.
+          description: Código identificador do cartão criado.
         activateCode:
           type: string
           description: Código para ativar o cartão.
@@ -2342,11 +2347,12 @@ components:
       type: object
       properties:
         created:
-          type: string
-          description: Proxy do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+          type: string 
+          format: date-time
+          description: Data de criação do cartão.
         companyKey:
           type: string
-          description: Identificador da companhia.
+          description: Chave que identifica o parceiro dentro do Bankly.
         documentNumber:
           type: string
           description: Número do documento do cliente (CPF/CNPJ).
@@ -2364,7 +2370,7 @@ components:
           description: Últimos 04 dígitos do cartão.
         proxy:
           type: string
-          description: Identificador do cartão.
+          description: Código identificador do cartão.
         name:
           type: string
           description: Nome impresso no cartão.
@@ -2377,75 +2383,79 @@ components:
           description: Tipo do cartão.
         physicalBinds: 
           type: array
-          description: Dados do cartão físico.
+          description: Lista contendo informações sobre o cartão físico.
           items:
             type: object
             properties:
               proxy: 
                 type: string
-                description: Identificador do cartão físico.
+                description: Código identificador do cartão físico.
               created: 
                 type: string
-                description: Data do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+                format: date-time
+                description: Data de criação do carto.
         virtualBind: 
           type: object
+          description: Objeto contendo informações sobre o cartão virtual.
           properties:
             proxy: 
               type: string
-              description: Identificador do cartão virtual.
+              description: Código identificador do cartão virtual.
             created: 
               type: string
-              description: Data do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+              format: date-time
+              description: Data de criação do cartão.
         status:
           type: string
           $ref: "#/components/schemas/cardStatus"
           description: Status atual do cartão.
         allowContactless:
           type: boolean
-          description: Informa status da função contactless.
+          description: Informa o status da função contactless.
         address:
           type: object
           properties:
             zipCode:
               type: string
-              description: CEP.
+              description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
-              description: Número.
+              description: Número do prédio ou da casa.
             neighborhood:
               type: string
-              description: Bairro.
+              description: Nome do bairro.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade.
             state:
               type: string
-              description: Estado (formato UF).
+              description: Nome do estado (informar a UF).
             country:
               type: string
-              description: País.
+              description: Nome do país.
         historyStatus:
           type: array
-          description: Histórico de status.
+          description: Objeto contendo o histórico de status do cartão.
           items:
             type: object
             properties:
               modified:
                 type: string
-                description: Data em que o status foi aplicado (formato 'yyyy-MM-ddTHH:mm:ss').
+                format: date-time
+                description: Data em que o status foi aplicado.
               value:
                 type: string
                 $ref: "#/components/schemas/cardStatus"
                 description: Status aplicado.
         wallets:
           type: array
-          description: Identificação das carteiras virtuais que o cartão encontra-se habilitado.
+          description: Identificação das carteiras virtuais que o cartão encontra-se vinculado.
           items:
             type: object
             properties:
@@ -2464,7 +2474,7 @@ components:
           properties:
             contractNumber:
               type: string
-              description: Número do contrato do cliente.
+              description: Número do contrato de crédito do cliente.
             limit:
               type: number
               description: Limite de crédito do cliente.
@@ -2473,31 +2483,33 @@ components:
               description: Limite de crédito ativo do cliente.
         activatedAt:
           type: string
-          description: Data da ativação do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          format: date-time
+          description: Data da ativação do cartão.
         lastUpdatedAt:
           type: string
-          description: Data da última atualização do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          format: date-time
+          description: Data da última atualização do cartão.
         isActivated:
           type: boolean
-          description: Informa se está ativo.
+          description: Indica se o cartão está ativo.
         isLocked:
           type: boolean
-          description: Informa se está bloqueado.
+          description: Indica se o cartão está bloqueado.
         isCanceled:
           type: boolean
-          description: Informa se está cancelado.
+          description: Indica se o cartão está cancelado.
         isBuilding:
           type: boolean
-          description: Informa se o cartão está sendo em construção.
+          description: Indica se o cartão está sendo em construção.
         isFirtual:
           type: boolean
-          description: Informa se é um cartão firtual.
+          description: Indica se o cartão é Firtual.
         isPre:
           type: boolean
-          description: Informa se é um cartão pré-pago.
+          description: Indica se é um cartão pré-pago.
         isPos:
           type: boolean
-          description: Informa se é um cartão pós-pago.
+          description: Indica se é um cartão pós-pago.
   
     cardStatus:
       type: string
@@ -2573,7 +2585,7 @@ components:
           description: Senha de uso do cartão (4 dígitos).
         updateCardBinded:
           type: boolean
-          description: Atualizar cartões vinculados.
+          description: Indica se os cartões vinculados devem ser atualizados.
       required:
         - status
         - password
@@ -2596,7 +2608,7 @@ components:
           description: Número de agência (4 dígitos).
         bankAccount:
           type: string
-          description: Número de conta que o cartão será vinculado.
+          description: Número de conta ao qual cartão será vinculado.
         programId:
           type: integer
           description: Identificador do programa que será vinculado ao cartão.
@@ -2612,25 +2624,25 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
-              description: Número.
+              description: Número do prédio ou da casa.
             neighborhood:
               type: string
-              description: Bairro.
+              description: Nome do bairro.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade.
             state:
               type: string
-              description: Estado (informar a UF).
+              description: Nome do estado (informar a UF).
             country:
               type: string
-              description: País.
+              description: Nome do país.
           required:
             - zipCode
             - address
@@ -2753,25 +2765,25 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Logradouro.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
-              description: Número.
+              description: Número do prédio ou da casa.
             neighborhood:
               type: string
-              description: Bairro.
+              description: Nome do bairro.
             complement:
               type: string
-              description: Complemento.
+              description: Complemento do endereço.
             city:
               type: string
-              description: Cidade.
+              description: Nome da cidade.
             state:
               type: string
-              description: Estado (informar a UF).
+              description: Nome do estado (informar a UF).
             country:
               type: string
-              description: País.
+              description: Nome do país.
           required:
             - zipCode
             - address
@@ -2814,7 +2826,7 @@ components:
           description: Código de segurança do cartão.
         expirationDate:
           type: string
-          description: Data de expiração do cartão (formato 'MM/yy').
+          description: Data de expiração do cartão (formato 'MM/YY').
     
     duplicateCardStatus:
       type: string
@@ -2892,7 +2904,7 @@ components:
           description: Profissão do cliente.
         cardProxy:
           type: string
-          description: Proxy do cartão.
+          description: Código identificador (proxy) do cartão.
         status:
           type: string
           description: Situação do contrato de crédito.
@@ -3015,10 +3027,10 @@ components:
                 properties:
                   number: 
                     type: string
-                    description: Número da conta na qual o cartão foi transacionado.
+                    description: Número da conta para o qual o cartão foi transacionado.
                   agency: 
                     type: string
-                    description: Agência da conta na qual o cartão foi transacionado.
+                    description: Agência da conta para o qual o cartão foi transacionado.
               amount:
                 type: object
                 properties:
@@ -3108,10 +3120,11 @@ components:
       properties:
         createdDate:
           type: string
-          description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
+          format: date-time
+          description: Data de criação do rastreio.
         externalTracking:
           type: object
-          description: Objeto para rastreio de serviço externo
+          description: Objeto para rastreio de serviço externo.
           properties:
             code:
               type: string
@@ -3127,36 +3140,37 @@ components:
           description: Apelido impresso no cartão.
         estimatedDeliveryDate:
           type: string
-          description: Data prevista de entrega do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          format: date-time
+          description: Data prevista da entrega do cartão.
         address:
           type: array
-          description: Lista de endereços do rastreio
+          description: Lista de endereços do rastreio.
           items:
             properties:
               zipCode:
                 type: string
-                description: CEP.
+                description: CEP (informar somente os números).
               address:
                 type: string
-                description: Logradouro.
+                description: Logradouro (Nome da rua, avenida etc.).
               number:
                 type: string
-                description: Número.
+                description: Número do prédio ou da casa.
               neighborhood:
                 type: string
-                description: Bairro.
+                description: Nome do bairro.
               complement:
                 type: string
-                description: Complemento.
+                description: Complemento do endereço.
               city:
                 type: string
-                description: Cidade.
+                description: Nome da cidade.
               state:
                 type: string
-                description: Estado (formato UF).
+                description: Nome do estado (informar a UF).
               country:
                 type: string
-                description: País.
+                description: Nome do país.
               isActive:
                 type: boolean
                 description: Situação de endereço de rastreio.
@@ -3168,7 +3182,8 @@ components:
             properties:
               createdDate:
                 type: string
-                description: Data em que o status foi aplicado (formato 'yyyy-MM-ddTHH:mm:ss').
+                format: date-time
+                description: Data em que o status foi aplicado.
               type:
                 type: string
                 $ref: "#/components/schemas/trackingStatus"
@@ -3184,7 +3199,8 @@ components:
             properties:
               createdDate:
                 type: string
-                description: Data em que a baixa foi adicionada (formato 'yyyy-MM-ddTHH:mm:ss').
+                format: date-time
+                description: Data em que a baixa foi adicionada.
               recipientName:
                 type: string
                 description: Nome do recebedor do cartão.
@@ -3230,20 +3246,20 @@ components:
     
     updateTrackingAddressRequest: 
           type: object
-          description: Informações sobre endereço para nova tentativa de entrega.
+          description: Objeto que contém informações sobre o endereço para nova tentativa de entrega.
           properties:
             zipCode:
               type: string
               description: O CEP deve ser nacional e conter oito dígitos.
             address:
               type: string
-              description: Nome do logradouro em que o cliente deseja receber o cartão.
+              description: Logradouro (Nome da rua, avenida etc.) em que o cliente deseja receber o cartão.
             number:
               type: string
               description: Número do imóvel com até 10 caracteres (se não existir, substitua por “S/N”).
             neighborhood:
               type: string
-              description: Bairro para nova entrega.
+              description: Nome do bairro para nova entrega.
             complement:
               type: string
               description: Complemento do endereço.
@@ -3252,7 +3268,7 @@ components:
               description: Nome da cidade para a entrega.
             state:
               type: string
-              description: "Estado (UF) do novo endereço de entrega. Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
+              description: "Nome do estado (UF) do novo endereço de entrega. Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
             country:
               type: string
               description: "Serão aceitos apenas endereços em território nacional. Deve-se respeitar o formato proposto pela ISO 3166-1. Exemplo: BR."
@@ -3302,7 +3318,7 @@ components:
 
     nextStatusResponse:
       type: array
-      description: Lista de objetos contem informações sobre os próximos status do cartão.
+      description: Lista de objetos contendo informações sobre os próximos status do cartão.
       items:
         type: object
         properties:
@@ -3312,8 +3328,6 @@ components:
           isDefinitive: 
             type: boolean
             description: Indica a reversibilidade do status, sendo TRUE para reversível e FALSE para irreversível.
-
-
 
     CreditReanalyzeOriginType:
       enum:
