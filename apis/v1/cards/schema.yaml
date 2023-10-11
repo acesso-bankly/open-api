@@ -1994,7 +1994,7 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Nome da rua.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
               description: Número do prédio ou da casa.
@@ -2080,7 +2080,7 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Nome da rua.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
               description: Número do prédio ou da casa.
@@ -2420,7 +2420,7 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Nome da rua.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
               description: Número do prédio ou da casa.
@@ -2624,7 +2624,7 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Nome da rua.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
               description: Número do prédio ou da casa.
@@ -2765,7 +2765,7 @@ components:
               description: CEP (informar somente os números).
             address:
               type: string
-              description: Nome da rua.
+              description: Logradouro (Nome da rua, avenida etc.).
             number:
               type: string
               description: Número do prédio ou da casa.
@@ -3152,7 +3152,7 @@ components:
                 description: CEP (informar somente os números).
               address:
                 type: string
-                description: Nome da rua.
+                description: Logradouro (Nome da rua, avenida etc.).
               number:
                 type: string
                 description: Número do prédio ou da casa.
@@ -3253,7 +3253,7 @@ components:
               description: O CEP deve ser nacional e conter oito dígitos.
             address:
               type: string
-              description: Nome do logradouro em que o cliente deseja receber o cartão.
+              description: Logradouro (Nome da rua, avenida etc.) em que o cliente deseja receber o cartão.
             number:
               type: string
               description: Número do imóvel com até 10 caracteres (se não existir, substitua por “S/N”).
