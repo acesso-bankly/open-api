@@ -502,6 +502,32 @@ components:
           description: "Sigla do país (Brasil) conforme a ISO 3166-2. Exemplo: BR."
       additionalProperties: false
     
+    AssertedIncome:
+      required:
+        - value
+      type: object
+      properties: 
+        value:
+          type: number
+          description: Valor em Reais da renda declarada pelo cliente.
+        currency:
+          type: string
+          default: BRL
+          description: Moeda da renda declarada. 
+      additionalProperties: false
+    
+    AssertedIncomeResponse:
+      type: object
+      properties: 
+        value:
+          type: number
+          description: Valor em Reais da renda declarada pelo cliente.
+        currency:
+          type: string
+          default: BRL
+          description: Moeda da renda declarada. 
+      additionalProperties: false
+
     BusinessResponse:
       type: object
       properties:
@@ -695,6 +721,8 @@ components:
           nullable: true
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
+        assertedIncome:
+          $ref: "#/components/schemas/AssertedIncomeResponse"
         confirmedIncome:
           type: string
           description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
@@ -725,6 +753,8 @@ components:
           $ref: "#/components/schemas/Address"
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
+        assertedIncome:
+          $ref: "#/components/schemas/AssertedIncome"
         pep:
           description: Objeto onde deve ser informado o nível de exposição política do cliente. A propriedade desse objeto é obrigatória em caso de alteração de nível de exposição política.
           $ref: "#/components/schemas/Pep"
@@ -779,6 +809,8 @@ components:
         confirmedIncome:
           type: string
           description: Indica se o valor informado da renda foi confirmado no Bureau de informação. O valor padrão desse campo é null.
+        assertedIncome:
+          $ref: "#/components/schemas/AssertedIncomeResponse"
         occupation:
           description: Código de ocupação do cliente, informado em seu registro ou atualizado.
           $ref: "#/components/schemas/Occupation"
@@ -846,7 +878,7 @@ components:
 
     DeclaredIncome:
       type: string
-      description: Faixa de renda declarada pelo cliente.
+      description: Faixa de renda declarada pelo cliente. Campo obsoleto em produção a partir do dia 27/11/2023. Deve ser substituído pelo objeto <code>assertedIncome</code>.
       enum:
         - LESS_THAN_ONE_THOUSAND
         - FROM_ONE_THOUSAND_TO_TWO_THOUSAND
@@ -1624,7 +1656,7 @@ components:
         - pep
         - email
         - motherName
-        - declaredIncome
+        - assertedIncome
         - occupation
         - documentation
       type: object
@@ -1654,6 +1686,8 @@ components:
           $ref: "#/components/schemas/Address"
         declaredIncome:
           $ref: "#/components/schemas/DeclaredIncome"
+        assertedIncome:
+          $ref: "#/components/schemas/AssertedIncome"
         occupation:
           $ref: "#/components/schemas/Occupation"
         pep:
