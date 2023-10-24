@@ -678,16 +678,9 @@ paths:
                     isFirtual: true
                     isPre: true
                     isPos: false
-        '400':
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '401':
-          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+                    isCombo: false
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
-        '409':
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -798,16 +791,10 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '400':
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '401':
-          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+                      isCombo: false
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
-        '409':
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -918,16 +905,9 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '204':
-          description: Não há cartões criados para o código de ativação fornecido.
-        '400':
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '401':
-          $ref: "http://localhost:3320/commons/components#/components/responses/401"
-        '409':
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+                      isCombo: false
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1049,16 +1029,9 @@ paths:
                       isFirtual: true
                       isPre: true
                       isPos: false
-        '400':
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '401':
-          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+                      isCombo: false
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
-        '409':
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -1128,14 +1101,14 @@ paths:
                     expirationDate: 05/09
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '401':
-          $ref: "http://localhost:3320/commons/components#/components/responses/401"
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
         '409':
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+        '503':
+          $ref: "http://localhost:3320/commons/components#/components/responses/503"
       x-amazon-apigateway-auth:
         type: NONE
       x-amazon-apigateway-integration:
@@ -2383,7 +2356,7 @@ components:
           description: Tipo do cartão.
         physicalBinds: 
           type: array
-          description: Lista contendo informações sobre o cartão físico.
+          description: Lista de objetos contendo informações sobre os cartões físicos vinculados ao cartão virtual consultado. Essa lista somente será retornada caso o tipo de cartão (cardType) seja "Virtual".
           items:
             type: object
             properties:
@@ -2393,10 +2366,10 @@ components:
               created: 
                 type: string
                 format: date-time
-                description: Data de criação do carto.
+                description: Data de criação do cartão.
         virtualBind: 
           type: object
-          description: Objeto contendo informações sobre o cartão virtual.
+          description: Objeto que contém informações sobre o cartão virtual vinculado ao cartão físico consultado. Esse objeto somente será retornado caso o tipo de cartão (cardType) seja "Physical".
           properties:
             proxy: 
               type: string
@@ -2408,16 +2381,17 @@ components:
         status:
           type: string
           $ref: "#/components/schemas/cardStatus"
-          description: Status atual do cartão.
+          description: Situação do cartão.
         allowContactless:
           type: boolean
-          description: Informa o status da função contactless.
+          description: Indica se a função contactless está habilitada.
         address:
           type: object
+          description: Objeto que contém informações sobre o endereço do titular do cartão.
           properties:
             zipCode:
               type: string
-              description: CEP (informar somente os números).
+              description: Código postal do endereço.
             address:
               type: string
               description: Logradouro (Nome da rua, avenida etc.).
@@ -2435,13 +2409,13 @@ components:
               description: Nome da cidade.
             state:
               type: string
-              description: Nome do estado (informar a UF).
+              description: Nome do estado.
             country:
               type: string
               description: Nome do país.
         historyStatus:
           type: array
-          description: Objeto contendo o histórico de status do cartão.
+          description: Lista de objetos contendo o histórico de status do cartão desde sua criação.
           items:
             type: object
             properties:
@@ -2452,16 +2426,16 @@ components:
               value:
                 type: string
                 $ref: "#/components/schemas/cardStatus"
-                description: Status aplicado.
+                description: Nome do status aplicado.
         wallets:
           type: array
-          description: Identificação das carteiras virtuais que o cartão encontra-se vinculado.
+          description: Lista de objetos contendo a identificação das carteiras digitais que o cartão encontra-se vinculado. Essa lista somente será retornada se o cartão estiver inserido em uma carteira digital.
           items:
             type: object
             properties:
               status:
                 $ref: "#/components/schemas/walletStatus"
-                description: Status do cartão na carteira.
+                description: Situação do cartão na carteira.
               walletType:
                 $ref: "#/components/schemas/walletTypes"
                 description: Identificador da carteira que o cartão encontra-se vinculado.
@@ -2470,7 +2444,7 @@ components:
                 description: Classificação do fluxo que o cartão recebeu ao entrar na carteira.
         creditPos:
           type: object
-          description: Objeto que contém informações sobre o limite de crédito do cartão pós-pago.
+          description: Objeto que contém informações sobre o limite de crédito do cartão pós-pago. Esse objeto somente será retornado se o cartão consultado for pós-pago.
           properties:
             contractNumber:
               type: string
@@ -2500,16 +2474,19 @@ components:
           description: Indica se o cartão está cancelado.
         isBuilding:
           type: boolean
-          description: Indica se o cartão está sendo em construção.
+          description: Indica se o cartão está em construção.
         isFirtual:
           type: boolean
           description: Indica se o cartão é Firtual.
         isPre:
           type: boolean
-          description: Indica se é um cartão pré-pago.
+          description: Indica se o cartão é pré-pago.
         isPos:
           type: boolean
-          description: Indica se é um cartão pós-pago.
+          description: Indica se o cartão é pós-pago.
+        isCombo:
+          type: boolean
+          description: Indica se o cartão é combo.
   
     cardStatus:
       type: string
