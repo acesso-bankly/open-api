@@ -2803,7 +2803,7 @@ components:
           nullable: true
         name:
           type: string
-          description: Nome de registro conforme consta no cadastro da conta. Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa. <br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          description: Nome de registro conforme consta no cadastro da conta. Quando pessoa física, trata-se do nome de registro, e quando pessoa jurídica, trata-se da razão social da empresa. <br /> Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso. Além disso, este campo <b>não</b> aceita caracteres especiais.
           nullable: true
       additionalProperties: false
 

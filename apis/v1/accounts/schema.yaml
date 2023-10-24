@@ -34,7 +34,8 @@ paths:
           in: query
           schema:
             type: string
-            description: Código do banco da conta consultada. Para conta corrente, este campo é <b>obrigatório</b>.
+            default: 332
+            description: "Código do banco da conta consultada. Default: <code>332</code>"
         - name: branch
           in: query
           schema:
