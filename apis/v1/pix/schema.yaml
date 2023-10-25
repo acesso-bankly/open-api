@@ -748,6 +748,8 @@ paths:
                   $ref: '#/components/examples/BusinessExample'
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
+        '408':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/408'
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
@@ -1328,9 +1330,7 @@ components:
               description: Código do banco.
             name:
               type: string
-              description: Nome do banco.
-            
-          
+              description: Nome do banco.  
       additionalProperties: false
    
     AccountRecipient:
@@ -1532,7 +1532,21 @@ components:
           $ref: '#/components/schemas/AddressingKeyType'
         value:
           type: string
-          description: Valor da chave.
+          description: "Valor da chave. <b>Importante</b>: Esse campo não deve ser enviado em caso de cadastro de chave do tipo <b>EVP</b>."
+          nullable: true
+      additionalProperties: false
+
+    CreateAddressingKeyRequest:
+      type: object
+      required:
+        - type
+      description: Objeto que contém os dados da chave Pix a ser cadastrada.
+      properties:
+        type:
+          $ref: '#/components/schemas/AddressingKeyType'
+        value:
+          type: string
+          description: "Valor da chave. <b>Importante</b>: Este campo é <b>obrigatório</b>, exceto em caso de cadastro de chave do tipo <b>EVP</b>."
           nullable: true
       additionalProperties: false
 
@@ -2243,7 +2257,7 @@ components:
       - account
       properties:
         addressingKey:
-          $ref: '#/components/schemas/AddressingKey'
+          $ref: '#/components/schemas/CreateAddressingKeyRequest'
         account: 
           $ref: '#/components/schemas/Account'
 
