@@ -2671,6 +2671,7 @@ components:
       type: object
       required:
         - city
+        - zipCode
       description: Objeto que contém informações sobre a localidade do recebedor do pagamento.
       properties:
         city:
