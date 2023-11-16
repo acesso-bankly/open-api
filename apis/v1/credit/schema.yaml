@@ -975,7 +975,7 @@ components:
         programId:
           type: number
           format: integer
-          description: Identificador do programa que será vinculado ao cartão.
+          description: Identificador do programa que será vinculado ao cartao.
         documentNumber:
           type: string
           description: Número do documento (CPF ou CNPJ). Informe somente números. 
