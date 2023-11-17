@@ -179,7 +179,7 @@ jobs:
           rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
   
       - uses: readmeio/rdme@7.0.3
-        name: Publish Boletos API Reference to readme.io
+        name: Publish Boletosv2 API Reference to readme.io
         with:
           rdme: openapi './apis/v2/boletos/schema.yaml' --id=${{ secrets.BOLETOV2_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
@@ -289,6 +289,6 @@ jobs:
           rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
-        name: Publish Boletos API Reference to readme.io
+        name: Publish Boletosv2 API Reference to readme.io
         with:
           rdme: openapi './apis/v2/boletos/schema.yaml' --id=${{ secrets.BOLETOV2_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
