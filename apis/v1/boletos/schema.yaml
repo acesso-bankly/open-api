@@ -66,13 +66,10 @@ paths:
                 $ref: '#/components/schemas/CreateBankslipResponse'
         '400':
           $ref: 'http://localhost:3320/commons/components#/components/responses/400'
-
         '401':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
-        
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'       
         '403':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/403'
-            
+          $ref: 'http://localhost:3320/commons/components#/components/responses/403'          
       security:
         - Bearer: []
   
@@ -94,7 +91,6 @@ paths:
           "body": "Para mais informações, confira a documentação [Consulta por authenticationCode](/docs/consulta-boleto-por-authenticationcode)."
         }
         [/block]
-
       operationId: GetByAuthenticationCode
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
@@ -791,8 +787,7 @@ components:
         fine:
           $ref: '#/components/schemas/BankslipFine'
         discounts:
-          $ref: '#/components/schemas/BankslipDiscounts'
-          
+          $ref: '#/components/schemas/BankslipDiscounts'    
       additionalProperties: false
     
     GetBankslipByBarcodeResponse:
