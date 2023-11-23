@@ -132,14 +132,14 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](v2/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
+          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
         }
         [/block]
       operationId: GetPDF
       parameters:
         - name: authenticationCode
           in: path
-          description: Identificador único do boleto.
+          description: Identificador único do boleto, retornado em sua emissão.
           required: true
           schema:
             minLength: 1
@@ -186,7 +186,6 @@ components:
       enum:
         - Deposit
         - Levy
-        - Invoice
       type: string
     
     BankslipInterest:
@@ -200,7 +199,7 @@ components:
         value:
           type: number
           format: double
-          description: "valor monetário ou percentual dos juros, dependendo da configuração do campo <code>type</code>. <b>Observação</b>: quando o campo <code>type</code> apresentar o valor <code>AmountPerCalendaryDay</code>, o valor a ser preenchido em <code>value</code> deve ser inteiro."
+          description: "valor monetário ou percentual dos juros, dependendo da configuração do campo <code>type</code>. <b>Observação</b>: quando o campo <code>type</code> apresentar o valor <code>FixedAmount</code>, o valor a ser preenchido em <code>value</code> deve ser inteiro."
         type:
           $ref: '#/components/schemas/BankslipInterestTypes'
     
@@ -213,17 +212,17 @@ components:
         - Settled
         - CancelledByRecipient
         - CancelledByDeadLine
+        - BlockedForPayment
+        - UnfitBeneficiary
       type: string
       description: Situação do boleto.
 
     BankslipInterestTypes:
       type: string
       enum:
-        - AmountPerBusinessDay
-        - AmountPerCalendaryDay
+        - FixedAmount
+        - Percent
         - Free
-        - PercentPerMonth
-        - PercentPerMonthBusinessDay
       description: Regra para cálculo dos juros.
     
     BankslipFine:
@@ -260,7 +259,7 @@ components:
         value:
           type: number
           format: double
-          description: Valor monetário ou percentual do desconto, dependendo da configuração do campo `type`
+          description: Valor monetário ou percentual do desconto, dependendo da configuração do campo `type`.
         type:
           $ref: '#/components/schemas/BankslipDiscountsTypes'
 
