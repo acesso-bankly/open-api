@@ -232,7 +232,7 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
-  /cards/invoices/{statementId}/payment-options:
+  /cards/invoices/{statementId}/settlement:
     post:
       tags: 
       - Pagamento de faturas
