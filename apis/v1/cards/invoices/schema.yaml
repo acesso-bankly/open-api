@@ -1187,5 +1187,4 @@ components:
         - Billet
       type: string
       description: Meio pelo qual a fatura será liquidada.
-      required: true 
     
