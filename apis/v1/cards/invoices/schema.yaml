@@ -469,10 +469,10 @@ components:
       additionalProperties: false
 
     Amount:
-     type: object
-     required:
-      - value
-      - currency
+      type: object
+      required:
+        - value
+        - currency
       properties:
         value: 
           type: number
