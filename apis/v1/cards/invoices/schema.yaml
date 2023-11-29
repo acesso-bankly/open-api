@@ -232,6 +232,43 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
+  /cards/invoices/{statementId}/payment-options:
+    post:
+      tags: 
+      - Pagamento de faturas
+      summary: Baixa de fatura por meio de pagamentos externos
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize a baixa total ou parcial de uma fatura emitida por meio de seu próprio sistema financeiro.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Baixa de fatura por meio de pagamentos externos](/docs/baixa-de-fatura)."
+        }
+        [/block]
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey_required"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-version"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
+        - $ref: '#/components/parameters/StatementId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExternalPaymentCommand'
+      responses:
+        '202':
+          $ref: "http://localhost:3320/commons/components#/components/responses/202"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
   /cards/invoices/{statementId}/installments:
     post:
       tags:
@@ -380,7 +417,7 @@ components:
       schema:
         type: integer
         format: int32
-        description: Identificador único da fatura em aberto.
+        description: Identificador único da fatura em aberto. Insira somente números, sem caracteres especiais.
 
     StatementItemId:
       name: statementItemId
@@ -431,23 +468,43 @@ components:
           description: Lista que contém os Ids das parcelas de refinanciamento antecipadas.
       additionalProperties: false
 
-    CycleType:
-      enum:
-        - Open
-        - Future
-        - Closed
-        - DueDate (atrasado)
-      type: string
-      description: Situação da fatura.
+    Amount:
+     type: object
+     required:
+      - value
+      - currency
+      properties:
+        value: 
+          type: number
+          description: Valor monetário da operação.
+        currency:
+          type: string
+          description: "Sigla da moeda da operação, de acordo com a ISO 4217. Exemplo: BRL."
     
-    StatementPaymentStatus:
-      enum:
-        - Pending
-        - Paid
-        - PartialPaid
-      type: string
-      description: Situação do pagamento da fatura.
+    AmountInvoiceDto:
+      type: object
+      properties:
+        amountType:
+          $ref: '#/components/schemas/AmountType'
+        value:
+          type: number
+          format: double
+          description: Valor do item da fatura.
+        currency:
+          type: string
+          nullable: true
+          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
+      additionalProperties: false
     
+    AmountType:
+      enum:
+        - NotMapper
+        - Local
+        - Exchange
+        - Billet
+      type: string
+      description: Indicador do item de fatura.
+
     CardDto:
       type: object
       properties:
@@ -471,322 +528,67 @@ components:
           nullable: true
           description: Tipo do cartão.
       additionalProperties: false
-    
-    TransactionInvoiceDto:
-      type: object
-      properties:
-        merchant:
-          type: string
-          nullable: true
-          description: Informações referentes ao estabelecimento/comerciante que aceitou a transação. Seus campos são baseados na ISO 8583.
-        mcc:
-          type: string
-          nullable: true
-          description: Código mcc da transação.
-        entrymode:
-          type: string
-          nullable: true
-          description: Código que identifica o tipo da transação.
-        mcg:
-          type: string
-          nullable: true
-          description: Descrição do tipo do mcc.
-        card:
-          $ref: '#/components/schemas/CardDto'
-      additionalProperties: false
-    
-    AmountType:
-      enum:
-        - NotMapper
-        - Local
-        - Exchange
-        - Billet
-      type: string
-      description: Indicador do item de fatura.
-    
-    AmountInvoiceDto:
-      type: object
-      properties:
-        amountType:
-          $ref: '#/components/schemas/AmountType'
-        value:
-          type: number
-          format: double
-          description: Valor do item da fatura.
-        currency:
-          type: string
-          nullable: true
-          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
-      additionalProperties: false
-    
-    FeeType:
-      enum:
-        - NotMapper
-        - Iof
-        - Markup
-        - DailyIof
-        - Interest
-      type: string
-      description: Tipo da taxa.
-    
-    FeeInvoiceDto:
-      type: object
-      properties:
-        feeType:
-          $ref: '#/components/schemas/FeeType'
-        value:
-          type: number
-          format: double
-          description: Valor da taxa.
-      additionalProperties: false
-      
-    TransactionType:
-      enum:
-      - REFINANCE_CHARGES
-      - INTEREST_ON_ARREST
-      - TRAFFIC_TICKET
-      - PURCHASE_BY_SIGHT
-      - INSTALLMENT_WITHOUT_INTEREST
-      - DEBIT_ADJUSTMENT
-      - INSTALLMENTS_WITHOUT_INTEREST
-      - INSTALLED_WITH_INTEREST
-      - PAYMENT
-      - CREDIT_ADJUSTMENT
-      - PARTIAL_CANCELLATION_OF_PURCHASE
-      - WITHDRAW
-      - INTERNATIONAL_PURCHASE
-      - INTERNATIONAL_IOF
-      - IOF
-      - IOF_WITHDRAWAL
-      - WITHDRAWAL_CHARGES
-      - ANNUITY
-      - WITHDRAWAL_RATE
-      - RATE_CARD_ISSUANCE
-      - REFINANCE_INSTALLMENT
-      - CANC_CREDIT_INSTALLMENTS
-      - PREPAID_CHARGE
-      - MEMBERSHIP_PAYMENT
-      - PURCHASE_CANCELLATION
-      - CANC_INSTALLMENT_WITHOUT_INTEREST
-      - ANNUAL_REVERSAL
-      - CREDIT_BY_INSTALLMENT
-      - REFINANCE_CONTRACT
-      - CANC_PARC_DE_REF
-      - EXCHANGE_DIF_DEBIT
-      - DIF_EXCHANGE_CREDIT
-      - REVERSAL_REFINING_CHARGES
-      - REVERSAL_INTEREST
-      - FINE_REVERSAL
-      - REVERSAL_IOF
-      - CANCELLATION_AGREEMENT_REFINANC
-      - CREDIT_BY_AGREEMENT
-      - INSTALLMENT_OF_AGREEMENT
-      - AGREEMENT_CONTRACT
-      - CANCELLATION_OF_INSTALLMENT_AGREEMENT
-      - CANC_CREDIT_AGREEMENT
-      - CANCELLATION_CONTRACT_AGREEMENT
-      - CREDIT_BY_INSTALLMENT_CP
-      - CP_REFINANCING_INSTALLMENT
-      - CP_REFINANCE_CONTRACT
-      - CANC_PARC_DE_REF_CP
-      - CANC_CREDIT_INSTALLMENT_CP
-      - CANCELLATION_CONTRACT_REF_CP
-      - DEBIT_PAYMENT
-      - CREDIT_VOUCHER
-      - CANC_INSTALLMENTS_WITHOUT_INTEREST
-      - CANC_IN_INSTALLMENTS_WITH_INTEREST
-      - CANC_INSTALLMENT_WITH_INTEREST
-      - CANC_INTERNATIONAL_PURCHASE
-      - CANC_IOF_INTERNATIONAL
-      - REVERSAL_INTERNATIONAL_WITHDRAWAL
-      - REVERSAL_DEBIT_PAYMENT
-      - REVERSED_WITHDRAWAL
-      - REVERSAL_RATE_WITHOUT_WITHDRAWAL
-      - INTERNATIONAL_WITHDRAWAL
-      - FLAG_PAYMENT
-      - TED_CASH_OUT
-      - TEF_CASH_OUT
-      - TED_CASH_IN
-      - DEBIT_REVERSAL
-      - REVERSAL_PAYMENT
-      - REVERSED_WITHDRAWAL_CHARGES
-      - PRE_PAID_RECHARGE_RATE
-      - PREPAID_RECHARGE_PERCENTAGE
-      - MDR
-      - REVERSAL_RATE_WITHDRAWAL
-      - REVERSAL_IOF_WITHDRAWAL
-      type: string
-      nullable: true
-      description: Tipo da transação.
 
-    ItemInvoiceDto:
+    CreateExternalPaymentCommand:
       type: object
+      required: 
+        - type
+        - liquidateDate
+        - paymentDate
+        - externalId
+        - amount
       properties:
-        statementNumber:
-          type: integer
-          format: int32
-          description: Número da parcela.
-        statementTotal:
-          type: integer
-          format: int32
-          description: Total de parcelas.
-        isCredit:
-          type: boolean
-          description: Indica se é uma operação de crédito (true) ou débito (false).
-        transactionDate:
+        type:
+          $ref: '#/components/schemas/TypeExternalPayment'
+        liquidateDate:
           type: string
+          description: Data de liquidação do pagamento, que não pode ser superior a seis dias da data do pagamento.
           format: date-time
-          description: Data em que ocorreu a transação.
-        transactionType:
-          $ref: "#/components/schemas/TransactionType"
-        transaction:
-          $ref: '#/components/schemas/TransactionInvoiceDto'
-        amounts:
-          type: array
-          items: {$ref: '#/components/schemas/AmountInvoiceDto'}
-          nullable: true
-        fees:
-          type: array
-          items: {$ref: '#/components/schemas/FeeInvoiceDto'}
-          nullable: true
-        statementItemId:
-          type: integer
-          format: int32
-          description: Indicador do item de fatura.
-        transactionDescription:
+        paymentDate: 
           type: string
-          nullable: true
-          description: Descritivo do item da fatura.
-      additionalProperties: false
-    
-    PaymentType:
-      enum:
-        - Cash
-        - Partial
-        - InstallmentWithEntry
-        - InstallmentWithoutEntry
-      type: string
-      description: Opção de pagamento.
-    
-    PaymentOptionType:
-      enum:
-        - Boleto
-      type: string
-      description: Forma de pagamento.
-    
-    PaymentStatus:
-      enum:
-        - Pending
-        - Paid
-      type: string
-      description: Situação do pagamento.
-    
-    InvoicePaymentDto:
+          description: Data do pagamento.
+          format: date-time
+        externalId: 
+          type: string
+          description: Identificador único da fatura que está sendo paga.
+        amount:
+          $ref: '#/components/schemas/Amount'
+
+    CreatePaymentCommand:
       type: object
+      required:
+        - paymentType
       properties:
-        paymentId:
-          type: integer
-          format: int32
-          description: Identificador único do pagamento.
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        value:
+          type: number
+          format: double
+          description: Valor a ser pago. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>Partial</code>.
         paymentOptionId:
           type: integer
           format: int32
-          description: Identificador único da opção de pagamento.
-        paymentBilletId:
-          type: string
+          description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
           nullable: true
-          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
-        amount:
-          type: number
-          format: double
-          description: Valor do pagamento.
-        dueDate:
-          type: string
-          format: date-time
-          description: Data de vencimento do pagamento.
-        paymentOptionType:
-          $ref: '#/components/schemas/PaymentOptionType'
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-        digitableLine:
-          type: string
-          nullable: true
-          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
-        paymentDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Data de pagamento.
-        liquidatedPaymentDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Data de liquidação do pagamento.
       additionalProperties: false
     
-    InstallmentDto:
+    CreditLimitDto:
       type: object
       properties:
-        creditOfferId:
-          type: integer
-          format: int32
-          description: Identificador único da proposta.
-        amortizationAmount:
+        totalCreditLimit:
           type: number
           format: double
-          description: Valor da amortização no contrato.
-          nullable: true
-        dueDate:
-          type: string
-          format: date-time
-          description: Data de vencimento da parcela.
-        interestAmount:
+          description: Total do limite de crédito aprovado.
+        limitActive:
           type: number
           format: double
-          description: Valor do juros da parcela.
-        iofAmount:
+          description: Limite habilitado pelo cliente.
+        availableLimit:
           type: number
           format: double
-          description: Valor do IOF da parcela.
-        paymentAmount:
-          type: number
-          format: double
-          description: Valor da parcela.
-        installmentNumber:
-          type: integer
-          format: int32
-          description: Número da parcela.
+          description: Limite de crédito disponível.
       additionalProperties: false
-    
-    InstallmentAdvancementSimulationDto:
-      type: array
-      description: Lista de objetos contendo informações sobre <b>todas/b> as parcelas passíveis de serem antecipadas.
-      items:
-        type: object
-        properties:
-          statementId:
-            type: integer
-            format: int32
-            description: Identificador único da fatura em aberto.
-          statementItemId:
-            type: integer
-            format: int32
-            description: Identificador da parcela de refinanciamento passível de ser antecipada.
-          installmentNumber:
-            type: integer
-            format: int32
-            description: Número da parcela.
-          paymentAmount:
-            type: number
-            description: Valor total da parcela.
-          interestAmount:
-            type: number
-            description: Valor dos encargos aplicados à parcela.
-          adjustedAmount:
-            type: number
-            description: Valor ajustado da parcela após a remoção dos encargos.
-        additionalProperties: false
-    
+
     CreditOfferDto:
       type: object
       properties:
@@ -898,31 +700,99 @@ components:
           nullable: true
       additionalProperties: false
     
-    PaymentOptionsDto:
+    CycleType:
+      enum:
+        - Open
+        - Future
+        - Closed
+        - DueDate (atrasado)
+      type: string
+      description: Situação da fatura.
+
+    FeeInvoiceDto:
       type: object
       properties:
-        paymentOptionId:
-          type: integer
-          format: int32
-          description: Identificador único da opção de pagamento.
-        statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
-        paymentType:
-          $ref: '#/components/schemas/PaymentType'
+        feeType:
+          $ref: '#/components/schemas/FeeType'
         value:
           type: number
           format: double
-          description: Valor a ser pago (no caso de parcelamento, será a entrada).
-        payment:
-          type: array
-          items: {$ref: '#/components/schemas/InvoicePaymentDto'}
-          nullable: true
-        creditOffer:
-          $ref: '#/components/schemas/CreditOfferDto'
+          description: Valor da taxa.
       additionalProperties: false
+
+    FeeType:
+      enum:
+        - NotMapper
+        - Iof
+        - Markup
+        - DailyIof
+        - Interest
+      type: string
+      description: Tipo da taxa.    
     
+    InstallmentAdvancementSimulationDto:
+      type: array
+      description: Lista de objetos contendo informações sobre <b>todas/b> as parcelas passíveis de serem antecipadas.
+      items:
+        type: object
+        properties:
+          statementId:
+            type: integer
+            format: int32
+            description: Identificador único da fatura em aberto.
+          statementItemId:
+            type: integer
+            format: int32
+            description: Identificador da parcela de refinanciamento passível de ser antecipada.
+          installmentNumber:
+            type: integer
+            format: int32
+            description: Número da parcela.
+          paymentAmount:
+            type: number
+            description: Valor total da parcela.
+          interestAmount:
+            type: number
+            description: Valor dos encargos aplicados à parcela.
+          adjustedAmount:
+            type: number
+            description: Valor ajustado da parcela após a remoção dos encargos.
+        additionalProperties: false
+
+    InstallmentDto:
+      type: object
+      properties:
+        creditOfferId:
+          type: integer
+          format: int32
+          description: Identificador único da proposta.
+        amortizationAmount:
+          type: number
+          format: double
+          description: Valor da amortização no contrato.
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento da parcela.
+        interestAmount:
+          type: number
+          format: double
+          description: Valor do juros da parcela.
+        iofAmount:
+          type: number
+          format: double
+          description: Valor do IOF da parcela.
+        paymentAmount:
+          type: number
+          format: double
+          description: Valor da parcela.
+        installmentNumber:
+          type: integer
+          format: int32
+          description: Número da parcela.
+      additionalProperties: false
+
     InvoiceDto:
       type: object
       properties:
@@ -984,6 +854,49 @@ components:
           nullable: true
       additionalProperties: false
     
+    InvoicePaymentDto:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+          format: int32
+          description: Identificador único do pagamento.
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        paymentBilletId:
+          type: string
+          nullable: true
+          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        amount:
+          type: number
+          format: double
+          description: Valor do pagamento.
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do pagamento.
+        paymentOptionType:
+          $ref: '#/components/schemas/PaymentOptionType'
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        digitableLine:
+          type: string
+          nullable: true
+          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de pagamento.
+        liquidatedPaymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de liquidação do pagamento.
+      additionalProperties: false
+
     InvoiceResumeDto:
       type: object
       properties:
@@ -1025,66 +938,72 @@ components:
           description: Valor pago.
           nullable: true
       additionalProperties: false
-    
-    PreviousResumeInvoicesDto:
+   
+    ItemInvoiceDto:
       type: object
       properties:
-        statements:
+        statementNumber:
+          type: integer
+          format: int32
+          description: Número da parcela.
+        statementTotal:
+          type: integer
+          format: int32
+          description: Total de parcelas.
+        isCredit:
+          type: boolean
+          description: Indica se é uma operação de crédito (true) ou débito (false).
+        transactionDate:
+          type: string
+          format: date-time
+          description: Data em que ocorreu a transação.
+        transactionType:
+          $ref: "#/components/schemas/TransactionType"
+        transaction:
+          $ref: '#/components/schemas/TransactionInvoiceDto'
+        amounts:
           type: array
-          items: {$ref: '#/components/schemas/InvoiceResumeDto'}
+          items: {$ref: '#/components/schemas/AmountInvoiceDto'}
           nullable: true
+        fees:
+          type: array
+          items: {$ref: '#/components/schemas/FeeInvoiceDto'}
+          nullable: true
+        statementItemId:
+          type: integer
+          format: int32
+          description: Indicador do item de fatura.
+        transactionDescription:
+          type: string
+          nullable: true
+          description: Descritivo do item da fatura.
       additionalProperties: false
     
-    CreditLimitDto:
+    PaymentOptionsDto:
       type: object
       properties:
-        totalCreditLimit:
-          type: number
-          format: double
-          description: Total do limite de crédito aprovado.
-        limitActive:
-          type: number
-          format: double
-          description: Limite habilitado pelo cliente.
-        availableLimit:
-          type: number
-          format: double
-          description: Limite de crédito disponível.
-      additionalProperties: false
-    
-    CreatePaymentCommand:
-      type: object
-      required:
-        - paymentType
-      properties:
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         value:
           type: number
           format: double
-          description: Valor a ser pago. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>Partial</code>.
-        paymentOptionId:
-          type: integer
-          format: int32
-          description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
+          description: Valor a ser pago (no caso de parcelamento, será a entrada).
+        payment:
+          type: array
+          items: {$ref: '#/components/schemas/InvoicePaymentDto'}
           nullable: true
+        creditOffer:
+          $ref: '#/components/schemas/CreditOfferDto'
       additionalProperties: false
-    
-    PaymentStatusDto:
-      type: object
-      properties:
-        status:
-          $ref: "#/components/schemas/PaymentStatus"
-        digitableLine:
-          type: string
-          nullable: true
-          description: Linha digitável do boleto de pagamento.
-        authenticationCode:
-          type: string
-          nullable: true
-          description: Identificador da forma de pagamento.
-      additionalProperties: false
-    
+
     PaymentOptionsInstallmentsDto:
       type: object
       properties:
@@ -1105,3 +1024,168 @@ components:
         creditOffer:
           $ref: '#/components/schemas/CreditOfferDto'
       additionalProperties: false
+
+    PaymentOptionType:
+      enum:
+        - Boleto
+      type: string
+      description: Forma de pagamento.
+
+    PaymentStatus:
+      enum:
+        - Pending
+        - Paid
+      type: string
+      description: Situação do pagamento.
+    
+    PaymentStatusDto:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        digitableLine:
+          type: string
+          nullable: true
+          description: Linha digitável do boleto de pagamento.
+        authenticationCode:
+          type: string
+          nullable: true
+          description: Identificador da forma de pagamento.
+      additionalProperties: false
+
+    PaymentType:
+      enum:
+        - Cash
+        - Partial
+        - InstallmentWithEntry
+        - InstallmentWithoutEntry
+      type: string
+      description: Opção de pagamento.
+    
+    PreviousResumeInvoicesDto:
+      type: object
+      properties:
+        statements:
+          type: array
+          items: {$ref: '#/components/schemas/InvoiceResumeDto'}
+          nullable: true
+      additionalProperties: false
+    
+    StatementPaymentStatus:
+      enum:
+        - Pending
+        - Paid
+        - PartialPaid
+      type: string
+      description: Situação do pagamento da fatura.
+
+    TransactionInvoiceDto:
+      type: object
+      properties:
+        merchant:
+          type: string
+          nullable: true
+          description: Informações referentes ao estabelecimento/comerciante que aceitou a transação. Seus campos são baseados na ISO 8583.
+        mcc:
+          type: string
+          nullable: true
+          description: Código mcc da transação.
+        entrymode:
+          type: string
+          nullable: true
+          description: Código que identifica o tipo da transação.
+        mcg:
+          type: string
+          nullable: true
+          description: Descrição do tipo do mcc.
+        card:
+          $ref: '#/components/schemas/CardDto'
+      additionalProperties: false
+          
+    TransactionType:
+      enum:
+      - REFINANCE_CHARGES
+      - INTEREST_ON_ARREST
+      - TRAFFIC_TICKET
+      - PURCHASE_BY_SIGHT
+      - INSTALLMENT_WITHOUT_INTEREST
+      - DEBIT_ADJUSTMENT
+      - INSTALLMENTS_WITHOUT_INTEREST
+      - INSTALLED_WITH_INTEREST
+      - PAYMENT
+      - CREDIT_ADJUSTMENT
+      - PARTIAL_CANCELLATION_OF_PURCHASE
+      - WITHDRAW
+      - INTERNATIONAL_PURCHASE
+      - INTERNATIONAL_IOF
+      - IOF
+      - IOF_WITHDRAWAL
+      - WITHDRAWAL_CHARGES
+      - ANNUITY
+      - WITHDRAWAL_RATE
+      - RATE_CARD_ISSUANCE
+      - REFINANCE_INSTALLMENT
+      - CANC_CREDIT_INSTALLMENTS
+      - PREPAID_CHARGE
+      - MEMBERSHIP_PAYMENT
+      - PURCHASE_CANCELLATION
+      - CANC_INSTALLMENT_WITHOUT_INTEREST
+      - ANNUAL_REVERSAL
+      - CREDIT_BY_INSTALLMENT
+      - REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF
+      - EXCHANGE_DIF_DEBIT
+      - DIF_EXCHANGE_CREDIT
+      - REVERSAL_REFINING_CHARGES
+      - REVERSAL_INTEREST
+      - FINE_REVERSAL
+      - REVERSAL_IOF
+      - CANCELLATION_AGREEMENT_REFINANC
+      - CREDIT_BY_AGREEMENT
+      - INSTALLMENT_OF_AGREEMENT
+      - AGREEMENT_CONTRACT
+      - CANCELLATION_OF_INSTALLMENT_AGREEMENT
+      - CANC_CREDIT_AGREEMENT
+      - CANCELLATION_CONTRACT_AGREEMENT
+      - CREDIT_BY_INSTALLMENT_CP
+      - CP_REFINANCING_INSTALLMENT
+      - CP_REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF_CP
+      - CANC_CREDIT_INSTALLMENT_CP
+      - CANCELLATION_CONTRACT_REF_CP
+      - DEBIT_PAYMENT
+      - CREDIT_VOUCHER
+      - CANC_INSTALLMENTS_WITHOUT_INTEREST
+      - CANC_IN_INSTALLMENTS_WITH_INTEREST
+      - CANC_INSTALLMENT_WITH_INTEREST
+      - CANC_INTERNATIONAL_PURCHASE
+      - CANC_IOF_INTERNATIONAL
+      - REVERSAL_INTERNATIONAL_WITHDRAWAL
+      - REVERSAL_DEBIT_PAYMENT
+      - REVERSED_WITHDRAWAL
+      - REVERSAL_RATE_WITHOUT_WITHDRAWAL
+      - INTERNATIONAL_WITHDRAWAL
+      - FLAG_PAYMENT
+      - TED_CASH_OUT
+      - TEF_CASH_OUT
+      - TED_CASH_IN
+      - DEBIT_REVERSAL
+      - REVERSAL_PAYMENT
+      - REVERSED_WITHDRAWAL_CHARGES
+      - PRE_PAID_RECHARGE_RATE
+      - PREPAID_RECHARGE_PERCENTAGE
+      - MDR
+      - REVERSAL_RATE_WITHDRAWAL
+      - REVERSAL_IOF_WITHDRAWAL
+      type: string
+      nullable: true
+      description: Tipo da transação.
+
+    TypeExternalPayment:
+      enum:
+        - Pix
+        - Billet
+      type: string
+      description: Meio pelo qual a fatura será liquidada.
+      required: true 
+    

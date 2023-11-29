@@ -55,6 +55,16 @@ components:
       explode: false
       schema:
         type: string
+    
+    IdempotencyKey_required:
+      name: Idempotency-Key
+      in: header
+      description: Chave de idempotêcia para a requisição (UUID v4).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
 
     CustomerDocument:
       name: documentNumber
@@ -187,6 +197,16 @@ components:
       name: bankly-idempotency-key
       in: header
       description: Chave de idempotência para a requisição (UUID v4).
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    
+    X-bkly-version:
+      name: x-bkly-version
+      in: header
+      description: "Versão do contrato. O padrão definido é: yyyy-mm-dd , que se refere à data da quebra de contrato."
       required: true
       style: simple
       explode: false
