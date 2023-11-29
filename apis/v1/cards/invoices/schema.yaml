@@ -553,6 +553,7 @@ components:
           description: Identificador único da fatura que está sendo paga.
         amount:
           $ref: '#/components/schemas/Amount'
+      additionalProperties: false
 
     CreatePaymentCommand:
       type: object
