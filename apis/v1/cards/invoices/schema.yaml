@@ -240,7 +240,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a baixa total ou parcial de uma fatura emitida por meio de seu próprio sistema financeiro.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
+          <span class="bkly-ref-small-beta-tag">beta</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
         [block:callout]
         {
