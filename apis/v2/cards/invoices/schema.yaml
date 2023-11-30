@@ -1,0 +1,1127 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Gestão de Faturas
+  description: |
+    Gerencie faturas vinculadas ao cartão do seu cliente em poucos
+    minutos. Consulte também nossa
+    [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre
+    os fluxos de negócio.
+servers:
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
+paths:
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}/open:
+    get:
+      tags:
+        - Consulta de faturas
+      summary: Consulta de fatura aberta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte uma fatura aberta por meio do proxy do cartão.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura aberta](/docs/consulta-de-fatura-aberta)."
+        }
+        [/block]
+      parameters:
+        - $ref: "#/components/parameters/DocumentNumber"
+        - $ref: "#/components/parameters/Proxy"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvoiceDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+
+  /cards/invoices/{statementId}:
+    get:
+      tags:
+      - Consulta de faturas
+      summary: Consulta de fatura pelo ID
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte uma fatura específica por meio do seu ID, independentemente do seu status. </p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura pelo ID](/docs/consulta-de-fatura-por-id)."
+        }
+        [/block]
+      parameters:
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/InvoiceDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}:
+    get:
+      tags:
+      - Consulta de faturas
+      summary: Consulta de fatura por período
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as faturas do cartão de um determinado período.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de fatura por período](/docs/consultas-de-faturas)."
+        }
+        [/block]
+      parameters:
+      - $ref: "#/components/parameters/DocumentNumber"
+      - $ref: "#/components/parameters/Proxy"
+      - name: initialDate
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Data inicial, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano).
+          format: date-time
+      - name: finalDate
+        in: query
+        required: true
+        schema:
+          type: string
+          description: Data final, referente ao vencimento da fatura, para a consulta (o período máximo a ser informado entre o initialDate e finalDate deverá ser de um ano).
+          format: date-time
+      - $ref: "#/components/parameters/apiVersion"
+      - $ref: "#/components/parameters/authorization"
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreviousResumeInvoicesDto"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+
+  /cards/invoices/document/{documentNumber}/proxy/{proxy}/limits:
+    get:
+      tags:
+      - Limite de crédito
+      summary: Consulta do limite de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte o limite de crédito do cartão.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta do limite de crédito](/docs/consulta-de-limite-de-credito)."
+        }
+        [/block]
+      parameters:
+      - $ref: "#/components/parameters/DocumentNumber"
+      - $ref: "#/components/parameters/Proxy"
+      - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+      - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditLimitDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+      
+  /cards/invoices/{statementId}/payment:
+    post:
+      tags:
+        - Pagamento de faturas
+      summary: Geração de uma forma de pagamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Gere uma forma de pagamento para uma fatura específica, por meio do seu ID.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Geração de uma forma de pagamento](/docs/geracao-forma-pagamento)."
+        }
+        [/block]
+      parameters:
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentCommand'
+      responses:
+        '202':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentStatusDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+  /cards/invoices/{statementId}/payment-options:
+    get:
+      tags:
+      - Pagamento de faturas
+      summary: Consulta de opções de pagamento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte as opções de pagamento de uma fatura.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de opções de pagamento](/docs/consulta-de-opcoes-pagamento)."
+        }
+        [/block]
+      parameters:
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentOptionsDto'
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+  /cards/invoices/{statementId}/installments:
+    post:
+      tags:
+      - Refinanciamento de fatura
+      summary: Simulação de parcelamentos de uma fatura
+      description: |
+        <div class="bkly-ref-description">
+          <p>Simule os possíveis parcelamentos de uma fatura e seus valores.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Simulação de parcelamentos de uma fatura](/docs/simulacao-de-parcelamentos-fatura)."
+        }
+        [/block]
+      parameters:
+      - $ref: '#/components/parameters/StatementId'
+      - $ref: '#/components/parameters/apiVersion'
+      - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: Solicitação aceita com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentOptionsInstallmentsDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+  
+  /cards/invoices/{statementId}/item/{statementItemId}/advancement:
+    post:
+      tags:
+        - Refinanciamento de fatura
+      summary: Antecipação de parcelas 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o adiantamento de parcelas referentes a um refinancimento.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "warning",
+          "title": "Importante",
+          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>. Confira a documentação [Antecipação de parcelas](/docs/antecipacao-de-parcelas) para mais informações."
+        }
+        [/block]
+      parameters:
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/StatementItemId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdvanceInstallmentsRequest"
+      responses:
+        '202':
+          description: Antecipação de parcelas processada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdvancedItemsDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+  /cards/invoices/{statementId}/item/{statementItemId}/installmentsAdvancementSimulation:
+    get:
+      tags:
+        - Refinanciamento de fatura
+      summary: Simulação de antecipação de parcelas
+      description: |
+        <div class="bkly-ref-description">
+          <p>Simule o processo de antecipação de parcelas de refinanciamento de forma a saber o valor, sem o juros de financiamento, que a parcela antecipada irá assumir antes de confirmar a operação.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Simulação de antecipação de parcelas](/docs/simulacao-de-antecipacao-de-parcelas)."
+        }
+        [/block]
+      parameters:
+        - $ref: '#/components/parameters/StatementId'
+        - $ref: '#/components/parameters/StatementItemId'
+        - $ref: '#/components/parameters/apiVersion'
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+            description: Simulação de antecipação de parcelas processada com sucesso.
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/InstallmentAdvancementSimulationDto"
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  
+  parameters:
+    apiVersion:
+      name: api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string 
+
+    DocumentNumber:
+      name: documentNumber
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+        description: Número do documento do titular do cartão.
+
+    StatementId:
+      name: statementId
+      required: true
+      in: path
+      schema:
+        type: integer
+        format: int32
+        description: Identificador único da fatura em aberto.
+
+    StatementItemId:
+      name: statementItemId
+      required: true
+      in: path  
+      schema: 
+        type: integer
+        format: int32
+        description: Identificador de uma das parcelas de refinanciamento passíveis de serem antecipadas.
+
+    Proxy:
+      name: proxy
+      in: path
+      required: true
+      schema:
+        type: string
+        nullable: true
+        description: Identificador do cartão utilizado na transação.
+  
+  schemas:
+    AdvanceInstallmentsRequest:
+      type: object
+      required: 
+        - installmentAdvanceQuantity
+        - removeInterest
+      properties:
+        installmentAdvanceQuantity:
+          type: integer
+          format: int32
+          description: Quantidade de parcelas a serem antecipadas.
+        removeInterest:
+          type: boolean
+          description: Sinaliza se os encargos das parcelas devem ser removidos (TRUE) ou não (FALSE). Como se trata de parcelas de refinanciamento, preencha este campo com <b>TRUE</b>.
+      additionalProperties: false
+
+    AdvancedItemsDto:
+      type: object
+      properties:
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        statementItemsId:
+          type: array
+          items: 
+            type: integer
+            format: int32
+          description: Lista que contém os Ids das parcelas de refinanciamento antecipadas.
+      additionalProperties: false
+
+    CycleType:
+      enum:
+        - Open
+        - Future
+        - Closed
+        - DueDate (atrasado)
+      type: string
+      description: Situação da fatura.
+    
+    StatementPaymentStatus:
+      enum:
+        - Pending
+        - Paid
+        - PartialPaid
+      type: string
+      description: Situação do pagamento da fatura.
+    
+    CardDto:
+      type: object
+      properties:
+        proxy:
+          type: string
+          nullable: true
+          description: Identificador do cartão utilizado na transação.
+        lastFourDigits: 
+          type: string
+          nullable: true
+          description: Quatro últimos dígitos do cartão.
+        alias:
+          type: string
+          nullable: true
+          description: Apelido dado ao cartão.
+        cardType:
+          enum:
+            - Physical
+            - Virtual
+          type: string
+          nullable: true
+          description: Tipo do cartão.
+      additionalProperties: false
+    
+    TransactionInvoiceDto:
+      type: object
+      properties:
+        merchant:
+          type: string
+          nullable: true
+          description: Informações referentes ao estabelecimento/comerciante que aceitou a transação. Seus campos são baseados na ISO 8583.
+        mcc:
+          type: string
+          nullable: true
+          description: Código mcc da transação.
+        entrymode:
+          type: string
+          nullable: true
+          description: Código que identifica o tipo da transação.
+        mcg:
+          type: string
+          nullable: true
+          description: Descrição do tipo do mcc.
+        card:
+          $ref: '#/components/schemas/CardDto'
+      additionalProperties: false
+    
+    AmountType:
+      enum:
+        - NotMapper
+        - Local
+        - Exchange
+        - Billet
+      type: string
+      description: Indicador do item de fatura.
+    
+    AmountInvoiceDto:
+      type: object
+      properties:
+        amountType:
+          $ref: '#/components/schemas/AmountType'
+        value:
+          type: number
+          format: double
+          description: Valor do item da fatura.
+        currency:
+          type: string
+          nullable: true
+          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
+      additionalProperties: false
+    
+    FeeType:
+      enum:
+        - NotMapper
+        - Iof
+        - Markup
+        - DailyIof
+        - Interest
+      type: string
+      description: Tipo da taxa.
+    
+    FeeInvoiceDto:
+      type: object
+      properties:
+        feeType:
+          $ref: '#/components/schemas/FeeType'
+        value:
+          type: number
+          format: double
+          description: Valor da taxa.
+      additionalProperties: false
+      
+    TransactionType:
+      enum:
+      - REFINANCE_CHARGES
+      - INTEREST_ON_ARREST
+      - TRAFFIC_TICKET
+      - PURCHASE_BY_SIGHT
+      - INSTALLMENT_WITHOUT_INTEREST
+      - DEBIT_ADJUSTMENT
+      - INSTALLMENTS_WITHOUT_INTEREST
+      - INSTALLED_WITH_INTEREST
+      - PAYMENT
+      - CREDIT_ADJUSTMENT
+      - PARTIAL_CANCELLATION_OF_PURCHASE
+      - WITHDRAW
+      - INTERNATIONAL_PURCHASE
+      - INTERNATIONAL_IOF
+      - IOF
+      - IOF_WITHDRAWAL
+      - WITHDRAWAL_CHARGES
+      - ANNUITY
+      - WITHDRAWAL_RATE
+      - RATE_CARD_ISSUANCE
+      - REFINANCE_INSTALLMENT
+      - CANC_CREDIT_INSTALLMENTS
+      - PREPAID_CHARGE
+      - MEMBERSHIP_PAYMENT
+      - PURCHASE_CANCELLATION
+      - CANC_INSTALLMENT_WITHOUT_INTEREST
+      - ANNUAL_REVERSAL
+      - CREDIT_BY_INSTALLMENT
+      - REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF
+      - EXCHANGE_DIF_DEBIT
+      - DIF_EXCHANGE_CREDIT
+      - REVERSAL_REFINING_CHARGES
+      - REVERSAL_INTEREST
+      - FINE_REVERSAL
+      - REVERSAL_IOF
+      - CANCELLATION_AGREEMENT_REFINANC
+      - CREDIT_BY_AGREEMENT
+      - INSTALLMENT_OF_AGREEMENT
+      - AGREEMENT_CONTRACT
+      - CANCELLATION_OF_INSTALLMENT_AGREEMENT
+      - CANC_CREDIT_AGREEMENT
+      - CANCELLATION_CONTRACT_AGREEMENT
+      - CREDIT_BY_INSTALLMENT_CP
+      - CP_REFINANCING_INSTALLMENT
+      - CP_REFINANCE_CONTRACT
+      - CANC_PARC_DE_REF_CP
+      - CANC_CREDIT_INSTALLMENT_CP
+      - CANCELLATION_CONTRACT_REF_CP
+      - DEBIT_PAYMENT
+      - CREDIT_VOUCHER
+      - CANC_INSTALLMENTS_WITHOUT_INTEREST
+      - CANC_IN_INSTALLMENTS_WITH_INTEREST
+      - CANC_INSTALLMENT_WITH_INTEREST
+      - CANC_INTERNATIONAL_PURCHASE
+      - CANC_IOF_INTERNATIONAL
+      - REVERSAL_INTERNATIONAL_WITHDRAWAL
+      - REVERSAL_DEBIT_PAYMENT
+      - REVERSED_WITHDRAWAL
+      - REVERSAL_RATE_WITHOUT_WITHDRAWAL
+      - INTERNATIONAL_WITHDRAWAL
+      - FLAG_PAYMENT
+      - TED_CASH_OUT
+      - TEF_CASH_OUT
+      - TED_CASH_IN
+      - DEBIT_REVERSAL
+      - REVERSAL_PAYMENT
+      - REVERSED_WITHDRAWAL_CHARGES
+      - PRE_PAID_RECHARGE_RATE
+      - PREPAID_RECHARGE_PERCENTAGE
+      - MDR
+      - REVERSAL_RATE_WITHDRAWAL
+      - REVERSAL_IOF_WITHDRAWAL
+      type: string
+      nullable: true
+      description: Tipo da transação.
+
+    ItemInvoiceDto:
+      type: object
+      properties:
+        statementNumber:
+          type: integer
+          format: int32
+          description: Número da parcela.
+        statementTotal:
+          type: integer
+          format: int32
+          description: Total de parcelas.
+        isCredit:
+          type: boolean
+          description: Indica se é uma operação de crédito (true) ou débito (false).
+        transactionDate:
+          type: string
+          format: date-time
+          description: Data em que ocorreu a transação.
+        transactionType:
+          $ref: "#/components/schemas/TransactionType"
+        transaction:
+          $ref: '#/components/schemas/TransactionInvoiceDto'
+        amounts:
+          type: array
+          items: {$ref: '#/components/schemas/AmountInvoiceDto'}
+          nullable: true
+        fees:
+          type: array
+          items: {$ref: '#/components/schemas/FeeInvoiceDto'}
+          nullable: true
+        statementItemId:
+          type: integer
+          format: int32
+          description: Indicador do item de fatura.
+        transactionDescription:
+          type: string
+          nullable: true
+          description: Descritivo do item da fatura.
+      additionalProperties: false
+    
+    PaymentType:
+      enum:
+        - Cash
+        - Partial
+        - InstallmentWithEntry
+        - InstallmentWithoutEntry
+      type: string
+      description: Opção de pagamento.
+    
+    PaymentOptionType:
+      enum:
+        - Boleto
+      type: string
+      description: Forma de pagamento.
+    
+    PaymentStatus:
+      enum:
+        - Pending
+        - Paid
+      type: string
+      description: Situação do pagamento.
+    
+    InvoicePaymentDto:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+          format: int32
+          description: Identificador único do pagamento.
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        paymentBilletId:
+          type: string
+          nullable: true
+          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        amount:
+          type: number
+          format: double
+          description: Valor do pagamento.
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do pagamento.
+        paymentOptionType:
+          $ref: '#/components/schemas/PaymentOptionType'
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        digitableLine:
+          type: string
+          nullable: true
+          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de pagamento.
+        liquidatedPaymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de liquidação do pagamento.
+      additionalProperties: false
+    
+    InstallmentDto:
+      type: object
+      properties:
+        creditOfferId:
+          type: integer
+          format: int32
+          description: Identificador único da proposta.
+        amortizationAmount:
+          type: number
+          format: double
+          description: Valor da amortização no contrato.
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento da parcela.
+        interestAmount:
+          type: number
+          format: double
+          description: Valor do juros da parcela.
+        iofAmount:
+          type: number
+          format: double
+          description: Valor do IOF da parcela.
+        paymentAmount:
+          type: number
+          format: double
+          description: Valor da parcela.
+        installmentNumber:
+          type: integer
+          format: int32
+          description: Número da parcela.
+      additionalProperties: false
+    
+    InstallmentAdvancementSimulationDto:
+      type: array
+      description: Lista de objetos contendo informações sobre <b>todas/b> as parcelas passíveis de serem antecipadas.
+      items:
+        type: object
+        properties:
+          statementId:
+            type: integer
+            format: int32
+            description: Identificador único da fatura em aberto.
+          statementItemId:
+            type: integer
+            format: int32
+            description: Identificador da parcela de refinanciamento passível de ser antecipada.
+          installmentNumber:
+            type: integer
+            format: int32
+            description: Número da parcela.
+          paymentAmount:
+            type: number
+            description: Valor total da parcela.
+          interestAmount:
+            type: number
+            description: Valor dos encargos aplicados à parcela.
+          adjustedAmount:
+            type: number
+            description: Valor ajustado da parcela após a remoção dos encargos.
+        additionalProperties: false
+    
+    CreditOfferDto:
+      type: object
+      properties:
+        creditOfferId:
+          type: integer
+          format: int32
+          description: Identificador único da proposta.
+        externalOperationId:
+          type: string
+          nullable: true
+          description: Identificador externo da operação.
+        externalOfferId:
+          type: string
+          nullable: true
+          description: Identificador externo da proposta.
+        externalOfferType:
+          enum:
+            - Variable
+            - Fixed
+          type: string
+          nullable: true
+          description: Tipo da proposta externa retornada.
+        amountCurrency:
+          type: string
+          nullable: true
+          description: Código da moeda de acordo com a ISO-4217 (exemplo BRL).
+        amountDue:
+          type: number
+          format: double
+          description: Valor contratado da proposta mais o valor total de juros (pode ou não conter TAC).
+        annualCet:
+          type: number
+          format: double
+          description: CET (custo efetivo total) da contratação calculado ao ano.
+        annualInterestRate:
+          type: number
+          format: double
+          description: Taxa de juros anual da contratação.
+        cet:
+          type: number
+          format: double
+          description: CET (custo efetivo total) da contratação calculado na periodicidade definida das parcelas.
+        disbursementDate:
+          type: string
+          format: date-time
+          description: Data prevista para o desembolso da proposta.
+        externalCreatedAt:
+          type: string
+          format: date-time
+          description: Data do cálculo da proposta no formato ISO 8601.
+        externalExpiresAt:
+          type: string
+          format: date-time
+          description: Data de expiração da proposta no formato ISO 8601.
+        firstPaymentDate:
+          type: string
+          format: date-time
+          description: Data do 1º pagamento da proposta no formato ISO 8601.
+        graceDays:
+          type: integer
+          format: int32
+          description: Quantidade de dias para a carência do 1º pagamento.
+        lastPaymentDate:
+          type: string
+          format: date-time
+          description: Data do último pagamento da proposta.
+        loanAmount:
+          type: number
+          format: double
+          description: Valor do crédito solicitado para contratação.
+        monthlyInterestRate:
+          type: number
+          format: double
+          description: Taxa de juros mensal da contratação.
+        operationCostAmount:
+          type: number
+          format: double
+          description: Custo de processamento da operação.
+        retentionRate:
+          type: number
+          format: double
+          description: Indica o percentual de retenção da proposta.
+        term:
+          type: integer
+          format: int32
+          description: Quantidade de parcelas da proposta.
+        totalInterestAmount:
+          type: number
+          format: double
+          description: Valor total de juros a ser pago na contratação.
+        totalPaymentAmount:
+          type: number
+          format: double
+          description: Valor total a ser pago no final do contrato (se aplicável ao produto).
+        iofTotalAmount:
+          type: number
+          format: double
+          description: Valor final do cálculo do IOF.
+        iofTotalPercentage:
+          type: number
+          format: double
+          description: Valor percentual do IOF, se aplicável.
+        confirmedOffer:
+          type: boolean
+          description: Informa se a oferta está confirmada.
+        installments:
+          type: array
+          items: {$ref: '#/components/schemas/InstallmentDto'}
+          nullable: true
+      additionalProperties: false
+    
+    PaymentOptionsDto:
+      type: object
+      properties:
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        value:
+          type: number
+          format: double
+          description: Valor a ser pago (no caso de parcelamento, será a entrada).
+        payment:
+          type: array
+          items: {$ref: '#/components/schemas/InvoicePaymentDto'}
+          nullable: true
+        creditOffer:
+          $ref: '#/components/schemas/CreditOfferDto'
+      additionalProperties: false
+    
+    InvoiceDto:
+      type: object
+      properties:
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        month:
+          type: integer
+          format: int32
+          description: Representa o mês de vencimento da fatura.
+        year:
+          type: integer
+          format: int32
+          description: Representa o ano de vencimento da fatura.
+        cycle:
+          type: integer
+          format: int32
+          description: Indicador do ciclo da fatura (por contrato de crédito).
+        cycleCloseDate:
+          type: string
+          format: date-time
+          description: Data de fechamento da fatura.
+          nullable: true
+        dueDateStart:
+          type: string
+          format: date-time
+          description: Data inicial do período da fatura.
+        dueDateEnd:
+          type: string
+          format: date-time
+          description: Data final do período da fatura.
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento da fatura.
+        amountMinimal:
+          type: number
+          format: double
+          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
+          nullable: true
+        balance:
+          type: number
+          format: double
+          description: Valor total da fatura.
+          nullable: true
+        cycleType:
+          $ref: '#/components/schemas/CycleType'
+        documentNumber:
+          type: string
+          nullable: true
+          description: Número do documento de CPF ou CNPJ do titular do cartão.
+        paymentStatus:
+          $ref: '#/components/schemas/StatementPaymentStatus'
+        statementItens:
+          type: array
+          items: {$ref: '#/components/schemas/ItemInvoiceDto'}
+          nullable: true
+      additionalProperties: false
+    
+    InvoiceResumeDto:
+      type: object
+      properties:
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        month:
+          type: integer
+          format: int32
+          description: Representa o mês de vencimento da fatura.
+        year:
+          type: integer
+          format: int32
+          description: Representa o ano de vencimento da fatura.
+        cycle:
+          type: integer
+          format: int32
+          description: Indicador do ciclo da fatura (por contrato de crédito).
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento da fatura.
+        amountMinimal:
+          type: number
+          format: double
+          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
+        balance:
+          type: number
+          format: double
+          description: Valor total da fatura.
+        cycleType:
+          $ref: '#/components/schemas/CycleType'
+        paymentStatus:
+          $ref: '#/components/schemas/StatementPaymentStatus'
+        paymentTotalAmount:
+          type: number
+          format: double
+          description: Valor pago.
+          nullable: true
+      additionalProperties: false
+    
+    PreviousResumeInvoicesDto:
+      type: object
+      properties:
+        statements:
+          type: array
+          items: {$ref: '#/components/schemas/InvoiceResumeDto'}
+          nullable: true
+      additionalProperties: false
+    
+    CreditLimitDto:
+      type: object
+      properties:
+        invoice:
+          type: object
+          description: Objeto que contém informações sobre o limite de crédito do cliente.
+          properties: 
+            totalCreditLimit:
+              type: number
+              format: float
+              description: Total do limite de crédito aprovado.
+            limitActive:
+              type: number
+              format: float
+              description: Limite habilitado pelo cliente.
+            availableLimit:
+              type: number
+              format: float
+              description: Limite de crédito disponível.
+        withdrawal:
+          type: object
+          description: Objeto que contém informações sobre o limite de saque do cliente.
+          properties:
+            totalLimit:
+              type: number
+              format: float
+              description: Limite concedido de saque.
+            availableLimit:
+              type: number
+              format: float
+              description: Limite disponível de saque.
+            spentLimit:
+              type: number
+              format: float
+              description: Limite de saque utilizado.
+      additionalProperties: false
+    
+    CreatePaymentCommand:
+      type: object
+      required:
+        - paymentType
+      properties:
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        value:
+          type: number
+          format: double
+          description: Valor a ser pago. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>Partial</code>.
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
+          nullable: true
+      additionalProperties: false
+    
+    PaymentStatusDto:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        digitableLine:
+          type: string
+          nullable: true
+          description: Linha digitável do boleto de pagamento.
+        authenticationCode:
+          type: string
+          nullable: true
+          description: Identificador da forma de pagamento.
+      additionalProperties: false
+    
+    PaymentOptionsInstallmentsDto:
+      type: object
+      properties:
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        value:
+          type: number
+          format: double
+          description: Valor a ser pago na entrada do parcelamento.
+        creditOffer:
+          $ref: '#/components/schemas/CreditOfferDto'
+      additionalProperties: false
