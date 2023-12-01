@@ -47,7 +47,7 @@ components:
         description: Token de autorização do tipo Bearer.
 
     IdempotencyKey:
-      name: Idempotency-Key
+      name: IdempotencyKey
       in: header
       description: Chave de idempotêcia para a requisição (UUID v4).
       required: false
