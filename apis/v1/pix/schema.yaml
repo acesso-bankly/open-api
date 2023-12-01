@@ -1700,7 +1700,7 @@ components:
         - NOT_ALLOWED
         - ALLOWED
       type: string
-      description: Campo que indica se o valor a ser pago pode (“ALLOWED”) ou não ("NOT_ALLOWED") ser alterado no momento da transação. Caso o valor "NOT_ALLOWED" seja informado, o campo <code>amount</code> deve ser preenchido <b>obrigatoriamente</b>.
+      description: Campo que indica se o valor a ser pago pode (“ALLOWED”) ou não ("NOT_ALLOWED") ser alterado no momento da transação. Caso o campo seja preenchido com “ALLOWED”, não é necessário preencher o campo <code>amount</code>, que assumirá automaticamente o valor "0", permitindo a alteração do montante no momento da transação. Se o valor "NOT_ALLOWED" for informado, o campo <code>amount</code> deverá ser preenchido <b>obrigatoriamente</b> com o valor a ser transacionado.
 
     ChannelResponse:
       enum:
