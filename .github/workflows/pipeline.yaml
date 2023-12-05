@@ -60,6 +60,7 @@ jobs:
             ./apis/v1/credit/schema.yaml
             ./apis/v2/boletos/schema.yaml
             ./apis/v2/cards/invoices/schema.yaml
+            ./apis/v2/accounts/schema.yaml
             
     
   deployDev:
@@ -190,6 +191,11 @@ jobs:
         with:
           rdme: openapi './apis/v2/cards/invoices/schema.yaml' --id=${{ secrets.FATURAV2_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
   
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Accountsv2 API Reference to readme.io
+        with:
+          rdme: openapi './apis/v2/accounts/schema.yaml' --id=${{ secrets.ACCOUNTSV2_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+  
   deployProd:
     name: "Deploy / Prod"
     environment: production
@@ -304,3 +310,8 @@ jobs:
         name: Publish Faturav2 API Reference to readme.io
         with:
           rdme: openapi './apis/v2/cards/invoices/schema.yaml' --id=${{ secrets.FATURAV2_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+      
+      - uses: readmeio/rdme@7.0.3
+        name: Publish Accountsv2 API Reference to readme.io
+        with:
+          rdme: openapi './apis/v2/accounts/schema.yaml' --id=${{ secrets.ACCOUNTSV2_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
