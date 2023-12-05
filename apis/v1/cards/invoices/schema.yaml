@@ -252,7 +252,7 @@ paths:
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey_required"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-version"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
         - $ref: '#/components/parameters/StatementId'
