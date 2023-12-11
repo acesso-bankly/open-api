@@ -1052,7 +1052,7 @@ components:
           additionalProperties:
             "$ref": "#/components/schemas/NetIncomeV2"
           nullable: true
-      additionalProperties: false
+      additionalProperties: true
 
     Source:
       type: object
