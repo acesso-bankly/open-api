@@ -1157,16 +1157,6 @@ components:
         year:
           type: string
           description: Ano do saldo.
-        cost:
-          type: object
-          description: Objeto do custo de aquisição da moeda. Apenas utilizado para criptoativos.
-          properties:
-            value:
-              type: number
-              description: Valor do custo de aquisição das moedas.
-            currency:
-              type: string
-              description: Sigla da moeda.
         amount:
           type: object
           description: Objeto que contém o saldo da conta.
@@ -1177,16 +1167,7 @@ components:
             currency:
               type: string
               description: Sigla da moeda do saldo.
-        fiat:
-          type: object
-          description: Objeto que contém o valor do saldo em moeda fiduciária. Apenas utilizado para criptoativos.
-          properties:
-            value:
-              type: number
-              description: Valor do saldo de criptoativos em moeda fiduciária.
-            currency:
-              type: string
-              description: Sigla da moeda.
+
 
     IncomeReportResponse:
       type: object
