@@ -1046,12 +1046,10 @@ components:
           type: object
           additionalProperties:
             "$ref": "#/components/schemas/CurrencyIncome"
-          nullable: true
         netIncome:
           type: object
           additionalProperties:
             "$ref": "#/components/schemas/NetIncomeV2"
-          nullable: true
       additionalProperties: true
 
     Source:
