@@ -281,7 +281,7 @@ components:
       properties:
         alias:
           type: string
-          description: Identificador externo do boleto.
+          description: Nome para identificar o boleto externamente.
           nullable: true
         account:
           required:
@@ -290,7 +290,7 @@ components:
           $ref: '#/components/schemas/Account'
         documentNumber:
           type: string
-          description: CPF ou CNPJ do emissor.
+          description: CPF ou CNPJ do emissor. Insira somente números.
           nullable: true
         amount:
           maximum: 92233720368547760
@@ -411,14 +411,14 @@ components:
         addressLine:
           type: string
           nullable: true
-          description: Endereço do pagador.
+          description: Logradouro (nome da rua, avenida etc.). Máximo de 60 caracteres.
         neighborhood:
           type: string
-          description: Nome do bairro.
+          description: Nome do bairro. Máximo de 40 caracteres.
         city:
           type: string
           nullable: true
-          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
+          description: Nome da cidade. Máximo de 40 caracteres. Deve-se evitar acentos e outros caracteres especiais.
         state:
           type: string
           nullable: true
@@ -487,15 +487,15 @@ components:
         document:
           type: string
           nullable: true
-          description: Número do documento (CPF ou CNPJ) do pagador.
+          description: Número do documento (CPF ou CNPJ) do pagador. Insira somente números.
         name:
           type: string
           nullable: true
-          description: Nome do pagador.
+          description: Nome do pagador. Máximo de 60 caracteres.
         tradeName:
           type: string
           nullable: true
-          description: Nome fantasia do pagador.
+          description: Nome fantasia do pagador. Máximo de 100 caracteres.
         address:
           description: Objeto que deverá conter informações sobre o endereço do pagador.
           $ref: '#/components/schemas/PayerAddress'
