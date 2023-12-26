@@ -2679,7 +2679,7 @@ components:
         city:
           type: string
           nullable: true
-          description: Nome da cidade.
+          description: Nome da cidade. Máximo é de 15 caracteres.
         zipCode:
           type: string
           nullable: true
