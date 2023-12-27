@@ -458,7 +458,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Identificador único do ajuste financeiro retornado no _endpoint_ de [realização de operação forçada](<>).
+            description: Identificador único do ajuste financeiro retornado no endpoint [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro).
       requestBody:
         content:
           application/json:
@@ -483,7 +483,7 @@ paths:
       summary: Consulta de ajuste financeiro 
       description: |
         <div class="bkly-ref-description">
-          <p>Realize um ajuste financeiro utilizando o ID retornado no endpoint  [Realização de ajuste financeiro](<>). </p> 
+          <p>Realize um ajuste financeiro utilizando o ID retornado no endpoint [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro). </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.adjustment </span>
         </div>
         [block:callout]
@@ -503,7 +503,7 @@ paths:
           required: true
           schema:
             type: string
-            description: Identificador único do ajuste financeiro retornado no _endpoint_ de [realização de operação forçada](<>).
+            description: Identificador único do ajuste financeiro retornado no endpoint [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro).
       responses:
         '201':
           description: A solicitação foi aceita e retornará um objeto contendo informações sobre o ajuste financeiro.
