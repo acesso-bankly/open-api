@@ -222,7 +222,6 @@ components:
       enum:
         - FixedAmount
         - Percent
-        - Free
       description: Regra para cálculo dos juros.
     
     BankslipFine:
@@ -244,7 +243,6 @@ components:
       type: string
       enum:
         - FixedAmount
-        - Free
         - Percent
       description: Tipo de regra aplicada à multa.
     
@@ -268,7 +266,6 @@ components:
       enum:
         - FixedAmountUntilLimitDate
         - FixedPercentUntilLimitDate
-        - Free
       description: Tipo de regra para cálculo do desconto.
     
     CreateBankslipRequest:
