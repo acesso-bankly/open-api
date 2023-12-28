@@ -354,7 +354,7 @@ components:
         digitable:
           type: string
           nullable: true
-          description: Linha digitável para pagamento do boleto. 
+          description: Linha digitável para o pagamento do boleto. 
         status:
           $ref: '#/components/schemas/BankslipStatus'
         account:
