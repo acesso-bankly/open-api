@@ -161,7 +161,7 @@ paths:
     post:
       tags:
         - Baixa efetiva
-      summary: Simulação de pagamento de boleto
+      summary: Simulação de pagamento
       description: |
         <div class="bkly-ref-description">
           <p>Realize simulações de pagamentos de boletos.</p> 
@@ -204,7 +204,7 @@ paths:
     delete:
       tags:
         - Cancelamento de boleto
-      summary: Solicitação de cancelamento de boleto
+      summary: Solicitação de cancelamento 
       description: |
         <div class="bkly-ref-description">
           <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
