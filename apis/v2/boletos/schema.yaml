@@ -165,7 +165,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize simulações de pagamentos de boletos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-guide-small-simulacao-tag">simulação</span>
           <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div> 
         [block:callout]
