@@ -697,7 +697,7 @@ components:
           $ref: '#/components/schemas/Account'
       additionalProperties: false
 
-     SettlementBankslipCancellationRequest:
+    SettlementBankslipCancellationRequest:
       required:
         - authenticationCode
         - account
