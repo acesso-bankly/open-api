@@ -328,7 +328,7 @@ paths:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional"
         - name: accountNumber
           in: path
           required: true
@@ -426,7 +426,7 @@ paths:
         [/block]
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
         - name: documentNumber
@@ -726,7 +726,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
         - name: addressingKeyValue
           in: path
           required: true
@@ -781,7 +781,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
         - name: addressingKeyValue
           in: path
           required: true
@@ -826,7 +826,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -867,12 +867,11 @@ paths:
           "body": "Para mais informações, confira a documentação [Consulta do status da transação](/docs/pix-consulta-status)."
         }
         [/block]
-
       operationId: GetByAuthenticationCodeAsync
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
         - name: x-bankly-pix-user-id
           in: header
           required: true
@@ -930,7 +929,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -976,7 +975,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -1023,7 +1022,7 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -1043,8 +1042,7 @@ paths:
         '422':
           $ref: 'http://localhost:3320/commons/components#/components/responses/422'
         '500':
-          $ref: 'http://localhost:3320/commons/components#/components/responses/500'  
-      
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'        
       security:
         - Bearer: []      
 
@@ -1117,7 +1115,7 @@ paths:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-pix-user-id'
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization" 
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
