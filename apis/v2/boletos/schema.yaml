@@ -157,6 +157,90 @@ paths:
       security:
         - Bearer: []
 
+  /bankslip/settlementpayment:
+    post:
+      tags:
+        - Baixa efetiva
+      summary: Simulação de pagamento de boleto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize simulações de pagamentos de boletos.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.create</span>
+        </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Pagamentos de boleto](/docs/simulacao-de-pagamento)."
+        }
+        [/block]
+      operationId: SettlementPayment
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettlementBankslipPaymentRequest'
+      responses:
+        '200':
+          description: A requisição foi aceita e está sendo processada.
+          headers:
+            x-bankly-correlation-id:
+              description: Id de correlação da operação requisitada.
+              schema:
+                type: string
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+      
+      security:
+        - Bearer: []
+
+  /bankslip/cancel:
+    delete:
+      tags:
+        - Cancelamento de boleto
+      summary: Solicitação de cancelamento de boleto
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
+        </div> 
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a página [Cancelamento](/docs/cancelamento-boleto)."
+        }
+        [/block]
+      operationId: SettlementCancellation
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettlementBankslipCancellationRequest'
+
+      responses:
+        '200':
+          description: A requisição de cancelamento foi aceita e está sendo processada.
+          headers:
+            x-bankly-correlation-id:
+              description: Id correlação da operação requisitada.
+              schema:
+                type: string 
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'     
+      security:
+        - Bearer: []
+
 components:
   schemas:
     Account:
@@ -402,6 +486,47 @@ components:
           $ref: '#/components/schemas/BankslipDiscounts'    
       additionalProperties: false
     
+    OriginPerson:
+      type: object
+      properties:
+        document:
+          type: string
+          nullable: true
+          description: Número do documento (CPF ou CNPJ) do solicitante.
+        name:
+          type: string
+          nullable: true
+          description: Nome do solicitante.
+        tradeName:
+          type: string
+          nullable: true
+          description: Nome fantasia do solicitante.
+        address:
+          description: Objeto que contém informações sobre o endereço do solicitante.
+          $ref: '#/components/schemas/OriginAddress'
+      additionalProperties: false
+
+    OriginAddress:
+      type: object
+      properties:
+        addressLine:
+          type: string
+          nullable: true
+          description: Endereço do solicitante.
+        city:
+          type: string
+          nullable: true
+          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
+        state:
+          type: string
+          nullable: true
+          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
+        zipCode:
+          type: string
+          nullable: true
+          description: Código postal do endereço.
+      additionalProperties: false
+    
     PayerAddress:
       type: object
       properties:
@@ -553,43 +678,39 @@ components:
           description: Código postal do endereço.
       additionalProperties: false
 
-    OriginPerson:
+    SettlementBankslipPaymentRequest:
+      required:
+        - authenticationCode
+        - account
       type: object
       properties:
-        document:
+        authenticationCode:
+          minLength: 1
           type: string
-          nullable: true
-          description: Número do documento (CPF ou CNPJ) do solicitante.
-        name:
-          type: string
-          nullable: true
-          description: Nome do solicitante.
-        tradeName:
-          type: string
-          nullable: true
-          description: Nome fantasia do solicitante.
-        address:
-          description: Objeto que contém informações sobre o endereço do solicitante.
-          $ref: '#/components/schemas/OriginAddress'
+          description: Identificador único do boleto.
+          format: uuid
+        account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
+          required:
+            - number
+            - branch
+          $ref: '#/components/schemas/Account'
       additionalProperties: false
 
-    OriginAddress:
+     SettlementBankslipCancellationRequest:
+      required:
+        - authenticationCode
+        - account
       type: object
       properties:
-        addressLine:
+        authenticationCode:
+          minLength: 1
           type: string
-          nullable: true
-          description: Endereço do solicitante.
-        city:
-          type: string
-          nullable: true
-          description: Nome da cidade. Deve-se evitar acentos e outros caracteres especiais.
-        state:
-          type: string
-          nullable: true
-          description: "Nome do estado Deve-se respeitar o formato proposto pela ISO 3166-2:BR. Exemplo: SP."
-        zipCode:
-          type: string
-          nullable: true
-          description: Código postal do endereço.
+          description: Identificador único do boleto.
+          format: uuid
+        account:
+          description: Objeto que contém informações sobre a conta do emissor do boleto.
+          $ref: '#/components/schemas/Account'
       additionalProperties: false
+
+    
