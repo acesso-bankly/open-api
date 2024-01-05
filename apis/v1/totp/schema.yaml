@@ -209,8 +209,26 @@ components:
         operation:
           $ref: "#/components/schemas/Operation"
         data:
-          type: string
+          type: object
           description: Campo dinâmico para que o parceiro insira as informações necessárias a serem enviadas, de acordo com a operação (<code>operation</code>).
+          properties:
+            addressingKey:
+              type: object
+              description: Objeto que deverá conter os dados da chave de endereçamento. Este objeto <b>somente</b> deverá ser enviado caso o tipo de operação (<code>operation</code>) seja "RegisterEntry".
+              properties:
+                type:
+                  type: string
+                  description: Tipo da chave de endereçamento.
+                  enum:
+                    - "PHONE"
+                    - "EMAIL"
+                value:
+                  type: string
+                  description: Número do telefone ou endereço do e-mail.
+            claimId:
+              type: string
+              description: Informe o valor retornado ao requisitar a portabilidade de uma chave ou reivindicar sua posse. Este campo <b>somente</b> deverá ser enviado caso o tipo de operação (<code>operation</code>) seja "Portability" ou "Ownership".
+
 
       additionalProperties: false
     
