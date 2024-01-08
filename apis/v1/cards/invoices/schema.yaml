@@ -399,7 +399,7 @@ paths:
         - $ref: '#/components/parameters/authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-version'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: x-user-id
           in: header
           schema:
@@ -425,6 +425,7 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
         '409':
           $ref: "http://localhost:3320/commons/components#/components/responses/409"
+  
   /cards/invoices/adjustments/{forceOperationId}/cancel:
     post:
       tags:
@@ -447,7 +448,7 @@ paths:
         - $ref: '#/components/parameters/authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-version'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Bankly-Idempotency-Key'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: x-user-id
           in: header
           schema:
@@ -741,16 +742,22 @@ components:
           description: Identificador da correlação entre transações.
         client:
           type: object
-          description: Objeto que contém informações sobre o valor monetário do ajuste.
+          description: Objeto que contém informações sobre o titular do cartão de crédito.
           properties:
-            value:
-              type: number
-              format: double
-              description: Valor monetário da operação.
-              nullable: true
-            currency:
+            documentNumber:
               type: string
-              description: Código da moeda com base na ISO 4217.
+              enum:
+                - CPF
+                - CNPJ
+              description: Número do documento.
+              nullable: true
+            contractNumber:
+              type: string
+              description: Número do contrato vigente.
+              nullable: true
+            companyKey:
+              type: string
+              description: Chave que identifica o parceiro dentro do Bankly.
               nullable: true
         transaction:
           type: object
@@ -758,7 +765,7 @@ components:
           properties:
             idempotencyKey:
               type: string
-              description: "???"
+              description: A chave de idempotência utilizada na criação do ajuste.
               nullable: true
             amount:
               type: object
@@ -767,7 +774,7 @@ components:
                 value:
                   type: number
                   format: double
-                  description: Valor monetário da operação.
+                  description: Valor monetário do ajuste.
                   nullable: true
                 currency:
                   type: string
@@ -775,16 +782,16 @@ components:
                   nullable: true
             transactionType:
               type: string
-              description: Código do ajuste que representa se é débito ou crédito.
+              description: Código do ajuste, que representa se é débito ou crédito.
               nullable: true
             descriptor:
               type: string
-              description: Descrição da operação.
+              description: Descrição da transação.
               nullable: true
             date:
               type: string
               format: date-time
-              description: "???"
+              description: Data e hora da realização do ajuste financeiro, no formato ISO 8601.
               nullable: true
             cancelledTransactions:
               type: array
@@ -796,9 +803,29 @@ components:
                     type: number
                     format: double
                     description: Valor da transação cancelada.
+                  originalIdempotencyKey:
+                    type: string
+                    description: Chave de idempotência originada no momento da criação do ajuste.
                   idempotencyKey:
                     type: string
-                    description: <code>idempotencyKey</code> utilizado no cancelamento da operação.
+                    description: Chave de idempotência utilizada no cancelamento do ajuste.
+                  forceOperationId:
+                    type: string
+                    description: Identificador do ajuste financeiro realizado.
+                  cancelFees:
+                    type: boolean
+                    description: Indica se as taxas foram canceladas (TRUE) ou não (FALSE).
+                  authorization_id:
+                    type: number
+                    format: integer
+                    description: Código de autorização do ajuste financeiro.
+                  descriptor:
+                    type: string
+                    description: Descrição do ajuste financeiro cancelado.
+                  date:
+                    type: string
+                    format: date-time
+                    description: Data e hora do cancelamento do ajuste financeiro, no formato ISO 8601.
                 
 
     
