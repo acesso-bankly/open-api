@@ -69,6 +69,7 @@ components:
       type: object
       required:
         - hiringDate
+        - billingType
         - recurrency
         - product
       properties:
