@@ -200,13 +200,16 @@ components:
     BaseResult:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-        recurrencyId:
-          type: string
-        productType:
-          type: string
-      additionalProperties: false
+        value:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            recurrencyId:
+              type: string
+            productType:
+              type: string
+          additionalProperties: false
     
