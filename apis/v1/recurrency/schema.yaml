@@ -1,0 +1,212 @@
+openapi: 3.0.1
+info:
+  title: Gestão de recorrências
+  description: Gerencie Recorrências vinculadas a conta do seu cliente. Consulte também
+    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
+    sobre os fluxos de negócio.
+  version: '1.0'
+servers:
+  - url: https://api-mtls.sandbox.bankly.com.br
+paths:
+
+  /recurrencies:
+    post:
+      tags:
+        - Agendamento
+      summary: Criação de recorrência
+      description: |
+        <div class="bkly-ref-description">
+          <p>Cria uma recorrência, que será efetuada conforme as informações passadas no corpo da requisição</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: recurrency.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Agendamento de recorrência](/docs/consulta-de-fatura-aberta)."
+        }
+        [/block]
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRecurrencyRequest'
+      responses:
+        '202':
+          description: A solicitação foi aceita e o agendamento de recorrência da cobrança foi criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    RecurrencyId:
+      name: recurrencyId
+      in: path
+      required: true
+      schema:
+        type: string
+        description: Id da recorrência que será cancelada.
+
+        
+  schemas:
+    ScheduleRecurrencyRequest:
+      type: object
+      required:
+        - hiringDate
+        - recurrency
+        - product
+      properties:
+        hiringDate:
+          type: string
+          format: date
+          example: "2024-04-01"
+        billingType:
+          type: string
+          nullable: true
+        recurrency:
+          $ref: '#/components/schemas/RecurrencyDto'
+        user:
+          $ref: '#/components/schemas/User'
+        product:
+          $ref: '#/components/schemas/Product'
+      additionalProperties: false
+    
+    RecurrencyDto:
+      type: object
+      description: Objeto que contém informações para o registro da Recorrência.
+      required:
+        - postDate
+        - mustChargeOnHiringDate
+        - frequency
+        - quantity
+        - amount
+        - chargeOptions
+      properties:
+        postDate:
+          type: integer
+          format: int32
+          nullable: true
+        mustChargeOnHiringDate:
+          type: boolean
+        frequency:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        amount:
+          $ref: '#/components/schemas/AmountDto'
+        discount:
+          $ref: '#/components/schemas/AmountDto'
+          nullable: true
+        chargeOptions:
+          $ref: '#/components/schemas/ChargeOptions'
+      additionalProperties: false
+    
+    AmountDto:
+      type: object
+      required:
+        - value
+        - currency
+      properties:
+        value:
+          type: number
+          format: double
+        currency:
+          type: string
+          example: "BRL"
+      additionalProperties: false
+    
+    ChargeOptions:
+      type: object
+      required:
+        - forceLimit
+        - blockedAccount
+      properties:
+        forceLimit:
+          type: boolean
+        blockedAccount:
+          type: boolean
+      additionalProperties: false
+   
+    User:
+      type: object
+      required:
+        - documentNumber
+      properties:
+        documentNumber:
+          $ref: '#/components/schemas/DocumentNumber'
+        contract:
+          $ref: '#/components/schemas/Contract'
+      additionalProperties: false
+    
+    DocumentNumber:
+      type: object
+      required:
+        - value
+        - type
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+      additionalProperties: false
+    
+    Contract:
+      type: object
+      required:
+        - id
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+      additionalProperties: false
+    
+    Product:
+      type: object
+      required:
+        - id
+        - type
+        - description
+        - transactionType
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        transactionType:
+          type: string
+      additionalProperties: false   
+
+    BaseResult:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        recurrencyId:
+          type: string
+        productType:
+          type: string
+      additionalProperties: false
+    
