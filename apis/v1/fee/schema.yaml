@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Tarifas
-  description: Aplicação de tarifas sobre os produtos Bankly. 
+  title: Gestão de cobrança
+  description: API destinada ao gerenciamento de cobranças. 
   version: '1.0'
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
@@ -93,7 +93,7 @@ paths:
   /recurrencies:
     post:
       tags:
-        - Agendamento
+        - Recorrência de cobrança
       summary: Agendamento de recorrência
       description: |
         <div class="bkly-ref-description">
