@@ -1,9 +1,8 @@
 openapi: 3.0.1
 info:
   title: Gestão de recorrências
-  description: Gerencie Recorrências vinculadas a conta do seu cliente. Consulte também
-    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes
-    sobre os fluxos de negócio.
+  description: Gerencie recorrências de cobranças vinculadas à conta do seu cliente. Consulte também
+    nossa [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre os fluxos de negócio.
   version: '1.0'
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
@@ -13,23 +12,23 @@ paths:
     post:
       tags:
         - Agendamento
-      summary: Criação de recorrência
+      summary: Agendamento de recorrência
       description: |
         <div class="bkly-ref-description">
-          <p>Cria uma recorrência, que será efetuada conforme as informações passadas no corpo da requisição</p> 
+          <p>Crie uma cobrança recorrente de acordo com as necessidades de seu cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: recurrency.write</span>
         </div>
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Agendamento de recorrência](/docs/consulta-de-fatura-aberta)."
+          "body": "Para mais informações, confira a documentação [Agendamento de recorrência](/docs/agendamento-de-recorrencia)."
         }
         [/block]
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional"
       requestBody:
         content:
           application/json:
@@ -37,7 +36,7 @@ paths:
               $ref: '#/components/schemas/ScheduleRecurrencyRequest'
       responses:
         '202':
-          description: A solicitação foi aceita e o agendamento de recorrência da cobrança foi criado
+          description: A solicitação foi aceita e o agendamento de recorrência de cobrança foi criado.
           content:
             application/json:
               schema:
@@ -77,9 +76,11 @@ components:
           type: string
           format: date
           example: "2024-04-01"
+          description: Data da contratação do produto que deverá ser cobrado de forma recorrente.
         billingType:
           type: string
           nullable: true
+          description: Tipo de cobrança. Preencha este campo com "" ou com null.
         recurrency:
           $ref: '#/components/schemas/RecurrencyDto'
         user:
@@ -92,7 +93,6 @@ components:
       type: object
       description: Objeto que contém informações para o registro da Recorrência.
       required:
-        - postDate
         - mustChargeOnHiringDate
         - frequency
         - quantity
@@ -103,19 +103,30 @@ components:
           type: integer
           format: int32
           nullable: true
+          description: Dia em que deverá ser realizada a postagem de recorrência na fatura. Caso este campo não seja preenchido, será considerada a data informada em <code>hiringDate</code>.
         mustChargeOnHiringDate:
           type: boolean
+          description: Indica se a cobrança deverá ser realizada no mesmo dia da contratação, sendo TRUE para sim e FALSE para não. Caso este campo seja preenchido com TRUE, o valor informado no campo <code>postDate</code> será desconsiderado.
         frequency:
           type: string
+          description: Frequência em que a recorrência deverá ocorrer.
+          enum:
+            - ANNUALY
+            - MONTHLY
+            - WEEKLY
         quantity:
           type: integer
           format: int32
+          description: Quantidade de cobranças da recorrência. Este campo deverá indicar quantas vezes a cobrança será realizada dentro da frequência informada.
         amount:
+          description: Objeto que deverá conter informações sobre o valor da cobrança recorrente.
           $ref: '#/components/schemas/AmountDto'
         discount:
+          description: Objeto que deverá conter informações sobre o desconto aplicado na cobrança, caso exista.
           $ref: '#/components/schemas/AmountDto'
           nullable: true
         chargeOptions:
+          description: Objeto que deverá conter informações sobre o formato de cobrança.
           $ref: '#/components/schemas/ChargeOptions'
       additionalProperties: false
     
@@ -128,9 +139,11 @@ components:
         value:
           type: number
           format: double
+          description: Valor da cobrança recorrente.
         currency:
           type: string
           example: "BRL"
+          description: Código da moeda com base na ISO 3361.
       additionalProperties: false
     
     ChargeOptions:
@@ -141,8 +154,10 @@ components:
       properties:
         forceLimit:
           type: boolean
+          description: ndica se a cobrança recorrente deverá ocorrer para cartão sem limite. 
         blockedAccount:
           type: boolean
+          description:  Indica se a cobrança recorrente deverá ocorrer para contas bloqueadas. 
       additionalProperties: false
    
     User:
@@ -158,30 +173,37 @@ components:
     
     DocumentNumber:
       type: object
+      description: Objeto que deverá conter informações sobre o documento do titular.
       required:
         - value
         - type
       properties:
         value:
           type: string
+          description: Número do documento.
         type:
           type: string
+          description: Tipo de documento, o qual pode ser "CPF" ou "CNPJ".
       additionalProperties: false
     
     Contract:
       type: object
+      description: Objeto que deverá conter informações sobre o contrato de crédito do titular do cartão.
       required:
         - id
         - type
       properties:
         id:
           type: string
+          description: Identificador único do contrato.
         type:
           type: string
+          description: Tipo de contrato.
       additionalProperties: false
     
     Product:
       type: object
+      description: Objeto que deverá conter informações sobre o produto que será cobrado de forma recorrente.
       required:
         - id
         - type
@@ -190,12 +212,16 @@ components:
       properties:
         id:
           type: string
+          description: Identificador único do contrato do produto.
         type:
           type: string
+          description:  Tipo de produto que será cobrado.
         description:
           type: string
+          description: Descrição do produto. Essa mensagem será apresentada na postagem da cobrança.
         transactionType:
           type: string
+          description: Código da transação.
       additionalProperties: false   
 
     BaseResult:
