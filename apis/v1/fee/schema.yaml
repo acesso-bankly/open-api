@@ -137,7 +137,7 @@ components:
       required: true
       schema:
         type: string
-        description: Id da recorrência que será cancelada.
+        description: Id da recorrência.
 
   schemas:
     account:
@@ -294,7 +294,7 @@ components:
     
     RecurrencyDto:
       type: object
-      description: Objeto que contém informações para o registro da Recorrência.
+      description: Objeto que contém informações para o registro da recorrência.
       required:
         - mustChargeOnHiringDate
         - frequency
@@ -357,7 +357,7 @@ components:
       properties:
         forceLimit:
           type: boolean
-          description: ndica se a cobrança recorrente deverá ocorrer para cartão sem limite. 
+          description: Indica se a cobrança recorrente deverá ocorrer para cartão sem limite. 
         blockedAccount:
           type: boolean
           description:  Indica se a cobrança recorrente deverá ocorrer para contas bloqueadas. 
@@ -386,7 +386,10 @@ components:
           description: Número do documento.
         type:
           type: string
-          description: Tipo de documento, o qual pode ser "CPF" ou "CNPJ".
+          description: Tipo de documento.
+          enum: 
+            - CPF
+            - CNPJ
       additionalProperties: false
     
     Contract:
