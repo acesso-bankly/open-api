@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Gestão de boletos
+  title: Gestão de boletos <span class="bkly-ref-small-deprecated-tag">deprecated</span>
   description: Depósitos e cobranças via boleto em poucos minutos.
   version: '1.0'
 servers:
