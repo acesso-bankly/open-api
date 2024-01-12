@@ -14,14 +14,14 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Emita boletos de depósito ou cobrança.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span> 
           <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div>  
         [block:callout]
         {
           "type": "warn",
           "title": "Importante",
-          "body": "Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/docs/emissao-de-boleto) para mais informações."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: Create
@@ -80,15 +80,15 @@ paths:
       summary: Consulta por authenticationCode
       description: |
         <div class="bkly-ref-description">
-          <p>Realize a consulta de dados por authenticationCode e obtenha todos os detalhes sobre o boleto pesquisado.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Realize a consulta de dados por <code>authenticationCode</code> e obtenha todos os detalhes sobre o boleto pesquisado.</p> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span> 
           <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div>  
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta por authenticationCode](/docs/consulta-boleto-por-authenticationcode)."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: GetByAuthenticationCode
@@ -146,14 +146,14 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize a impressão em PDF do boleto emitido. </p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span> 
           <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: GetPDF
@@ -185,15 +185,15 @@ paths:
       summary: Consulta de boletos por data
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte todos os boletos emitidos que sofreram alteração de status em uma data específica.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <p>Consulte todos os boletos emitidos que sofreram alteração de <i>status</i> em uma data específica.</p> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span> 
           <span class="bkly-ref-scope-tag">scope: boleto.read</span>
         </div> 
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta por data](/docs/consulta-boleto-por-data)."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SearchStatus
@@ -238,14 +238,14 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize o cancelamento de um boleto a qualquer momento após o seu registro, desde que ele <b>não</b> tenha sido pago.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span>
           <span class="bkly-ref-scope-tag">scope: boleto.delete</span>
         </div> 
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Cancelamento](/docs/cancelamento-boleto)."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SettlementCancellation
@@ -287,14 +287,14 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Realize simulações de pagamentos de boletos.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-deprecated-tag">deprecated</span> 
           <span class="bkly-ref-scope-tag">scope: boleto.create</span>
         </div> 
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Pagamentos](/docs/pagamentos-de-boletos)."
+          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SettlementPayment
