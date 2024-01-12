@@ -58,7 +58,7 @@ jobs:
             ./apis/v1/cards/invoices/schema.yaml
             ./apis/v1/crypto/schema.yaml
             ./apis/v1/credit/schema.yaml
-            ./apis/v1/recurrency/schema.yaml
+            ./apis/v1/charge/schema.yaml
             ./apis/v2/boletos/schema.yaml
             ./apis/v2/cards/invoices/schema.yaml
             ./apis/v2/accounts/schema.yaml
@@ -183,9 +183,9 @@ jobs:
           rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
   
       - uses: readmeio/rdme@7.0.3
-        name: Publish Recurrency to Reference to readme.io
+        name: Publish Charge to Reference to readme.io
         with:
-          rdme: openapi './apis/v1/recurrency/schema.yaml' --id=${{ secrets.RECURRENCY_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/charge/schema.yaml' --id=${{ secrets.CHARGE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletosv2 API Reference to readme.io
@@ -308,9 +308,9 @@ jobs:
           rdme: openapi './apis/v1/credit/schema.yaml' --id=${{ secrets.CREDIT_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
-        name: Recurrency to Reference to readme.io
+        name: Charge to Reference to readme.io
         with:
-          rdme: openapi './apis/v1/recurrency/schema.yaml' --id=${{ secrets.RECURRENCY_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/charge/schema.yaml' --id=${{ secrets.CHARGE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletosv2 API Reference to readme.io
