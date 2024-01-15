@@ -21,7 +21,7 @@ paths:
         {
           "type": "warn",
           "title": "Importante",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: Create
@@ -88,7 +88,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: GetByAuthenticationCode
@@ -153,7 +153,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: GetPDF
@@ -193,7 +193,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SearchStatus
@@ -245,7 +245,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SettlementCancellation
@@ -294,7 +294,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "A nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
+          "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
       operationId: SettlementPayment
