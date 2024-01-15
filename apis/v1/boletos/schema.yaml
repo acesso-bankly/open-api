@@ -19,7 +19,7 @@ paths:
         </div>  
         [block:callout]
         {
-          "type": "warn",
+          "type": "warning",
           "title": "Importante",
           "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
@@ -86,8 +86,8 @@ paths:
         </div>  
         [block:callout]
         {
-          "type": "info",
-          "title": "Nota",
+          "type": "warning",
+          "title": "Importante",
           "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
@@ -191,8 +191,8 @@ paths:
         </div> 
         [block:callout]
         {
-          "type": "info",
-          "title": "Nota",
+          "type": "warning",
+          "title": "Importante",
           "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
@@ -243,8 +243,8 @@ paths:
         </div> 
         [block:callout]
         {
-          "type": "info",
-          "title": "Nota",
+          "type": "warning",
+          "title": "Importante",
           "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
@@ -292,8 +292,8 @@ paths:
         </div> 
         [block:callout]
         {
-          "type": "info",
-          "title": "Nota",
+          "type": "warning",
+          "title": "Importante",
           "body": "A documentação da nova versão deste <i>endpoint</i> está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
         }
         [/block]
