@@ -320,7 +320,9 @@ components:
         transactionType:
           type: string
           description: Código da transação.
-      additionalProperties: false   
+          Enum:
+            - SEGUROS_DEB
+            - SEGUROS_CRED
 
     BaseResult:
       type: object
@@ -345,14 +347,10 @@ components:
     ScheduleRecurrencyCommandUpdate:   
       type: object
       required:
-        - recurrencyId
         - billingType
         - recurrency
         - user
       properties:
-        recurrencyId:
-          type: string
-          description: Identificador único da recorrência que deverá ser atualizada. Informe o valor do campo recurrencyId retornado no endpoint de agendamento de recorrência. 
         billingType:
           type: string
           description: Tipo de cobrança. Preencha este campo com "" ou com null.
