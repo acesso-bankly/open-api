@@ -165,6 +165,7 @@ components:
         - hiringDate
         - billingType
         - recurrency
+        - user
         - product
       properties:
         hiringDate:
@@ -309,7 +310,7 @@ components:
         transactionType:
           type: string
           description: Código da transação.
-          Enum:
+          enum:
             - SEGUROS_DEB
             - SEGUROS_CRED
 
