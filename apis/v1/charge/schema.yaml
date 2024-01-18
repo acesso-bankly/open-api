@@ -254,17 +254,6 @@ components:
           type: boolean
           description:  Indica se a cobrança recorrente deverá ocorrer para contas bloqueadas. 
       additionalProperties: false
-   
-    User:
-      type: object
-      required:
-        - documentNumber
-      properties:
-        documentNumber:
-          $ref: '#/components/schemas/DocumentNumber'
-        contract:
-          $ref: '#/components/schemas/Contract'
-      additionalProperties: false
     
     DocumentNumber:
       type: object
