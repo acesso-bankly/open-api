@@ -283,10 +283,13 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único do contrato.
+          description: Identificador único do contrato, , o qual pode ser um número de proposta, contrato etc. relativo ao produto que o cliente do parceiro contratou.
         type:
           type: string
           description: Tipo de contrato.
+          enum: 
+            - Credit
+            - Debit
       additionalProperties: false
     
     Product:
