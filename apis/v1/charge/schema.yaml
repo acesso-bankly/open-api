@@ -14,7 +14,7 @@ paths:
       summary: Agendamento de recorrência
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma cobrança recorrente de acordo com as necessidades de seu cliente.</p> 
+          <p>Realize o agendamento de uma cobrança recorrente de acordo com as necessidades de seu cliente.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: recurrency.write</span>
         </div>
         [block:callout]
@@ -44,6 +44,107 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
+
+  /recurrencies/{recurrencyId}:
+    patch:
+      tags:
+        - Recorrência de cobrança
+      summary: Atualização de recorrência
+      description: |
+        <div class="bkly-ref-description">
+          <p>Atualize uma cobrança recorrente agendada previamente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: recurrency.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Atualização de recorrência](/docs/atualizacao-de-recorrencia)."
+        }
+        [/block]        
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional"
+        - name: recurrencyId
+          in: path
+          description: Identificador único da recorrência que deverá ser atualizada. Informe o valor do campo <code>recurrencyId</code> retornado no endpoint de agendamento de recorrência.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRecurrencyCommandUpdate'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRecurrencyCommandUpdate'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRecurrencyCommandUpdate'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+              
+    delete:
+      tags:
+        - Recorrência de cobrança
+      summary: Cancelamento de recorrência
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o cancelamento de uma cobrança recorrente. Isso implicará a interrupção de todas as futuras cobranças recorrentes associadas à transação.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: recurrency.delete</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Cancelamento de recorrência](/docs/cancelamento-de-cobranca)."
+        }
+        [/block]        
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional"
+        - name: recurrencyId
+          in: path
+          description: Identificador único da recorrência que deverá ser atualizada. Informe o valor do campo <code>recurrencyId</code> retornado no endpoint de agendamento de recorrência.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recorrência de cobrança cancelada com sucesso.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BaseResult'
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+    
 components:
   securitySchemes:
     bearerAuth:
@@ -64,6 +165,7 @@ components:
         - hiringDate
         - billingType
         - recurrency
+        - user
         - product
       properties:
         hiringDate:
@@ -116,7 +218,7 @@ components:
           description: Objeto que deverá conter informações sobre o valor da cobrança recorrente.
           $ref: '#/components/schemas/AmountDto'
         discount:
-          description: Objeto que deverá conter informações sobre o desconto aplicado na cobrança, caso exista.
+          description: "Objeto que deverá conter informações sobre o desconto aplicado na cobrança, caso exista. <b>Importante</b>: se este objeto for enviado, seus subcampos devem ser preenchidos obrigatoriamente."
           $ref: '#/components/schemas/AmountDto'
           nullable: true
         chargeOptions:
@@ -153,17 +255,6 @@ components:
           type: boolean
           description:  Indica se a cobrança recorrente deverá ocorrer para contas bloqueadas. 
       additionalProperties: false
-   
-    User:
-      type: object
-      required:
-        - documentNumber
-      properties:
-        documentNumber:
-          $ref: '#/components/schemas/DocumentNumber'
-        contract:
-          $ref: '#/components/schemas/Contract'
-      additionalProperties: false
     
     DocumentNumber:
       type: object
@@ -177,7 +268,10 @@ components:
           description: Número do documento.
         type:
           type: string
-          description: Tipo de documento, o qual pode ser "CPF" ou "CNPJ".
+          description: Tipo de documento.
+          enum:
+            - CPF
+            - CNPJ
       additionalProperties: false
     
     Contract:
@@ -189,10 +283,13 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único do contrato.
+          description: Identificador único do contrato, , o qual pode ser um número de proposta, contrato etc. relativo ao produto que o cliente do parceiro contratou.
         type:
           type: string
           description: Tipo de contrato.
+          enum: 
+            - Credit
+            - Debit
       additionalProperties: false
     
     Product:
@@ -216,7 +313,9 @@ components:
         transactionType:
           type: string
           description: Código da transação.
-      additionalProperties: false   
+          enum:
+            - SEGUROS_DEB
+            - SEGUROS_CRED
 
     BaseResult:
       type: object
@@ -226,11 +325,64 @@ components:
           properties:
             code:
               type: string
+              description: Código personalizado da mensagem de sucesso.
             message:
               type: string
+              description: Descrição do código de sucesso.
             recurrencyId:
               type: string
+              description: Identificador único da recorrência agendada.
             productType:
               type: string
+              description: Descrição do produto enviado na requisição.
           additionalProperties: false
     
+    ScheduleRecurrencyCommandUpdate:   
+      type: object
+      required:
+        - billingType
+        - recurrency
+        - user
+      properties:
+        billingType:
+          type: string
+          description: Tipo de cobrança. Preencha este campo com "" ou com null.
+          nullable: true
+        recurrency:
+          $ref: '#/components/schemas/RecurrencyUpdate'
+        user:
+          $ref: '#/components/schemas/User'        
+      additionalProperties: false  
+    
+    RecurrencyUpdate:
+      type: object
+      properties:
+        postDate:
+          type: integer
+          format: int32
+          description: Dia em que deverá ser realizada a postagem de recorrência na fatura.
+          nullable: true        
+        amount:
+          $ref: '#/components/schemas/AmountDto'
+          required:
+            - "recurrency.amount is required"
+        discount:
+          $ref: '#/components/schemas/AmountDto'
+          nullable: true
+        chargeOptions:
+          $ref: '#/components/schemas/ChargeOptions'
+          required:
+            - "recurrency.chargeOptions is required"
+      additionalProperties: false  
+
+    User:
+      type: object
+      required:
+        - documentNumber
+        - contract
+      properties:
+        documentNumber:
+          $ref: '#/components/schemas/DocumentNumber'
+        contract:
+          $ref: '#/components/schemas/Contract'
+      additionalProperties: false
