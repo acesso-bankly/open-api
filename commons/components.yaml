@@ -191,6 +191,15 @@ components:
       schema:
         $ref: '#/components/schemas/X-Correlation-Id'
 
+    X-Correlation-Id-Optional:  
+      name: x-correlation-id
+      in: header 
+      description: Informe um GUID v4. A cada requisição, deve-se gerar um novo GUID.
+      required: false
+      schema:
+        $ref: '#/components/schemas/X-Correlation-Id'
+    
+
     X-Idempotency-Key:
       name: x-idempotency-key
       in: header

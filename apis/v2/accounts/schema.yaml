@@ -358,7 +358,7 @@ paths:
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Para mais detalhes sobre os campos retornados nessa requisição, consulte o [Manual do dev](https://docs.bankly.com.br/docs/informe-de-rendimentos-v2)."
+            "body": "Para mais detalhes sobre os campos retornados nessa requisição, consulte o [Manual do dev](/docs/informe-de-rendimentos)."
           }
           [/block]
       operationId: GetIncomeReportByAccountNumberAsync
