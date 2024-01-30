@@ -350,18 +350,17 @@ paths:
       summary: Informe de rendimentos
       description: |
         <div class="bkly-ref-description">
-        Obtenha os dados necessários para gerar o Informe de Rendimentos de contas de pagamentos (pessoa física ou jurídica) e de outras fontes pagadoras. <br />É possível refinar a busca informando o ano calendário desejado (o padrão é sempre o ano vigente). <br />
-        <span class="bkly-ref-small-stable-tag">stable</span>
+        Obtenha os dados necessários para gerar o Informe de Rendimentos de todos os seus clientes.
+        <span class="bkly-ref-small-deprecated-tag">deprecated</span>
         <span class="bkly-ref-scope-tag">scope: income.report.read</span>
         </div>
         [block:callout]
           {
             "type": "warning",
             "title": "Importante",
-            "body": "Para mais detalhes sobre os campos retornados nessa requisição, consulte o [Manual do dev](https://docs.bankly.com.br/docs/informe-de-rendimentos-v2)."
+            "body": "A documentação da nova versão deste endpoint está disponível na aba v2 deste manual. Para acessá-la, basta selecionar a versão desejada (v2) no menu suspenso localizado no canto superior esquerdo da página."
           }
           [/block]
-      operationId: GetIncomeReportByAccountNumberAsync
       parameters:
         - name: accountNumber
           in: path
@@ -378,7 +377,7 @@ paths:
             type: integer
             description: Ano para a geração das informações do informe de rendimento. O valor padrão será o ano atual da consulta menos um.
             format: int32
-        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion2"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
       responses:
         "200":
@@ -1035,6 +1034,17 @@ components:
           format: date-time
           nullable: true
 
+    PayerSource:
+      type: object
+      description: Objeto que contém informações sobre a fonte pagadora.
+      properties:
+        name:
+          type: string
+          description: Razão social da fonte pagadora.
+        documentNumber:
+          type: string
+          description: Número do documento CNPJ da fonte pagadora.
+
     Payer:
       type: array
       properties:
@@ -1088,6 +1098,17 @@ components:
         fiat:
           "$ref": "#/components/schemas/FiatBalance"
       additionalProperties: false
+
+    NetIncomeV1:
+      type: object
+      description: Objeto que contém informações sobre os rendimentos líquidos do cliente.
+      properties:
+        amount:
+          type: number
+          description: Valor do rendimento líquido.
+        currency:
+          type: string
+          description: Sigla da moeda do valor do rendimento de acordo com a ISO 4207.
 
     NetIncomeV2:
       type: object
@@ -1193,15 +1214,16 @@ components:
     IncomeReportResponse:
       type: object
       properties:
+        payerSource:
+          $ref: "#/components/schemas/PayerSource"
         holder:
-          $ref: "#/components/schemas/PaymentAccountHolder"
+          $ref: "#/components/schemas/Holder"
         account:
           $ref: "#/components/schemas/Account"
-        payers:
-          type: array
-          items:
-            $ref: "#/components/schemas/Payer"
-          nullable: true
+        balances:
+          $ref: "#/components/schemas/IncomeBalance"
+        netIncome:
+          $ref: "#/components/schemas/NetIncomeV1"
       additionalProperties: false
 
     GetIncomeReportResponse:
@@ -2075,7 +2097,7 @@ components:
       additionalProperties: false
 
     IncomeBalance:
-      type: object
+      type: array
       properties:
         year:
           type: string
