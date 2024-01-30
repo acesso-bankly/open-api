@@ -2011,7 +2011,7 @@ components:
       properties:
         amount:
           description: |
-            Valor em decimal. Ex: 1.00.
+            Valor em decimal.
           type: number
           format: double
         currency:
