@@ -135,7 +135,7 @@ paths:
             schema:
               $ref: '#/components/schemas/MaximumLimitRequest'
       responses:
-        '200':
+        '201':
           description: |
             Sucesso na criação ou atualização do limite.
           content:
