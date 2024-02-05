@@ -272,7 +272,6 @@ paths:
       tags:
         - Pessoa jurídica
       summary: Envio de documentos de pessoa jurídica (LTDA, S.A. e TS)
-      operationId: UploadDocumentOnboardingPJLTDASATS
       description: |
         <div class="bkly-ref-description">
           <p>Realize o envio de imagens de documentos de pessoa jurídica (LTDA, S.A. e TS), para que seja possível realizar o fluxo de Onboarding.</p>
@@ -328,7 +327,6 @@ paths:
           "body": "Para mais informações, confira a documentação [Registro de LTDA, S.A. e TS](/docs/registro-pj-ltda-sa-ts)."
         }
         [/block]
-      operationId: RegisterCorporationBusinessAsync
       parameters:
         - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
         - $ref: "http://localhost:3320/commons/components#/components/parameters/BusinessDocument"
@@ -1778,11 +1776,54 @@ components:
           $ref: "#/components/schemas/CorporationBusinessSize"       
         cnaeCode:
           type: string
-          description: Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa.
+          description: "[Código CNAE (Classificação Nacional de Atividades Econômicas) da empresa](https://cnae.ibge.gov.br/?option=com_cnae&view=estrutura&Itemid=6160&tipo=cnae&versao_classe=7.0.0&versao_subclasse=). Informe <b>apenas</b> a subclasse do código CNAE, sem máscara."
           nullable: true
         legalNature:
           type: string
-          description: Natureza Jurídica da empresa.
+          description: Natureza Jurídica da empresa. Para mais informações sobre o código correspondente à natureza jurídica da empresa, consulte o [Manual do dev](/docs/registro-pj-ltda-sa-ts).
+          enum:
+            - 399-9
+            - 214-3
+            - 201-1
+            - 322-0
+            - 330-1
+            - 204-6
+            - 205-4 
+            - 203-8 
+            - 212-7 
+            - 209-7 
+            - 208-9 
+            - 207-0 
+            - 206-2 
+            - 215-1 
+            - 216-0 
+            - 221-6
+            - 223-2
+            - 224-0 
+            - 225-9 
+            - 226-7
+            - 229-1 
+            - 231-3 
+            - 233-0 
+            - 306-9 
+            - 313-1 
+            - 321-2 
+            - 230-5 
+            - 327-1 
+            - 326-3
+            - 328-0 
+            - 303-4 
+            - 329-8 
+            - 307-7 
+            - 308-5 
+            - 310-7 
+            - 311-5 
+            - 320-4
+            - 323-9
+            - 324-7 
+            - 325-5 
+            - 213-5
+            - 222-4
           nullable: true
         openingDate:
           type: string
