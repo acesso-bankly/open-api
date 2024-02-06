@@ -397,14 +397,14 @@ paths:
       parameters:
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-version'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: x-user-id
           in: header
           schema:
             type: string
-            description: Documento do cliente, o qual é proprietário da conta de ajuste.
+            description: Documento associado à conta do usuário.
       requestBody:
         content:
           application/json:
@@ -446,14 +446,14 @@ paths:
       parameters:
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-version'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - name: x-user-id
           in: header
           schema:
             type: string
-            description: Documento do cliente, o qual é proprietário da conta de ajuste.
+            description: Documento associado à conta do usuário.
         - name: forceOperationId
           in: path
           required: true
@@ -484,7 +484,7 @@ paths:
       summary: Consulta de ajuste financeiro 
       description: |
         <div class="bkly-ref-description">
-          <p>Realize um ajuste financeiro utilizando o ID retornado no endpoint [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro). </p> 
+          <p>Consulte um ajuste financeiro utilizando o ID retornado no endpoint [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro). </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.adjustment </span>
         </div>
         [block:callout]
@@ -497,7 +497,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-version'
         - name: forceOperationId
           in: path
@@ -605,21 +605,11 @@ components:
       type: object
       description: Objeto que deverá conter informações sobre o titular do cartão de crédito.
       required:
-        - documentNumber
         - contractNumber
-        - companyKey
       properties:
-        documentNumber:
-          type: string
-          description: Número de documento, o qual pode ser CPF ou CNPJ.
-          nullable: true
         contractNumber:
           type: string
-          description: Número do contrato vigente.
-          nullable: true
-        companyKey:
-          type: string
-          description: Chave que identifica o parceiro dentro do Bankly.
+          description: Número do contrato de crédito vigente.
           nullable: true
       additionalProperties: false
 
@@ -630,40 +620,45 @@ components:
         - transactionType
         - descriptor
       properties:
-        idempotencyKey:
-          type: string
-          description: "???"
-          nullable: true
         amount:
           "$ref": "#/components/schemas/AmountRequestDto"
         transactionType:
           type: string
-          description: Código do ajuste que representa se é débito ou crédito.
+          description: Código que identifica a transação de crédito ou débito.
           nullable: true
         descriptor:
           type: string
-          description: Descrição da operação.
-          nullable: true
-        date:
-          type: string
-          format: date-time
-          description: "???"
+          maxLength: 256
+          description: Descrição do ajuste financeiro realizado. O valor inserido neste campo será retornado no campo <code>transactionDescription</code> do evento TRANSACTION_CREATED.
           nullable: true
       additionalProperties: false
     
     CancelAdjustmentRequestDto:
       type: object
+      required:
+      - client
+      - transaction
       properties:
         client:
-          "$ref": "#/components/schemas/ClientRequestDto"
+          type: object
+          description: Objeto que deverá conter informações sobre o titular do cartão de crédito.
+          required:
+            - contractNumber
+            - documentNumber
+          properties:
+            contractNumber:
+              type: string
+              description: Número do contrato de crédito vigente.
+              nullable: true
+            documentNumber:
+              type: string
+              enum:
+                - CPF
+                - CNPJ
+              description: Número do documento.
+          additionalProperties: false
         transaction:
           "$ref": "#/components/schemas/CancelTransactionDto"
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-            nullable: true
-          nullable: true
       additionalProperties: false
     
     CancelTransactionDto:
@@ -684,10 +679,6 @@ components:
           type: string
           description: "<code>IdempotencyKey</code> utilizado no ajuste financeiro."
           nullable: true
-        idempotencyKey:
-          type: string
-          description: Pq tem dois???
-          nullable: true
         forceOperationId:
           type: string
           description: Identificador único do ajuste financeiro retornado no endpoint de [realização de operação forçada](<>).
@@ -699,16 +690,11 @@ components:
         authorization_id:
           type: integer
           format: int64
-          description: Código de autorização do ajuste financeiro.
+          description: "Identificador da transação gerado pela processadora. <b>Dica</b>: Informe o valor retornado no campo <code>authorizationId</code> do evento TRANSACTION_CREATED, que é disparado após a realização do ajuste."
           nullable: true
         descriptor:
           type: string
-          description: Descrição do ajuste.
-          nullable: true
-        date:
-          type: string
-          format: date-time
-          description: O que seria isso?
+          description: Descrição do ajuste financeiro realizado.
           nullable: true
       additionalProperties: false
     
@@ -721,6 +707,8 @@ components:
           "$ref": "#/components/schemas/TransactionRequestDto"
         metadata:
           type: object
+          maxLength: 256
+          description: Dados adicionais que podem ser informados para a rastreabilidade da operação.
           additionalProperties:
             type: string
             nullable: true
@@ -730,8 +718,9 @@ components:
     AdjustmentResponseDto:
       type: object
       properties:
-        adjustmentId:
+        forceOperationId:
           type: string
+          maxLength: 32
           description: Identificador único do ajuste financeiro.
     
     AdjustmentQueryResponseDto:
@@ -753,7 +742,7 @@ components:
               nullable: true
             contractNumber:
               type: string
-              description: Número do contrato vigente.
+              description: Número do contrato de crédito vigente.
               nullable: true
             companyKey:
               type: string
@@ -782,11 +771,11 @@ components:
                   nullable: true
             transactionType:
               type: string
-              description: Código do ajuste, que representa se é débito ou crédito.
+              description: Código que identifica a transação de crédito ou débito.
               nullable: true
             descriptor:
               type: string
-              description: Descrição da transação.
+              description: Descrição do ajuste financeiro realizado.
               nullable: true
             date:
               type: string
@@ -795,14 +784,14 @@ components:
               nullable: true
             cancelledTransactions:
               type: array
-              description: Lista de objetos contendo informações sobre os ajustes financeiros cancelados.
+              description: "Lista de objetos contendo informações sobre os ajustes financeiros cancelados. <b>Importante</b>: Esta lista somente será retornada caso algum ajuste financeiro tenha sido cancelado."
               items:
                 type: object
                 properties:
                   amount:
                     type: number
                     format: double
-                    description: Valor da transação cancelada.
+                    description: Valor do ajuste cancelado.
                   originalIdempotencyKey:
                     type: string
                     description: Chave de idempotência originada no momento da criação do ajuste.
@@ -816,9 +805,9 @@ components:
                     type: boolean
                     description: Indica se as taxas foram canceladas (TRUE) ou não (FALSE).
                   authorization_id:
-                    type: number
-                    format: integer
-                    description: Código de autorização do ajuste financeiro.
+                    type: integer
+                    format: int64
+                    description: Código de autorização do ajuste financeiro cancelado.
                   descriptor:
                     type: string
                     description: Descrição do ajuste financeiro cancelado.
