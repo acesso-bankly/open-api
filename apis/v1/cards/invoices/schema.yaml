@@ -537,6 +537,7 @@ components:
       required: true
       schema:
         type: string
+        description: Versão da API. Atualmente estamos na versão 1.0.
         
     authorization:
       name: Authorization
@@ -544,6 +545,7 @@ components:
       required: true
       schema:
         type: string 
+        description: Token de autorização do tipo Bearer.
 
     DocumentNumber:
       name: documentNumber
@@ -623,13 +625,12 @@ components:
         amount:
           "$ref": "#/components/schemas/AmountRequestDto"
         transactionType:
-          type: string
           description: Código que identifica a transação de crédito ou débito.
-          nullable: true
+          $ref: "#/components/schemas/TransactionType"
         descriptor:
           type: string
           maxLength: 256
-          description: Descrição do ajuste financeiro realizado. O valor inserido neste campo será retornado no campo <code>transactionDescription</code> do evento TRANSACTION_CREATED.
+          description: Descrição do ajuste financeiro realizado. O valor informado será retornado no campo <code>transactionDescription</code> do evento TRANSACTION_CREATED, que é disparado após a realização do ajuste.
           nullable: true
       additionalProperties: false
     
@@ -681,7 +682,7 @@ components:
           nullable: true
         forceOperationId:
           type: string
-          description: Identificador único do ajuste financeiro retornado no endpoint de [realização de operação forçada](<>).
+          description: Identificador único do ajuste financeiro retornado no endpoint de [Realização de ajuste financeiro](/docs/realizacao-ajuste-financeiro).
           nullable: true
         cancelFees:
           type: boolean
@@ -770,9 +771,8 @@ components:
                   description: Código da moeda com base na ISO 4217.
                   nullable: true
             transactionType:
-              type: string
               description: Código que identifica a transação de crédito ou débito.
-              nullable: true
+              $ref: "#/components/schemas/TransactionType"
             descriptor:
               type: string
               description: Descrição do ajuste financeiro realizado.
