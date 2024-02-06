@@ -630,7 +630,7 @@ components:
         descriptor:
           type: string
           maxLength: 256
-          description: Descrição do ajuste financeiro realizado. O valor inserido neste campo será retornado no campo <code>transactionDescription</code> do evento TRANSACTION_CREATED.
+          description: Descrição do ajuste financeiro realizado. O valor informado será retornado no campo <code>transactionDescription</code> do evento TRANSACTION_CREATED, que é disparado após a realização do ajuste.
           nullable: true
       additionalProperties: false
     
