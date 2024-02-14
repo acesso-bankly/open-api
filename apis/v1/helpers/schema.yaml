@@ -103,6 +103,7 @@ paths:
           <p>Obtenha uma lista de instituições financeiras e suas informações, como o ISPB, os produtos ofertados, o tipo de banco (se é folha, destino ou ambos), dentre outras.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: banklist.read</span>
+        </div>
          [block:callout]
         {
           "type": "info",
@@ -110,7 +111,6 @@ paths:
           "body": "Caso não seja enviado um valor no campo <code>product</code>, será assumido o valor padrão <b>TED</b>. Confira a documentação [Listagem de instituições financeiras](/docs/listagem-bancos) para mais informações."
         }
         [/block]
-        </div>
       operationId: GetBanks
       parameters:
         - name: name
