@@ -104,7 +104,7 @@ paths:
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: banklist.read</span>
         </div>
-         [block:callout]
+        [block:callout]
         {
           "type": "info",
           "title": "Nota",
