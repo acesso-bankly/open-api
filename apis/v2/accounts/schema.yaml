@@ -1089,7 +1089,7 @@ components:
 
     NetIncomeV2:
       type: object
-      description: Detalhes sobre os rendimentos líquidos do cliente.
+      description: Detalhes sobre os rendimentos líquidos do cliente. <b>Importante</b> Este objeto somente será retornado caso a conta possua algum valor de rendimento.
       properties:
         year:
           type: integer
