@@ -292,7 +292,7 @@ components:
         - Processed
         - Registered
         - MarkedConciliation
-        - Conciliation
+        - Conciliated
         - Settled
         - CancelledByRecipient
         - CancelledByDeadLine
