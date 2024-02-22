@@ -1508,7 +1508,7 @@ paths:
                       }
                     ]         
         '204':
-          $ref: "http://localhost:3320/commons/components#/components/responses/204"
+          description: A requisição foi aceita, porém sem dados para exibição.
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
       x-amazon-apigateway-auth:
