@@ -1102,7 +1102,6 @@ components:
           type: integer
           format: int32
           description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido for <code>InstallmentWithEntry</code>.
-          nullable: true
       additionalProperties: false
     
     PaymentStatusDto:
