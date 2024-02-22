@@ -180,6 +180,8 @@ paths:
         - $ref: '#/components/parameters/StatementId'
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -218,6 +220,8 @@ paths:
       - $ref: '#/components/parameters/StatementId'
       - $ref: '#/components/parameters/apiVersion'
       - $ref: '#/components/parameters/authorization'
+      - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+      - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       responses:
         '200':
           description: Solicitação aceita com sucesso.
@@ -918,7 +922,7 @@ components:
         - externalId
         - amount
       properties:
-        type:
+        type: 
           $ref: '#/components/schemas/TypeExternalPayment'
         liquidateDate:
           type: string
