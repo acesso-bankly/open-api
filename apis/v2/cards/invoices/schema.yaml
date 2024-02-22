@@ -434,7 +434,7 @@ components:
       additionalProperties: false
 
     Amount:
-      type: objetc
+      type: object
       description: Este objeto e suas propriedades são obrigatórias somente se o tipo de pagamento escolhido for <code>Partial</code>.
       required:
         - value
