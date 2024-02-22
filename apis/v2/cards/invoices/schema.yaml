@@ -178,8 +178,8 @@ paths:
         [/block]
       parameters:
         - $ref: '#/components/parameters/StatementId'
-        - $ref: '#/components/parameters/apiVersion'
-        - $ref: '#/components/parameters/authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion2'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
