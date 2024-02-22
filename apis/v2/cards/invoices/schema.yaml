@@ -180,6 +180,8 @@ paths:
         - $ref: '#/components/parameters/StatementId'
         - $ref: '#/components/parameters/apiVersion'
         - $ref: '#/components/parameters/authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/IdempotencyKey'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-Correlation-Id-Optional'
       requestBody:
         content:
           application/json:
@@ -380,7 +382,7 @@ components:
       schema:
         type: integer
         format: int32
-        description: Identificador único da fatura em aberto.
+        description: Identificador único da fatura.
 
     StatementItemId:
       name: statementItemId
@@ -430,6 +432,21 @@ components:
             format: int32
           description: Lista que contém os Ids das parcelas de refinanciamento antecipadas.
       additionalProperties: false
+
+    Amount:
+      type: objetc
+      description: Este objeto e suas propriedades são obrigatórias somente se o tipo de pagamento escolhido for <code>Partial</code>.
+      required:
+        - value
+        - currency
+      properties: 
+        value:
+          type: number
+          format: double
+          description: Valor a ser pago. 
+        currency:
+          type: string
+          description: Moeda referente ao valor a ser pago.
 
     CycleType:
       enum:
@@ -1079,26 +1096,18 @@ components:
       properties:
         paymentType:
           $ref: '#/components/schemas/PaymentType'
-        value:
-          type: number
-          format: double
-          description: Valor a ser pago. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>Partial</code>.
+        amount:
+          $ref: '#/components/schemas/Amount'
         paymentOptionId:
           type: integer
           format: int32
-          description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido tenha sido <code>InstallmentWithEntry</code>.
+          description: Identificador da opção de pagamento. Este campo é obrigatório somente se o tipo de pagamento escolhido for <code>InstallmentWithEntry</code>.
           nullable: true
       additionalProperties: false
     
     PaymentStatusDto:
       type: object
       properties:
-        status:
-          $ref: "#/components/schemas/PaymentStatus"
-        digitableLine:
-          type: string
-          nullable: true
-          description: Linha digitável do boleto de pagamento.
         authenticationCode:
           type: string
           nullable: true
