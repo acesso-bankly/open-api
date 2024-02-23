@@ -73,7 +73,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta por authenticationCode](v2/docs/consulta-boleto-por-authenticationcode)."
+          "body": "Para mais informações, confira a documentação [Consulta por authenticationCode](/docs/consulta-boleto-por-authenticationcode)."
         }
         [/block]
       operationId: GetByAuthenticationCode
