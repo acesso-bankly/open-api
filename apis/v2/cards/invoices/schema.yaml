@@ -173,7 +173,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Geração de uma forma de pagamento](v2/docs/geracao-forma-pagamento)."
+          "body": "Para mais informações, confira a documentação [Geração de uma forma de pagamento](v2/docs/geracao-forma-de-pagamento)."
         }
         [/block]
       parameters:
