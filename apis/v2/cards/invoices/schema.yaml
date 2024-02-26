@@ -166,7 +166,7 @@ paths:
       summary: Geração de uma forma de pagamento
       description: |
         <div class="bkly-ref-description">
-          <p>Gere uma forma de pagamento para uma fatura específica, por meio do seu ID.</p> 
+          <p>Gere uma forma de pagamento para uma fatura específica, por meio do seu identificador único (<code>statementId</code>).</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
         [block:callout]
@@ -446,7 +446,7 @@ components:
           description: Valor a ser pago. 
         currency:
           type: string
-          description: Moeda referente ao valor a ser pago.
+          description: Moeda referente ao valor a ser pago. Atualmente só é aceito BRL (Real).
 
     CycleType:
       enum:
