@@ -1921,7 +1921,6 @@ paths:
           "body": "Para mais informações, confira a documentação [Alteração da data de vencimento](/docs/alteracao-data-de-vencimento)."
         }
         [/block]
-      operationId: cardChangeCardStatus
       parameters:
         - name: proxy
           in: path
