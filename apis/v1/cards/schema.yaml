@@ -1930,6 +1930,12 @@ paths:
             description: Código identificador do cartão.
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - name: x-bkly-license
+          in: header
+          required: true
+          schema:
+            type: string
+            description: Identificador da licença bancária utilizada pelo parceiro.
       requestBody:
         required: true
         content:
