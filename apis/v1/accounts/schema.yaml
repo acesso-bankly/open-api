@@ -1756,7 +1756,7 @@ components:
         bank:
           $ref: "#/components/schemas/Bank"
         holder:
-          $ref: "#components/schemas/HolderCompleteResponse"
+          $ref: "#/components/schemas/HolderCompleteResponse"
       additionalProperties: false
 
     CreatePocketCompleteResponseDto:
