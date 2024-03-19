@@ -306,7 +306,10 @@ components:
       properties:
         accountType:
           type: string
-          description: Tipo de conta, o qual pode ser “CHECKING” para conta corrente, “SALARY” para conta salário, “SAVINGS” para conta poupança e “PAYMENT” para conta de pagamento.
+          enum:
+            - CHECKING
+            - SAVINGS
+          description: Tipo de conta. Caso este campo <b>não</b> seja enviado na requisição, será considerado o valor "CHECKING".
         document:
           type: string
           description: Número do documento.
