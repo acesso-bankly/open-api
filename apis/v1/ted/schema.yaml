@@ -329,7 +329,6 @@ components:
         - account
         - document
         - name
-        - accountType
         - bankCode
 
     sender:
