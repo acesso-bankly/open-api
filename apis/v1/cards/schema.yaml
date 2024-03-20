@@ -2878,8 +2878,9 @@ components:
           type: string
           description: Número do documento (CPF ou CNPJ). Informe somente números.
         day:  
-          type: string
-          description: Nova data de vencimento da fatura do cartão. Informe somente números.
+          type: number
+          format: integer
+          description: Novo dia de vencimento da fatura do cartão.
         
     
     entryModeTypes:
