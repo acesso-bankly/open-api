@@ -1428,7 +1428,7 @@ components:
                   description: Percentual mensal do custo efetivo total da operação de rotativo.
             installmentSummary:
               type: object
-              description: Objeto que contém o resumo dos itens parcelados a vencer ( itens de parcelamento que compõem a fatura aberta e faturas futuras).
+              description: Objeto que contém o resumo dos itens parcelados a vencer (itens de parcelamento que compõem a fatura aberta e faturas futuras).
               properties:
                 interestFree:
                   type: object
