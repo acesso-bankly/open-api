@@ -1362,6 +1362,138 @@ components:
           type: string
           nullable: true
           description: Descritivo do item da fatura.
+        summary:
+          type: object
+          description: Objeto que contém informações resumidas sobre a fatura.
+          properties:
+            outstandingBalance:
+              type: object
+              description: Objeto que contém o saldo residual devedor da fatura anterior.
+              properties:
+                value:
+                  type: number
+                  description: Valor total do saldo residual.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            estimatedCharges:
+              type: object
+              description: Objeto que contém o valor estimado de encargos caso a fatura seja rotativada.
+              properties:
+                iof:
+                  type: object
+                  description: Objeto que contém o valor estimado do IOF caso a fatura seja rotativada.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total estimado do IOF.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                refinance:
+                  type: object
+                  description: "Objeto que contém o valor que será refinanciado caso a fatura seja rotativada. Observação: o valor a ser refinanciado é a diferença entre o mínimo da fatura e o valor total."
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total a ser refinanciado.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                interest:
+                  type: object
+                  description: Objeto que contém o valor estimado do encargo de refinanciamento caso a fatura seja rotativada.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total estimado dos encargos de refinanciamento.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                trafficValue:
+                  type: object
+                  description: Objeto que contém o valor estimado da multa caso a fatura seja rotativada.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total estimado da multa.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                annualCet:
+                  type: number
+                  description: Percentual anual do custo efetivo total da operação de rotativo.
+                monthlyCet:
+                  type: number
+                  description: Percentual mensal do custo efetivo total da operação de rotativo.
+            installmentSummary:
+              type: object
+              description: Objeto que contém o resumo dos itens parcelados a vencer (itens de parcelamento que compõem a fatura aberta e faturas futuras).
+              properties:
+                interestFree:
+                  type: object
+                  description: Objeto que contém a soma dos itens de parcela sem juros a vencer.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total dos itens parcelados sem juros a vencer.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                interest:
+                  type: object
+                  description: Objeto que contém a soma dos itens de parcela com juros a vencer, com desconto dos encargos futuros.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total dos itens parcelados com juros a vencer, com desconto dos encargos futuros.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+            amountMinimalComposition:
+              type: object
+              description: Objeto que contém os valores que compõem o valor de pagamento mínimo da fatura.
+              properties:
+                outstandingBalance:
+                  type: object
+                  description: Objeto que contém o saldo residual devedor da fatura anterior.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total do saldo residual.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                fees:
+                  type: object
+                  description: Objeto que contém a soma dos valores de transações de encargos lançadas na fatura.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total dos itens de encargos lançados em fatura.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                refinance:
+                  type: object
+                  description: Objeto que contém a soma dos valores de transações de refinanciamento de fatura lançados na fatura.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total dos itens de refinanciamento de fatura lançados em fatura.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                transactions:
+                  type: object
+                  description: Objeto que contém a soma dos valores das transações de débito lançadas em fatura.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações de débitos lançadas em fatura.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
       additionalProperties: false
     
     PaymentOptionsDto:
