@@ -2620,31 +2620,13 @@ components:
   
     cardStatus:
       type: string
-      enum:
-        - Building      
-        - Undefined
+      enum:   
         - Active
-        - UpdateRegisterLocked
-        - UpdateRegisterCanceled
-        - RegisterFraudLocked
-        - RegisterFraudCanceled
+        - TemporarilyUserLocked
         - CanceledByCustomer 
         - CanceledByEmitter
-        - ReturnedLocked
-        - Sleeping
-        - InTransitLocked
-        - ExpiredCanceled
-        - StrayedCanceled
-        - Inactive
         - DeathCanceled
-        - LockedByPendingPayment 
         - LostOrTheftCanceled
-        - WithoutMovementLocked
-        - TemporarilyUserLocked
-        - WrongPasswordAttemptLocked
-        - UseFraudLocked
-        - UseFraudCanceled
-        - CardCanceledByAccount
     
     cardTokenizationResponse:
       type: object
