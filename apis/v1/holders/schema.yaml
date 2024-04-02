@@ -24,7 +24,7 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLOCKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](/docs/onboarding-completo)."
+          "body": "Os possíveis status do cliente após essa análise são: PENDING_APPROVAL, APPROVED, REPROVED e BLACKLISTED. Para mais informações, consulte a documentação [Onboarding de pessoa física](/docs/onboarding-completo)."
         }
         [/block]
       operationId: PutCustomerRegistration
