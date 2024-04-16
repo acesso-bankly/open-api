@@ -48,7 +48,7 @@ paths:
     get:
       tags:
       - Consulta de faturas
-      summary: Consulta de fatura pelo ID
+      summary: Consulta de fatura por ID
       description: |
         <div class="bkly-ref-description">
           <p>Consulte uma fatura específica por meio do seu ID, independentemente do seu status. </p> 
@@ -819,9 +819,7 @@ components:
                     type: string
                     format: date-time
                     description: Data e hora do cancelamento do ajuste financeiro, no formato ISO 8601.
-                
-
-    
+                  
     AdvanceInstallmentsRequest:
       type: object
       required: 
@@ -1447,6 +1445,16 @@ components:
                     value:
                       type: number
                       description: Valor total dos itens parcelados com juros a vencer, com desconto dos encargos futuros.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                interestWithoutDiscount:
+                  type: object
+                  description: Objeto que contém a soma dos itens de parcela com juros a vencer, sem desconto dos encargos futuros.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total dos itens parcelados com juros a vencer, sem o desconto dos encargos futuros.
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
