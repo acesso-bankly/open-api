@@ -533,14 +533,17 @@ components:
         addressLine:
           type: string
           nullable: true
-          description: "Logradouro (nome da rua, avenida etc.). Máximo de 60 caracteres. Não são permitidas strings vazias, apenas com espaços, somente numéricas, ou contendo exclusivamente os seguintes caracteres: traço (-), colchetes ([]), pipe (|), vírgula (,), ponto (.), barra (/), sinal de primeira (ª), primeiro (º), ou grau (°)."
+          maxLength: 60
+          description: "Logradouro (nome da rua, avenida etc.)"
         neighborhood:
           type: string
-          description: "Nome do bairro. Máximo de 40 caracteres. Não são permitidas strings vazias, apenas com espaços, somente numéricas, ou contendo exclusivamente os seguintes caracteres: traço (-), colchetes ([]), pipe (|), vírgula (,), ponto (.), barra (/), sinal de primeira (ª), primeiro (º), ou grau (°)."
+          maxLength: 40
+          description: "Nome do bairro."
         city:
           type: string
           nullable: true
-          description: "Nome da cidade. Máximo de 40 caracteres. Não são permitidas strings vazias, apenas com espaços, somente numéricas, ou contendo exclusivamente os seguintes caracteres: traço (-), colchetes ([]), pipe (|), vírgula (,), ponto (.), barra (/), sinal de primeira (ª), primeiro (º), ou grau (°)."
+          maxLength: 40
+          description: "Nome da cidade."
         state:
           type: string
           nullable: true
@@ -614,11 +617,12 @@ components:
           type: string
           nullable: true
           maxLength: 60
-          description: "Nome do pagador. Máximo de 60 caracteres. Não são permitidas strings vazias, apenas com espaços, somente numéricas, ou contendo exclusivamente os seguintes caracteres: traço (-), colchetes ([]), pipe (|), vírgula (,), ponto (.), barra (/), sinal de primeira (ª), primeiro (º), ou grau (°)."
+          description: "Nome do pagador."
         tradeName:
           type: string
           nullable: true
-          description: "Nome fantasia do pagador. Máximo de 100 caracteres. Não são permitidas strings vazias, apenas com espaços, somente numéricas, ou contendo exclusivamente os seguintes caracteres: traço (-), colchetes ([]), pipe (|), vírgula (,), ponto (.), barra (/), sinal de primeira (ª), primeiro (º), ou grau (°)."
+          maxLength: 100
+          description: "Nome fantasia do pagador."
         address:
           description: Objeto que deverá conter informações sobre o endereço do pagador.
           $ref: '#/components/schemas/PayerAddress'
