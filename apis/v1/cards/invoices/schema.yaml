@@ -1618,7 +1618,7 @@ components:
                       description: Código da moeda com base na ISO-4217.
                 transactionsCardsSummary:
                   type: array
-                  description: Lista de objets que contém os valores totalizadores das transações da fatura por cartão.
+                  description: Lista de objetos que contém os valores totalizadores das transações da fatura por cartão.
                   properties: 
                     card:
                       type: object
@@ -1732,7 +1732,7 @@ components:
                       properties:
                         value:
                           type: number
-                          description: 
+                          description: Soma total dos valores de saque.
                         currency:
                           type: string
                           description: Código da moeda com base na ISO-4217.
