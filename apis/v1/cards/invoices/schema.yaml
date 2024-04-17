@@ -1558,11 +1558,11 @@ components:
                       description: Código da moeda com base na ISO-4217.
                 payments:
                   type: object
-                  description: 
+                  description: descrição
                   properties:
                     value:
                       type: number
-                      description: 
+                      description: descrição
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
@@ -1756,7 +1756,7 @@ components:
                         currency:
                           type: string
                           description: Código da moeda com base na ISO-4217.
-          additionalProperties: false
+      additionalProperties: false
     
     PaymentOptionsDto:
       type: object
