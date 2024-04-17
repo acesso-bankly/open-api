@@ -1728,7 +1728,7 @@ components:
                           description: Código da moeda com base na ISO-4217.
                     withdraw:
                       type: object
-                      description: 
+                      description: Objeto que contém os valores totalizadores de saque.
                       properties:
                         value:
                           type: number
