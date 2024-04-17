@@ -1502,6 +1502,260 @@ components:
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
+            transactionsSummary:
+              type: object
+              description: Objeto que contém os valores totalizadores das transações da fatura.
+              properties:
+                nationalPurchasing:
+                  type: object 
+                  description: Objeto que contém os valores totalizadores das transações nacionais da fatura. 
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações nacionais da fatura.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217. 
+                internationalPurchasing:
+                  type: array
+                  description: Objeto que contém os valores totalizadores das transações internacionais da fatura.
+                  properties: 
+                    value:
+                      type: number
+                      description: Valor total das transações internacionais da fatura.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                fees:
+                  type: object
+                  description: Objeto que contém os valores totalizadores dos encargos.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações de encargos.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                debtAdjustments:
+                  type: object
+                  description: Objeto que contém os valores totalizadores dos ajustes a débito.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações de ajustes a débito.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                creditAdjustments:
+                  type: object
+                  description: Objeto que contém os valores totalizadores dos ajustes a crédito.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações de ajustes a crédito.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                payments:
+                  type: object
+                  description: 
+                  properties:
+                    value:
+                      type: number
+                      description: 
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                insurance:
+                  type: object
+                  description: Objeto que contém os valores totalizadores de seguro.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor total das transações de totalizadores de seguro.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                annuity:
+                  type: object
+                  description: Objeto que contém os valores totalizadores de anuidade.
+                  properties:
+                    value: 
+                      type: number
+                      description: Valor total das transações da anuidade.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                withdraw:
+                  type: object
+                  description: Objeto que contém os valores totalizadores de saque.
+                  properties:
+                    value:
+                      type: number
+                      description: Soma total dos valores de saque.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                international_withdraw:
+                  type: object
+                  description: Objeto que contém os valores totalizadores de saques internacionais.
+                  properties:
+                    value:
+                      type: number
+                      description: Soma total dos valores de saque internacional.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                installment:
+                  type: object
+                  description: Objeto que contém os valores totalizadores das parcelas da fatura atual.
+                  properties:
+                    value:
+                      type: number
+                      description: Valor totalizador das parcelas da fatura atual.
+                    currency:
+                      type: string
+                      description: Código da moeda com base na ISO-4217.
+                transactionsCardsSummary:
+                  type: array
+                  description: Lista de objets que contém os valores totalizadores das transações da fatura por cartão.
+                  properties: 
+                    card:
+                      type: object
+                      description: Objeto que contém informações do cartão.
+                      properties:
+                        type:
+                          type: string
+                          description: Tipo do cartão.
+                        lastFourDigitis:
+                          type: string
+                          description: Últimos 4 dígitos do cartão.
+                        name:
+                          type: string
+                          description: Nome que se encontra no cartão.
+                        proxy:
+                          type: string
+                          description: Identificador único do cartão.
+                    totalDebits:
+                      type: object
+                      description: Objeto que contém os valores totalizadores dos itens de débito da fatura atual.
+                      properties: 
+                        value:
+                          type: number
+                          description: Valor total dos itens de débito da fatura atual.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    nationalPurchasing:   
+                      type: object
+                      description: Objeto que contém os valores totalizadores das transações nacionais da fatura.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor total das transações nacionais da fatura.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    internationalPurchasing:
+                      type: array
+                      description: Lista de objetos que contém os valores totalizadores das transações internacionais da fatura.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor total das transações internacionais da fatura.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    fees:
+                      type: object
+                      description: Objeto que contém os valores totalizadores dos encargos.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor total das transações de encargos.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    debtAdjustments:
+                      type: object
+                      description: Objeto que contém os valores totalizadores dos ajustes a débito.
+                      properties: 
+                        value:
+                          type: number
+                          description: Valor total das transações de ajustes a débito.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    creditAdjustments:
+                      type: object
+                      description: Objeto que contém os valores totalizadores dos ajustes a crédito.
+                      properties: 
+                        value:
+                          type: number
+                          description: Valor total das transações de ajustes a crédito.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    payments:
+                      type: object
+                      description: 
+                      properties:
+                        value:
+                          type: number
+                          description: 
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    insurance:
+                      type: object
+                      description: Objeto que contém os valores totalizadores de seguro.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor total das transações de totalizadores de seguro.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    annuity:
+                      type: object
+                      description: Objeto que contém os valores totalizadores de anuidade.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor total das transações de anuidade.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    withdraw:
+                      type: object
+                      description: 
+                      properties:
+                        value:
+                          type: number
+                          description: 
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    internationalWithdraw:
+                      type: object
+                      description: Objeto que contém os valores totalizadores de saques internacionais.
+                      properties:
+                        value:
+                          type: number
+                          description: Soma total dos valores de saque.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
+                    installment:
+                      type: object
+                      description: Objeto que contém os valores totalizadores das parcelas da fatura atual.
+                      properties:
+                        value:
+                          type: number
+                          description: Valor totalizador das parcelas da fatura atual.
+                        currency:
+                          type: string
+                          description: Código da moeda com base na ISO-4217.
       additionalProperties: false
     
     PaymentOptionsDto:
