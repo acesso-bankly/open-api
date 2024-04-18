@@ -583,7 +583,10 @@ components:
         - CorrespondentBanking
         - CallCenter
         - EletronicFile
-        - DDA
+        - DDA,
+        - PIX,
+        - DCC,
+        - DigitalCorrespondentBanking
       type: string
     
     Payments:
