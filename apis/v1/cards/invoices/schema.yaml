@@ -1558,11 +1558,11 @@ components:
                       description: Código da moeda com base na ISO-4217.
                 payments:
                   type: object
-                  description: descrição
+                  description: Objeto que contém os valores totalizadores de pagamentos por cartão.
                   properties:
                     value:
                       type: number
-                      description: descrição
+                      description: Valor total das transações totalizadoras de pagamentos por cartão.
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
@@ -1626,7 +1626,7 @@ components:
                       properties:
                         type:
                           type: string
-                          description: Tipo do cartão.
+                          description: Tipo do cartão, o qual pode ser “Virtual” ou “Physical”.
                         lastFourDigitis:
                           type: string
                           description: Últimos 4 dígitos do cartão.
@@ -1698,11 +1698,11 @@ components:
                           description: Código da moeda com base na ISO-4217.
                     payments:
                       type: object
-                      description: descrição
+                      description: Objeto que contém os valores totalizadores de pagamentos por cartão.
                       properties:
                         value:
                           type: number
-                          description: descrição
+                          description: Valor total das transações totalizadoras de pagamentos por cartão.
                         currency:
                           type: string
                           description: Código da moeda com base na ISO-4217.
