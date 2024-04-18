@@ -1558,11 +1558,11 @@ components:
                       description: Código da moeda com base na ISO-4217.
                 payments:
                   type: object
-                  description: Objeto que contém os valores totalizadores de pagamentos por cartão.
+                  description: Objeto que contém os valores totalizadores de pagamentos.
                   properties:
                     value:
                       type: number
-                      description: Valor total das transações totalizadoras de pagamentos por cartão.
+                      description: Valor total das transações totalizadoras de pagamentos.
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
