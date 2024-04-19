@@ -1632,7 +1632,7 @@ components:
                           description: Últimos 4 dígitos do cartão.
                         name:
                           type: string
-                          description: Nome que se encontra no cartão.
+                          description: Nome exibido no cartão.
                         proxy:
                           type: string
                           description: Identificador único do cartão.
