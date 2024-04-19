@@ -1718,7 +1718,7 @@ components:
                           description: Código da moeda com base na ISO-4217.
                     annuity:
                       type: object
-                      description: object	Objeto que contém a soma dos valores de transações de anuidade na fatura.
+                      description: Objeto que contém a soma dos valores de transações de anuidade na fatura.
                       properties:
                         value:
                           type: number
