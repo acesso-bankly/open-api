@@ -1753,15 +1753,15 @@ components:
                               type: string
                               description: Código da moeda com base na ISO-4217.
                         installment:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações parceladas na fatura atual.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações parceladas na fatura atual.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações parceladas na fatura atual.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações parceladas na fatura atual.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
       additionalProperties: false
     
     PaymentOptionsDto:
