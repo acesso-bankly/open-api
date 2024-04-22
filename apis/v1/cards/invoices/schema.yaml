@@ -1619,134 +1619,140 @@ components:
                 transactionsCardsSummary:
                   type: array
                   description: Lista de objetos que contém os valores totais das transações da fatura, agrupados por cartão e divididos por categoria de transação.
-                  properties: 
-                    card:
+                  items:
+                    transactionsCardsObject:
                       type: object
-                      description: Objeto que contém as informações do cartão atrelado à transação.
-                      properties:
-                        type:
-                          type: string
-                          description: Tipo do cartão, o qual pode ser “Virtual” ou “Physical”.
-                        lastFourDigitis:
-                          type: string
-                          description: Últimos 4 dígitos do cartão.
-                        name:
-                          type: string
-                          description: Nome exibido no cartão.
-                        proxy:
-                          type: string
-                          description: Identificador único do cartão.
-                    totalDebits:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações dos itens de débito na fatura atual.
                       properties: 
-                        value:
-                          type: number
-                          description: Soma dos valores das transações dos itens de débito na fatura atual.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    nationalPurchasing:   
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações nacionais na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações nacionais na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    internationalPurchasing:
-                      type: array
-                      description: Lista de objetos que contém a soma dos valores de transações internacionais na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações internacionais na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    fees:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações dos encargos na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações de encargos na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    debtAdjustments:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de ajustes a débito na fatura.
-                      properties: 
-                        value:
-                          type: number
-                          description: Valor total das transações de ajustes a débito na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    creditAdjustments:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de ajustes a crédito na fatura.
-                      properties: 
-                        value:
-                          type: number
-                          description: Soma dos valores das transações de ajustes a crédito na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    payments:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de pagamentos por cartão.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações de pagamentos por cartão.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    insurance:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de seguro na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações de seguro na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    annuity:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de anuidade na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações da anuidade na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    withdraw:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de saque na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações  de saque na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    internationalWithdraw:
-                      type: object
-                      description: Objeto que contém a soma dos valores de transações de saques internacionais na fatura.
-                      properties:
-                        value:
-                          type: number
-                          description: Soma dos valores das transações de saques internacionais na fatura.
-                        currency:
-                          type: string
-                          description: Código da moeda com base na ISO-4217.
-                    installment:
+                        card:
+                          type: object
+                          description: Objeto que contém as informações do cartão atrelado à transação.
+                          properties:
+                            type:
+                              type: string
+                              description: Tipo do cartão, o qual pode ser “Virtual” ou “Physical”.
+                            lastFourDigitis:
+                              type: string
+                              description: Últimos 4 dígitos do cartão.
+                            name:
+                              type: string
+                              description: Nome exibido no cartão.
+                            proxy:
+                              type: string
+                              description: Identificador único do cartão.
+                        totalDebits:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações dos itens de débito na fatura atual.
+                          properties: 
+                            value:
+                              type: number
+                              description: Soma dos valores das transações dos itens de débito na fatura atual.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        nationalPurchasing:   
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações nacionais na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações nacionais na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        internationalPurchasing:
+                          type: array
+                          items:
+                            internationalPurchasingItems:
+                              type: object
+                              description: Lista de objetos que contém a soma dos valores de transações internacionais na fatura.
+                              properties:
+                                value:
+                                  type: number
+                                  description: Soma dos valores das transações internacionais na fatura.
+                                currency:
+                                  type: string
+                                  description: Código da moeda com base na ISO-4217.
+                        fees:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações dos encargos na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações de encargos na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        debtAdjustments:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de ajustes a débito na fatura.
+                          properties: 
+                            value:
+                              type: number
+                              description: Valor total das transações de ajustes a débito na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        creditAdjustments:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de ajustes a crédito na fatura.
+                          properties: 
+                            value:
+                              type: number
+                              description: Soma dos valores das transações de ajustes a crédito na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        payments:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de pagamentos por cartão.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações de pagamentos por cartão.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        insurance:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de seguro na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações de seguro na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        annuity:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de anuidade na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações da anuidade na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        withdraw:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de saque na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações  de saque na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        internationalWithdraw:
+                          type: object
+                          description: Objeto que contém a soma dos valores de transações de saques internacionais na fatura.
+                          properties:
+                            value:
+                              type: number
+                              description: Soma dos valores das transações de saques internacionais na fatura.
+                            currency:
+                              type: string
+                              description: Código da moeda com base na ISO-4217.
+                        installment:
                       type: object
                       description: Objeto que contém a soma dos valores de transações parceladas na fatura atual.
                       properties:
