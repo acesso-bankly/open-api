@@ -287,13 +287,13 @@ paths:
           required: true
           schema:
             type: string
-            description: Data de inicial das mensagens a serem exibidas na pesquisa. Formato YYYY-MM-DD.
+            description: Data de inicial das mensagens a serem exibidas na pesquisa. Formato YYYY-MM-DD ou MM/DD/YYYY.
         - name: endDate
           in: query
           required: true
           schema:
             type: string
-            description: Data de final das mensagens a serem exibidas. Formato YYYY-MM-DD.
+            description: Data de final das mensagens a serem exibidas. Formato YYYY-MM-DD ou MM/DD/YYYY.
         - name: state
           in: query
           schema:
