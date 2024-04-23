@@ -1596,7 +1596,7 @@ components:
                     currency:
                       type: string
                       description: Código da moeda com base na ISO-4217.
-                international_withdraw:
+                internationalWithdraw:
                   type: object
                   description: Objeto que contém a soma dos valores de transações de saques internacionais na fatura.
                   properties:
