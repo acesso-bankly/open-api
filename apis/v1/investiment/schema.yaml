@@ -39,27 +39,15 @@ paths:
           in: query
           schema:
             type: string
-            description: Nível de consulta das informações da carteira de rendimento, podendo ser BASIC ou DETAILED.  O valor BASIC retornará uma consulta básica. O valor DETAILED retornará uma consulta detalhada. Caso nao seja enviado o resultLevel, a consulta retornará o modelo detalhado. Assumindo como Default o BASIC.
+            description: "Nível de consulta das informações da carteira de rendimento, podendo ser “BASIC” (básico) ou “DETAILED” (detalhado). O valor BASIC retornará uma consulta básica, enquanto o valor DETAILED fornecerá uma consulta mais detalhada. Importante: Caso o campo <code>resultLevel</code> não seja enviado, a consulta retornará o modelo básico, assumindo o valor BASIC como padrão."
       responses:
         "200":
           description: Recurso encontrado.
-          headers:
-            x-bkly-correlation-id:
-              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AccountDetailedResponse"
-              examples:
-                accountDetailedExample:
-                  $ref: "#/components/examples/accountDetailedExample"
 
 
 security:
   - Bearer: []
 
-
-components:
 
 
 x-readme:
