@@ -1,0 +1,70 @@
+openapi: 3.0.1
+info:
+  title: Gestão de Ivestimento
+  description: Crie e gerencie carteiras de investimento para seus clientes.
+  version: "1.0"
+servers:
+  - url: https://api-mtls.sandbox.bankly.com.br
+paths:
+
+  /investiment/wallets/{walletNumber}:
+    get:
+      tags:
+        - Consulta de wallets
+      summary: Consulta de uma wallet
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte </p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: investment.wallet.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de uma wallet](/docs/consulta-de-uma-wallet)."
+        }
+        [/block]
+      operationId: GetAccount
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/IdempotencyKey_required"
+        - name: walletNumber
+          in: path
+          schema:
+            type: string
+            description: Identificador único gerado na criação da carteira.
+        - name: resultLevel
+          in: query
+          schema:
+            type: string
+            description: Nível de consulta das informações da carteira de rendimento, podendo ser BASIC ou DETAILED.  O valor BASIC retornará uma consulta básica. O valor DETAILED retornará uma consulta detalhada. Caso nao seja enviado o resultLevel, a consulta retornará o modelo detalhado. Assumindo como Default o BASIC.
+      responses:
+        "200":
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountDetailedResponse"
+              examples:
+                accountDetailedExample:
+                  $ref: "#/components/examples/accountDetailedExample"
+
+
+security:
+  - Bearer: []
+
+
+components:
+
+
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true
+  samples-languages:
+    - curl
