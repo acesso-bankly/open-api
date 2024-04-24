@@ -191,7 +191,7 @@ jobs:
       - uses: readmeio/rdme@7.0.3
         name: Publish Investiment to Reference to readme.io
         with:
-          rdme: openapi './apis/v1/investment/schema.yaml' --id=${{ secrets.INVESTIMENT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+          rdme: openapi './apis/v1/investiment/schema.yaml' --id=${{ secrets.INVESTIMENT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
       
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletosv2 API Reference to readme.io
