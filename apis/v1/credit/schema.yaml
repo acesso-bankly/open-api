@@ -651,7 +651,7 @@ components:
       properties:
         created:
           type: string
-          description: Proxy do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+          description: Proxy do cartão criado (formato ISO 8601 - UTC).
         companyKey:
           type: string
           description: Identificador da companhia.
@@ -694,7 +694,7 @@ components:
                 description: Identificador do cartão físico.
               created: 
                 type: string
-                description: Data do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+                description: Data do cartão criado (formato ISO 8601 - UTC).
         virtualBind: 
           type: object
           properties:
@@ -703,7 +703,7 @@ components:
               description: Identificador do cartão virtual.
             created: 
               type: string
-              description: Data do cartão criado (formato 'yyyy-MM-ddTHH:mm:ss').
+              description: Data do cartão criado (formato ISO 8601 - UTC).
         status:
           type: string
           $ref: "#/components/schemas/cardStatus"
@@ -746,7 +746,7 @@ components:
             properties:
               modified:
                 type: string
-                description: Data em que o status foi aplicado (formato 'yyyy-MM-ddTHH:mm:ss').
+                description: Data em que o status foi aplicado (formato ISO 8601 - UTC).
               value:
                 type: string
                 $ref: "#/components/schemas/cardStatus"
@@ -781,10 +781,10 @@ components:
               description: Limite de crédito ativo do cliente.
         activatedAt:
           type: string
-          description: Data da ativação do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          description: Data da ativação do cartão (formato ISO 8601 - UTC).
         lastUpdatedAt:
           type: string
-          description: Data da última atualização do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          description: Data da última atualização do cartão (formato ISO 8601 - UTC).
         isActivated:
           type: boolean
           description: Informa se está ativo.
@@ -1394,7 +1394,7 @@ components:
                 description: Situação da transação.
               transactionTimestamp:
                 type: string
-                description: Data em que ocorreu a transação (formato 'yyyy-MM-ddTHH:mm:ss+00:00').
+                description: Data em que ocorreu a transação (formato ISO 8601 - UTC).
               transactionType:
                 type: string
                 $ref: "#/components/schemas/transactionTypes"
@@ -1431,7 +1431,7 @@ components:
       properties:
         createdDate:
           type: string
-          description: Data de criação do rastreio (formato 'yyyy-MM-ddTHH:mm:ss').
+          description: Data de criação do rastreio (formato ISO 8601 - UTC).
         externalTracking:
           type: object
           description: Objeto para rastreio de serviço externo
@@ -1450,7 +1450,7 @@ components:
           description: Apelido impresso no cartão.
         estimatedDeliveryDate:
           type: string
-          description: Data prevista de entrega do cartão (formato 'yyyy-MM-ddTHH:mm:ss').
+          description: Data prevista de entrega do cartão (formato ISO 8601 - UTC).
         address:
           type: array
           description: Lista de endereços do rastreio
@@ -1491,7 +1491,7 @@ components:
             properties:
               createdDate:
                 type: string
-                description: Data em que o status foi aplicado (formato 'yyyy-MM-ddTHH:mm:ss').
+                description: Data em que o status foi aplicado (formato ISO 8601 - UTC).
               type:
                 type: string
                 $ref: "#/components/schemas/trackingStatus"
@@ -1507,7 +1507,7 @@ components:
             properties:
               createdDate:
                 type: string
-                description: Data em que a baixa foi adicionada (formato 'yyyy-MM-ddTHH:mm:ss').
+                description: Data em que a baixa foi adicionada (formato ISO 8601 - UTC).
               recipientName:
                 type: string
                 description: Nome do recebedor do cartão.

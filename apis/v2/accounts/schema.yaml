@@ -1222,7 +1222,6 @@ components:
           type: string
           description: "Label para criação da conta pocket."
         useCase:
-          description: "Especificação da finalidade da pocket."
           $ref: "#/components/schemas/UseCase"
       additionalProperties: false
 
@@ -1230,10 +1229,10 @@ components:
       minLength: 1
       enum:
         - CORPORATE_EXPENSES
-        - ACCOUNT_FOR_UNDER_AGE
         - FLEXIBLE_BENEFITS
         - BALANCE_SEGREGATION
       type: string
+      description: Especificação da finalidade da pocket.
 
     CreatePocketRequestRequest:
       type: object
@@ -1390,8 +1389,7 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
           description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
@@ -1580,8 +1578,7 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
           description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
@@ -1744,8 +1741,7 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Especificação da finalidade da pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
           description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
@@ -1783,8 +1779,7 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Especificação da finalidade da pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
           description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
