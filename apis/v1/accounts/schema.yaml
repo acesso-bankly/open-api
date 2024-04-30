@@ -1265,7 +1265,6 @@ components:
           type: string
           description: "Label para criação da conta pocket."
         useCase:
-          description: "Especificação da finalidade da pocket."
           $ref: "#/components/schemas/UseCase"
       additionalProperties: false
 
@@ -1273,10 +1272,10 @@ components:
       minLength: 1
       enum:
         - CORPORATE_EXPENSES
-        - ACCOUNT_FOR_UNDER_AGE
         - FLEXIBLE_BENEFITS
         - BALANCE_SEGREGATION
       type: string
+      description: Especificação da finalidade da pocket.
 
     CreatePocketRequestRequest:
       type: object
@@ -1433,14 +1432,13 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
-          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da conta pocket, no formato ISO 8601 - UTC.
         updatedAt:
           type: string
-          description: Data de atualização da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de atualização da conta pocket, no formato ISO 8601 - UTC.
         user:
           $ref: "#/components/schemas/User"
         account:
@@ -1492,10 +1490,10 @@ components:
           description: "Situação da transação, que pode ser: “CREATED” (criada), “IN_PROCESS” (em processamento), “DONE” (concluída), “UNDONE” (desfeita) e “ERROR” (erro)."
         createdAt:
           type: string
-          description: Data de criação da transação, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da transação, no formato ISO 8601 - UTC.
         updatedAt:
           type: string
-          description: Data de atualização da transação, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de atualização da transação, no formato ISO 8601 - UTC.
 
     PaymentAccount:
       type: object
@@ -1623,14 +1621,13 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Motivo de uso da conta pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
-          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da conta pocket, no formato ISO 8601 - UTC.
         updatedAt:
           type: string
-          description: Data de atualização da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de atualização da conta pocket, no formato ISO 8601 - UTC.
         user:
           $ref: "#/components/schemas/User"
       additionalProperties: false
@@ -1732,7 +1729,7 @@ components:
           description: Situação do cadastro do titular.
         createdAt:
           type: string
-          description: Data de criação do cadastro do titular no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação do cadastro do titular no formato ISO 8601 - UTC.
       additionalProperties: false
 
     AccountCompleteResponse:
@@ -1752,7 +1749,7 @@ components:
           description: Motivo da situação da conta de pagamento.
         createdAt:
           type: string
-          description: Data de criação da conta de pagamento, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da conta de pagamento, no formato ISO 8601 - UTC.
         bank:
           $ref: "#/components/schemas/Bank"
         holder:
@@ -1787,11 +1784,10 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Especificação da finalidade da pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
-          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da conta pocket, no formato ISO 8601 - UTC.
         user:
           $ref: "#/components/schemas/User"
         account:
@@ -1826,14 +1822,13 @@ components:
           type: string
           description: Categoria da conta.
         useCase:
-          type: string
-          description: "Especificação da finalidade da pocket, que pode ser: “ACCOUNT_FOR_UNDER_AGE” (Conta para menor de idade), “CORPORATE_EXPENSES” (Despesas corporativas), “FLEXIBLE_BENEFITS” (Benefícios flexíveis) e “BALANCE_SEGREGATION” (Segregação de saldo)."
+          $ref: "#/components/schemas/UseCase"
         createdAt:
           type: string
-          description: Data de criação da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de criação da conta pocket, no formato ISO 8601 - UTC.
         updateddAt:
           type: string
-          description: Data de atualizaçã da conta pocket, no formato yyyy-MM-dd'T'HH:mm:ss.SSS.
+          description: Data de atualizaçã da conta pocket, no formato ISO 8601 - UTC.
         user:
           $ref: "#/components/schemas/User"
         account:
@@ -2293,7 +2288,7 @@ components:
       type: http
       description: Inclua um token de autorização do tipo Bearer.
       scheme: bearer
-
+  
 x-readme:
   explorer-enabled: true
   proxy-enabled: true

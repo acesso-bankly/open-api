@@ -446,11 +446,11 @@ components:
         createdAt:
           format: date-time
           type: string
-          description: "Data de criação da execução da ordem de compra ou venda (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de criação da execução da ordem de compra ou venda (formato: ISO 8601 - UTC)."
         expiresIn:
           format: date-time
           type: string
-          description: "Data de expiração da execução da ordem (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Data de expiração da execução da ordem (formato: ISO 8601 - UTC)."
 
     TotalValueObject:
       type: object
@@ -716,7 +716,7 @@ components:
           description: Valor da venda da criptomoeda.
           $ref: "#/components/schemas/PriceValueObject"
         timestamp:
-          description: "Momento da consulta (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Momento da consulta (formato: ISO 8601 - UTC)."
           type: string
 
     PriceResponseDto:
@@ -743,7 +743,7 @@ components:
         timestamp:
           type: string
           nullable: true
-          description: "Momento da cotação (formato: YYYY-MM-DDTHH:mm:SS.MMMZ)."
+          description: "Momento da cotação (formato: ISO 8601 - UTC)."
 
     GraphDto:
       type: object

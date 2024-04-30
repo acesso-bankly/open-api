@@ -1570,13 +1570,13 @@ paths:
           required: true
           schema:
             type: string
-            description: Data de início dos eventos a serem pesquisados, no formato yyyy-mm-dd. Caso necessário, poderá ser feito um filtro incluindo o horário, no formato yyyy-mm-ddThh:mm:ss. Utilize esse campo em conjunto com o parâmetro <code>endDate</code> para filtrar eventos por um range de datas.
+            description: Data de início dos eventos a serem pesquisados, no formato yyyy-mm-dd. Caso necessário, poderá ser feito um filtro incluindo o horário, no formato ISO 8601 - UTC. Utilize esse campo em conjunto com o parâmetro <code>endDate</code> para filtrar eventos por um range de datas.
         - name: endDate
           in: query
           required: true
           schema:
             type: string
-            description: Data do final dos eventos a serem pesquisados, no formato yyyy-mm-dd. Caso necessário, poderá ser feito um filtro incluindo o horário, no formato yyyy-mm-ddThh:mm:ss. Utilize esse campo em conjunto com o parâmetro <code>startDate</code> para filtrar eventos por um range de datas.
+            description: Data do final dos eventos a serem pesquisados, no formato yyyy-mm-dd. Caso necessário, poderá ser feito um filtro incluindo o horário, no formato ISO 8601 - UTC Utilize esse campo em conjunto com o parâmetro <code>startDate</code> para filtrar eventos por um range de datas.
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       responses:
@@ -3196,7 +3196,7 @@ components:
                 description: Situação da transação.
               transactionTimestamp:
                 type: string
-                description: Data em que ocorreu a transação (formato 'yyyy-MM-ddTHH:mm:ss+00:00').
+                description: Data em que ocorreu a transação (formato ISO 8601 - UTC).
               transactionType:
                 type: string
                 $ref: "#/components/schemas/transactionTypes"

@@ -347,7 +347,7 @@ components:
         settleDate:
           type: string
           format: date-time
-          description: Data em que o pagamento será liquidado, no formato YYYY-MM-DDTHH:mm:SS.MMMZ. Caso a data de vencimento coincida com feriados ou finais de semana, esse campo informará a data do próximo dia útil.
+          description: Data em que o pagamento será liquidado, no formato ISO 8601 - UTC. Caso a data de vencimento coincida com feriados ou finais de semana, esse campo informará a data do próximo dia útil.
       additionalProperties: false
 
     PayBillStatus:
