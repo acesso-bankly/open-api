@@ -2336,6 +2336,7 @@ components:
               type: string
               description: Número da conta transitória.
             bank:
+              type: object
               description: Objeto que contém informações sobre o banco ao qual a conta transitória pertence.
               $ref: "#/components/schemas/Bank"
         fallbackAccount:
@@ -2349,6 +2350,7 @@ components:
               type: string
               description: Número da conta reserva.
             bank:
+              type: object
               description: Objeto que contém informações sobre o banco ao qual a conta reserva pertence.
               $ref: "#/components/schemas/Bank"
         recipients:
@@ -2368,6 +2370,7 @@ components:
                     type: string
                     description: Número da conta recebedora.
                   bank:
+                    type: object
                     description: Objeto que contém informações sobre o banco ao qual a conta recebedora pertence.
                     $ref: "#/components/schemas/Bank"
               splitSetting:
