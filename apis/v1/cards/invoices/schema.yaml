@@ -1245,131 +1245,6 @@ components:
           type: array
           items: {$ref: '#/components/schemas/ItemInvoiceDto'}
           nullable: true
-      additionalProperties: false
-    
-    InvoicePaymentDto:
-      type: object
-      properties:
-        paymentId:
-          type: integer
-          format: int32
-          description: Identificador único do pagamento.
-        paymentOptionId:
-          type: integer
-          format: int32
-          description: Identificador único da opção de pagamento.
-        paymentBilletId:
-          type: string
-          nullable: true
-          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
-        amount:
-          type: number
-          format: double
-          description: Valor do pagamento.
-        dueDate:
-          type: string
-          format: date-time
-          description: Data de vencimento do pagamento.
-        paymentOptionType:
-          $ref: '#/components/schemas/PaymentOptionType'
-        status:
-          $ref: '#/components/schemas/PaymentStatus'
-        digitableLine:
-          type: string
-          nullable: true
-          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
-        paymentDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Data de pagamento.
-        liquidatedPaymentDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Data de liquidação do pagamento.
-      additionalProperties: false
-
-    InvoiceResumeDto:
-      type: object
-      properties:
-        statementId:
-          type: integer
-          format: int32
-          description: Identificador único da fatura.
-        month:
-          type: integer
-          format: int32
-          description: Representa o mês de vencimento da fatura.
-        year:
-          type: integer
-          format: int32
-          description: Representa o ano de vencimento da fatura.
-        cycle:
-          type: integer
-          format: int32
-          description: Indicador do ciclo da fatura (por contrato de crédito).
-        dueDate:
-          type: string
-          format: date-time
-          description: Data de vencimento da fatura.
-        amountMinimal:
-          type: number
-          format: double
-          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
-        balance:
-          type: number
-          format: double
-          description: Valor total da fatura.
-        cycleType:
-          $ref: '#/components/schemas/CycleType'
-        paymentStatus:
-          $ref: '#/components/schemas/StatementPaymentStatus'
-        paymentTotalAmount:
-          type: number
-          format: double
-          description: Valor pago.
-          nullable: true
-      additionalProperties: false
-   
-    ItemInvoiceDto:
-      type: object
-      properties:
-        statementNumber:
-          type: integer
-          format: int32
-          description: Número da parcela.
-        statementTotal:
-          type: integer
-          format: int32
-          description: Total de parcelas.
-        isCredit:
-          type: boolean
-          description: Indica se é uma operação de crédito (true) ou débito (false).
-        transactionDate:
-          type: string
-          format: date-time
-          description: Data em que ocorreu a transação.
-        transactionType:
-          $ref: "#/components/schemas/TransactionType"
-        transaction:
-          $ref: '#/components/schemas/TransactionInvoiceDto'
-        amounts:
-          type: array
-          items: {$ref: '#/components/schemas/AmountInvoiceDto'}
-          nullable: true
-        fees:
-          type: array
-          items: {$ref: '#/components/schemas/FeeInvoiceDto'}
-          nullable: true
-        statementItemId:
-          type: integer
-          format: int32
-          description: Indicador do item de fatura.
-        transactionDescription:
-          type: string
-          nullable: true
-          description: Descritivo do item da fatura.
         summary:
           type: object
           description: Objeto que contém informações resumidas sobre a fatura.
@@ -1690,7 +1565,7 @@ components:
                           currency:
                             type: string
                             description: Código da moeda com base na ISO-4217.
-                      debtAdjustments:
+                      debitAdjustments:
                         type: object
                         description: Objeto que contém a soma dos valores de transações de ajustes a débito na fatura.
                         properties: 
@@ -1770,6 +1645,131 @@ components:
                             currency:
                               type: string
                               description: Código da moeda com base na ISO-4217.
+      additionalProperties: false
+    
+    InvoicePaymentDto:
+      type: object
+      properties:
+        paymentId:
+          type: integer
+          format: int32
+          description: Identificador único do pagamento.
+        paymentOptionId:
+          type: integer
+          format: int32
+          description: Identificador único da opção de pagamento.
+        paymentBilletId:
+          type: string
+          nullable: true
+          description: Código de registro do boleto.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        amount:
+          type: number
+          format: double
+          description: Valor do pagamento.
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento do pagamento.
+        paymentOptionType:
+          $ref: '#/components/schemas/PaymentOptionType'
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
+        digitableLine:
+          type: string
+          nullable: true
+          description: Linha digitável do boleto de pagamento.  Este campo somente será retornado caso a forma de pagamento escolhida tenha sido “Billet”.
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de pagamento.
+        liquidatedPaymentDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Data de liquidação do pagamento.
+      additionalProperties: false
+
+    InvoiceResumeDto:
+      type: object
+      properties:
+        statementId:
+          type: integer
+          format: int32
+          description: Identificador único da fatura.
+        month:
+          type: integer
+          format: int32
+          description: Representa o mês de vencimento da fatura.
+        year:
+          type: integer
+          format: int32
+          description: Representa o ano de vencimento da fatura.
+        cycle:
+          type: integer
+          format: int32
+          description: Indicador do ciclo da fatura (por contrato de crédito).
+        dueDate:
+          type: string
+          format: date-time
+          description: Data de vencimento da fatura.
+        amountMinimal:
+          type: number
+          format: double
+          description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
+        balance:
+          type: number
+          format: double
+          description: Valor total da fatura.
+        cycleType:
+          $ref: '#/components/schemas/CycleType'
+        paymentStatus:
+          $ref: '#/components/schemas/StatementPaymentStatus'
+        paymentTotalAmount:
+          type: number
+          format: double
+          description: Valor pago.
+          nullable: true
+      additionalProperties: false
+   
+    ItemInvoiceDto:
+      type: object
+      properties:
+        statementNumber:
+          type: integer
+          format: int32
+          description: Número da parcela.
+        statementTotal:
+          type: integer
+          format: int32
+          description: Total de parcelas.
+        isCredit:
+          type: boolean
+          description: Indica se é uma operação de crédito (true) ou débito (false).
+        transactionDate:
+          type: string
+          format: date-time
+          description: Data em que ocorreu a transação.
+        transactionType:
+          $ref: "#/components/schemas/TransactionType"
+        transaction:
+          $ref: '#/components/schemas/TransactionInvoiceDto'
+        amounts:
+          type: array
+          items: {$ref: '#/components/schemas/AmountInvoiceDto'}
+          nullable: true
+        fees:
+          type: array
+          items: {$ref: '#/components/schemas/FeeInvoiceDto'}
+          nullable: true
+        statementItemId:
+          type: integer
+          format: int32
+          description: Indicador do item de fatura.
+        transactionDescription:
+          type: string
+          nullable: true
+          description: Descritivo do item da fatura.
       additionalProperties: false
     
     PaymentOptionsDto:
