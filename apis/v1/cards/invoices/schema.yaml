@@ -1218,6 +1218,16 @@ components:
           format: double
           description: Valor mínimo a ser pago da fatura. Somente é calculado após o fechamento da fatura.
           nullable: true
+        previousBalance:
+          type: object
+          description: Objeto que contém informações referentes ao valor total da fatura anterior.
+          properties:
+            value:
+              type: number
+              description: Valor total da fatura anterior.
+            currency:
+              type: string
+              description: Código da moeda com base na ISO-4217.
         balance:
           type: number
           format: double
