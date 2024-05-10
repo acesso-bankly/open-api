@@ -1851,23 +1851,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/cardTokenizationResponse"
-              examples:
-                response:
-                  value:
-                    - data: "mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801mkzjfhcnnhat84y583hguim49801"
-                      lastFourDigits: "1534"
-                      phoneNumber: "11999999999"
-                      address:
-                        zipCode: "05402100"
-                        address: Avenida Rebouças
-                        number: "1368"
-                        neighborhood: Pinheiros
-                        complement: Em frente a Wizard
-                        city: São Paulo
-                        state: SP
-                        country: Brasil
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '401':
