@@ -22,7 +22,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Consulta de premiação](/docs/consulta-contrato-de-credito) no Manual do dev."
+          "body": "Para mais informações, confira a documentação [Consulta de premiação](/docs/consulta-premiacao) no Manual do dev."
         }
         [/block]
       parameters:
