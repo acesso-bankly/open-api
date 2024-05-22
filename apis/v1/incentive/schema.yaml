@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Gestão de incentivo
+  description: |
+    Esta API foi desenvolvida com o propósito de fornecer um mecanismo eficiente para que o parceiro Bankly (Integrador EASE) possa acessar e obter detalhes cruciais relacionados a premiações. Consulte também nossa
+    [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre os fluxos de negócio.
+servers:
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
+paths:
+  /incentives/{uniqueId}:
+    get:
+      tags:
+        - Consultas
+      summary: Consulta de premiação 
+      description: |
+        <div class="bkly-ref-description">
+          <p>Consulte os detalhes de uma premiação utilizando o seu identificador único (<code>uniqueId</code>). Por meio dessa funcionalidade, é possível acessar informações cruciais sobre o premiado, sua conta de pagamento associada e os cartões vinculados a essas premiações.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: incentive.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de premiação](/docs/consulta-contrato-de-credito) no Manual do dev."
+        }
+        [/block]
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - name: uniqueId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Identificador único da premiação.
+      responses:
+        '200':
+          description: A solicitação foi aceita com sucesso e trará um objeto contendo os dados da premiação.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/awardInquiryRequest"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+
+security:
+  - bearerAuth: []
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  
+  schemas:
+
+    awardInquiryRequest:
+      type: object
+      properties:
+        uniqueId:
+          type: string
+          description: Identificador único da premiação.
+        product:
+          type: object
+          description: Objeto que contém informações sobre o produto (campanha) da premiação.
+          properties:
+            name: 
+              type: string
+              description: Nome do produto (campanha).
+        holder:
+          type: object
+          description: Objeto que contém informações sobre o premiado.
+          properties:
+            name:
+              type: string
+              description: Nome do premiado.
+            type:
+              type: string
+              enum:
+                - Customer
+                - Business
+              description: Tipo do premiado.
+            document:
+              type: object
+              description: Objeto que contém informações sobre o documento do premiado.
+              properties:
+                value:
+                  type: string
+                  description: Número do documento, o qual sempre retornará mascarado.
+                type: 
+                  type: string
+                  enum:
+                    - CPF
+                    - CNPJ
+                  description: Tipo do documento.
+        account:
+          type: object
+          description: Objeto que contém informações sobre a conta do premiado.
+          properties:
+            branch:
+              type: string
+              description: Número da agência.
+            number:
+              type: string 
+              description: Número da conta.
+            bank:
+              type: object
+              description: Objeto que contém informações sobre o banco ao qual a conta pertence.
+              properties:
+                ispb: 
+                  type: string
+                  description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
+                code:
+                  type: string
+                  description: Código do banco.
+                name:
+                  type: string
+                  description: Nome do banco.
+        card:
+          type: object
+          description: Objeto que contém informações sobre o cartão cujo titular é o premiado.
+          properties:
+            proxy:
+              type: string
+              description: Código identificador do cartão.
+            lastFourDigits:
+              type: string
+              description: Quatro últimos dígitos do cartão.
