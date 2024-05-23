@@ -2101,7 +2101,7 @@ components:
           description: Saldo disponível.
           $ref: "#/components/schemas/Balance"
         blocked:
-          description: "Saldo em bloqueio judicial. <b>Importante</b>: Este objeto retornará vazio. Para obter informações sobre o saldo bloqueado, por favor, abra um chamado no Service Desk ou utilize os eventos de Webhook de bloqueio de saldo."
+          description: "Saldo em bloqueio judicial. <b>Importante</b>: Este objeto deve ser desconsiderado, pois sempre retornará com o valor <b>zerado</b>. Para obter informações sobre o saldo bloqueado, por favor, abra um chamado no Service Desk ou utilize os eventos de Webhook de bloqueio de saldo."
           $ref: "#/components/schemas/Balance"
       additionalProperties: false
 
