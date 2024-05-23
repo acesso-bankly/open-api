@@ -13,7 +13,7 @@ paths:
       summary: Consulta de dados de uma conta
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte todos os dados de uma conta de pagamentos. Opcionalmente, você pode obter o saldo dessa conta.</p> 
+          <p>Consulte os dados de uma conta de pagamentos (regular). Opcionalmente, é possível obter o saldo dessa conta, exceto o saldo bloqueado.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: account.read</span>
         </div>
@@ -2101,7 +2101,7 @@ components:
           description: Saldo disponível.
           $ref: "#/components/schemas/Balance"
         blocked:
-          description: Saldo em bloqueio judicial.
+          description: "Saldo em bloqueio judicial. <b>Importante</b>: Este objeto retornará vazio. Para obter informações sobre o saldo bloqueado, por favor, abra um chamado no Service Desk ou utilize os eventos de Webhook de bloqueio de saldo."
           $ref: "#/components/schemas/Balance"
       additionalProperties: false
 
