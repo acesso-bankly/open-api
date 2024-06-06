@@ -21,7 +21,7 @@ paths:
         {
           "type": "warn",
           "title": "Importante",
-          "body": "Recordamos que <b>não</b> é possível realizar o registro de boletos das 5h25 às 6h05. Em caso de emissão de boleto de cobrança, é obrigatório preencher as informações do pagador. Confira a documentação [Emissão de boleto](/v2/docs/emissao-de-boleto) para mais informações."
+          "body": "Recordamos que <b>não</b> é possível realizar o registro de boletos das 5h25 às 6h05. Em caso de emissão de boleto de cobrança, é obrigatório preencher as <b>informações do pagador</b>. Confira a documentação [Emissão de boleto](/v2/docs/emissao-de-boleto) para mais informações."
         }
         [/block]
       operationId: Create
