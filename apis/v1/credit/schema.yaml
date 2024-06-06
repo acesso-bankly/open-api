@@ -16,7 +16,7 @@ paths:
       summary: Criação de pré-análise de crédito
       description: |
         <div class="bkly-ref-description">
-          <p>Crie uma pré-análise para determinar se o cliente terá limite de crédito aprovado antes da criação de uma conta. <b> Importante</b> A pré-análise é válida apenas até o final do dia em que foi realizada. </p> 
+          <p>Crie uma pré-análise para determinar se o cliente terá limite de crédito aprovado antes da criação de uma conta. <b> Importante</b>: A pré-análise é válida apenas até o final do dia em que foi realizada. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
         </div>
         [block:callout]
