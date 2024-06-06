@@ -132,7 +132,12 @@ paths:
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Para que seja possível solicitar a geração do PDF, o status do boleto deve ser <b>Registered</b>. Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
+          "body": "Recordamos que: 
+          <ul>
+          <li>Para que seja possível solicitar a geração do PDF, o <i>status</i> do boleto deve ser <b>Registered</b>.</li>
+          <li>Não é possível realizar o registro de boletos das 5h25 às 6h05, pois este é o período de sincronização de nosso sistema com a CIP (Sistema de Boletos do Brasil).</li>
+          </ul>
+          Confira as documentações [Emissão de boleto](/docs/emissao-de-boleto) e [Impressão de boleto](/docs/impressao-de-boleto) para mais informações."
         }
         [/block]
       operationId: GetPDF
