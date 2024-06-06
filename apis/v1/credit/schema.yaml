@@ -235,6 +235,44 @@ paths:
         '404':
           $ref: 'http://localhost:3320/commons/components#/components/responses/404'
 
+  /cards/credits/pre-analysis:
+    post:
+      tags:
+        - Pré-análise de crédito 
+      summary: Criação de pré-análise de crédito
+      description: |
+        <div class="bkly-ref-description">
+          <p>Crie uma pré-análise para determinar se o cliente terá limite de crédito aprovado antes da criação de uma conta. <b> Importante</b> A pré-análise é válida apenas até o final do dia em que foi realizada. </p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: credit.write</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Criação de pré-análise de crédito](/docs/criacao-pre-analise)."
+        }
+        [/block]
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createPreAnalyzeRequest"
+      responses:
+        '202':
+          description: A solicitação foi aceita e a pré-analise está sendo processada.
+        '400':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/400'
+        '401':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/401'
+        '406:
+          $ref: 'http://localhost:3320/commons/components#/components/responses/406'
+        '500':
+          $ref: 'http://localhost:3320/commons/components#/components/responses/500'
+
 security:
   - bearerAuth: []
 
@@ -429,7 +467,31 @@ components:
         - bankAccount
         - bankAgency
     
-    
+    createPreAnalyzeRequest:
+      type: object
+      required:
+        - documentNumber
+      properties:
+        programId:
+          type: string
+          description: Identificador do programa que será vinculado ao cartão.
+        documentNumber:
+          type: string
+          enum:
+            - CPF
+            - CNPJ
+          description: "Número do documento do cliente. Exemplo: “00000000000”."
+        scr:
+          type: object
+          description: Objeto que deverá conter informações sobre a resposta do cliente quanto à consulta ao SCR (Sistema de Informação de Crédito).
+          properties:
+            collectedAt: 
+              type: string
+              description: Data de coleta da resposta do cliente, no formato ISO 8601 - UTC.
+            authorized:
+              type: boolean
+              description: Indica se o cliente autorizou (true) ou não (false) a consulta ao SCR.
+
     academicDegree:
       type: string
       description: Grau de instrução do cliente.
