@@ -42,7 +42,7 @@ paths:
             enum:
               - BASIC
               - DETAILED
-            description: Nível de consulta das informações da wallet. O valor BASIC retornará uma consulta básica, enquanto o valor DETAILED fornecerá uma consulta mais detalhada.
+            description: Nível de consulta das informações da wallet, podendo ser “BASIC”, que retornará uma consulta básica, ou “DETAILED”, que fornecerá uma consulta mais detalhada.
       responses:
         '200':
           description: A solicitação foi aceita e retornará os dados da wallet informada (modelo básico ou detalhado).

@@ -60,6 +60,7 @@ jobs:
             ./apis/v1/credit/schema.yaml
             ./apis/v1/charge/schema.yaml
             ./apis/v1/incentive/schema.yaml
+            ./apis/v1/investment/schema.yaml
             ./apis/v2/boletos/schema.yaml
             ./apis/v2/cards/invoices/schema.yaml
             ./apis/v2/accounts/schema.yaml
@@ -194,6 +195,11 @@ jobs:
           rdme: openapi './apis/v1/incentive/schema.yaml' --id=${{ secrets.INCENTIVE_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
     
       - uses: readmeio/rdme@7.0.3
+        name: Publish Investment to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/investment/schema.yaml' --id=${{ secrets.INVESTMENT_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+    
+      - uses: readmeio/rdme@7.0.3
         name: Publish Boletosv2 API Reference to readme.io
         with:
           rdme: openapi './apis/v2/boletos/schema.yaml' --id=${{ secrets.BOLETOV2_API_README_OAS_ID_DEV }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
@@ -323,6 +329,11 @@ jobs:
         with:
           rdme: openapi './apis/v1/incentive/schema.yaml' --id=${{ secrets.INCENTIVE_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
 
+      - uses: readmeio/rdme@7.0.3
+        name: Investment to Reference to readme.io
+        with:
+          rdme: openapi './apis/v1/investment/schema.yaml' --id=${{ secrets.INVESTMENT_API_README_OAS_ID }} --key=${{ secrets.APIS_README_OAS_KEY_DEV }}
+      
       - uses: readmeio/rdme@7.0.3
         name: Publish Boletosv2 API Reference to readme.io
         with:
