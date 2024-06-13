@@ -1,0 +1,223 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Gestão de investimento
+  description: |
+    Esta API foi desenvolvida com o objetivo simplificar e democratizar o acesso ao mercado financeiro, proporcionando aos investidores a oportunidade de aplicar em Certificados de Depósito Bancário (CDB) de maneira direta e eficaz. Acesse a [documentação](https://bankly.readme.io/v1.0/docs/) para mais detalhes sobre os fluxos de negócio.
+servers:
+  - url: 'https://api-mtls.sandbox.bankly.com.br'
+paths:
+  /investments/wallets/{walletNumber}:
+    get:
+      tags:
+        - Consulta
+      summary: Consulta de wallet
+      description: |
+        <div class="bkly-ref-description">
+          <p>Este endpoint permite realizar consultas básicas e detalhadas de uma carteira de investimento específica (wallet). Na consulta básica, você pode visualizar informações como o valor alvo (<code>target</code>) que se deseja alcançar e o status da carteira. Já na consulta detalhada, além das informações básicas, é possível obter dados sobre os investimentos realizados.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: investment.wallet.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de wallet](/docs/consulta-wallet) no Manual do dev."
+        }
+        [/block]
+      parameters:
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-correlation-id'
+        - name: walletNumber
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Identificador único gerado pela criação da wallet.
+        - name: resultLevel
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - BASIC
+              - DETAILED
+            description: Nível de consulta das informações da wallet. O valor BASIC retornará uma consulta básica, enquanto o valor DETAILED fornecerá uma consulta mais detalhada.
+      responses:
+        '200':
+          description: A solicitação foi aceita e retornará os dados da wallet informada (modelo básico ou detalhado).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InvestmentQueryResponse"
+        '401':
+          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+
+security:
+  - bearerAuth: []
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  
+  schemas:
+
+    InvestmentQueryResponse:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Número exclusivo atribuído a cada wallet para identificação e rastreamento. Retornado na consulta <b>básica</b> e <b>detalhada</b>.
+        externalId:
+          type: string
+          description: Um identificador único gerado pelo parceiro. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+        programId:
+          type: string
+          description: Código de identificação do programa de investimentos. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+        target:
+          type: object
+          description: Objeto que contém informações sobre o objetivo financeiro da wallet. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+          properties:  
+            name:
+              type: string
+              description: Etiqueta identificadora do objetivo, como por exemplo "Viagem para Acapulco".
+            amount:
+              type: object
+              description: Objeto que contém informações sobre o valor definido para se alcançar na wallet. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+              properties:
+                value: 
+                  type: number
+                  description: Valor que o cliente deseja alcançar para atingir o objetivo.
+                currency: 
+                  type: string
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”." 
+        holder:
+          type: object
+          description: Objeto que contém informações sobre o titular da wallet. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+          properties:
+            document:
+              type: object
+              description: Objeto que contém informações sobre o documento do titular. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+              properties:
+                value:
+                  type: string
+                  description: Número do documento.
+                type:
+                  type: string
+                  description: Tipo do documento, que sempre será “CPF”.
+        status:
+          type: string
+          enum:
+            - CREATED
+            - EARNING
+            - BLOCKED
+            - CLOSED
+          description: Situação da wallet. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+        createdAt:
+          type: string
+          format: date-time
+          description: Data e hora da criação da wallet, no formato ISO 8601 - UTC. Retornado na consulta <b>básica</b> e <b>detalhada</b>
+        updatedAt:
+          type: string
+          format: date-time
+          description: "Data e hora da atualização da wallet, no formato ISO 8601 - UTC. Retornado na consulta <b>básica</b> e <b>detalhada</b>. <b>Importante</b>: Este campo somente será retornado caso a wallet tenha sido atualizada."
+        balance:
+          type: object
+          description: "Objeto que contém informações sobre o saldo da wallet e o seu rendimento correspondente. Retornado <b>apenas</b> na consulta <b>detalhada</b>. <b>Importante</b>: Se a wallet possuir mais de um CDB, será apresentada a soma de todos os rendimentos."
+          properties:
+            invested:
+              type: object
+              description: Objeto que contém informações sobre os investimentos realizados. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Saldo total investido pelo cliente, sem os rendimentos.
+                currency:
+                  type: number
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+            gross:
+              type: object
+              description: Objeto que contém informações sobre a soma do saldo total investido e o rendimento bruto acumulado. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor total.
+                currency:
+                  type: number
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+            net:
+              type: object
+              description: Objeto que contém informações sobre a soma do saldo total investido e o rendimento líquido acumulado. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor total.
+                currency:
+                  type: number
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+        yield:
+          type: object
+          description: "Objeto que contém informações sobre o total de rendimento da wallet. Retornado <b>apenas</b> na consulta <b>detalhada</b>. **Importante**: Se a wallet possuir mais de um CDB, será apresentada a soma de todos os rendimentos."
+          properties:
+            updatedAt:
+              type: string
+              format: date-time
+              description: "Data e hora da atualização do rendimento, no formato ISO 8601 - UTC. **Importante**: Este campo somente será retornado caso o rendimento tenha sido atualizado."
+            createdAt:
+              type: string
+              description: Data e hora do começo do rendimento, no formato ISO 8601 - UTC.
+            gross:
+              type: object
+              description: Objeto que contém informações sobre o rendimento bruto. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor do rendimento bruto.
+                currency:
+                  type: number
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+            net:
+              type: object
+              description: Objeto que contém informações sobre o rendimento líquido, descontando impostos. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor do rendimento líquido.
+                currency:
+                  type: number
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+        taxes:
+          type: object
+          description: "Objeto que contém informações sobre os impostos a serem pagos. Retornado <b>apenas</b> na consulta <b>detalhada</b>. **Importante**: Se a wallet possuir mais de um CDB, será apresentada a soma de todos os impostos."
+          properties:
+            createdAt:
+              type: string
+              description: Data e hora do começo da aplicação das taxas, no formato ISO 8601 - UTC.
+            updatedAt:
+              type: string
+              description: "Data e hora da atualização das taxas, no formato ISO 8601 - UTC. **Importante**: Este campo somente será retornado caso as taxas tenham sido atualizadas."
+            ir:
+              type: object
+              description: Objeto que contém informações sobre o  valor do IR (imposto de renda) aplicado na wallet. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor a ser descontado dos rendimentos em caso de resgate.
+                currency:
+                  type: string
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
+            iof:
+              type: object
+              description: Objeto que contém informações sobre o valor do IOF (Imposto sobre operações financeiras) aplicado na wallet. Retornado <b>apenas</b> na consulta <b>detalhada</b>.
+              properties:
+                value:
+                  type: number
+                  description: Valor a ser descontado dos rendimentos em caso de resgate.
+                currency:
+                  type: string
+                  description: "Código da moeda com base na ISO - 4217. Exemplo: “BRL”."
