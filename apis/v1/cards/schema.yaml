@@ -1962,7 +1962,7 @@ paths:
           '500':
             statusCode: 500
 
-/cards/{proxy}/duedate-expiration:
+  /cards/{proxy}/duedate-expiration:
     put:
       tags:
         - Configuração do cartão
@@ -2013,7 +2013,7 @@ paths:
         '500':
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
-/cards/{proxy}/functionalityStatus:
+  /cards/{proxy}/functionalityStatus:
     patch:
       tags:
         - Configuração do cartão
