@@ -1887,57 +1887,6 @@ paths:
           '500':
             statusCode: 500
 
-  /cards/{proxy}/duedate-expiration:
-    put:
-      tags:
-        - Configuração do cartão
-      summary: Alteração da data de vencimento
-      description: |
-        <div class="bkly-ref-description">
-          <p>Altere a data de vencimento da fatura do cartão de crédito do seu cliente.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
-          <span class="bkly-ref-scope-tag">scope: card.update</span>
-        </div>
-        [block:callout]
-        {
-          "type": "info",
-          "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Alteração da data de vencimento](/docs/alteracao-data-de-vencimento)."
-        }
-        [/block]
-      parameters:
-        - name: proxy
-          in: path
-          required: true
-          schema:
-            type: string
-            description: Código identificador do cartão.
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
-        - name: x-bkly-license
-          in: header
-          required: true
-          schema:
-            type: string
-            description: Identificador da licença bancária utilizada pelo parceiro.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/dueDateAlterationRequest"
-      responses:
-        '204':
-          description: A solicitação foi aceita e a data de vencimento da fatura do cartão foi alterada com sucesso.
-        '400':
-          $ref: "http://localhost:3320/commons/components#/components/responses/400"
-        '404':
-          $ref: "http://localhost:3320/commons/components#/components/responses/404"
-        '409':
-          $ref: "http://localhost:3320/commons/components#/components/responses/409"
-        '500':
-          $ref: "http://localhost:3320/commons/components#/components/responses/500"
-
   /cards-pci/{proxy}/password:
     patch:
       tags:
@@ -2013,6 +1962,98 @@ paths:
           '500':
             statusCode: 500
 
+  /cards/{proxy}/duedate-expiration:
+    put:
+      tags:
+        - Configuração do cartão
+      summary: Alteração da data de vencimento
+      description: |
+        <div class="bkly-ref-description">
+          <p>Altere a data de vencimento da fatura do cartão de crédito do seu cliente.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração da data de vencimento](/docs/alteracao-data-de-vencimento)."
+        }
+        [/block]
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código identificador do cartão.
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - name: x-bkly-license
+          in: header
+          required: true
+          schema:
+            type: string
+            description: Identificador da licença bancária utilizada pelo parceiro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dueDateAlterationRequest"
+      responses:
+        '204':
+          description: A solicitação foi aceita e a data de vencimento da fatura do cartão foi alterada com sucesso.
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        '409':
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
+        '500':
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
+  /cards/{proxy}/functionalityStatus:
+    patch:
+      tags:
+        - Configuração do cartão
+      summary: Habilitação e bloqueio temporário de modalidade
+      description: |
+        <div class="bkly-ref-description">
+          <p>Realize o bloqueio temporário de uma das modalidade do cartão do tipo combo (débito ou pós) ou habilite uma modalidade que havia sido bloqueada.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Habilitação e bloqueio temporário de modalidade](/docs/bloqueio-temporario-modalidade)."
+        }
+        [/block]
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código identificador do cartão.
+            nullable: true
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeFunctionalityStatusCommand'
+      responses:
+        '200':
+          description: Status da modalidade alterado com sucesso.
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '500':
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
 
 
 security:
@@ -2059,159 +2100,7 @@ components:
         description: Identificador do cartão.
 
   schemas:
-
-    createCardsInLotRequest:
-      type: object
-      properties:
-        programId:
-          type: integer
-          description: Identificador do programa que será vinculado ao cartão.
-        quantityCards:
-          type: integer
-          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000).
-        paymentDay:
-          type: integer
-          description: Dia de pagamento do cartão.
-        address:
-          type: object
-          description: Informações sobre o endereço de entrega.
-          properties:
-            zipCode:
-              type: string
-              description: CEP (informar somente os números).
-            address:
-              type: string
-              description: Logradouro (Nome da rua, avenida etc.).
-            number:
-              type: string
-              description: Número do prédio ou da casa.
-            neighborhood:
-              type: string
-              description: Nome do bairro.
-            complement:
-              type: string
-              description: Complemento do endereço.
-            city:
-              type: string
-              description: Nome da cidade.
-            state:
-              type: string
-              description: Nome do estado (informar a UF).
-            country:
-              type: string
-              description: Nome do país.
-          required:
-            - zipCode
-            - address
-            - number
-            - neighborhood
-            - city
-            - state
-            - country
-      required:
-        - programId
-        - quantityCards
-        - address
-    
-    createCardInLotResponse:
-      type: object
-      properties:
-        lotId:
-          type: string
-          description: Identificador único do lote.
-
-    cardLotsResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          lotId:
-            type: string
-            description: Identificador único do lote
-          quantityOrder:
-            type: integer
-            description: Quantidade de cartões solicitados.    
-          dateOrder:
-            type: string
-            format: date-time
-            description: Data da solicitação de criação do lote.
-          programId:
-            type: integer
-            description: Identificador do programa vinculado ao cartão.
-
-    cardLotResponse:
-      type: object
-      properties:
-        lotId:
-          type: string
-          description: Identificador único do lote
-        quantityOrder:
-          type: integer
-          description: Quantidade de cartões solicitados.
-        dateOrder:
-          type: string
-          format: date-time
-          description: Data da solicitação de criação do lote.
-        programId:
-          type: integer
-          description: Identificador do programa vinculado ao cartão.
-        cards: 
-          type: array
-          description: Proxy dos cartões.
-        address:
-          type: object
-          description: Informações sobre o endereço de entrega.
-          properties:
-            zipCode:
-              type: string
-              description: CEP (informar somente os números).
-            address:
-              type: string
-              description: Logradouro (Nome da rua, avenida etc.).
-            number:
-              type: string
-              description: Número do prédio ou da casa.
-            neighborhood:
-              type: string
-              description: Nome do bairro.
-            complement:
-              type: string
-              description: Complemento do endereço.
-            city:
-              type: string
-              description: Nome da cidade.
-            state:
-              type: string
-              description: Nome do estado (informar a UF).
-            country:
-              type: string
-              description: Nome do país.
-    
-    bindNoNameRequest:
-      type: object
-      properties:
-        password:
-          type: string
-          description: Senha que será utilizada nas compras (4 dígitos).
-        bankAccount:
-          type: string
-          description: Número da conta ao qual o cartão será vinculado.
-        bankAgency:
-          type: string
-          description: Número da agência (4 dígitos) do banco ao qual a conta pertence.
-        documentNumber:
-          type: string
-          description: Número do documento (CPF ou CNPJ) do titular da conta. Informe somente números. Tamanho máximo de 14 caracteres.
-        alias:
-          type: string
-          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).    
-      required:
-        - documentNumber
-        - password
-        - bankAccount
-        - bankAgency
-    
-    
+       
     academicDegree:
       type: string
       description: Grau de instrução do cliente.
@@ -2238,7 +2127,7 @@ components:
         - documentNumber
         - contract
         - dataHash
-    
+
     acceptanceTerm:
       type: object
       properties:
@@ -2319,6 +2208,42 @@ components:
           type: string
           description: Termos e condições aceitos pelo cliente.
     
+    AcceptCreditLimitIncreaseDto:
+      type: object
+      required:
+        - authorization
+        - idState
+        - token
+        - terms
+        - trace
+        - userInfo
+      properties:
+        authorization:
+          type: string
+          description: Token que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
+          nullable: true
+        idState:
+          type: string
+          description: Identificador do contrato.
+          nullable: true
+        token:
+          type: string
+          description: Token de SMS/email que confirma a identidade do usuário que assinou o aceite.
+          nullable: true
+        terms:
+          type: string
+          description: "Insira o texto do contrato que foi aceito pelo cliente. Sugestão: pode-se remover as quebras de linha e enviar o texto corrido do aceite."
+          nullable: true
+        trace:
+          type: array
+          description: Objeto que contém os dados de rastreio do usuário solicitante.
+          items:
+            $ref: "#/components/schemas/TraceDto"
+          nullable: true
+        userInfo:
+          $ref: "#/components/schemas/UserInfoDto"
+      additionalProperties: false
+
     activateCardRequest:
       type: object
       properties:
@@ -2397,6 +2322,30 @@ components:
           type: string
           description: Nome do país.
     
+    bindNoNameRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Senha que será utilizada nas compras (4 dígitos).
+        bankAccount:
+          type: string
+          description: Número da conta ao qual o cartão será vinculado.
+        bankAgency:
+          type: string
+          description: Número da agência (4 dígitos) do banco ao qual a conta pertence.
+        documentNumber:
+          type: string
+          description: Número do documento (CPF ou CNPJ) do titular da conta. Informe somente números. Tamanho máximo de 14 caracteres.
+        alias:
+          type: string
+          description: Apelido do cartão (não é permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).    
+      required:
+        - documentNumber
+        - password
+        - bankAccount
+        - bankAgency
+
     brandTypes:
       type: string
       enum:
@@ -2429,6 +2378,73 @@ components:
               message:
                 type: string
                 description: Mensagem explicativa do erro.
+    
+    cardLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Identificador único do lote
+        quantityOrder:
+          type: integer
+          description: Quantidade de cartões solicitados.
+        dateOrder:
+          type: string
+          format: date-time
+          description: Data da solicitação de criação do lote.
+        programId:
+          type: integer
+          description: Identificador do programa vinculado ao cartão.
+        cards: 
+          type: array
+          description: Proxy dos cartões.
+        address:
+          type: object
+          description: Informações sobre o endereço de entrega.
+          properties:
+            zipCode:
+              type: string
+              description: CEP (informar somente os números).
+            address:
+              type: string
+              description: Logradouro (Nome da rua, avenida etc.).
+            number:
+              type: string
+              description: Número do prédio ou da casa.
+            neighborhood:
+              type: string
+              description: Nome do bairro.
+            complement:
+              type: string
+              description: Complemento do endereço.
+            city:
+              type: string
+              description: Nome da cidade.
+            state:
+              type: string
+              description: Nome do estado (informar a UF).
+            country:
+              type: string
+              description: Nome do país.
+
+    cardLotsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          lotId:
+            type: string
+            description: Identificador único do lote
+          quantityOrder:
+            type: integer
+            description: Quantidade de cartões solicitados.    
+          dateOrder:
+            type: string
+            format: date-time
+            description: Data da solicitação de criação do lote.
+          programId:
+            type: integer
+            description: Identificador do programa vinculado ao cartão.
     
     cardResponse:
       type: object
@@ -2646,15 +2662,6 @@ components:
       required:
         - password
     
-    changeEncryptedCardPasswordRequest:
-      type: object
-      properties:
-        password:
-          type: string
-          description: Senha de uso do cartão. A senha deve possuir <b>4 dígitos</b> e ser transmitida <b>criptografada</b>.
-      required:
-        - password
-    
     changeCardStatusRequest:
       type: object
       properties:
@@ -2672,13 +2679,51 @@ components:
         - status
         - password
         - updateCardBinded
+
+    changeEncryptedCardPasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Senha de uso do cartão. A senha deve possuir <b>4 dígitos</b> e ser transmitida <b>criptografada</b>.
+      required:
+        - password
    
+    ChangeFunctionalityStatusCommand:
+      type: object
+      required:
+        - enable
+        - functionalityType
+        - documentNumber
+      properties:
+        enable:
+          type: boolean
+          description: Campo que indica se a modalidade deverá ser habilitada (true) ou bloqueada temporariamente (false).
+        functionalityType:
+          $ref: '#/components/schemas/FunctionalityType'
+        password:
+          type: string
+          description: Senha do cartão. Informe somente números.
+          nullable: true
+        documentNumber:
+          type: string
+          description: Número de documento de CPF ou CNPJ. Informe somente números.
+          nullable: true
+      additionalProperties: false
+    
+    createCardInLotResponse:
+      type: object
+      properties:
+        lotId:
+          type: string
+          description: Identificador único do lote.
+
     createCardRequest:
       type: object
       properties:
         documentNumber:
           type: string
-          description: Número de documento de CPF ou CNPJ (informe somente os números). Tamanho máximo de 14 caracteres.
+          description: Número de documento de CPF ou CNPJ (informe somente números). Tamanho máximo de 14 caracteres.
         cardName:
           type: string
           description: Nome que será impresso no cartão (não será permitido o uso de números e caracteres especiais). Tamanho máximo de 19 caracteres.
@@ -2741,6 +2786,70 @@ components:
         - bankAccount
         - password
         - programId
+    
+    createCardsInLotRequest:
+      type: object
+      properties:
+        programId:
+          type: integer
+          description: Identificador do programa que será vinculado ao cartão.
+        quantityCards:
+          type: integer
+          description: Quantidade de cartões em lote (informar um valor acima de 0 e menor que 2000).
+        paymentDay:
+          type: integer
+          description: Dia de pagamento do cartão.
+        address:
+          type: object
+          description: Informações sobre o endereço de entrega.
+          properties:
+            zipCode:
+              type: string
+              description: CEP (informar somente os números).
+            address:
+              type: string
+              description: Logradouro (Nome da rua, avenida etc.).
+            number:
+              type: string
+              description: Número do prédio ou da casa.
+            neighborhood:
+              type: string
+              description: Nome do bairro.
+            complement:
+              type: string
+              description: Complemento do endereço.
+            city:
+              type: string
+              description: Nome da cidade.
+            state:
+              type: string
+              description: Nome do estado (informar a UF).
+            country:
+              type: string
+              description: Nome do país.
+          required:
+            - zipCode
+            - address
+            - number
+            - neighborhood
+            - city
+            - state
+            - country
+      required:
+        - programId
+        - quantityCards
+        - address
+
+    creditContractStatus:
+      type: string
+      enum:
+        - Pending
+        - Approved
+        - Reproved
+        - Canceled
+        - Expired
+        - Signed
+        - Blocked
     
     createCustomerRequest:
       type: object
@@ -2897,6 +3006,18 @@ components:
               reasons:
                 type: string
     
+    creditEvaluationStatus:
+      type: string
+      enum:
+        - Approved
+        - Reproved
+
+    CreditReanalyzeOriginType:
+      enum:
+      - COMPANY_REQUEST
+      - CUSTOMER_REQUEST
+      type: string
+
     dataPciResponse:
       type: object
       properties:
@@ -2909,15 +3030,6 @@ components:
         expirationDate:
           type: string
           description: Data de expiração do cartão (formato 'MM/YY').
-    
-    duplicateCardStatus:
-      type: string
-      enum:
-        - LostMyCard
-        - CardWasStolen
-        - CardWasDamaged
-        - CardNotDelivered
-        - UnrecognizedOnlinePurchase
     
     dueDateAlterationRequest:
       type: object
@@ -2932,8 +3044,16 @@ components:
           type: number
           format: integer
           description: Novo dia de vencimento da fatura do cartão.
-        
-    
+
+    duplicateCardStatus:
+      type: string
+      enum:
+        - LostMyCard
+        - CardWasStolen
+        - CardWasDamaged
+        - CardNotDelivered
+        - UnrecognizedOnlinePurchase
+           
     entryModeTypes:
       type: string
       enum:
@@ -2956,24 +3076,15 @@ components:
         - ContactlessMagneticStripe
         - ContactlessInput
         - Visa
+
+    FunctionalityType:
+      enum:
+        - Pre
+        - Pos
+        - Debit
+      type: string
+      nullable: false
     
-    creditEvaluationStatus:
-      type: string
-      enum:
-        - Approved
-        - Reproved
-
-    creditContractStatus:
-      type: string
-      enum:
-        - Pending
-        - Approved
-        - Reproved
-        - Canceled
-        - Expired
-        - Signed
-        - Blocked
-
     getContractCreditResponse:
       type: object
       properties:
@@ -3085,7 +3196,24 @@ components:
         - FromFiveThousandToTenThousand
         - FromTenThousandToTwentyThousand
         - OverTwentyThousand
-                    
+
+    limitAlterationRequest:
+      type: object
+      required:
+        - documentNumber
+        - contractNumber
+        - limit
+      properties:
+        documentNumber:
+          type: string
+          description: Número de documento de CPF ou CNPJ. Informe somente os números.
+        contractNumber:
+          type: string
+          description: Número do contrato do cliente.
+        limit:
+          type: number
+          description: Novo limite de crédito ativo (definido pelo cliente).
+
     maritalStatus:
       type: string
       description: Estado civil do cliente.
@@ -3096,6 +3224,19 @@ components:
         - Divorced
         - Widower
 
+    nextStatusResponse:
+      type: array
+      description: Lista de objetos contendo informações sobre os próximos status do cartão.
+      items:
+        type: object
+        properties:
+          value:
+            type: string
+            description: Próximo status do cartão.
+          isDefinitive: 
+            type: boolean
+            description: Indica a reversibilidade do status, sendo TRUE para reversível e FALSE para irreversível.
+    
     phoneType:
       type: string
       description: Tipo de telefone do cliente.
@@ -3104,6 +3245,16 @@ components:
         - Commercial
         - Mobile
    
+    ReanalyzeCreditDto:
+      type: object
+      required:
+        - origin
+      properties:
+        origin:
+          description: Solicitante do chamado de reanálise.
+          $ref: "#/components/schemas/CreditReanalyzeOriginType"
+      additionalProperties: false
+    
     resultTransactionResponse:
       type: object
       properties:
@@ -3193,6 +3344,23 @@ components:
         - Male
         - Female
         - Other
+    
+    TraceDto:
+      type: object
+      required:
+        - state
+        - date
+      properties:
+        state:
+          type: string
+          description: Log de navegação do cliente nas telas do frontend, desde o login até a tela de aceite.
+          nullable: true
+        date:
+          type: string
+          format: date-time
+          description: Data do aceite.
+          nullable: true
+      additionalProperties: false
     
     trackingErrorResponse:
       type: object
@@ -3378,119 +3546,6 @@ components:
             - state
             - country
     
-    walletTypes:
-      type: string
-      enum:
-        - GooglePay
-          
-    walletStatus:
-      type: string
-      enum:
-        - Approved
-        - Denied
-      
-    walletFlows:
-      type: string
-      enum:
-        - Undefined
-        - GreenPatch
-        - YellowPatch
-
-    limitAlterationRequest:
-      type: object
-      required:
-        - documentNumber
-        - contractNumber
-        - limit
-      properties:
-        documentNumber:
-          type: string
-          description: Número de documento de CPF ou CNPJ. Informe somente os números.
-        contractNumber:
-          type: string
-          description: Número do contrato do cliente.
-        limit:
-          type: number
-          description: Novo limite de crédito ativo (definido pelo cliente).
-
-    nextStatusResponse:
-      type: array
-      description: Lista de objetos contendo informações sobre os próximos status do cartão.
-      items:
-        type: object
-        properties:
-          value:
-            type: string
-            description: Próximo status do cartão.
-          isDefinitive: 
-            type: boolean
-            description: Indica a reversibilidade do status, sendo TRUE para reversível e FALSE para irreversível.
-
-    CreditReanalyzeOriginType:
-      enum:
-      - COMPANY_REQUEST
-      - CUSTOMER_REQUEST
-      type: string
-    ReanalyzeCreditDto:
-      type: object
-      required:
-        - origin
-      properties:
-        origin:
-          description: Solicitante do chamado de reanálise.
-          $ref: "#/components/schemas/CreditReanalyzeOriginType"
-      additionalProperties: false
-    AcceptCreditLimitIncreaseDto:
-      type: object
-      required:
-        - authorization
-        - idState
-        - token
-        - terms
-        - trace
-        - userInfo
-      properties:
-        authorization:
-          type: string
-          description: Token que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
-          nullable: true
-        idState:
-          type: string
-          description: Identificador do contrato.
-          nullable: true
-        token:
-          type: string
-          description: Token de SMS/email que confirma a identidade do usuário que assinou o aceite.
-          nullable: true
-        terms:
-          type: string
-          description: "Insira o texto do contrato que foi aceito pelo cliente. Sugestão: pode-se remover as quebras de linha e enviar o texto corrido do aceite."
-          nullable: true
-        trace:
-          type: array
-          description: Objeto que contém os dados de rastreio do usuário solicitante.
-          items:
-            $ref: "#/components/schemas/TraceDto"
-          nullable: true
-        userInfo:
-          $ref: "#/components/schemas/UserInfoDto"
-      additionalProperties: false
-    TraceDto:
-      type: object
-      required:
-        - state
-        - date
-      properties:
-        state:
-          type: string
-          description: Log de navegação do cliente nas telas do frontend, desde o login até a tela de aceite.
-          nullable: true
-        date:
-          type: string
-          format: date-time
-          description: Data do aceite.
-          nullable: true
-      additionalProperties: false
     UserInfoDto:
       type: object
       description: Objeto que contém os dados do usuário no momento em que solicitou o crédito.
@@ -3523,6 +3578,25 @@ components:
           description: Número de telefone do cliente, com DDD.
           nullable: true
       additionalProperties: false
+    
+    walletFlows:
+      type: string
+      enum:
+        - Undefined
+        - GreenPatch
+        - YellowPatch
+
+    walletStatus:
+      type: string
+      enum:
+        - Approved
+        - Denied
+
+    walletTypes:
+      type: string
+      enum:
+        - GooglePay
+    
 x-readme:
   explorer-enabled: true
   proxy-enabled: true
