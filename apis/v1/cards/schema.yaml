@@ -3097,13 +3097,13 @@ components:
       properties:
         nonce:
           type: string
-          description: Valor em formato hexadecimal, gerado no dispositivo, que associa uma sessão de cliente a um token ID da Apple.
+          description: "Valor em formato hexadecimal, gerado no dispositivo, que associa uma sessão de cliente a um token ID da Apple. **Importante**: este campo <b>somente</b> será considerado em caso de adição à wallet da ApplePay."
         nonceSignature:
           type: string
-          description: Assinatura em formato hexadecimal, gerada no dispositivo, que associa uma sessão de cliente a um token ID da Apple.
+          description: "Assinatura em formato hexadecimal, gerada no dispositivo, que associa uma sessão de cliente a um token ID da Apple. **Importante**: este campo <b>somente</b> será considerado em caso de adição à wallet da ApplePay."
         appleCertificate:
           type: string
-          description: Certificado público, em formato PEM, gerado pela Apple.
+          description: "Certificado público, em formato PEM, gerado pela Apple. **Importante**: este campo <b>somente</b> será considerado em caso de adição à wallet da ApplePay."
 
     getContractCreditResponse:
       type: object
