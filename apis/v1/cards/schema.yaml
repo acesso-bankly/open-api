@@ -2017,7 +2017,7 @@ paths:
     patch:
       tags:
         - Configuração do cartão
-      summary: Habilitação e bloqueio temporário de modalidade
+      summary: Alteração de status de modalidade
       description: |
         <div class="bkly-ref-description">
           <p>Realize o bloqueio temporário de uma das modalidade do cartão do tipo combo (débito ou pós) ou habilite uma modalidade que havia sido bloqueada.</p> 
@@ -2028,7 +2028,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Habilitação e bloqueio temporário de modalidade](/docs/bloqueio-temporario-modalidade)."
+          "body": "Para mais informações, confira a documentação [Alteração de status de modalidade](/docs/alteracao-status-modalidade)."
         }
         [/block]
       parameters:
@@ -2038,7 +2038,7 @@ paths:
           schema:
             type: string
             description: Código identificador do cartão.
-            nullable: true
+            nullable: false
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       requestBody:
@@ -2060,10 +2060,12 @@ security:
   - bearerAuth: []
 
 components:
+  
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+  
   parameters:
     apiVersion:
       name: api-version
@@ -2695,20 +2697,23 @@ components:
         - enable
         - functionalityType
         - documentNumber
+        - password
       properties:
         enable:
           type: boolean
           description: Campo que indica se a modalidade deverá ser habilitada (true) ou bloqueada temporariamente (false).
+          nullable: false
         functionalityType:
           $ref: '#/components/schemas/FunctionalityType'
+          nullable: false
         password:
           type: string
-          description: Senha do cartão. Informe somente números.
+          description: "Senha do cartão. Informe somente números. Importante: dependendo da configuração do programa, o envio deste campo poderá ser opcional."
           nullable: true
         documentNumber:
           type: string
           description: Número de documento de CPF ou CNPJ. Informe somente números.
-          nullable: true
+          nullable: false
       additionalProperties: false
     
     createCardInLotResponse:
@@ -3079,7 +3084,6 @@ components:
 
     FunctionalityType:
       enum:
-        - Pre
         - Pos
         - Debit
       type: string
