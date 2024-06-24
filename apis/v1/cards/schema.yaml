@@ -1814,7 +1814,7 @@ paths:
       summary: Geração de token
       description: |
         <div class="bkly-ref-description">
-          <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital.</p>
+          <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital (Google Pay ou Apple Pay).</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
         </div>
@@ -1832,6 +1832,7 @@ paths:
           required: true
           schema:
             type: string
+            description: Código identificador do cartão.
         - name: wallet
           in: path
           required: true
@@ -1845,6 +1846,11 @@ paths:
             $ref: "#/components/schemas/brandTypes"
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/generateTokenRequest"
       responses:
         '200':
           description: Resultado da geração do token.
@@ -1970,7 +1976,7 @@ paths:
       description: |
         <div class="bkly-ref-description">
           <p>Altere a data de vencimento da fatura do cartão de crédito do seu cliente.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+        <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.update</span>
         </div>
         [block:callout]
@@ -2349,6 +2355,7 @@ components:
 
     brandTypes:
       type: string
+      description: Bandeira do cartão.
       enum:
         - Mastercard
       
@@ -2634,7 +2641,7 @@ components:
       properties:
         data:
           type: string
-          description: Token gerado.
+          description: "Token gerado em formato base64, contendo os dados criptografados do cartão. Importante: para a tokenização no Apple Pay, ao decodificar o token, será obtido um JSON com os campos <code>EphemeralPublicKey</code>, <code>EncryptedData</code>, <code>ActivationData</code>."
         lastFourDigits:
           type: string
           description: Últimos quatro dígitos do cartão.
@@ -3085,6 +3092,19 @@ components:
       type: string
       nullable: false
     
+    generateTokenRequest:
+      type: object
+      properties:
+        nonce:
+          type: string
+          description: Valor em formato hexadecimal, gerado no dispositivo, que associa uma sessão de cliente a um token ID da Apple.
+        nonceSignature:
+          type: string
+          description: Assinatura em formato hexadecimal, gerada no dispositivo, que associa uma sessão de cliente a um token ID da Apple.
+        appleCertificate:
+          type: string
+          description: Certificado público, em formato PEM, gerado pela Apple.
+
     getContractCreditResponse:
       type: object
       properties:
@@ -3594,8 +3614,10 @@ components:
 
     walletTypes:
       type: string
+      description: Carteira digital ao qual o cartão deverá ser adicionado
       enum:
         - GooglePay
+        - ApplePay
     
 x-readme:
   explorer-enabled: true
