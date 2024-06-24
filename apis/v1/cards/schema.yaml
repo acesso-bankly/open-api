@@ -2038,7 +2038,6 @@ paths:
           schema:
             type: string
             description: Código identificador do cartão.
-            nullable: false
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
       requestBody:
@@ -2702,18 +2701,15 @@ components:
         enable:
           type: boolean
           description: Campo que indica se a modalidade deverá ser habilitada (true) ou bloqueada temporariamente (false).
-          nullable: false
         functionalityType:
           $ref: '#/components/schemas/FunctionalityType'
-          nullable: false
         password:
           type: string
-          description: "Senha do cartão. Informe somente números. Importante: dependendo da configuração do programa, o envio deste campo poderá ser opcional."
+          description: "Senha do cartão. Informe somente números. <b>Importante</b>: dependendo da configuração do programa, o envio deste campo poderá ser opcional."
           nullable: true
         documentNumber:
           type: string
           description: Número de documento de CPF ou CNPJ. Informe somente números.
-          nullable: false
       additionalProperties: false
     
     createCardInLotResponse:
