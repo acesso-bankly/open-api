@@ -3614,7 +3614,7 @@ components:
 
     walletTypes:
       type: string
-      description: Carteira digital ao qual o cartão deverá ser adicionado
+      description: Carteira digital à qual o cartão deverá ser adicionado
       enum:
         - GooglePay
         - ApplePay
