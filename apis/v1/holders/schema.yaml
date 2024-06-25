@@ -618,6 +618,14 @@ components:
         - MEI
         - ME
         - EPP
+    
+    BusinessSizeLtda:
+      description: Porte da empresa.
+      type: string
+      enum:
+        - SMALL
+        - MEDIUM
+        - LARGE
 
     BusinessType:
       description: Tipo da empresa (MEI, EI, SLU, LTDA, S.A. ou TS).
@@ -1732,7 +1740,7 @@ components:
         businessType:
           $ref: "#/components/schemas/BusinessTypeMEIEISLURequest"
         businessSize:
-          $ref: "#/components/schemas/BusinessSize"
+          $ref: "#/components/schemas/BusinessSizeLtda"
         businessAddress:
           description: Endereço da empresa registrado no cartão CNPJ.
           $ref: "#/components/schemas/Address"
