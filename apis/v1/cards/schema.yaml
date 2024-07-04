@@ -633,6 +633,7 @@ paths:
                     companyKey: "Acesso"
                     documentNumber: "00000000000"
                     activateCode: "A9991B2E491D"
+                    trackingCode: "4717AEWATCTQ"
                     bankAgency: "0001"
                     bankAccount: "0001"
                     lastFourDigits: "4321"
@@ -746,6 +747,7 @@ paths:
                       companyKey: "Acesso"
                       documentNumber: "00000000000"
                       activateCode: "A9991B2E491D"
+                      trackingCode: "4717AEWATCTQ"
                       bankAgency: "0001"
                       bankAccount: "0001"
                       lastFourDigits: "4321"
@@ -860,6 +862,7 @@ paths:
                       companyKey: "Acesso"
                       documentNumber: "00000000000"
                       activateCode: "A9991B2E491D"
+                      trackingCode: "4717AEWATCTQ"
                       bankAgency: "0001"
                       bankAccount: "0001"
                       lastFourDigits: "4321"
@@ -984,6 +987,7 @@ paths:
                       companyKey: "Acesso"
                       documentNumber: "00000000000"
                       activateCode: "A9991B2E491D"
+                      trackingCode: "4717AEWATCTQ"
                       bankAgency: "0001"
                       bankAccount: "0001"
                       lastFourDigits: "4321"
@@ -2548,6 +2552,9 @@ components:
         activateCode:
           type: string
           description: Código de ativação do cartão.
+        trackingCode:
+          type: string
+          description: Código de rastreio do cartão.
         bankAgency:
           type: string
           description: Número da agência do cliente.
