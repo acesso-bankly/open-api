@@ -1900,7 +1900,7 @@ paths:
       summary: Geração de dados de ativação
       description: |
         <div class="bkly-ref-description">
-          <p>Gere um <em>token</em> contendo os dados de ativação (activationData) para a formulação do desafio que confirmará a adição do cartão à carteira digital, em caso de uso de Apple Pay e fluxo de verificação in-App.</p>
+          <p>Gere um <em>token</em> contendo os dados de ativação (<code>activationData</code>) para a formulação do desafio que confirmará a adição do cartão à carteira digital, em caso de uso de Apple Pay e fluxo de verificação in-App.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
         </div>
