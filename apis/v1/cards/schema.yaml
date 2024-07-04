@@ -1478,7 +1478,7 @@ paths:
       summary: Consulta dos próximos status
       description: |
         <div class="bkly-ref-description">
-          <p>Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o token informado na requisição.</p> 
+          <p>Consulte todos os possíveis próximos status válidos para o cartão. Serão consideradas as permissões concedidas para o <em>token</em> informado na requisição.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.read</span>
         </div>
@@ -1814,7 +1814,7 @@ paths:
       summary: Geração de token
       description: |
         <div class="bkly-ref-description">
-          <p>Gere um token com os dados criptografados do cartão para adição do cartão junto a uma carteira digital (Google Pay ou Apple Pay).</p>
+          <p>Gere um <em>token</em> com os dados criptografados do cartão para adição do cartão junto a uma carteira digital (Google Pay ou Apple Pay).</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
         </div>
@@ -1822,7 +1822,7 @@ paths:
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Geração de token](/docs/geracao-de-token)."
+          "body": "Para mais informações, confira a documentação [Geração de <em>token</em>](/docs/geracao-de-token)."
         }
         [/block]
       operationId: GenerateTokenizationForWallet
@@ -1853,7 +1853,7 @@ paths:
               $ref: "#/components/schemas/generateTokenRequest"
       responses:
         '200':
-          description: Resultado da geração do token.
+          description: Resultado da geração do <em>token</em>.
           content:
             application/json:
               schema:
@@ -1900,7 +1900,7 @@ paths:
       summary: Geração de dados de ativação
       description: |
         <div class="bkly-ref-description">
-          <p>Gere um token contendo os dados de ativação (activationData) para a formulação do desafio que confirmará a adição do cartão à carteira digital, em caso de uso de Apple Pay e fluxo de verificação in-App.</p>
+          <p>Gere um <em>token</em> contendo os dados de ativação (activationData) para a formulação do desafio que confirmará a adição do cartão à carteira digital, em caso de uso de Apple Pay e fluxo de verificação in-App.</p>
           <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.token.create</span>
         </div>
@@ -1933,7 +1933,7 @@ paths:
         - $ref: "#/components/parameters/authorization"
       responses:
         '200':
-          description: Resultado da geração do token.
+          description: Resultado da geração do <em>token</em>.
           content:
             application/json:
               schema:
@@ -2164,7 +2164,7 @@ components:
       required: true
       schema:
         type: string
-        description: Token de autorização do tipo Bearer.
+        description: <em>Token</em> de autorização do tipo Bearer.
 
     DocumentNumber:
       name: documentNumber
@@ -2305,7 +2305,7 @@ components:
       properties:
         authorization:
           type: string
-          description: Token que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
+          description: <em>Token</em> que o cliente utilizou na assinatura eletrônica, o qual comprova a sua autenticação no site.
           nullable: true
         idState:
           type: string
@@ -2313,7 +2313,7 @@ components:
           nullable: true
         token:
           type: string
-          description: Token de SMS/email que confirma a identidade do usuário que assinou o aceite.
+          description: <em>Token</em> de SMS/email que confirma a identidade do usuário que assinou o aceite.
           nullable: true
         terms:
           type: string
@@ -2719,7 +2719,7 @@ components:
       properties:
         data:
           type: string
-          description: "Token gerado em formato base64, que deverá ser enviado ao SDK da carteira digital correspondente. Importante: para a tokenização na Apple Pay, ao decodificar o token, será obtido um JSON com os campos <code>EphemeralPublicKey</code>, <code>EncryptedData</code>, <code>ActivationData</code>."
+          description: "<em>Token</em> gerado em formato base64, que deverá ser enviado ao SDK da carteira digital correspondente. Importante: para a tokenização na Apple Pay, ao decodificar o <em>token</em>, será obtido um JSON com os campos <code>EphemeralPublicKey</code>, <code>EncryptedData</code>, <code>ActivationData</code>."
         lastFourDigits:
           type: string
           description: Últimos quatro dígitos do cartão.
@@ -3188,7 +3188,7 @@ components:
       properties:
         data:
           type: string
-          description: Token, em formato base64, que deverá ser utilizado na formulação do desafio.
+          description: <em>Token</em>, em formato base64, que deverá ser utilizado na formulação do desafio.
     
     getContractCreditResponse:
       type: object
