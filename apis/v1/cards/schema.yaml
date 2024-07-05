@@ -2590,7 +2590,7 @@ components:
           description: Código de ativação do cartão.
         trackingCode:
           type: string
-          description: Código de rastreio do cartão.
+          description: Código de rastreio do cartão. Campo retornado <b>apenas</b> para cartões físicos.
         bankAgency:
           type: string
           description: Número da agência do cliente.
