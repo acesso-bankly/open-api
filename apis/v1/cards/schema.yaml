@@ -1979,18 +1979,18 @@ paths:
     patch:
       tags:
         - Gestão de senha
-      summary: Alteração de senha criptografada
+      summary: Alteração de senha com criptografia
       description: |
         <div class="bkly-ref-description">
           <p>Altere a senha de um cartão com segurança, por meio da comunicação criptografada.</p> 
-          <span class="bkly-ref-small-stable-tag">stable</span> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.password.update</span>
         </div>
         [block:callout]
         {
           "type": "info",
           "title": "Nota",
-          "body": "Para mais informações, confira a documentação [Alteração de senha criptografada](/docs/alteracao-de-senha-criptografada)."
+          "body": "Para mais informações, confira a documentação [Processo criptografado de alteração de senha](/docs/alteracao-de-senha-criptografada)."
         }
         [/block]
       parameters:
@@ -2015,6 +2015,8 @@ paths:
         '400':
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '401':
+          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+        '403':
           $ref: "http://localhost:3320/commons/components#/components/responses/401"
         '404':
           $ref: "http://localhost:3320/commons/components#/components/responses/404"
@@ -2049,6 +2051,40 @@ paths:
             statusCode: 409
           '500':
             statusCode: 500
+
+    get:
+      tags:
+        - Gestão de senha
+      summary: Consulta de senha com criptografia
+      description: |
+        <div class="bkly-ref-description">
+          <p>consulte a senha de um cartão por meio de comunicação criptografada.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.pci.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Consulta de senha com criptografia](/docs/consulta-senha-criptografada)."
+        }
+        [/block]
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código identificador do cartão.
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      responses:
+        '200':
+          description: Recurso encontrado.
+        '403':
+          $ref: "http://localhost:3320/commons/components#/components/responses/401"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
 
   /cards/{proxy}/duedate-expiration:
     put:
@@ -2778,7 +2814,7 @@ components:
       properties:
         password:
           type: string
-          description: Senha de uso do cartão. A senha deve possuir <b>4 dígitos</b> e ser transmitida <b>criptografada</b>.
+          description: Senha de uso do cartão. A senha deve possuir <b>4 dígitos</b> e ser transmitida <b>criptografada</b> em formato base64.
       required:
         - password
    
