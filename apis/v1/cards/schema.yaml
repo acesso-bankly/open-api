@@ -1926,7 +1926,10 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/walletTypes"
+            type: string
+            description: Carteira digital à qual o cartão deverá ser adicionado.
+            enum:
+              - ApplePay
         - name: brand
           in: path
           required: true
