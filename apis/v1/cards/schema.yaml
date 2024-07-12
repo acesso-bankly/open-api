@@ -470,33 +470,34 @@ paths:
             statusCode: 500
 
   /cards-pci/physical:
-    tags:
-      - Criação de cartão
-    summary: Emissão de cartão físico com criptografia
-    description:  |
-      <div class="bkly-ref-description">
-        <p>Realise a emissão de um cartão físico por meio de comunicação criptografada.</p> 
-        <span class="bkly-ref-small-beta-tag">beta</span> 
-        <span class="bkly-ref-scope-tag">scope: card.create</span>
-      </div>
-      [block:callout]
-      {
-        "type": "info",
-        "title": "Nota",
-        "body": "Para mais informações, confira a documentação [Emissão de cartão físico](/docs/emissao-cartao-fisico)."
-      }
-      [/block]
-    operationId: cardCreatePhysicalCard
-    parameters:
-      - $ref: "#/components/parameters/apiVersion"
-      - $ref: "#/components/parameters/authorization"
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/createCardRequestPci"
-    responses:
+    post:
+      tags:
+        - Criação de cartão
+      summary: Emissão de cartão físico com criptografia
+      description:  |
+        <div class="bkly-ref-description">
+          <p>Realise a emissão de um cartão físico por meio de comunicação criptografada.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.create</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Emissão de cartão físico](/docs/emissao-cartao-fisico)."
+        }
+        [/block]
+      operationId: cardCreatePhysicalCard
+      parameters:
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCardRequestPci"
+      responses:
   
   /cards/multiple:
     post:
