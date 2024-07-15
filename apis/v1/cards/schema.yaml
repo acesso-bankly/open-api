@@ -487,7 +487,6 @@ paths:
           "body": "Para mais informações, confira a documentação [Emissão de cartão físico](/docs/emissao-cartao-fisico)."
         }
         [/block]
-      operationId: cardCreatePhysicalCard
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
