@@ -2299,9 +2299,6 @@ components:
           type: string
           format: date-time
           description: "Data e hora em que o QR Code deve expirar. Caso esse campo não seja informado, o QR Code irá expirar em 24h."
-        payerRequestText:
-          type: string
-          description: "Texto que o pagador visualizará no momento da transação."
       additionalProperties: false
 
     CreatePixCashOutTransactionRequest:
