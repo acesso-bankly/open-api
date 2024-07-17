@@ -400,7 +400,7 @@ paths:
       summary: Emissão de cartão virtual com criptografia
       description:  |
         <div class="bkly-ref-description">
-          <p>Realise a emissão de um cartão virtual por meio de comunicação criptografada.</p> 
+          <p>Realize a emissão de um cartão virtual por meio de comunicação criptografada.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
@@ -528,7 +528,7 @@ paths:
       summary: Emissão de cartão físico com criptografia
       description:  |
         <div class="bkly-ref-description">
-          <p>Realise a emissão de um cartão físico por meio de comunicação criptografada.</p> 
+          <p>Realize a emissão de um cartão físico por meio de comunicação criptografada.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
           <span class="bkly-ref-scope-tag">scope: card.create</span>
         </div>
@@ -3045,7 +3045,7 @@ components:
           $ref: "#/components/schemas/holder"
         embossingCustomFields:
           $ref: "#/components/schemas/embossingFields"
-        metada:
+        metadata:
           type: object
           description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.
         paymentDay:
@@ -3110,7 +3110,7 @@ components:
           $ref: "#/components/schemas/program"
         holder:
           $ref: "#/components/schemas/holder"
-        metada:
+        metadata:
           type: object
           description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.
         paymentDay:
