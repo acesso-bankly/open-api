@@ -6,6 +6,94 @@ info:
 servers:
   - url: https://api-mtls.sandbox.bankly.com.br
 paths:
+
+  /legal-agreements/file:
+    get:
+      tags:
+        - Acordos legais
+      summary: Obtenção do documento (acordo legal)
+      description: |
+        <div class="bkly-ref-description">
+          <p>Obtenha o documento do acordo legal para ser visualizado e aceito pelo seu cliente.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: legal-agreements.read</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Atualmente, este endpoint apenas retorna o documento de termos e condições de uso, que deve ser aplicado para cada conta individualmente. Para mais informações, confira a documentação [Obtenção do documento (acordo legal)](/docs/obtencao-do-documento)."
+        }
+        [/block]
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+        - name: type
+          in: query
+          schema:
+            type: string
+            default: TERMS_AND_CONDITIONS_OF_USE
+            description: "Tipo de acordo a ser obtido."
+      responses:
+        "200":
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/legalAgreementsGetResponse"
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+    
+  /legal-agreements/accept:
+    post:
+      tags:
+        - Acordos legais
+      summary: Aceite do acordo legal
+      description: |
+        <div class="bkly-ref-description">
+          <p>Envie ao Bankly o consentimento do cliente referente ao acordo legal apresentado.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: legal-agreements.accept</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Atualmente, somente deverá ser enviado o aceite dos termos e condições de uso da conta. Para mais informações, confira a documentação [Aceite do acordo legal](/docs/aceite-do-acordo-legal)."
+        }
+        [/block]
+      parameters:
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/ApiVersion"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/Authorization"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/legalAgreementsPostRequest"
+      responses:
+        "200":
+          description: Recurso encontrado.
+          headers:
+            x-bkly-correlation-id:
+              $ref: "http://localhost:3320/commons/components#/components/headers/CorrelationId"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Identificador único do acordo legal aceito pelo cliente. 
+        "404":
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        "500":
+          $ref: "http://localhost:3320/commons/components#/components/responses/500"
+  
   /accounts/{accountNumber}:
     get:
       tags:
@@ -587,9 +675,6 @@ paths:
         "401":
           $ref: "http://localhost:3320/commons/components#/components/responses/401"
 
-
-
-
   /pockets/{pocketNumber}:
     get:
       tags:
@@ -1065,6 +1150,57 @@ components:
         description: O número da conta transitória designada para receber o valor a ser dividido entre as contas recebedoras. 
   
   schemas:
+    legalAgreementsGetResponse:
+      type: object
+      properties:
+        contentType:
+          type: string
+          description: Formato do arquivo base64 do acordo obtido.
+        file:
+          type: string
+          description: Arquivo do acordo em base64.
+    
+    legalAgreementsPostRequest:
+      type: object
+      required:
+        - acceptance
+      properties:
+        acceptance:
+          type: object
+          required:
+            - document
+            - account
+          description: Objeto que deverá conter informações sobre o aceite realizado pelo cliente (titular da conta).
+          properties:
+            document:
+              type: object
+              required:
+                - value
+              description: Objeto que deverá conter informações sobre o documento do cliente.
+              properties:
+                value:
+                  type: string
+                  description: Número do documento (CPF ou CNPJ).
+            account:
+              type: object
+              required:
+                - number
+                - branch
+              description: Objeto que deverá conter informações sobre a conta do cliente.
+              properties:
+                number: 
+                  type: string
+                  description: Número da conta. 
+                branch: 
+                  type: string
+                  description: Agência bancária.
+
+        type:
+          type: string
+          default: TERMS_AND_CONDITIONS_OF_USE
+          description: Tipo de acordo aceito pelo cliente.
+
+
     PaymentAccountHolder:
       type: object
       description: Dados do títular da conta.
