@@ -1155,7 +1155,7 @@ components:
       properties:
         contentType:
           type: string
-          description: Formato do arquivo base64 do acordo obtido.
+          description: Tipo de retorno da requisição.
         file:
           type: string
           description: Arquivo do acordo em base64.
@@ -1194,7 +1194,6 @@ components:
                 branch: 
                   type: string
                   description: Agência bancária.
-
         type:
           type: string
           default: TERMS_AND_CONDITIONS_OF_USE
