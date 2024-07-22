@@ -16,7 +16,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Obtenha o documento do acordo legal para ser visualizado e aceito pelo seu cliente.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: legal-agreements.read</span>
+          <span class="bkly-ref-scope-tag">scope: legal.agreements.read</span>
         </div>
         [block:callout]
         {
@@ -58,7 +58,7 @@ paths:
         <div class="bkly-ref-description">
           <p>Envie ao Bankly o consentimento do cliente referente ao acordo legal apresentado.</p> 
           <span class="bkly-ref-small-beta-tag">beta</span> 
-          <span class="bkly-ref-scope-tag">scope: legal-agreements.accept</span>
+          <span class="bkly-ref-scope-tag">scope: legal.agreements.accept</span>
         </div>
         [block:callout]
         {
