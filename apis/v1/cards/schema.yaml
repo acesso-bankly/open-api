@@ -3427,7 +3427,7 @@ components:
         status:
           $ref: "#/components/schemas/duplicateCardStatus"
         holder:
-          $ref: "#/components/schemas/holder"   
+          $ref: "#/components/schemas/holderPci"   
         password:
           type: string
           description: Senha do cartão atual (primeira via). A senha deve possuir <b>quatro dígitos</b> e ser transmitida <b>criptografada</b> em formato base64.
@@ -3744,6 +3744,15 @@ components:
           $ref: "#/components/schemas/document"
         account:
           $ref: "#/components/schemas/account"
+
+    holderPci:
+      type: object
+      description: Objeto com informações sobre o titular do cartão.
+      required: 
+        - document
+      properties: 
+        document:
+          $ref: "#/components/schemas/document"
 
     incomeBracket:
       type: string
