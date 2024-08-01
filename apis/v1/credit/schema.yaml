@@ -27,8 +27,9 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-license'
       requestBody:
         required: true
         content:
@@ -66,8 +67,9 @@ paths:
         [/block]
       operationId: creditAnalysisCreate
       parameters:
-        - $ref: "#/components/parameters/apiVersion"
-        - $ref: "#/components/parameters/authorization"
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
+        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-license'
       requestBody:
         required: true
         content:

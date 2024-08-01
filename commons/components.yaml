@@ -220,6 +220,16 @@ components:
       explode: false
       schema:
         type: string
+
+    X-bkly-license:
+      name: x-bkly-license
+      in: header
+      description: "Identificador da licença bancária utilizada pelo parceiro."
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
   
   schemas:
 
