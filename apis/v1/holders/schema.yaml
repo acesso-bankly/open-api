@@ -1671,13 +1671,13 @@ components:
           minLength: 1
           type: string
           description: >
-            Nome completo conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente. <b>Sem abreviações</b>. Máximo de 256 caracteres.
+            Nome completo conforme consta no documento de identificação (RG, CNH, RNE, DNI ou CRNM) do cliente. <b>Sem abreviações</b>.
         socialName:
           maxLength: 256
           minLength: 1
           type: string
           description: >
-            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).Máximo de 256 caracteres.
+            Nome pelo qual a pessoa gostaria de ser chamada. Saiba mais consultando a [Cartilha do nome social](https://www.mds.gov.br/webarquivos/publicacao/assistencia_social/Folders/cartilha_nome_social.pdf).
           nullable: true
         birthDate:
           maxLength: 10
@@ -1704,13 +1704,13 @@ components:
           maxLength: 256
           minLength: 1
           type: string
-          description: Nome completo da mãe do cliente conforme consta no documento de identificação. <b>Sem abreviações</b>. Máximo de 256 caracteres.
+          description: Nome completo da mãe do cliente conforme consta no documento de identificação. <b>Sem abreviações</b>.
           nullable: true
         email:
           maxLength: 256
           minLength: 1
           type: string
-          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes. Máximo de 256 caracteres.
+          description: Endereço de e-mail. Um mesmo endereço de e-mail não poderá ser usado por dois clientes.
           format: email
         documentation:
           $ref: "#/components/schemas/SendedDocumentationRequest"
