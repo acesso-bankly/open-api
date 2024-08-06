@@ -474,7 +474,8 @@ components:
     createPreAnalyzeRequest:
       type: object
       required:
-        - documentNumber
+        - programId
+        - documentNumber 
       properties:
         programId:
           type: string
