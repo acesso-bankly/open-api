@@ -29,7 +29,14 @@ paths:
       parameters:
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/ApiVersion'
         - $ref: 'http://localhost:3320/commons/components#/components/parameters/Authorization'
-        - $ref: 'http://localhost:3320/commons/components#/components/parameters/X-bkly-license'
+        - name: x-bkly-license
+          in: header
+          description: "Identificador da licença bancária utilizada pelo parceiro."
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -474,7 +481,8 @@ components:
     createPreAnalyzeRequest:
       type: object
       required:
-        - documentNumber
+        - programId
+        - documentNumber 
       properties:
         programId:
           type: string
