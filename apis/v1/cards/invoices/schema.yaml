@@ -311,8 +311,8 @@ paths:
   /cards/invoices/{statementId}/item/{statementItemId}/advancement:
     post:
       tags:
-        - Refinanciamento de fatura
-      summary: Antecipação de parcelas 
+        - Antecipação de parcelas
+      summary: Antecipação de parcelas de refinanciamento ou de uma compra
       description: |
         <div class="bkly-ref-description">
           <p>Realize o adiantamento de parcelas referentes a um refinanciamento (parcelado ou parcelado compulsório) e/ou de compras realizadas com cartão.</p> 
