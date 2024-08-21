@@ -315,14 +315,14 @@ paths:
       summary: Antecipação de parcelas 
       description: |
         <div class="bkly-ref-description">
-          <p>Realize o adiantamento de parcelas referentes a um refinancimento.</p> 
+          <p>Realize o adiantamento de parcelas referentes a um refinanciamento (parcelado ou parcelado compulsório) e/ou de compras realizadas com cartão.</p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.write</span>
         </div>
         [block:callout]
         {
           "type": "warning",
           "title": "Importante",
-          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code> ou <code>CP_REFINANCING_INSTALLMENT</code>. Confira a documentação [Antecipação de parcelas](/docs/antecipacao-de-parcelas) para mais informações."
+          "body": "Somente será possível gerar o adiantamento de parcelas cujo <code>transactionType</code> apresente o valor <code>REFINANCE_INSTALLMENT</code>, <code>CP_REFINANCING_INSTALLMENT</code> ou ou <code>INSTALLMENT_WITHOUT_INTEREST</code>. Confira a documentação [Antecipação de parcelas](/docs/antecipacao-de-parcelas) para mais informações."
         }
         [/block]
       parameters:
@@ -576,7 +576,7 @@ components:
       schema: 
         type: integer
         format: int32
-        description: Identificador de uma das parcelas de refinanciamento passíveis de serem antecipadas.
+        description: Identificador de uma das parcelas de refinanciamento ou de uma compra que podem ser antecipadas.
 
     Proxy:
       name: proxy
@@ -829,10 +829,11 @@ components:
         installmentAdvanceQuantity:
           type: integer
           format: int32
-          description: Quantidade de parcelas a serem antecipadas.
+          description: Quantidade de parcelas de refinanciamento ou de uma compra a serem antecipadas.
         removeInterest:
           type: boolean
-          description: Sinaliza se os encargos das parcelas devem ser removidos (TRUE) ou não (FALSE). Como se trata de parcelas de refinanciamento, preencha este campo com <b>TRUE</b>.
+          default: true
+          description: Sinaliza se os encargos das parcelas devem ser removidos (TRUE) ou não (FALSE). Como se trata de parcelas de refinanciamento ou de uma compra, preencha este campo com <b>TRUE</b>.
       additionalProperties: false
 
     AdvancedItemsDto:
@@ -847,7 +848,7 @@ components:
           items: 
             type: integer
             format: int32
-          description: Lista que contém os Ids das parcelas de refinanciamento antecipadas.
+          description: Lista que contém os IDs das parcelas de refinanciamento ou de uma compra antecipadas.
       additionalProperties: false
 
     Amount:
