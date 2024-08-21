@@ -2367,7 +2367,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/account'
+              $ref: '#/components/schemas/VinculoCartaoConta'
       responses:
         '202':
           description: A solicitação foi aceita e que o cartão está sendo vinculado à conta.
@@ -4215,6 +4215,16 @@ components:
           nullable: true
       additionalProperties: false
     
+    VinculoCartaoConta:
+      type: object
+      required:
+        - account
+      properties: 
+        account:
+          description: Objeto que contém as informações da conta bancária à qual o cartão será vinculado. 
+          $ref: "#/components/schemas/account"
+      additionalProperties: false
+
     walletFlows:
       type: string
       enum:
