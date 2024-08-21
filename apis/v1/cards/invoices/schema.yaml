@@ -310,8 +310,6 @@ paths:
   
   /cards/invoices/{statementId}/item/{statementItemId}/advancement:
     post:
-      tags:
-        - Refinanciamento de fatura
       summary: Antecipação de parcelas 
       description: |
         <div class="bkly-ref-description">
