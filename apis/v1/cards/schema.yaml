@@ -2297,7 +2297,7 @@ paths:
   /cards/{proxy}/functionalityStatus:
     patch:
       tags:
-        - Configuração do cartão
+        - Cartão combo
       summary: Alteração de status de modalidade
       description: |
         <div class="bkly-ref-description">
@@ -2334,6 +2334,51 @@ paths:
           $ref: "http://localhost:3320/commons/components#/components/responses/400"
         '500':
           $ref: "http://localhost:3320/commons/components#/components/responses/500"
+
+  /cards/{proxy}/account:
+     patch:
+      tags:
+        - Cartão combo
+      summary: Vinculação do cartão combo a uma conta
+      description: |
+        <div class="bkly-ref-description">
+          <p>Vincule um cartão do tipo combo a uma conta bancária. Desse modo, a modalidade débito será ativada.</p> 
+          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <span class="bkly-ref-scope-tag">scope: card.update</span>
+        </div>
+        [block:callout]
+        {
+          "type": "info",
+          "title": "Nota",
+          "body": "Para mais informações, confira a documentação [Alteração de status de modalidade](/docs/vinculo-cartao-conta)."
+        }
+        [/block]
+      parameters:
+        - name: proxy
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Código identificador do cartão.
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+      responses:
+        '202':
+          description: A solicitação foi aceita e que o cartão está sendo vinculado à conta.
+        '400':
+          $ref: "http://localhost:3320/commons/components#/components/responses/400"
+        '404':
+          $ref: "http://localhost:3320/commons/components#/components/responses/404"
+        '406':
+          $ref: "http://localhost:3320/commons/components#/components/responses/406"
+        '409':
+          $ref: "http://localhost:3320/commons/components#/components/responses/409"
 
 security:
   - bearerAuth: []
@@ -2534,6 +2579,7 @@ components:
       properties:
         branch:
           type: string
+          maxLength: 4
           description: Número da agência.
         number:
           type: string
