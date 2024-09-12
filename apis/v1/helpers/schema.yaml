@@ -491,7 +491,7 @@ components:
           nullable: true
         ispb:
           type: string
-          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
+          description: 'ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco. O campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
           nullable: true
         code:
           type: string
