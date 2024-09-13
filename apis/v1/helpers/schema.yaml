@@ -240,11 +240,11 @@ paths:
       parameters:
         - name: id
           in: path
-          description: O Id corresponde ao ISPB ou Code
+          description: 'Id corresponde ao ISPB ou Code. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
           required: true
           schema:
             type: string
-            description: O Id corresponde ao ISPB ou Code
+            description: 'Id corresponde ao ISPB ou Code. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
             nullable: true
             example: '332'
         - name: api-version
@@ -491,8 +491,7 @@ components:
           nullable: true
         ispb:
           type: string
-          description: 'ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco. O campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
-          nullable: true
+          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
         code:
           type: string
           description: Código do banco. Este campo somente é retornado caso a instituição seja participante do SPB (possui TED). As instituições que participam somente do SPI (que só possuem Pix) não retornarão o campo <code>code</code> nessa pesquisa.
