@@ -1326,7 +1326,7 @@ components:
           properties:
             ispb:
               type: string
-              description: ISPB (Identificador de Sistema de Pagamento Brasileiro) do banco.
+              description: 'ISPB da instituição financeira. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
             code:
               type: string
               description: Código do banco.
@@ -1591,7 +1591,7 @@ components:
           nullable: true
         ispb:
           type: string
-          description: ISPB (Identificador de Sistema de Pagamentos Brasileiro) do banco.
+          description: 'ISPB da instituição financeira. <b>Importante</b> O campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
           nullable: true
 
       additionalProperties: false
@@ -1638,7 +1638,7 @@ components:
         ispb:
           type: string
           nullable: true
-          description: Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso.
+          description: 'Campo obrigatório para <b>Pix cash-out Manual</b>. Só deve ser preenchido nesse caso. ISPB da instituição financeira. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
    
     BankRequestSender:
       type: object
@@ -1842,7 +1842,7 @@ components:
           description: Número da conta.
         bankISPB:
           type: string
-          description: ISPB da instituição financeira.
+          description: 'ISPB da instituição financeira. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
         holder:
           type: object
           required:
@@ -2194,8 +2194,8 @@ components:
       type: object
       required:
       - type
+      - addressingKey
       - claimer
-      - bank
       properties:
         type:
           $ref: "#/components/schemas/ClaimType"
@@ -2499,7 +2499,7 @@ components:
           description: Número da conta.
         bankISPB:
           type: string
-          description: ISPB da instituição financeira.
+          description: 'ISPB da instituição financeira. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
         holder:
           type: object
           required: 
