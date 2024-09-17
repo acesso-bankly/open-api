@@ -2217,8 +2217,8 @@ paths:
       summary: Consulta de senha com criptografia
       description: |
         <div class="bkly-ref-description">
-          <p>consulte a senha de um cartão por meio de comunicação criptografada.</p> 
-          <span class="bkly-ref-small-beta-tag">beta</span> 
+          <p>Consulte a senha de um cartão por meio de comunicação criptografada.</p> 
+          <span class="bkly-ref-small-stable-tag">stable</span> 
           <span class="bkly-ref-scope-tag">scope: card.pci.read</span>
         </div>
         [block:callout]
