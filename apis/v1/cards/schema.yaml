@@ -15,7 +15,7 @@ paths:
     post:
       tags:
         - Cartões No Name
-      summary: Criação de cartão em lote
+      summary: Emissão de cartão em lote
       description: |
         <div class="bkly-ref-description">
           <p>Crie um lote de cartões sem vínculo com uma conta (Cartão No Name).</p> 
@@ -320,7 +320,7 @@ paths:
   /cards/virtual:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Cartão virtual
       description:  |
         <div class="bkly-ref-description">
@@ -396,7 +396,7 @@ paths:
   /cards-pci/virtual:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Emissão de cartão virtual com criptografia
       description:  |
         <div class="bkly-ref-description">
@@ -448,7 +448,7 @@ paths:
   /cards/physical:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Cartão físico
       description:  |
         <div class="bkly-ref-description">
@@ -524,7 +524,7 @@ paths:
   /cards-pci/physical:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Emissão de cartão físico com criptografia
       description:  |
         <div class="bkly-ref-description">
@@ -567,7 +567,7 @@ paths:
   /cards/multiple:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Cartão físico múltiplo
       description: |
         <div class="bkly-ref-description">
@@ -591,7 +591,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/createCardRequest"
+              $ref: "#/components/schemas/createCardRequestMultiple"
       responses:
         '202':
           description: A solicitação foi aceita e o cartão está sendo criado.
@@ -641,7 +641,7 @@ paths:
   /cards/{proxy}/duplicate:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Segunda via de cartão
       description: |
         <div class="bkly-ref-description">
@@ -697,7 +697,7 @@ paths:
   /cards-pci/{proxy}/duplicate:
     post:
       tags:
-        - Criação de cartão
+        - Emissão de cartão
       summary: Emissão de segunda via com criptografia
       description: |
         <div class="bkly-ref-description">
@@ -3125,6 +3125,78 @@ components:
             - city
             - state
             - country
+        metadata:
+          type: object
+          description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.
+      required:
+        - documentNumber
+        - cardName
+        - alias
+        - bankAgency
+        - bankAccount
+        - password
+        - programId
+    
+    createCardRequestMultiple:
+      type: object
+      properties:
+        documentNumber:
+          type: string
+          description: Número de documento de CPF ou CNPJ (informe somente números). Tamanho máximo de 14 caracteres.
+        cardName:
+          type: string
+          description: Nome que será impresso no cartão (não será permitido o uso de números e caracteres especiais). Tamanho máximo de 19 caracteres.
+        alias:
+          type: string
+          description: Apelido do cartão (não será permitido o uso de caracteres especiais e o tamanho máximo é de 16 caracteres).
+        bankAgency:
+          type: string
+          description: Número de agência (4 dígitos).
+        bankAccount:
+          type: string
+          description: Número de conta ao qual cartão será vinculado.
+        programId:
+          type: integer
+          description: Identificador do programa que será vinculado ao cartão.
+        password:
+          type: string
+          description: "Senha do cartão para realizar transações (preencha com quatro números. Exemplo: '9348')."
+        address:
+          type: object
+          description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
+          properties:
+            zipCode:
+              type: string
+              description: CEP (informar somente os números).
+            address:
+              type: string
+              description: Logradouro (Nome da rua, avenida etc.).
+            number:
+              type: string
+              description: Número do prédio ou da casa.
+            neighborhood:
+              type: string
+              description: Nome do bairro.
+            complement:
+              type: string
+              description: Complemento do endereço.
+            city:
+              type: string
+              description: Nome da cidade.
+            state:
+              type: string
+              description: Nome do estado (informar a UF).
+            country:
+              type: string
+              description: Nome do país.
+          required:
+            - zipCode
+            - address
+            - number
+            - neighborhood
+            - city
+            - state
+            - country
       required:
         - documentNumber
         - cardName
@@ -3194,6 +3266,9 @@ components:
             - city
             - state
             - country
+        metadata:
+          type: object
+          description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.     
       required:
         - name
         - alias
@@ -3460,6 +3535,9 @@ components:
             - city
             - state
             - country
+        metadata:
+          type: object
+          description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.
       required:
         - status
         - documentNumber
