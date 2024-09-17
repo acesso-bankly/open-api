@@ -3224,9 +3224,6 @@ components:
           $ref: "#/components/schemas/holder"
         embossingCustomFields:
           $ref: "#/components/schemas/embossingFields"
-        metadata:
-          type: object
-          description: Objeto que deverá conter informações adicionais pertinentes ao contexto, representadas por meio de pares de chave e valor.
         paymentDay:
           type: string
           description: Dia de vencimento da fatura.
