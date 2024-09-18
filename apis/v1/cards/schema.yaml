@@ -337,9 +337,9 @@ paths:
         [/block]
       operationId: cardCreateVirtualCard
       parameters:
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
-        - $ref: "#/components/parameters/X-bkly-license"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -413,9 +413,9 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
-        - $ref: "#/components/parameters/X-bkly-license"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -467,9 +467,9 @@ paths:
         [/block]
       operationId: cardCreatePhysicalCard
       parameters:
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
-        - $ref: "#/components/parameters/X-bkly-license"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -543,9 +543,9 @@ paths:
         }
         [/block]
       parameters:
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
-        - $ref: "#/components/parameters/X-bkly-license"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -588,9 +588,9 @@ paths:
         [/block]
       operationId: cardCreateMultipleCard
       parameters:
-        - $ref: "#/components/parameters/ApiVersion"
-        - $ref: "#/components/parameters/Authorization"
-        - $ref: "#/components/parameters/X-bkly-license"
+        - $ref: "#/components/parameters/apiVersion"
+        - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
