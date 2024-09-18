@@ -2592,6 +2592,21 @@ components:
           type: string
           description: Número da conta.
 
+    accountPCI:
+      type: object
+      description: 'Objeto com informações sobre a conta do titular do cartão. <b>Observação</b>: em caso de cartões do tipo combo, se este objeto não for enviado, apenas a modalidade crédito ficará habilitada (desde que o cliente possua um contrato de crédito aprovado).'
+      required: 
+        - branch
+        - number
+      properties:
+        branch:
+          type: string
+          maxLength: 4
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+    
     activateCardRequest:
       type: object
       properties:
@@ -3871,7 +3886,7 @@ components:
         document:
           $ref: "#/components/schemas/document"
         account:
-          $ref: "#/components/schemas/account"
+          $ref: "#/components/schemas/accountPCI"
 
     holderPci:
       type: object
