@@ -308,14 +308,14 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
   
-  /cards/invoices/{statementId}/item/{statementItemId}/installmentsAdvancementSimulation:
+  /cards/invoices/{statementId}/item/{statementItemId}/installment-advance:
     get:
       tags:
-        - Refinanciamento de fatura
+        - Antecipação de parcelas
       summary: Simulação de antecipação de parcelas
       description: |
         <div class="bkly-ref-description">
-          <p>Simule o processo de antecipação de parcelas de refinanciamento de forma a saber o valor, sem o juros de financiamento, que a parcela antecipada irá assumir antes de confirmar a operação.</p> 
+          <p> Simule a antecipação de parcelas de refinanciamento e/ou de compras realizadas com o cartão, registradas em ciclos de faturas futuros, ou seja, que ainda não foram fechados nem abertos. </p> 
           <span class="bkly-ref-small-stable-tag">stable</span> <span class="bkly-ref-scope-tag">scope: invoice.read</span>
         </div>
         [block:callout]
