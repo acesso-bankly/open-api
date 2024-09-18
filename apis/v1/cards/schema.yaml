@@ -3516,6 +3516,9 @@ components:
         password:
           type: string
           description: "Senha do cartão atual (primeira via) para realizar transações (preencha com quatro campos números. Exemplo: '9348')."
+        resetPassword:
+          type: boolean
+          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false)."
         address:
           type: object
           description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente).
