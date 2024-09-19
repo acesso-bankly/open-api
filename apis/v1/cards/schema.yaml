@@ -339,6 +339,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -414,6 +415,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -467,6 +469,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -542,6 +545,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -586,6 +590,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/apiVersion"
         - $ref: "#/components/parameters/authorization"
+        - $ref: "http://localhost:3320/commons/components#/components/parameters/X-bkly-license"
       requestBody:
         required: true
         content:
@@ -2587,6 +2592,21 @@ components:
           type: string
           description: Número da conta.
 
+    accountPCI:
+      type: object
+      description: 'Objeto com informações sobre a conta do titular do cartão. <b>Observação</b>: em caso de cartões do tipo combo, se este objeto não for enviado, apenas a modalidade crédito ficará habilitada (desde que o cliente possua um contrato de crédito aprovado).'
+      required: 
+        - branch
+        - number
+      properties:
+        branch:
+          type: string
+          maxLength: 4
+          description: Número da agência.
+        number:
+          type: string
+          description: Número da conta.
+    
     activateCardRequest:
       type: object
       properties:
@@ -3496,6 +3516,9 @@ components:
         password:
           type: string
           description: "Senha do cartão atual (primeira via) para realizar transações (preencha com quatro campos números. Exemplo: '9348')."
+        resetPassword:
+          type: boolean
+          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false)."
         address:
           type: object
           description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente).
@@ -3866,7 +3889,7 @@ components:
         document:
           $ref: "#/components/schemas/document"
         account:
-          $ref: "#/components/schemas/account"
+          $ref: "#/components/schemas/accountPCI"
 
     holderPci:
       type: object
