@@ -342,6 +342,7 @@ paths:
         '406':
           $ref: "http://localhost:3320/commons/components#/components/responses/406"
 
+
 security:
   - bearerAuth: []
 
@@ -674,6 +675,120 @@ components:
           type: string
           nullable: true
           description: Descritivo do item da fatura.
+        transactionsSummary:
+          type: object
+          description: Objeto que contém os valores totalizadores das transações da fatura.
+          properties:
+            nationalPurchasing:
+              type: object
+              description: Objeto que contém os valores totalizadores das transações nacionais da fatura.
+              properties:
+                value:
+                  type: number
+                  description: Valor total das transações nacionais da fatura.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            internationalPurchasing:
+              type: object
+              description: Objeto que contém os valores totalizadores das transações internacionais da fatura.
+              properties:
+                value:
+                  type: number
+                  description: Valor total das transações internacionais da fatura.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            fees:
+              type: object
+              description: Objeto que contém os valores totalizadores dos encargos.
+              properties:
+                value:
+                  type: number
+                  description: Valor total dos encargos.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            debtAdjustments:
+              type: object
+              description: Objeto que contém os valores totalizadores dos ajustes a débito.
+              properties:
+                value:
+                  type: number
+                  description: Valor total dos ajustes a débito.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            creditAdjustments:
+              type: object
+              description: Objeto que contém os valores totalizadores dos ajustes a crédito.
+              properties:
+                value:
+                  type: number
+                  description: Valor total dos ajustes a crédito.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            payments:
+              type: object
+              description: Objeto que contém os valores totalizadores de pagamentos.
+              properties:
+                value:
+                  type: number
+                  description: Valor total das transações de pagamentos.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            insurance:
+              type: object
+              description: Objeto que contém os valores totalizadores de seguro.
+              properties:
+                value:
+                  type: number
+                  description: Valor total de seguro.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            annuity:
+              type: object
+              description: Objeto que contém os valores totalizadores de anuidade.
+              properties:
+                value:
+                  type: number
+                  description: Valor total de anuidade.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.  
+            withdraw:
+              type: object
+              description: Objeto que contém os valores totalizadores de saque.
+              properties:
+                value:
+                  type: number
+                  description: Valor total de saque.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            internationalWithdraw:
+              type: object
+              description: Objeto que contém os valores totalizadores de saques internacionais.
+              properties:
+                value:
+                  type: number
+                  description: Valor total de saque.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
+            installment:
+              type: object
+              description: Objeto que contém os valores totalizadores das parcelas da fatura atual.
+              properties:
+                value:
+                  type: number
+                  description: Valor total das parcelas da fatura atual.
+                currency:
+                  type: string
+                  description: Código da moeda com base na ISO-4217.
       additionalProperties: false
     
     PaymentType:
@@ -943,6 +1058,12 @@ components:
     InvoiceDto:
       type: object
       properties:
+        programId:
+          type: integer
+          description: Identificador único do porgrama.
+        companyKey: 
+          type: string
+          description: Chave que identifica o parceiro dentro do Bankly.
         statementId:
           type: integer
           format: int32
@@ -995,6 +1116,29 @@ components:
           description: Número do documento de CPF ou CNPJ do titular do cartão.
         paymentStatus:
           $ref: '#/components/schemas/StatementPaymentStatus'
+        canBePaid:
+          type: boolean
+          description: Indica se a fatura pode ser paga (true) ou não (false).
+        previousBalance:
+          type: object
+          description: Objeto que contém informações referentes ao valor total da fatura anterior.
+          properties:
+            value:
+              type: number
+              description: Valor total da fatura anterior.
+            currency:
+              type: string
+              description: Código da moeda com base na ISO-4217.
+        residualBalance:
+          type: object
+          description: Objeto que contém informações sobre o saldo residual da fatura.
+          properties:
+            value:
+              type: number
+              description: Saldo residual da fatura.
+            currency:
+              type: string
+              description: Código da moeda com base na ISO-4217.
         statementItens:
           type: array
           items: {$ref: '#/components/schemas/ItemInvoiceDto'}
