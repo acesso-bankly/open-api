@@ -359,6 +359,7 @@ components:
       required: true
       schema:
         type: string
+        default: 2
         
     authorization:
       name: Authorization
