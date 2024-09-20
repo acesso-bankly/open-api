@@ -3108,7 +3108,7 @@ components:
           description: Identificador do programa que será vinculado ao cartão.
         password:
           type: string
-          description: "Senha do cartão para realizar transações (preencha com quatro números. Exemplo: '9348')."
+          description: "Senha do cartão para realizar transações (preencha com quatro dígitos. Exemplo: '9348'). <b>Importante</b>: dependendo da configuração do programa, o envio deste campo poderá ser opcional. Neste caso, a senha será gerada randomicamente. Para que o parceiro possa utilizar a opção de senha randômica, é necessário que seja feita uma avaliação pelo time de segurança do Bankly e que o usuário tenha acesso à senha, seja pelo kit enviado, seja pelo <i>endpoint</i> de [consulta de senhas](reference/consulta-senha-criptografia)."
         address:
           type: object
           description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
@@ -3516,7 +3516,7 @@ components:
           description: "Senha do cartão atual (primeira via) para realizar transações (preencha com quatro campos números. Exemplo: '9348')."
         resetPassword:
           type: boolean
-          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false)."
+          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false). Para que o parceiro possa utilizar o campo resetPassword, é necessário que seja feita uma avaliação pelo time de segurança do Bankly e que o usuário tenha acesso à senha, seja pelo kit enviado, seja pelo <i>endpoint</i> de [consulta de senhas](reference/consulta-senha-criptografia)."
         address:
           type: object
           description: Informações sobre endereço (se não for informado será utilizado o endereço de cadastro do cliente).
@@ -3577,7 +3577,7 @@ components:
           description: Senha do cartão atual (primeira via). A senha deve possuir <b>quatro dígitos</b> e ser transmitida <b>criptografada</b> em formato base64.
         resetPassword:
           type: boolean
-          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false)."
+          description: "Indica se o sistema deve gerar uma nova senha aleatória para o cartão durante a solicitação de segunda via (true) ou se deve manter a senha atual (false). <b>Importante</b>: caso este campo não seja preenchido, será adotado o valor padrão (false). Para que o parceiro possa utilizar o campo resetPassword, é necessário que seja feita uma avaliação pelo time de segurança do Bankly e que o usuário tenha acesso à senha, seja pelo kit enviado, seja pelo <i>endpoint</i> de [consulta de senhas](reference/consulta-senha-criptografia)."
         address:
           type: object
           description: Informações sobre endereço (se não for informado, será utilizado o endereço de cadastro do cliente).
