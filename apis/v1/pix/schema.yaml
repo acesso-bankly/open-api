@@ -2261,8 +2261,39 @@ components:
         addressingKey:
           $ref: '#/components/schemas/CreateAddressingKeyRequest'
         account: 
-          $ref: '#/components/schemas/Account'
-
+          required:
+          - branch
+          - number
+          - bank
+          type: object
+          description: Objeto que deverá conter os dados da conta à qual a chave Pix será vinculada.
+          properties:
+            branch:
+              minLength: 1
+              description: Número da agência.
+              type: string
+            number:
+              minLength: 1
+              description: Número da conta
+              type: string
+            type:
+              $ref: '#/components/schemas/AccountType'
+            bank:
+              type: object
+              required:
+                - ispb
+                - code
+                - name
+              properties:
+                ispb:
+                  type: string
+                  description: 'ISPB da instituição financeira. <b>Importante</b>: o campo deve conter oito caracteres. Portanto, se o ISPB do banco contiver apenas seis dígitos, por exemplo, complete-o com zeros à esquerda. Exemplo: "00123456".'
+                code:
+                  type: string
+                  description: Código do banco.
+                name:
+                  type: string
+                  description: Nome do banco.  
       additionalProperties: false
      
     CreateDynamicQRCodePaymentRequest:
