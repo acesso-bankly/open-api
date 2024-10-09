@@ -327,6 +327,24 @@ paths:
       - $ref: '#/components/parameters/StatementId'
       - $ref: '#/components/parameters/apiVersion'
       - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - minTerm
+                - maxTerm
+              properties:
+                minTerm:
+                  type: integer
+                  description: Número mínimo de parcelas a serem antecipadas. Mínimo de duas parcelas.
+                maxTerm:
+                  type: integer
+                  description: Número máximo de parcelas a serem antecipadas. Mínimo de duas parcelas.
+                downPayment:
+                  type: number
+                  description: Valor de entrada para simulação.
       responses:
         '200':
           description: Solicitação aceita com sucesso.
